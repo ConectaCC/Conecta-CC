@@ -1,0 +1,23 @@
+{
+  "version": "0.2",
+  "title": "Termos de participação na versão de testes",
+  "sections": [
+    {
+      "title": "Sobre o ConectaCC",
+      "body": "O ConectaCC é um ambiente em desenvolvimento, criado no contexto da disciplina de Práticas Curriculares em Sociedade III, do curso de Ciência da Computação do IFSul – Câmpus Passo Fundo. Seu objetivo é promover integração, apoio e conexão entre estudantes."
+    },
+    {
+      "title": "Esta é uma versão de testes",
+      "body": "Funcionalidades podem mudar, apresentar falhas ou deixar de existir. O projeto poderá evoluir de acordo com as necessidades da comunidade acadêmica."
+    },
+    {
+      "title": "Feedbacks",
+      "body": "Durante os testes, poderemos solicitar sua opinião sobre o ConectaCC. Responder é voluntário, e os feedbacks ajudarão a orientar a evolução do projeto."
+    },
+    {
+      "title": "O que outros estudantes podem ver",
+      "body": "Seu perfil fica visível apenas para usuários autenticados no ConectaCC, e não para a internet. As informações que você preencher no perfil, como nome de exibição, interesses e áreas em que pode ajudar, podem ser vistas por outros estudantes. Seu e-mail institucional não é exibido. Os materiais e conteúdos que você compartilhar mostram seu nome de exibição. Se você escolher compartilhar anonimamente, os outros estudantes não verão seu nome, mas a administração do ConectaCC mantém o registro de quem enviou."
+    }
+  ],
+  "acceptance_label": "Li e concordo em participar da versão de testes do ConectaCC e estou ciente de que meus feedbacks poderão ser utilizados para o aprimoramento do projeto."
+}

@@ -13,7 +13,7 @@ function registerPayload(array $overrides = []): array
         'email' => 'ana.silva@academico.ifsul.edu.br',
         'password' => 'segredo123',
         'password_confirmation' => 'segredo123',
-        'terms_version' => '0.1',
+        'terms_version' => config('conectacc.terms_version'),
     ], $overrides);
 }
 
@@ -26,7 +26,7 @@ it('cria a conta como ALUNO, com Nome de exibição inicial e aceite registrado'
         ->and($user->email)->toBe('ana.silva@academico.ifsul.edu.br');
 
     $acceptance = $user->termsAcceptances()->sole();
-    expect($acceptance->version)->toBe('0.1')
+    expect($acceptance->version)->toBe(config('conectacc.terms_version'))
         ->and($acceptance->accepted_at)->not->toBeNull();
 
     $this->assertGuest('web'); // o fluxo volta ao Login, sem login automático
@@ -85,7 +85,7 @@ it('transforma a corrida de e-mail duplicado em erro de validação', function (
     // simula o segundo de dois envios simultâneos: a validação passou, mas o e-mail já foi gravado
     User::factory()->create(['email' => 'ana.silva@academico.ifsul.edu.br']);
 
-    expect(fn () => app(RegisterUser::class)->handle('Ana Silva', 'ana.silva@academico.ifsul.edu.br', 'segredo123', '0.1'))
+    expect(fn () => app(RegisterUser::class)->handle('Ana Silva', 'ana.silva@academico.ifsul.edu.br', 'segredo123', config('conectacc.terms_version')))
         ->toThrow(ValidationException::class);
 });
 

@@ -30,7 +30,7 @@ services:
       - key: ALLOWED_EMAIL_DOMAINS
         value: academico.ifsul.edu.br
       - key: TERMS_VERSION
-        value: '0.1'
+        value: '0.2'
       - key: APP_KEY
         sync: false
       - key: APP_URL
