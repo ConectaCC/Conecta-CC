@@ -324,6 +324,50 @@
                 }
             }
         },
+        "/me/materials": {
+            "get": {
+                "operationId": "v1.listMyMaterials",
+                "tags": [
+                    "ListMyMaterials"
+                ],
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Situa\u00e7\u00e3o: all (padr\u00e3o), pending, approved, rejected ou deleted.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "description": "Cursor da pr\u00f3xima p\u00e1gina (meta.next_cursor).",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of `MyMaterialResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MyMaterialResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "operationId": "v1.login",
@@ -744,6 +788,131 @@
                     "discipline"
                 ],
                 "title": "ModerationMaterialResource"
+            },
+            "MyMaterialResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "anonymous": {
+                        "type": "boolean"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "rejection_reason": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "submitted_at": {
+                        "type": "string"
+                    },
+                    "discipline": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "slug": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "name",
+                            "slug"
+                        ]
+                    },
+                    "pending_revision": {
+                        "type": [
+                            "object",
+                            "null"
+                        ],
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "url": {
+                                "type": "string"
+                            },
+                            "submitted_at": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "title",
+                            "description",
+                            "url",
+                            "submitted_at"
+                        ]
+                    },
+                    "rejected_revision": {
+                        "type": [
+                            "object",
+                            "null"
+                        ],
+                        "properties": {
+                            "reason": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "decided_at": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "reason",
+                            "decided_at"
+                        ]
+                    }
+                },
+                "required": [
+                    "id",
+                    "code",
+                    "title",
+                    "description",
+                    "url",
+                    "anonymous",
+                    "status",
+                    "rejection_reason",
+                    "submitted_at",
+                    "discipline",
+                    "pending_revision",
+                    "rejected_revision"
+                ],
+                "title": "MyMaterialResource"
             },
             "ProfileResource": {
                 "type": "object",

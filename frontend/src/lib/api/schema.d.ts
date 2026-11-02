@@ -84,6 +84,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/me/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listMyMaterials"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/login": {
         parameters: {
             query?: never;
@@ -227,6 +243,33 @@ export interface components {
                 name: string;
                 slug: string;
             };
+        };
+        /** MyMaterialResource */
+        MyMaterialResource: {
+            id: number;
+            code: string;
+            title: string;
+            description: string | null;
+            url: string;
+            anonymous: boolean;
+            status: string;
+            rejection_reason: string | null;
+            submitted_at: string;
+            discipline: {
+                id: number;
+                name: string;
+                slug: string;
+            };
+            pending_revision: {
+                title: string;
+                description: string | null;
+                url: string;
+                submitted_at: string;
+            } | null;
+            rejected_revision: {
+                reason: string | null;
+                decided_at: string | null;
+            } | null;
         };
         /** ProfileResource */
         ProfileResource: {
@@ -526,6 +569,32 @@ export interface operations {
             };
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
+        };
+    };
+    "v1.listMyMaterials": {
+        parameters: {
+            query?: {
+                /** @description Situação: all (padrão), pending, approved, rejected ou deleted. */
+                status?: string;
+                /** @description Cursor da próxima página (meta.next_cursor). */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `MyMaterialResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyMaterialResource"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
         };
     };
     "v1.login": {

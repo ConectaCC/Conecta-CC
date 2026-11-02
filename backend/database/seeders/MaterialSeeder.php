@@ -26,6 +26,9 @@ class MaterialSeeder extends Seeder
             ['Estrutura de Dados III', 'moderador2@academico.ifsul.edu.br', 'Visualizador de estruturas de dados', null, 'https://example.com/visualizador', false, MaterialStatus::Aprovado],
             ['Algoritmos I', 'aluno@academico.ifsul.edu.br', 'Exercícios de lógica com Python', 'Lista com gabarito.', 'https://example.com/logica-python', false, MaterialStatus::Pendente],
             ['Sistemas Distribuídos I', 'moderador@academico.ifsul.edu.br', 'Resumo de relógios lógicos', null, 'https://example.com/relogios-logicos', false, MaterialStatus::Pendente],
+            ['Algoritmos I', 'aluno@academico.ifsul.edu.br', 'Lista de exercícios de recursão', null, 'https://example.com/recursao', false, MaterialStatus::Rejeitado],
+            ['Cálculo Diferencial e Integral I', 'aluno@academico.ifsul.edu.br', 'Resumo de limites', 'Resumo com exemplos.', 'https://example.com/limites', false, MaterialStatus::Cancelado],
+            ['Circuitos Digitais', 'aluno@academico.ifsul.edu.br', 'Mapas de Karnaugh', 'Passo a passo.', 'https://example.com/karnaugh', false, MaterialStatus::Aprovado],
         ];
 
         foreach ($materials as [$disciplineName, $email, $title, $description, $url, $anonymous, $status]) {
@@ -39,7 +42,22 @@ class MaterialSeeder extends Seeder
             if ($status === MaterialStatus::Aprovado) {
                 $material->published_at = $material->decided_at = now();
             }
+            if ($status === MaterialStatus::Rejeitado) {
+                $material->rejection_reason = 'Link pede login no Moodle.';
+                $material->decided_at = now();
+            }
             $material->save();
+        }
+
+        // alteração pendente de um material aprovado (Meus conteúdos e Moderação da etapa 2b)
+        $karnaugh = Material::where('url', 'https://example.com/karnaugh')->firstOrFail();
+        if (! $karnaugh->revisions()->exists()) {
+            $revision = new Material(['title' => 'Mapas de Karnaugh com exercícios', 'description' => 'Passo a passo e lista resolvida.', 'url' => 'https://example.com/karnaugh-v2', 'anonymous' => $karnaugh->anonymous]);
+            $revision->discipline_id = $karnaugh->discipline_id;
+            $revision->user_id = $karnaugh->user_id;
+            $revision->revises_id = $karnaugh->id;
+            $revision->status = MaterialStatus::Pendente;
+            $revision->save();
         }
     }
 }

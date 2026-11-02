@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\CurrentTermsController;
 use App\Http\Controllers\Api\V1\ListDisciplineMaterialsController;
 use App\Http\Controllers\Api\V1\ListDisciplinesController;
 use App\Http\Controllers\Api\V1\ListModerationMaterialsController;
+use App\Http\Controllers\Api\V1\ListMyMaterialsController;
 use App\Http\Controllers\Api\V1\LoginController;
 use App\Http\Controllers\Api\V1\LogoutController;
 use App\Http\Controllers\Api\V1\MeController;
@@ -26,6 +27,7 @@ Route::prefix('v1')->group(function () {
         Route::get('disciplines/{discipline}/materials', ListDisciplineMaterialsController::class);
         Route::post('disciplines/{discipline}/materials', StoreMaterialController::class)->middleware('throttle:materials');
         Route::get('profile', ShowProfileController::class);
+        Route::get('me/materials', ListMyMaterialsController::class);
         Route::put('profile', UpdateProfileController::class);
         Route::post('logout', LogoutController::class);
 
