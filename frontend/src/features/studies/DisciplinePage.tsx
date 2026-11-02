@@ -1,6 +1,8 @@
 import { ExternalLink } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 import { Chip } from '@/components/Chip';
+import { MaterialsSection } from '@/features/materials/MaterialsSection';
+import { hostOf } from '@/lib/format';
 import { StudiesError, StudiesLoading } from './StudiesStatus';
 import { useStudies } from './useStudies';
 
@@ -11,7 +13,7 @@ export function DisciplinePage() {
   const { disciplines, mineIds, ready, failed, retry } = useStudies();
 
   const discipline = disciplines?.find((item) => item.slug === slug?.toLowerCase());
-  const host = discipline?.syllabus_url ? new URL(discipline.syllabus_url).hostname.replace(/^www\./, '') : '';
+  const host = discipline?.syllabus_url ? hostOf(discipline.syllabus_url) : '';
 
   return (
     <div>
@@ -84,13 +86,7 @@ export function DisciplinePage() {
               )}
             </section>
 
-            <section aria-labelledby="materiais" className={CARD}>
-              <h2 id="materiais" className="font-display text-2xl font-bold text-foreground">
-                Materiais compartilhados
-              </h2>
-              <h3 className="mt-5 font-display text-lg font-bold text-foreground">Ainda não há materiais compartilhados</h3>
-              <p className="mt-2 text-base text-muted-foreground">Em breve você poderá compartilhar materiais nesta disciplina.</p>
-            </section>
+            <MaterialsSection discipline={discipline} />
           </div>
         </>
       )}

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api\V1;
 use App\Enums\MaterialStatus;
 use App\Http\Resources\MaterialResource;
 use App\Models\Discipline;
+use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 final class ListDisciplineMaterialsController
 {
+    #[QueryParameter('cursor', description: 'Cursor da próxima página (meta.next_cursor).', type: 'string')]
     public function __invoke(Discipline $discipline): AnonymousResourceCollection
     {
         $materials = $discipline->materials()

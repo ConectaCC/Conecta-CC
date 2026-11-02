@@ -411,7 +411,10 @@ export interface operations {
     };
     "v1.listDisciplineMaterials": {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Cursor da próxima página (meta.next_cursor). */
+                cursor?: string;
+            };
             header?: never;
             path: {
                 /** @description The discipline ID */

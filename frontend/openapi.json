@@ -106,6 +106,14 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "description": "Cursor da pr\u00f3xima p\u00e1gina (meta.next_cursor).",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
