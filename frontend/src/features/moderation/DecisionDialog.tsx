@@ -15,18 +15,19 @@ type Props = {
   material: ModerationMaterial;
   onCancel: () => void;
   onDone: (kind: DecisionKind) => void;
-  onConflict: () => void;
+  onConflict: (message: string) => void;
   onCloseAutoFocus?: (event: Event) => void;
 };
 
 const REQUIRED_REASON = 'Informe o motivo da rejeição.';
+const LINK_TAKEN = 'O link desta alteração já foi compartilhado nesta disciplina.';
 
 export function DecisionDialog({ kind, material, onCancel, onDone, onConflict, onCloseAutoFocus }: Props) {
   const approve = useApproveMaterial();
   const reject = useRejectMaterial();
   const [reason, setReason] = useState('');
   const [reasonError, setReasonError] = useState<string | null>(null);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState<string | null>(null);
   const id = useId();
   const busy = approve.isPending || reject.isPending;
   const isReject = kind === 'reject';
@@ -34,7 +35,7 @@ export function DecisionDialog({ kind, material, onCancel, onDone, onConflict, o
   function reset() {
     setReason('');
     setReasonError(null);
-    setFailed(false);
+    setFailed(null);
   }
 
   function cancel() {
@@ -45,7 +46,7 @@ export function DecisionDialog({ kind, material, onCancel, onDone, onConflict, o
 
   async function confirm() {
     if (busy || !kind) return;
-    setFailed(false);
+    setFailed(null);
     if (isReject && reason.trim() === '') {
       setReasonError(REQUIRED_REASON);
       return;
@@ -56,13 +57,16 @@ export function DecisionDialog({ kind, material, onCancel, onDone, onConflict, o
       reset();
       onDone(kind);
     } catch (error) {
-      if (error instanceof ApiError && error.status === 409) {
+      if (error instanceof ApiError && error.status === 409 && error.message === LINK_TAKEN) {
+        // a alteração continua pendente: o moderador pode rejeitar com o motivo
+        setFailed(LINK_TAKEN);
+      } else if (error instanceof ApiError && error.status === 409) {
         reset();
-        onConflict();
+        onConflict(error.message);
       } else if (error instanceof ApiError && error.status === 422 && error.fieldErrors.reason) {
         setReasonError(error.fieldErrors.reason[0]);
       } else {
-        setFailed(true);
+        setFailed(isReject ? 'Não foi possível rejeitar o conteúdo. Tente novamente.' : 'Não foi possível aprovar o conteúdo. Tente novamente.');
       }
     }
   }
@@ -120,9 +124,7 @@ export function DecisionDialog({ kind, material, onCancel, onDone, onConflict, o
 
         {failed && (
           <div className="mt-4">
-            <FormAlert variant="danger">
-              {isReject ? 'Não foi possível rejeitar o conteúdo. Tente novamente.' : 'Não foi possível aprovar o conteúdo. Tente novamente.'}
-            </FormAlert>
+            <FormAlert variant="danger">{failed}</FormAlert>
           </div>
         )}
 

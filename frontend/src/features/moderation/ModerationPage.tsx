@@ -11,11 +11,13 @@ import { ReviewSheet } from './ReviewSheet';
 
 type Notice = { title: string; detail?: string };
 
+const CANCELLED = 'Este conteúdo foi cancelado pelo autor.';
+
 export function ModerationPage() {
   const queue = useModerationQueue();
   const [selected, setSelected] = useState<ModerationMaterial | null>(null);
   const [decision, setDecision] = useState<DecisionKind | null>(null);
-  const [conflict, setConflict] = useState(false);
+  const [conflict, setConflict] = useState<string | null>(null);
   const [notice, setNotice] = useState<Notice | null>(null);
   const items = queue.data ?? [];
   const noticeRef = useRef<HTMLDivElement>(null);
@@ -48,7 +50,7 @@ export function ModerationPage() {
 
   function refreshAfterConflict() {
     focusTarget.current = 'heading';
-    setConflict(false);
+    setConflict(null);
     setSelected(null);
     queue.refetch();
   }
@@ -112,6 +114,7 @@ export function ModerationPage() {
                     <span>Tipo: Material</span>
                     <span aria-hidden>·</span>
                     <span>Status: Pendente</span>
+                    {material.revision_of && <Chip>Alteração</Chip>}
                     {material.is_own && <Chip>Seu envio</Chip>}
                   </p>
                   <h3 className="mt-2 font-display text-lg font-bold [overflow-wrap:anywhere] text-foreground">{material.title}</h3>
@@ -143,16 +146,18 @@ export function ModerationPage() {
           onCancel={() => setDecision(null)}
           onDone={done}
           onCloseAutoFocus={restoreFocus}
-          onConflict={() => {
+          onConflict={(message) => {
             setDecision(null);
-            setConflict(true);
+            setConflict(message);
           }}
         />
       )}
 
-      <Dialog open={conflict} onOpenChange={(next) => !next && refreshAfterConflict()}>
+      <Dialog open={conflict !== null} onOpenChange={(next) => !next && refreshAfterConflict()}>
         <DialogContent showCloseButton={false} onCloseAutoFocus={restoreFocus} className="w-[calc(100%-2rem)] max-w-md gap-0 p-6 sm:max-w-md">
-          <DialogTitle className="font-display text-xl font-bold text-foreground">Este conteúdo já foi analisado</DialogTitle>
+          <DialogTitle className="font-display text-xl font-bold text-foreground">
+            {conflict === CANCELLED ? 'Este conteúdo foi cancelado pelo autor' : 'Este conteúdo já foi analisado'}
+          </DialogTitle>
           <DialogDescription className="mt-2 text-[15px] text-muted-foreground">
             O status deste conteúdo foi atualizado por outra ação. Atualize a fila para continuar.
           </DialogDescription>
