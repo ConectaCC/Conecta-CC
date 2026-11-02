@@ -20,6 +20,14 @@ final class StoreMaterialRequest extends FormRequest
 
     public const DUPLICATE_URL = 'Esse link já foi compartilhado nesta disciplina.';
 
+    // na edição, quem não é o autor recebe 403 antes da validação
+    public function authorize(): bool
+    {
+        $material = $this->route('material');
+
+        return ! $material instanceof Material || (bool) $this->user()?->can('manage', $material);
+    }
+
     protected function prepareForValidation(): void
     {
         $merge = [];
@@ -99,12 +107,15 @@ final class StoreMaterialRequest extends FormRequest
                 return;
             }
 
+            // na edição (PUT /materials/{material}) a disciplina é a do material, que não conta como repetido
+            $editing = $this->route('material');
             /** @var Discipline $discipline */
-            $discipline = $this->route('discipline');
+            $discipline = $editing instanceof Material ? $editing->discipline : $this->route('discipline');
 
             $taken = Material::where('discipline_id', $discipline->id)
                 ->where('url', $url)
                 ->whereNull('revises_id')
+                ->when($editing instanceof Material, fn ($query) => $query->whereKeyNot($editing->id))
                 ->whereIn('status', [MaterialStatus::Pendente, MaterialStatus::Aprovado])
                 ->exists();
 

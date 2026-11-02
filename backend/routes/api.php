@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\V1\ApproveMaterialController;
+use App\Http\Controllers\Api\V1\CancelMaterialController;
 use App\Http\Controllers\Api\V1\CurrentTermsController;
+use App\Http\Controllers\Api\V1\DeleteMaterialController;
 use App\Http\Controllers\Api\V1\ListDisciplineMaterialsController;
 use App\Http\Controllers\Api\V1\ListDisciplinesController;
 use App\Http\Controllers\Api\V1\ListModerationMaterialsController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\Api\V1\RegisterController;
 use App\Http\Controllers\Api\V1\RejectMaterialController;
 use App\Http\Controllers\Api\V1\ShowProfileController;
 use App\Http\Controllers\Api\V1\StoreMaterialController;
+use App\Http\Controllers\Api\V1\UpdateMaterialController;
 use App\Http\Controllers\Api\V1\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +31,9 @@ Route::prefix('v1')->group(function () {
         Route::post('disciplines/{discipline}/materials', StoreMaterialController::class)->middleware('throttle:materials');
         Route::get('profile', ShowProfileController::class);
         Route::get('me/materials', ListMyMaterialsController::class);
+        Route::post('materials/{material}/cancel', CancelMaterialController::class);
+        Route::put('materials/{material}', UpdateMaterialController::class)->middleware('throttle:materials');
+        Route::delete('materials/{material}', DeleteMaterialController::class);
         Route::put('profile', UpdateProfileController::class);
         Route::post('logout', LogoutController::class);
 
