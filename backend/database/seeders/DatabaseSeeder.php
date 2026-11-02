@@ -33,5 +33,7 @@ class DatabaseSeeder extends Seeder
                 'role' => $role,
             ]);
         }
+
+        $this->call(MaterialSeeder::class);
     }
 }
