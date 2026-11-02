@@ -187,7 +187,7 @@ A documentação do projeto está organizada em:
 
 ## Estado da implementação
 
-Fundação técnica, Cadastro, Login e Home implementados (ver [`docs/specs/2026-10-12-fundacao-design.md`](docs/specs/2026-10-12-fundacao-design.md)). Estudos implementado na etapa 1, só leitura (ver [`docs/specs/2026-10-31-estudos-design.md`](docs/specs/2026-10-31-estudos-design.md)). Compartilhamento de materiais (identificado ou anônimo) e Moderação de material implementados na etapa 2a (ver [`docs/specs/2026-11-02-estudos-parte-2-design.md`](docs/specs/2026-11-02-estudos-parte-2-design.md)).
+Fundação técnica, Cadastro, Login e Home implementados (ver [`docs/specs/2026-10-12-fundacao-design.md`](docs/specs/2026-10-12-fundacao-design.md)). Estudos implementado na etapa 1, só leitura (ver [`docs/specs/2026-10-31-estudos-design.md`](docs/specs/2026-10-31-estudos-design.md)). Compartilhamento de materiais (identificado ou anônimo) e Moderação de material implementados na etapa 2a, e Meus conteúdos com editar, excluir e cancelar na etapa 2b (ver [`docs/specs/2026-11-02-estudos-parte-2-design.md`](docs/specs/2026-11-02-estudos-parte-2-design.md)).
 
 As decisões de stack e arquitetura estão em [`docs/stack-e-decisoes-tecnicas.md`](docs/stack-e-decisoes-tecnicas.md). Elas são conduzidas principalmente por **Marcelo Henrique Germiniani Panho**, com revisão da equipe para garantir aderência aos requisitos definidos.
 

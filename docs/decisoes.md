@@ -1239,3 +1239,13 @@ A parte 2 é entregue em três etapas, cada uma funcionando de ponta a ponta:
   - quatro eventos geram notificação: material aprovado, material rejeitado, alteração aprovada e alteração rejeitada;
   - o painel mostra as 20 mais recentes.
 
+## 55.6 Escolhas da etapa 2b (Meus conteúdos, Editar, Excluir e Cancelar)
+
+- **Paginação:** Meus conteúdos tem "Mostrar mais" de 20 em 20 (decisão do Marcelo). O endereço `?item=MAT-00042` carrega as páginas seguintes até achar o item.
+- **Alteração pendente não é cancelada:** o autor espera a análise, e uma segunda edição recebe "Já existe uma alteração deste material em análise.".
+- **Alteração rejeitada:** aparece no item original como "Alteração não aprovada em dd/mm/aaaa: <motivo>", até a próxima alteração.
+- **"Ver dados enviados"** fica disponível em todos os itens.
+- **Ação não permitida:** responde 409 com "Este envio não pode ser cancelado.", "Este material não pode ser editado." ou "Este material não pode ser excluído.".
+- **Na Moderação,** o envio cancelado pelo autor durante a análise mostra "Este conteúdo foi cancelado pelo autor".
+- **Aprovação de alteração com link repetido:** se o link da alteração passou a repetir outro envio, a aprovação mostra o erro no próprio diálogo, e a alteração continua pendente para ser rejeitada.
+

@@ -237,13 +237,18 @@ Todas as disciplinas têm área de materiais (decisão de 31/10/2026), então o 
 
 ## Etapa 2 — Materiais + Moderação de material
 
-Dividida em 2a (materiais e Moderação, entregue), 2b (Meus conteúdos, Editar, Excluir e Cancelar) e 2c (Notificações). Ver `decisoes.md` 55.1.
+Dividida em 2a (materiais e Moderação, entregue), 2b (Meus conteúdos, Editar, Excluir e Cancelar, entregue) e 2c (Notificações). Ver `decisoes.md` 55.1 e 55.6.
 
 
 - [x] formulário Compartilhar material.
 - [x] envio de material por link.
 - [x] fila de Moderação só com MATERIAL (ver §14; PUBLICAÇÃO e OPORTUNIDADE entram com seus módulos).
 - [x] materiais aprovados na página da disciplina.
+- [x] Perfil → Meus conteúdos (filtros, "Mostrar mais", motivo da rejeição).
+- [x] cancelar envio pendente.
+- [x] editar material aprovado (alteração moderada, versão publicada mantida até a aprovação).
+- [x] excluir material aprovado (soft delete).
+- [ ] notificações de material e alteração (etapa 2c).
 
 ## Referência acadêmica inicial
 

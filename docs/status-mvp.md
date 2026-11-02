@@ -36,6 +36,7 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 | Indicação de oportunidade | ✅ | ✅ | ⏳ | ⏳ |
 | Comunidade | ✅ | ✅ | ⏳ | ⏳ |
 | Perfil público | ✅ | ✅ | ⏳ | ⏳ |
+| Meus conteúdos (materiais) | ✅ | ✅ (esboço) | ✅ (2b) | ⏳ |
 | Compartilhamento na Comunidade | ✅ | ✅ | ⏳ | ⏳ |
 | Busca de estudantes | ✅ | ✅ | ⏳ | ⏳ |
 | Configurações | ✅ | ✅ | ⏳ | ⏳ |
