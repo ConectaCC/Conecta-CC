@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\MaterialStatus;
 use App\Http\Resources\MyMaterialResource;
+use App\Models\Material;
 use App\Models\User;
 use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Http\Request;
@@ -18,7 +19,9 @@ final class ListMyMaterialsController
         /** @var User $user */
         $user = $request->user();
 
-        $query = $user->materials()
+        // a partir de Material::query() para o Scramble documentar a resposta paginada
+        $query = Material::query()
+            ->where('user_id', $user->id)
             ->withTrashed()
             ->whereNull('revises_id')
             ->with(['discipline', 'revisions'])

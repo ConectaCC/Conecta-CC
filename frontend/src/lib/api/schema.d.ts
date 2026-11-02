@@ -717,13 +717,31 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Array of `MyMaterialResource` */
+            /** @description Paginated set of `MyMaterialResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MyMaterialResource"][];
+                    "application/json": {
+                        data: components["schemas"]["MyMaterialResource"][];
+                        links: {
+                            first: string | null;
+                            last: string | null;
+                            prev: string | null;
+                            next: string | null;
+                        };
+                        meta: {
+                            /** @description Base path for paginator generated URLs. */
+                            path: string | null;
+                            /** @description Number of items shown per page. */
+                            per_page: number;
+                            /** @description The "cursor" that points to the next set of items. */
+                            next_cursor: string | null;
+                            /** @description The "cursor" that points to the previous set of items. */
+                            prev_cursor: string | null;
+                        };
+                    };
                 };
             };
             401: components["responses"]["AuthenticationException"];

@@ -18,6 +18,11 @@ export function timeAgo(iso: string, now = new Date()): string {
   return relative.format(0, 'second');
 }
 
+// "25/10/2026"
+export function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('pt-BR');
+}
+
 // "25/10/2026 às 14:10"
 export function formatDateTime(iso: string): string {
   const date = new Date(iso);
