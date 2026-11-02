@@ -64,7 +64,7 @@ export function MaterialsSection({ discipline }: { discipline: Discipline }) {
       {items.length > 0 && (
         <div className="mt-5 space-y-4">
           {items.map((material) => (
-            <MaterialCard key={material.id} material={material} />
+            <MaterialCard key={material.id} material={material} discipline={discipline} />
           ))}
         </div>
       )}

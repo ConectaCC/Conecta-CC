@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api, ensureCsrfCookie } from '@/lib/api/client';
 import { call } from '@/lib/api/errors';
 import type { components } from '@/lib/api/schema';
@@ -25,6 +25,20 @@ export function useShareMaterial(disciplineId: number) {
     mutationFn: async (body: MaterialInput) => {
       await ensureCsrfCookie();
       return call(api.POST('/disciplines/{discipline}/materials', { params: { path: { discipline: disciplineId } }, body }));
+    },
+  });
+}
+
+export function useReviseMaterial() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, body }: { id: number; body: MaterialInput }) => {
+      await ensureCsrfCookie();
+      return call(api.PUT('/materials/{material}', { params: { path: { material: id } }, body }));
+    },
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ['my-materials'] });
+      client.invalidateQueries({ queryKey: ['moderation', 'materials'] });
     },
   });
 }

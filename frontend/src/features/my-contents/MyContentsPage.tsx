@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { FormAlert } from '@/components/FormAlert';
 import { Button } from '@/components/ui/button';
+import { ShareMaterialDialog } from '@/features/materials/ShareMaterialDialog';
 import { ApiError } from '@/lib/api/errors';
 import { cn } from '@/lib/utils';
 import { ConfirmActionDialog } from './ConfirmActionDialog';
@@ -27,6 +28,7 @@ export function MyContentsPage() {
   const remove = useDeleteMaterial();
   const [expanded, setExpanded] = useState<Set<string>>(() => new Set(target ? [target] : []));
   const [pending, setPending] = useState<Pending>(null);
+  const [editing, setEditing] = useState<MyMaterial | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
   const scrolled = useRef(false);
 
@@ -150,6 +152,7 @@ export function MyContentsPage() {
                 onToggle={() => toggle(item.code)}
                 onCancel={() => setPending({ kind: 'cancel', item })}
                 onDelete={() => setPending({ kind: 'delete', item })}
+                onEdit={() => setEditing(item)}
               />
             ))}
           </ul>
@@ -176,6 +179,15 @@ export function MyContentsPage() {
           </div>
         )}
       </div>
+
+      {editing && (
+        <ShareMaterialDialog
+          discipline={editing.discipline}
+          open
+          onOpenChange={(open) => !open && setEditing(null)}
+          editing={{ id: editing.id, title: editing.title, description: editing.description, url: editing.url }}
+        />
+      )}
 
       <ConfirmActionDialog
         open={pending !== null}
