@@ -237,10 +237,13 @@ Todas as disciplinas têm área de materiais (decisão de 31/10/2026), então o 
 
 ## Etapa 2 — Materiais + Moderação de material
 
-- [ ] formulário Compartilhar material.
-- [ ] envio de material por link.
-- [ ] fila de Moderação só com MATERIAL (ver §14; PUBLICAÇÃO e OPORTUNIDADE entram com seus módulos).
-- [ ] materiais aprovados na página da disciplina.
+Dividida em 2a (materiais e Moderação, entregue), 2b (Meus conteúdos, Editar, Excluir e Cancelar) e 2c (Notificações). Ver `decisoes.md` 55.1.
+
+
+- [x] formulário Compartilhar material.
+- [x] envio de material por link.
+- [x] fila de Moderação só com MATERIAL (ver §14; PUBLICAÇÃO e OPORTUNIDADE entram com seus módulos).
+- [x] materiais aprovados na página da disciplina.
 
 ## Referência acadêmica inicial
 
@@ -441,20 +444,20 @@ Implementar fila única para:
 
 Funcionalidades:
 
-- [ ] listar conteúdos PENDENTES;
-- [ ] ordenar mais antigos primeiro;
-- [ ] filtrar por tipo;
-- [ ] visualizar detalhes;
-- [ ] identificar autor;
-- [ ] abrir link enviado;
-- [ ] Aprovar;
-- [ ] Rejeitar;
-- [ ] informar motivo opcional;
+- [x] listar conteúdos PENDENTES;
+- [x] ordenar mais antigos primeiro;
+- [ ] filtrar por tipo (volta quando houver um segundo tipo);
+- [x] visualizar detalhes;
+- [x] identificar autor;
+- [x] abrir link enviado;
+- [x] Aprovar;
+- [x] Rejeitar;
+- [x] informar motivo (obrigatório — decisoes.md 55.4);
 - [ ] gerar notificação;
-- [ ] retirar conteúdo processado da fila;
-- [ ] tratar conteúdo já processado;
-- [ ] impedir ADMIN de moderar o próprio conteúdo;
-- [ ] proteger a área para usuários ADMIN.
+- [x] retirar conteúdo processado da fila;
+- [x] tratar conteúdo já processado;
+- [x] impedir MODERADOR de moderar o próprio conteúdo (ADMIN pode — decisoes.md 51.2);
+- [x] proteger a área para MODERADOR e ADMIN.
 
 A autorização deve existir no backend e no banco, não apenas na interface.
 
@@ -609,7 +612,7 @@ Uma ordem possível é:
 4. Perfil;
 5. Home;
 6. Estudos — etapa 1 (leitura);
-7. Materiais + núcleo de Moderação (só MATERIAL) — etapa 2 de Estudos;
+7. Estudos parte 2: 2a Materiais + núcleo de Moderação (só MATERIAL), 2b Meus conteúdos e 2c Notificações;
 8. Oportunidade (entra na fila de Moderação);
 9. Comunidade (entra na fila de Moderação);
 10. Perfil público;
