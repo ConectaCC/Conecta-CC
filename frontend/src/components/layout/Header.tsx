@@ -1,7 +1,8 @@
-import { Bell, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { Brand } from '@/components/Brand';
 import { Skeleton } from '@/components/Skeleton';
 import type { User } from '@/features/auth/hooks';
+import { NotificationsBell } from '@/features/notifications/NotificationsBell';
 import { UserAvatar } from './UserAvatar';
 
 export function Header({ user, loading, onOpenMenu }: { user?: User | null; loading: boolean; onOpenMenu: () => void }) {
@@ -13,8 +14,7 @@ export function Header({ user, loading, onOpenMenu }: { user?: User | null; load
       <Brand tone="light" className="text-2xl lg:hidden" />
 
       <div className="ml-auto flex items-center gap-5 lg:ml-0">
-        {/* só o ícone até existir o módulo de Notificações */}
-        <Bell className="size-6 text-navy-900" aria-hidden />
+        <NotificationsBell />
         {loading && (
           <>
             <Skeleton className="size-11 rounded-full" />
