@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Chip } from '@/components/Chip';
 import { FormAlert } from '@/components/FormAlert';
 import { Skeleton } from '@/components/Skeleton';
@@ -18,9 +18,25 @@ export function ModerationPage() {
   const [conflict, setConflict] = useState(false);
   const [notice, setNotice] = useState<Notice | null>(null);
   const items = queue.data ?? [];
+  const noticeRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  // o botão "Analisar" some depois da decisão; o foco vai para o aviso (ou para o título, após conflito)
+  const focusTarget = useRef<'notice' | 'heading' | null>(null);
+
+  function restoreFocus(event: Event) {
+    if (!focusTarget.current) return;
+    event.preventDefault();
+    (focusTarget.current === 'notice' ? noticeRef : headingRef).current?.focus();
+  }
+
+  function analyze(material: ModerationMaterial) {
+    focusTarget.current = null;
+    setSelected(material);
+  }
 
   function done(kind: DecisionKind) {
     if (!selected) return;
+    focusTarget.current = 'notice';
     setNotice(
       kind === 'approve'
         ? { title: 'Conteúdo aprovado com sucesso.', detail: `O material passa a aparecer em Estudos › ${selected.discipline.name}.` }
@@ -31,6 +47,7 @@ export function ModerationPage() {
   }
 
   function refreshAfterConflict() {
+    focusTarget.current = 'heading';
     setConflict(false);
     setSelected(null);
     queue.refetch();
@@ -39,15 +56,19 @@ export function ModerationPage() {
   return (
     <div>
       <header>
-        <h1 className="font-display text-4xl font-bold text-foreground">Moderação</h1>
+        <h1 ref={headingRef} tabIndex={-1} className="font-display text-4xl font-bold text-foreground outline-none">
+          Moderação
+        </h1>
         <p className="mt-2 text-lg text-muted-foreground">Analise conteúdos enviados pela comunidade antes da publicação.</p>
       </header>
 
       <div className="mt-8 space-y-6">
         {notice && (
-          <FormAlert variant="success" onDismiss={() => setNotice(null)}>
-            <strong>{notice.title}</strong> {notice.detail}
-          </FormAlert>
+          <div ref={noticeRef} tabIndex={-1} className="outline-none">
+            <FormAlert variant="success" onDismiss={() => setNotice(null)}>
+              <strong>{notice.title}</strong> {notice.detail}
+            </FormAlert>
+          </div>
         )}
 
         {queue.isPending && (
@@ -97,7 +118,7 @@ export function ModerationPage() {
                   <p className="mt-1 text-[15px] text-muted-foreground">
                     Enviado por {material.author_name ?? 'Comunidade'} · {timeAgo(material.submitted_at)} · Disciplina: {material.discipline.name}
                   </p>
-                  <Button type="button" onClick={() => setSelected(material)} className="mt-4 h-11 px-5 text-[15px] font-semibold">
+                  <Button type="button" onClick={() => analyze(material)} className="mt-4 h-11 px-5 text-[15px] font-semibold">
                     Analisar
                   </Button>
                 </li>
@@ -107,7 +128,13 @@ export function ModerationPage() {
         )}
       </div>
 
-      <ReviewSheet material={selected} locked={decision !== null} onClose={() => setSelected(null)} onDecide={setDecision} />
+      <ReviewSheet
+        material={selected}
+        locked={decision !== null}
+        onClose={() => setSelected(null)}
+        onDecide={setDecision}
+        onCloseAutoFocus={restoreFocus}
+      />
 
       {selected && (
         <DecisionDialog
@@ -115,6 +142,7 @@ export function ModerationPage() {
           material={selected}
           onCancel={() => setDecision(null)}
           onDone={done}
+          onCloseAutoFocus={restoreFocus}
           onConflict={() => {
             setDecision(null);
             setConflict(true);
@@ -123,7 +151,7 @@ export function ModerationPage() {
       )}
 
       <Dialog open={conflict} onOpenChange={(next) => !next && refreshAfterConflict()}>
-        <DialogContent showCloseButton={false} className="w-[calc(100%-2rem)] max-w-md gap-0 p-6 sm:max-w-md">
+        <DialogContent showCloseButton={false} onCloseAutoFocus={restoreFocus} className="w-[calc(100%-2rem)] max-w-md gap-0 p-6 sm:max-w-md">
           <DialogTitle className="font-display text-xl font-bold text-foreground">Este conteúdo já foi analisado</DialogTitle>
           <DialogDescription className="mt-2 text-[15px] text-muted-foreground">
             O status deste conteúdo foi atualizado por outra ação. Atualize a fila para continuar.

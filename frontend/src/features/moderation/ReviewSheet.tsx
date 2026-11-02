@@ -2,7 +2,7 @@ import { ExternalLink, X } from 'lucide-react';
 import { Chip } from '@/components/Chip';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
-import { formatDateTime, hostOf, timeAgo } from '@/lib/format';
+import { formatDateTime, hostOf, pathOf, timeAgo } from '@/lib/format';
 import type { ModerationMaterial } from './hooks';
 
 type Props = {
@@ -10,13 +10,15 @@ type Props = {
   locked: boolean;
   onClose: () => void;
   onDecide: (kind: 'approve' | 'reject') => void;
+  onCloseAutoFocus?: (event: Event) => void;
 };
 
-export function ReviewSheet({ material, locked, onClose, onDecide }: Props) {
+export function ReviewSheet({ material, locked, onClose, onDecide, onCloseAutoFocus }: Props) {
   return (
     <Sheet open={material !== null} onOpenChange={(next) => !next && !locked && onClose()}>
       <SheetContent
         showCloseButton={false}
+        onCloseAutoFocus={onCloseAutoFocus}
         className="gap-0 overflow-y-auto p-6 data-[side=right]:w-full data-[side=right]:sm:max-w-lg"
       >
         {material && <ReviewContent material={material} onClose={onClose} onDecide={onDecide} />}
@@ -26,7 +28,6 @@ export function ReviewSheet({ material, locked, onClose, onDecide }: Props) {
 }
 
 function ReviewContent({ material, onClose, onDecide }: { material: ModerationMaterial; onClose: () => void; onDecide: Props['onDecide'] }) {
-  const url = new URL(material.url);
   const host = hostOf(material.url);
 
   return (
@@ -76,7 +77,7 @@ function ReviewContent({ material, onClose, onDecide }: { material: ModerationMa
           <dt className="font-semibold text-foreground">Link enviado</dt>
           <dd className="mt-1 break-all text-foreground">
             <span className="font-semibold">{host}</span>
-            <span className="text-muted-foreground">{url.pathname + url.search + url.hash}</span>
+            <span className="text-muted-foreground">{pathOf(material.url)}</span>
           </dd>
           <dd className="mt-2">
             <a

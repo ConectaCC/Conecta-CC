@@ -16,11 +16,12 @@ type Props = {
   onCancel: () => void;
   onDone: (kind: DecisionKind) => void;
   onConflict: () => void;
+  onCloseAutoFocus?: (event: Event) => void;
 };
 
 const REQUIRED_REASON = 'Informe o motivo da rejeição.';
 
-export function DecisionDialog({ kind, material, onCancel, onDone, onConflict }: Props) {
+export function DecisionDialog({ kind, material, onCancel, onDone, onConflict, onCloseAutoFocus }: Props) {
   const approve = useApproveMaterial();
   const reject = useRejectMaterial();
   const [reason, setReason] = useState('');
@@ -70,7 +71,7 @@ export function DecisionDialog({ kind, material, onCancel, onDone, onConflict }:
 
   return (
     <Dialog open={kind !== null} onOpenChange={(next) => !next && cancel()}>
-      <DialogContent showCloseButton={false} className="w-[calc(100%-2rem)] max-w-md gap-0 p-6 sm:max-w-md">
+      <DialogContent showCloseButton={false} onCloseAutoFocus={onCloseAutoFocus} className="w-[calc(100%-2rem)] max-w-md gap-0 p-6 sm:max-w-md">
         <DialogTitle className="font-display text-xl font-bold text-foreground">{isReject ? 'Rejeitar conteúdo?' : 'Aprovar conteúdo?'}</DialogTitle>
         {isReject ? (
           <DialogDescription className="mt-2 text-[15px] font-semibold [overflow-wrap:anywhere] text-foreground">{material.title}</DialogDescription>

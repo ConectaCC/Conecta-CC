@@ -21,4 +21,14 @@ it('recusa link inválido', function (string $input) {
     'vazio' => [''],
     'só espaços' => ['   '],
     'texto solto' => ['meu material'],
+    'barra vertical no host' => ['https://si|te.com/x'],
+    'aspas e tag no host' => ['https://site.com"><script>/'],
+    'porcentagem no host' => ['https://si%te.com/'],
+    'colchete no host' => ['https://site.com]/x'],
+    'host só com ponto' => ['https://./'],
+    'rótulo vazio' => ['https://site..com/'],
 ]);
+
+it('aceita host com acento', function () {
+    expect(MaterialUrl::normalize('https://Ünï.com/x'))->toBe('https://ünï.com/x');
+});

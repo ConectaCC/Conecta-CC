@@ -4,6 +4,9 @@ namespace App\Support;
 
 final class MaterialUrl
 {
+    // rótulos de letras, números e hífen separados por ponto: o mesmo que o navegador consegue abrir
+    private const HOST = '/^(?:[\p{L}\p{N}](?:[\p{L}\p{N}-]*[\p{L}\p{N}])?\.)+[\p{L}\p{N}](?:[\p{L}\p{N}-]*[\p{L}\p{N}])?$/u';
+
     /** Devolve o link pronto para gravar (https:// completado, host em minúsculas) ou null se for inválido. */
     public static function normalize(string $input): ?string
     {
@@ -23,9 +26,9 @@ final class MaterialUrl
 
         $parts = parse_url($url);
         $scheme = strtolower($parts['scheme'] ?? '');
-        $host = strtolower($parts['host'] ?? '');
+        $host = mb_strtolower($parts['host'] ?? '');
 
-        if (! in_array($scheme, ['http', 'https'], true) || ! str_contains($host, '.') || isset($parts['user'])) {
+        if (! in_array($scheme, ['http', 'https'], true) || ! preg_match(self::HOST, $host) || isset($parts['user'])) {
             return null;
         }
 

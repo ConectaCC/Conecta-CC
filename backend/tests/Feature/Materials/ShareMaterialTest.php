@@ -56,6 +56,8 @@ it('valida os campos com as mensagens da spec', function (array $payload, string
     'título longo' => [['title' => str_repeat('a', 201)], 'title', 'Use no máximo 200 caracteres.'],
     'descrição longa' => [['description' => str_repeat('a', 2001)], 'description', 'Use no máximo 2.000 caracteres.'],
     'link longo' => [['url' => 'https://site.com/'.str_repeat('a', 2040)], 'url', 'Use no máximo 2.048 caracteres.'],
+    'link longo sem protocolo' => [['url' => 'site.com/'.str_repeat('a', 2039)], 'url', 'Use no máximo 2.048 caracteres.'],
+    'host inválido' => [['url' => 'https://si|te.com/x'], 'url', 'Informe um link válido.'],
 ]);
 
 it('recusa o mesmo link escrito de outro jeito na mesma disciplina', function (MaterialStatus $status, string $typed) {

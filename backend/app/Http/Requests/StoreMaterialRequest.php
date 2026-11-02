@@ -92,6 +92,13 @@ final class StoreMaterialRequest extends FormRequest
                 return;
             }
 
+            // o https:// completado pode passar do tamanho da coluna
+            if (mb_strlen($url) > self::MAX_URL) {
+                $fail('Use no máximo 2.048 caracteres.');
+
+                return;
+            }
+
             /** @var Discipline $discipline */
             $discipline = $this->route('discipline');
 

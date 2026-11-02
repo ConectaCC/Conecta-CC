@@ -24,6 +24,20 @@ export function formatDateTime(iso: string): string {
   return `${date.toLocaleDateString('pt-BR')} às ${date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
 }
 
+// dado antigo ou inválido não pode derrubar a página: devolve o texto como veio
 export function hostOf(url: string): string {
-  return new URL(url).hostname.replace(/^www\./, '');
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+}
+
+export function pathOf(url: string): string {
+  try {
+    const parsed = new URL(url);
+    return parsed.pathname + parsed.search + parsed.hash;
+  } catch {
+    return '';
+  }
 }
