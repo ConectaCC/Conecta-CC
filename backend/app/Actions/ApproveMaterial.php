@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Enums\MaterialStatus;
 use App\Models\Material;
 use App\Models\User;
+use App\Support\Conflict;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
 
@@ -38,7 +39,7 @@ final class ApproveMaterial
                 return $approved;
             });
         } catch (UniqueConstraintViolationException) {
-            abort(409, 'O link desta alteração já foi compartilhado nesta disciplina.');
+            Conflict::abort('link_taken', 'O link desta alteração já foi compartilhado nesta disciplina.');
         }
     }
 }

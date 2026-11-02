@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\MaterialStatus;
+use App\Support\Conflict;
 use Database\Factories\MaterialFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -81,11 +82,13 @@ class Material extends Model
     }
 
     // a decisão chegou tarde: o autor cancelou ou outra pessoa decidiu antes
-    public function decisionConflictMessage(): string
+    public function abortDecisionConflict(): never
     {
-        return $this->refresh()->status === MaterialStatus::Cancelado
-            ? 'Este conteúdo foi cancelado pelo autor.'
-            : 'Este conteúdo já foi analisado.';
+        if ($this->refresh()->status === MaterialStatus::Cancelado) {
+            Conflict::abort('material_cancelled', 'Este conteúdo foi cancelado pelo autor.');
+        }
+
+        Conflict::abort('already_decided', 'Este conteúdo já foi analisado.');
     }
 
     /** @return Attribute<non-falsy-string, never> */

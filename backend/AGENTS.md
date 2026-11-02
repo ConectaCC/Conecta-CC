@@ -58,7 +58,8 @@ final class UpdateProfileController
 
 - Use Gates e Policies, nunca só a interface. Exemplo: `Gate::define('access-moderation', ...)` em `AppServiceProvider`.
 - Papéis: `Role` (ALUNO, MODERADOR, ADMINISTRADOR) **sem herança automática**. Cada permissão é um método explícito no enum (`canModerate()`).
-- O ADMIN não modera o próprio conteúdo, e duas decisões de Moderação nunca se sobrescrevem (`implementacao.md` §14 e §15). Garanta as duas coisas no backend e no banco.
+- O MODERADOR não modera o próprio conteúdo, nem vê o próprio envio na fila. O ADMINISTRADOR pode moderar o próprio conteúdo (`decisoes.md` §51.2). Duas decisões de Moderação nunca se sobrescrevem (`implementacao.md` §15). Garanta tudo isso no backend (Policy e `UPDATE ... WHERE status = 'PENDENTE'`).
+- Conflitos de regra respondem 409 com `{message, code}` via `App\Support\Conflict::abort()`. O front decide pelo `code`, nunca pelo texto.
 
 ## Banco de dados
 

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreMaterialRequest;
 use App\Http\Resources\MaterialResource;
 use App\Models\Discipline;
 use App\Models\User;
+use App\Support\MaterialSubmissionLimit;
 use Illuminate\Http\JsonResponse;
 
 final class StoreMaterialController
@@ -16,7 +17,10 @@ final class StoreMaterialController
         /** @var User $user */
         $user = $request->user();
 
-        return (new MaterialResource($createMaterial->handle($user, $discipline, $request->materialData())))
+        $material = $createMaterial->handle($user, $discipline, $request->materialData());
+        MaterialSubmissionLimit::hit($user);
+
+        return (new MaterialResource($material))
             ->response()
             ->setStatusCode(201);
     }

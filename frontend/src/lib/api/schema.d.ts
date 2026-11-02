@@ -454,18 +454,6 @@ export interface operations {
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
-            /** @description An error */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @description Error overview. */
-                        message: string;
-                    };
-                };
-            };
         };
     };
     "v1.cancelMaterial": {
@@ -492,21 +480,6 @@ export interface operations {
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
-            /** @description An error */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /**
-                         * @description Error overview.
-                         * @example Este envio não pode ser cancelado.
-                         */
-                        message: string;
-                    };
-                };
-            };
         };
     };
     "v1.currentTerms": {
@@ -867,18 +840,6 @@ export interface operations {
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
-            /** @description An error */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @description Error overview. */
-                        message: string;
-                    };
-                };
-            };
             422: components["responses"]["ValidationException"];
         };
     };

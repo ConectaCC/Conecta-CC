@@ -18,7 +18,7 @@ final class RejectMaterialController
         $user = $request->user();
 
         if (! $rejectMaterial->handle($material, $user, $request->reason())) {
-            abort(409, $material->decisionConflictMessage());
+            $material->abortDecisionConflict();
         }
 
         return new ModerationMaterialResource($material->refresh()->load(['author', 'discipline', 'revisionOf']));

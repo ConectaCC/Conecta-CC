@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Enums\MaterialStatus;
 use App\Models\Discipline;
 use App\Models\Material;
+use App\Support\MaterialSubmissionLimit;
 use App\Support\MaterialUrl;
 use Closure;
 use Illuminate\Foundation\Http\FormRequest;
@@ -30,6 +31,8 @@ final class StoreMaterialRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        MaterialSubmissionLimit::ensureAvailable($this->user());
+
         $merge = [];
 
         foreach (['title', 'description', 'url'] as $field) {

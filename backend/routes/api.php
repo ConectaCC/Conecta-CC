@@ -28,11 +28,11 @@ Route::prefix('v1')->group(function () {
         Route::get('me', MeController::class);
         Route::get('disciplines', ListDisciplinesController::class);
         Route::get('disciplines/{discipline}/materials', ListDisciplineMaterialsController::class);
-        Route::post('disciplines/{discipline}/materials', StoreMaterialController::class)->middleware('throttle:materials');
+        Route::post('disciplines/{discipline}/materials', StoreMaterialController::class);
         Route::get('profile', ShowProfileController::class);
         Route::get('me/materials', ListMyMaterialsController::class);
         Route::post('materials/{material}/cancel', CancelMaterialController::class);
-        Route::put('materials/{material}', UpdateMaterialController::class)->middleware('throttle:materials');
+        Route::put('materials/{material}', UpdateMaterialController::class);
         Route::delete('materials/{material}', DeleteMaterialController::class);
         Route::put('profile', UpdateProfileController::class);
         Route::post('logout', LogoutController::class);

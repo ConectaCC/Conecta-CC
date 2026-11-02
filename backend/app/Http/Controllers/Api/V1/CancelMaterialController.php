@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Actions\CancelMaterial;
 use App\Http\Resources\MyMaterialResource;
 use App\Models\Material;
+use App\Support\Conflict;
 use Illuminate\Support\Facades\Gate;
 
 final class CancelMaterialController
@@ -13,7 +14,9 @@ final class CancelMaterialController
     {
         Gate::authorize('manage', $material);
 
-        abort_unless($cancelMaterial->handle($material), 409, 'Este envio não pode ser cancelado.');
+        if (! $cancelMaterial->handle($material)) {
+            Conflict::abort('not_cancellable', 'Este envio não pode ser cancelado.');
+        }
 
         return new MyMaterialResource($material->refresh()->load(['discipline', 'revisions']));
     }
