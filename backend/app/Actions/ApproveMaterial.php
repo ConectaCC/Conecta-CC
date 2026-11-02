@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Enums\MaterialStatus;
 use App\Models\Material;
 use App\Models\User;
+use App\Notifications\MaterialDecided;
 use App\Support\Conflict;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
@@ -27,8 +28,12 @@ final class ApproveMaterial
                         'decided_at' => $now,
                     ]) === 1;
 
+                if (! $approved) {
+                    return false;
+                }
+
                 // alteração: a versão publicada recebe os dados novos; a data pública do original não muda
-                if ($approved && $material->revises_id !== null) {
+                if ($material->revises_id !== null) {
                     Material::whereKey($material->revises_id)->update([
                         'title' => $material->title,
                         'description' => $material->description,
@@ -36,7 +41,10 @@ final class ApproveMaterial
                     ]);
                 }
 
-                return $approved;
+                // na mesma transação: se a decisão não valer, a notificação também não existe
+                $material->author->notify(MaterialDecided::for($material, approved: true));
+
+                return true;
             });
         } catch (UniqueConstraintViolationException) {
             Conflict::abort('link_taken', 'O link desta alteração já foi compartilhado nesta disciplina.');
