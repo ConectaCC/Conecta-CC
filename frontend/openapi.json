@@ -555,6 +555,45 @@
                 }
             }
         },
+        "/notifications": {
+            "get": {
+                "operationId": "v1.listNotifications",
+                "tags": [
+                    "ListNotifications"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/NotificationResource"
+                                            }
+                                        },
+                                        "unread_count": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        }
+                                    },
+                                    "required": [
+                                        "data",
+                                        "unread_count"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "operationId": "v1.login",
@@ -620,6 +659,48 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/notifications/read-all": {
+            "post": {
+                "operationId": "v1.readAllNotifications",
+                "tags": [
+                    "ReadAllNotifications"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/notifications/{notification}/read": {
+            "post": {
+                "operationId": "v1.readNotification",
+                "tags": [
+                    "ReadNotification"
+                ],
+                "parameters": [
+                    {
+                        "name": "notification",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content"
                     },
                     "401": {
                         "$ref": "#/components/responses/AuthenticationException"
@@ -1105,6 +1186,43 @@
                     "rejected_revision"
                 ],
                 "title": "MyMaterialResource"
+            },
+            "NotificationResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "detail": {
+                        "type": "string"
+                    },
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "read": {
+                        "type": "boolean"
+                    },
+                    "link": {
+                        "type": "string",
+                        "description": "aprovado leva \u00e0 disciplina; rejeitado leva ao item em Meus conte\u00fados (onde est\u00e1 o motivo)"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "title",
+                    "detail",
+                    "ok",
+                    "read",
+                    "link",
+                    "created_at"
+                ],
+                "title": "NotificationResource"
             },
             "ProfileResource": {
                 "type": "object",

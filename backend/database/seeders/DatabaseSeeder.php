@@ -34,6 +34,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $this->call(MaterialSeeder::class);
+        $this->call([MaterialSeeder::class, NotificationSeeder::class]);
     }
 }
