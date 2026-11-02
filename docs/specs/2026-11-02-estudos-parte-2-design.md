@@ -274,6 +274,7 @@ Segue o esboço aprovado.
 
 - **Acesso:** o link "Meus conteúdos" fica no cabeçalho do Perfil. A página tem o breadcrumb "Perfil / Meus conteúdos", o título "Meus conteúdos" e o texto "Acompanhe o que você enviou e a análise da moderação.".
 - **Filtros:** Todos, Em andamento (PENDENTE), Aprovados, Rejeitados, Excluídos. "Cancelado" aparece só em Todos **(escolha do Claude)**. A lista vem dos mais recentes para os mais antigos.
+- **Paginação:** "Mostrar mais", de 20 em 20, como na lista de materiais da disciplina (decisão do Marcelo, 02/11/2026). O `?item=` carrega as páginas seguintes até achar o item.
 - **Item:**
   - linha de identificação: "MAT-00042 · Material · Estudos › <disciplina>";
   - título e "Enviado em dd/mm/aaaa";

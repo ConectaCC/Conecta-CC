@@ -29,9 +29,9 @@
 - **Fora desta etapa:**
   - Notificações (2c);
   - cancelar uma alteração pendente (o autor espera a análise) **(escolha do Claude)**;
-  - paginação em Meus conteúdos, que traz a lista inteira com `// shortcut: lista inteira; paginar se um estudante passar de ~200 envios` **(escolha do Claude)**;
   - retirar material aprovado (ADMIN) e solicitar revisão (MODERADOR).
 - **Regras:**
+  - Meus conteúdos tem paginação com "Mostrar mais", de 20 em 20 (decisão do Marcelo, 02/11/2026), no mesmo padrão da lista de materiais da disciplina;
   - só o autor cancela, edita ou exclui (403 para os outros);
   - cancelar só funciona em `PENDENTE` de um original (409 nos outros casos);
   - editar e excluir só funcionam em `APROVADO`, sem soft delete e que não seja alteração (409 nos outros casos);
@@ -119,7 +119,8 @@ docs/  decisoes.md, implementacao.md, status-mvp.md, README.md
 
 **Interfaces:**
 - **Produz:**
-  - **Rota:** `GET /api/v1/me/materials?status=`, com `status` em `all` (padrão), `pending`, `approved`, `rejected` ou `deleted`, documentado com `#[QueryParameter]`. Um valor inválido vira `all`.
+  - **Rota:** `GET /api/v1/me/materials?status=&cursor=`, com `status` em `all` (padrão), `pending`, `approved`, `rejected` ou `deleted`. Os dois parâmetros são documentados com `#[QueryParameter]`. Um valor inválido vira `all`.
+  - **Paginação:** `cursorPaginate(20)`. O JSON tem o formato `{data, links, meta}`, igual ao da lista da disciplina, e o front lê `meta.next_cursor`.
   - **Itens:**
     - só os originais do usuário logado (`revises_id` nulo), incluindo os com soft delete (`withTrashed`);
     - ordenados por `created_at desc, id desc`.
@@ -147,6 +148,7 @@ docs/  decisoes.md, implementacao.md, status-mvp.md, README.md
   - `pending_revision` vem preenchido quando há alteração pendente;
   - `rejected_revision` traz o motivo da última alteração rejeitada e volta a `null` quando há uma pendente mais nova;
   - `rejection_reason` vem no item rejeitado;
+  - **paginação:** com 21 envios, a primeira página traz 20 e `meta.next_cursor`, e a segunda traz 1 com `next_cursor` nulo. O filtro vale em todas as páginas;
   - sem sessão, a resposta é 401.
 
 - [ ] **Passo 2: Rodar e ver falhar.** Comando: `docker compose exec -T -u sail app vendor/bin/pest tests/Feature/Materials/MyMaterialsTest.php`. Resultado esperado: FAIL com 404.
@@ -274,14 +276,15 @@ docs/  decisoes.md, implementacao.md, status-mvp.md, README.md
 - **Consome:** `MyMaterialResource` do schema e `formatDateTime` de `lib/format`. Acrescentar a `lib/format` a função `formatDate(iso): string`, que devolve "dd/mm/aaaa".
 - **Produz:**
   - **Hooks:**
-    - `useMyMaterials(filter: MyFilter)`, com a key `['my-materials', filter]`;
+    - `useMyMaterials(filter: MyFilter)`: `useInfiniteQuery` com a key `['my-materials', filter]`, a página seguinte em `meta.next_cursor` e `initialPageParam: null`;
     - `useCancelMaterial()` e `useDeleteMaterial()`, que no sucesso invalidam `['my-materials']`, `['materials', discipline.id]` e `['moderation', 'materials']`.
   - **`type MyFilter = 'all' | 'pending' | 'approved' | 'rejected' | 'deleted'`.** O filtro fica na URL (`?filtro=`) e não muda o `?item=`.
   - **`ConfirmActionDialog({ open, title, description, confirmLabel, busyLabel, cancelLabel, busy, error, onConfirm, onCancel })`:** um diálogo de confirmação reaproveitado por Cancelar e Excluir.
   - **`ContentItem({ item, expanded, onToggle, onCancel, onEdit, onDelete })`:**
     - "Ver dados enviados" é um botão com `aria-expanded` que mostra título, descrição, link (sr-only "(abre em nova guia, …)") e "Compartilhado anonimamente" quando for o caso;
     - "Ver conteúdo" é um `Link` para `/estudos/<slug>`.
-  - **`?item=MAT-00042`:** abre o item expandido e faz `scrollIntoView` nele.
+  - **"Mostrar mais":** aparece abaixo da lista enquanto houver `next_cursor`. Uma falha ao carregar a próxima página mostra o aviso "Não foi possível carregar seus conteúdos agora." com "Tentar novamente", sem esconder o que já carregou.
+  - **`?item=MAT-00042`:** abre o item expandido e faz `scrollIntoView` nele. Se o item não estiver nas páginas carregadas, a página chama `fetchNextPage` até achar o item ou acabar a lista **(escolha do Claude)**. Se não achar, a lista fica normal, sem erro.
   - **Status:** as etiquetas usam os tokens existentes: `warning` para Em análise, `success` para Aprovado, `danger` para Rejeitado e neutro para Cancelado e Excluído.
   - **Filtros:** um grupo de botões com `aria-pressed`, dentro de `role="group" aria-label="Filtrar por situação"`.
 
@@ -293,6 +296,8 @@ docs/  decisoes.md, implementacao.md, status-mvp.md, README.md
   - o filtro "Rejeitados" mostra só os rejeitados, e "Cancelado" não aparece em "Em andamento";
   - "Ver dados enviados" expande e mostra o link;
   - `?item=<código do rejeitado>` abre aquele item já expandido;
+  - **paginação:** com 25 envios do aluno (criados via `php()` com links `pw-`), aparecem 20 itens e "Mostrar mais"; depois do clique são 25 e o botão some;
+  - `?item=` de um item que só está na 2ª página também abre o item expandido;
   - "Cancelar envio" e depois "Cancelar envio?" e "Cancelar envio" fazem o item virar "Cancelado";
   - "Excluir", depois "Excluir material?" e "Excluir material", fazem o item virar "Excluído" e o material sumir da disciplina;
   - não há rolagem horizontal em 360px.
@@ -405,7 +410,7 @@ docs/  decisoes.md, implementacao.md, status-mvp.md, README.md
   - **`decisoes.md`:** acrescentar à seção 55 as escolhas desta etapa:
     - sem cancelar alteração pendente;
     - "Alteração não aprovada" no item;
-    - sem paginação em Meus conteúdos;
+    - Meus conteúdos com "Mostrar mais" de 20 em 20;
     - mensagens de 409.
   - **`implementacao.md`:** marcar Meus conteúdos e as ações do autor na §8, e ajustar a §22.
   - **`status-mvp.md`:** linhas de Meus conteúdos e ações do autor, se existirem. Se não existirem, acrescentar.
