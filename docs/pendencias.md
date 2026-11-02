@@ -316,6 +316,8 @@ Os limites deverão considerar:
 
 > **Teto provisório (19/10/2026):** até a definição, o servidor recusa Nome de exibição acima de 120 caracteres, Sobre mim acima de 5.000, tags acima de 255 caracteres e mais de 50 tags por campo. São só limites de segurança, sem contador na tela, e ficam em `UpdateProfileRequest` (constantes `MAX_*`).
 
+> **Atualização (02/11/2026):** os limites de material foram definidos: título até 200 caracteres, descrição até 2.000, link até 2.048 e motivo da rejeição até 500 (`decisoes.md` 55.3 e 55.4).
+
 ---
 
 ## 2.8 Quantidade inicial antes de “Mostrar mais”

@@ -4,6 +4,22 @@
  */
 
 export interface paths {
+    "/moderation/materials/{material}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.approveMaterial"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/terms/current": {
         parameters: {
             query?: never;
@@ -20,6 +36,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/disciplines/{discipline}/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listDisciplineMaterials"];
+        put?: never;
+        post: operations["v1.storeMaterial"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/disciplines": {
         parameters: {
             query?: never;
@@ -28,6 +60,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["v1.listDisciplines"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/moderation/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listModerationMaterials"];
         put?: never;
         post?: never;
         delete?: never;
@@ -100,6 +148,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/moderation/materials/{material}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.rejectMaterial"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/profile": {
         parameters: {
             query?: never;
@@ -135,6 +199,35 @@ export interface components {
             email: string;
             password: string;
         };
+        /** MaterialResource */
+        MaterialResource: {
+            id: number;
+            code: string;
+            title: string;
+            description: string | null;
+            url: string;
+            /** @description anônimo: ninguém recebe o nome na área pública, nem o ADMINISTRADOR (requisitos §1.3) */
+            author_name: string | null;
+            published_at: string | null;
+            is_mine: boolean;
+        };
+        /** ModerationMaterialResource */
+        ModerationMaterialResource: {
+            id: number;
+            code: string;
+            title: string;
+            description: string | null;
+            url: string;
+            anonymous: boolean;
+            author_name: string | null;
+            is_own: boolean;
+            submitted_at: string;
+            discipline: {
+                id: number;
+                name: string;
+                slug: string;
+            };
+        };
         /** ProfileResource */
         ProfileResource: {
             display_name: string;
@@ -158,11 +251,22 @@ export interface components {
             /** @description closure em vez de Rule::in: a versão vigente é configuração e não deve virar enum no OpenAPI */
             terms_version: string;
         };
+        /** RejectMaterialRequest */
+        RejectMaterialRequest: {
+            reason: string;
+        };
         /**
          * Role
          * @enum {string}
          */
         Role: "ALUNO" | "MODERADOR" | "ADMINISTRADOR";
+        /** StoreMaterialRequest */
+        StoreMaterialRequest: {
+            title: string;
+            description?: string | null;
+            url: string;
+            anonymous?: boolean;
+        };
         /** UpdateProfileRequest */
         UpdateProfileRequest: {
             display_name: string;
@@ -213,6 +317,30 @@ export interface components {
                 };
             };
         };
+        /** @description Not found */
+        ModelNotFoundException: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description Error overview. */
+                    message: string;
+                };
+            };
+        };
+        /** @description Authorization error */
+        AuthorizationException: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description Error overview. */
+                    message: string;
+                };
+            };
+        };
     };
     parameters: never;
     requestBodies: never;
@@ -221,6 +349,47 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    "v1.approveMaterial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The material ID */
+                material: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `ModerationMaterialResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModerationMaterialResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description An error */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description Error overview.
+                         * @example Este conteúdo já foi analisado.
+                         */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
     "v1.currentTerms": {
         parameters: {
             query?: never;
@@ -238,6 +407,82 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
+        };
+    };
+    "v1.listDisciplineMaterials": {
+        parameters: {
+            query?: {
+                /** @description Cursor da próxima página (meta.next_cursor). */
+                cursor?: string;
+            };
+            header?: never;
+            path: {
+                /** @description The discipline ID */
+                discipline: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated set of `MaterialResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["MaterialResource"][];
+                        links: {
+                            first: string | null;
+                            last: string | null;
+                            prev: string | null;
+                            next: string | null;
+                        };
+                        meta: {
+                            /** @description Base path for paginator generated URLs. */
+                            path: string | null;
+                            /** @description Number of items shown per page. */
+                            per_page: number;
+                            /** @description The "cursor" that points to the next set of items. */
+                            next_cursor: string | null;
+                            /** @description The "cursor" that points to the previous set of items. */
+                            prev_cursor: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+        };
+    };
+    "v1.storeMaterial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The discipline ID */
+                discipline: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreMaterialRequest"];
+            };
+        };
+        responses: {
+            /** @description `MaterialResource` */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaterialResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
         };
     };
     "v1.listDisciplines": {
@@ -259,6 +504,28 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "v1.listModerationMaterials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `ModerationMaterialResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModerationMaterialResource"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
         };
     };
     "v1.login": {
@@ -347,6 +614,52 @@ export interface operations {
                     "application/json": {
                         /** @constant */
                         message: "Conta criada.";
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.rejectMaterial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The material ID */
+                material: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RejectMaterialRequest"];
+            };
+        };
+        responses: {
+            /** @description `ModerationMaterialResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModerationMaterialResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description An error */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description Error overview.
+                         * @example Este conteúdo já foi analisado.
+                         */
+                        message: string;
                     };
                 };
             };

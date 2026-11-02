@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 /**
@@ -29,5 +30,11 @@ class Discipline extends Model
     protected function slug(): Attribute
     {
         return Attribute::get(fn (): string => Str::slug($this->name));
+    }
+
+    /** @return HasMany<Material, $this> */
+    public function materials(): HasMany
+    {
+        return $this->hasMany(Material::class);
     }
 }

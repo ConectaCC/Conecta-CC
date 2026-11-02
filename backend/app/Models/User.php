@@ -53,6 +53,12 @@ class User extends Authenticatable
         return $this->hasMany(TermsAcceptance::class);
     }
 
+    /** @return HasMany<Material, $this> */
+    public function materials(): HasMany
+    {
+        return $this->hasMany(Material::class);
+    }
+
     /** @return BelongsToMany<Discipline, $this> */
     public function disciplines(): BelongsToMany
     {

@@ -31,7 +31,7 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 | Perfil | ✅ | ✅ | ⏳ | ⏳ |
 | Estudos | ✅ | ✅ | ✅ (leitura) | ⏳ |
 | Página da disciplina | ✅ | ✅ | ✅ (sem materiais) | ⏳ |
-| Compartilhamento de material | ✅ | ✅ | ⏳ | ⏳ |
+| Compartilhamento de material | ✅ | ✅ | ✅ (2a) | ⏳ |
 | Oportunidade | ✅ | ✅ | ⏳ | ⏳ |
 | Indicação de oportunidade | ✅ | ✅ | ⏳ | ⏳ |
 | Comunidade | ✅ | ✅ | ⏳ | ⏳ |
@@ -40,7 +40,7 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 | Busca de estudantes | ✅ | ✅ | ⏳ | ⏳ |
 | Configurações | ✅ | ✅ | ⏳ | ⏳ |
 | Notificações | ✅ | ✅ | ⏳ | ⏳ |
-| Moderação ADMIN | ✅ | ✅ | ⏳ | ⏳ |
+| Moderação ADMIN | ✅ | ✅ | ✅ (só material) | ⏳ |
 | Responsividade | ✅ | ✅ | ⏳ | ⏳ |
 | Acessibilidade | ✅ | Considerada no protótipo | ⏳ | ⏳ |
 | Testes com estudantes | Planejado | — | — | ⏳ |

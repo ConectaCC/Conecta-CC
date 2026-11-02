@@ -37,6 +37,8 @@ Criadas pelos seeders (só em desenvolvimento). Senha de todas: `password`.
 | moderador2@academico.ifsul.edu.br | MODERADOR |
 | admin@academico.ifsul.edu.br | ADMINISTRADOR |
 
+O `MaterialSeeder` cria alguns materiais de exemplo (aprovados e pendentes) e pode ser rodado sozinho, sem recriar o banco: `docker compose exec -u sail app php artisan db:seed --class=MaterialSeeder`.
+
 ### Comandos
 
 | Comando | O que faz |
@@ -91,8 +93,10 @@ Actions → **Promover usuário** → Run workflow, informando e-mail e papel. O
 ## Trocar os Termos de participação
 
 1. Criar `backend/resources/terms/<nova versão>.json` com o texto.
-2. Atualizar `TERMS_VERSION` no Render e no `render.yaml`.
+2. Atualizar `TERMS_VERSION` no `render.yaml`, no Render, em `backend/.env.example`, no padrão de `config/conectacc.php` e em `backend/phpunit.xml`. No ambiente local, atualizar também o `backend/.env`.
 3. Quem estiver no meio de um cadastro verá "Os Termos de participação foram atualizados. Leia e aceite novamente.".
+
+A versão vigente é a **0.2** (02/11/2026), que acrescentou a regra de autoria e anonimato dos conteúdos.
 
 ## Atualizar o catálogo de disciplinas
 

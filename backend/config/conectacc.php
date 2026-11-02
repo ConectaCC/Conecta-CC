@@ -6,5 +6,5 @@ return [
         explode(',', (string) env('ALLOWED_EMAIL_DOMAINS', 'academico.ifsul.edu.br')),
     ))),
 
-    'terms_version' => (string) env('TERMS_VERSION', '0.1'),
+    'terms_version' => (string) env('TERMS_VERSION', '0.2'),
 ];

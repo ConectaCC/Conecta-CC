@@ -1182,3 +1182,60 @@ Todas as 49 disciplinas do catálogo têm área de materiais. Não existe lista 
 - Cada semestre abre e fecha ao clicar, e todos começam fechados. Durante a busca, os semestres com resultado abrem sozinhos.
 - A página da disciplina mostra semestre e carga horária junto do link "Ver ementa oficial".
 - O endereço é legível: `/estudos/estrutura-de-dados-iii`. O slug é calculado a partir do nome e não fica guardado no banco.
+
+---
+
+# 55. Estudos parte 2 — 02/11/2026
+
+Decisões tomadas na definição da parte 2 de Estudos (spec `specs/2026-11-02-estudos-parte-2-design.md`).
+
+## 55.1 Três etapas
+
+A parte 2 é entregue em três etapas, cada uma funcionando de ponta a ponta:
+
+1. **2a:** Materiais e Moderação de material.
+2. **2b:** Meus conteúdos, Editar, Excluir e Cancelar envio.
+3. **2c:** Notificações.
+
+"Retirar material aprovado" e "solicitar revisão" ficam para uma rodada própria.
+
+## 55.2 Autoria com opção de anônimo
+
+- O material mostra o **nome de exibição** do autor.
+- Com "Compartilhar anonimamente", os outros estudantes veem "Compartilhado pela comunidade", mas o sistema guarda o autor.
+- A condição de autoria não muda numa edição.
+- **Substitui** a §18 e o RF-39 (todo material anônimo, decisão adiada para o próximo semestre).
+- **Na Moderação:**
+  - o MODERADOR vê "Comunidade" no material anônimo, e o backend não envia o nome a ele;
+  - o ADMINISTRADOR vê o nome, com a marca "Enviado anonimamente".
+- Os Termos passam à versão **0.2**, com essa regra.
+
+## 55.3 Regras do envio
+
+- **Limites:** título até 200 caracteres, descrição até 2.000 e link até 2.048.
+- **Links aceitos:** qualquer endereço `http` ou `https`. Quando falta o protocolo, o sistema completa com `https://`.
+- **Link repetido:** recusado na mesma disciplina, se houver envio pendente ou aprovado com ele. A regra é garantida também no banco.
+- **Limite:** 10 envios por hora por usuário.
+- **Mostrar mais:** de 20 em 20 materiais.
+- A disciplina em Estudos **não** mostra a quantidade de materiais.
+
+## 55.4 Moderação
+
+- **Motivo da rejeição obrigatório** para MODERADOR e ADMINISTRADOR, com até 500 caracteres. Substitui a §37 e o RF-73.
+- **Fila sem filtro por tipo** enquanto houver um tipo só.
+- **Status na tabela de materiais:** o status de moderação fica na própria tabela, sem tabela genérica de moderação.
+
+## 55.5 Resolvidas para as próximas etapas
+
+- **§52.5 (cancelamento):** o autor cancela o envio pendente na hora, e o envio passa a CANCELADO, que aparece só no filtro Todos.
+- **§52.11 (rejeitado):** o material rejeitado não é reenviado. O autor faz um envio novo.
+- **Código da solicitação:** `MAT-00042`.
+- **Meus conteúdos:** fica em `/perfil/meus-conteudos`.
+- **Alteração de material publicado:** é moderada mostrando a versão publicada e a proposta lado a lado.
+- **Excluir com alteração pendente:** excluir o material cancela a alteração.
+- **§33 (notificações):**
+  - clicar marca a notificação como lida e leva ao conteúdo: uma aprovação abre a disciplina, e uma rejeição abre o item em Meus conteúdos;
+  - o contador é consultado a cada 60 segundos;
+  - quatro eventos geram notificação: material aprovado, material rejeitado, alteração aprovada e alteração rejeitada;
+  - o painel mostra as 20 mais recentes.
+

@@ -463,6 +463,8 @@ Só pode aparecer publicamente depois de:
 
 ## RF-39 — Autoria pública
 
+> **Atualização (02/11/2026):** substituído. O material mostra o nome de exibição do autor, e o autor pode escolher "Compartilhar anonimamente". Ver `decisoes.md` 55.2.
+
 No MVP atual, materiais devem aparecer publicamente como:
 
 **Compartilhado pela comunidade**
@@ -742,6 +744,8 @@ Essa decisão deverá ser tomada antes da implementação definitiva de Notifica
 
 ## RF-66 — Acesso
 
+> **Atualização (02/11/2026):** MODERADOR e ADMINISTRADOR acessam a Moderação (§1.2). O MODERADOR não vê o próprio envio na fila.
+
 Somente ADMIN pode acessar Moderação.
 
 ## RF-67 — Fila única
@@ -797,6 +801,8 @@ Depois:
 - autor recebe notificação.
 
 ## RF-73 — Rejeitar
+
+> **Atualização (02/11/2026):** o motivo é obrigatório para MODERADOR e ADMINISTRADOR, com até 500 caracteres. Ver `decisoes.md` 55.4.
 
 ADMIN pode rejeitar conteúdo PENDENTE.
 
