@@ -10,7 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /** @mixin Material */
 final class ModerationMaterialResource extends JsonResource
 {
-    /** @return array{id: int, code: string, title: string, description: string|null, url: string, anonymous: bool, author_name: string|null, is_own: bool, submitted_at: string, discipline: array{id: int, name: string, slug: string}} */
+    /** @return array{id: int, code: string, title: string, description: string|null, url: string, anonymous: bool, author_name: string|null, is_own: bool, submitted_at: string, discipline: array{id: int, name: string, slug: string}, revision_of: array{title: string, description: string|null, url: string}|null} */
     public function toArray(Request $request): array
     {
         $viewer = $request->user();
@@ -32,6 +32,12 @@ final class ModerationMaterialResource extends JsonResource
                 'name' => $this->discipline->name,
                 'slug' => $this->discipline->slug,
             ],
+            // alteração de material publicado: a versão que está no ar hoje, para comparar
+            'revision_of' => $this->revisionOf ? [
+                'title' => $this->revisionOf->title,
+                'description' => $this->revisionOf->description,
+                'url' => $this->revisionOf->url,
+            ] : null,
         ];
     }
 }

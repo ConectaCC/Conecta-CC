@@ -17,8 +17,10 @@ final class RejectMaterialController
         /** @var User $user */
         $user = $request->user();
 
-        abort_unless($rejectMaterial->handle($material, $user, $request->reason()), 409, 'Este conteúdo já foi analisado.');
+        if (! $rejectMaterial->handle($material, $user, $request->reason())) {
+            abort(409, $material->decisionConflictMessage());
+        }
 
-        return new ModerationMaterialResource($material->refresh()->load(['author', 'discipline']));
+        return new ModerationMaterialResource($material->refresh()->load(['author', 'discipline', 'revisionOf']));
     }
 }

@@ -80,6 +80,14 @@ class Material extends Model
         return $this->hasMany(Material::class, 'revises_id');
     }
 
+    // a decisão chegou tarde: o autor cancelou ou outra pessoa decidiu antes
+    public function decisionConflictMessage(): string
+    {
+        return $this->refresh()->status === MaterialStatus::Cancelado
+            ? 'Este conteúdo foi cancelado pelo autor.'
+            : 'Este conteúdo já foi analisado.';
+    }
+
     /** @return Attribute<non-falsy-string, never> */
     protected function code(): Attribute
     {

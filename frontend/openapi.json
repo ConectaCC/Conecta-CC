@@ -48,10 +48,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "description": "Error overview.",
-                                            "examples": [
-                                                "Este conte\u00fado j\u00e1 foi analisado."
-                                            ]
+                                            "description": "Error overview."
                                         }
                                     },
                                     "required": [
@@ -678,10 +675,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "description": "Error overview.",
-                                            "examples": [
-                                                "Este conte\u00fado j\u00e1 foi analisado."
-                                            ]
+                                            "description": "Error overview."
                                         }
                                     },
                                     "required": [
@@ -922,6 +916,32 @@
                             "name",
                             "slug"
                         ]
+                    },
+                    "revision_of": {
+                        "type": [
+                            "object",
+                            "null"
+                        ],
+                        "description": "altera\u00e7\u00e3o de material publicado: a vers\u00e3o que est\u00e1 no ar hoje, para comparar",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "url": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "title",
+                            "description",
+                            "url"
+                        ]
                     }
                 },
                 "required": [
@@ -934,7 +954,8 @@
                     "author_name",
                     "is_own",
                     "submitted_at",
-                    "discipline"
+                    "discipline",
+                    "revision_of"
                 ],
                 "title": "ModerationMaterialResource"
             },

@@ -275,6 +275,12 @@ export interface components {
                 name: string;
                 slug: string;
             };
+            /** @description alteração de material publicado: a versão que está no ar hoje, para comparar */
+            revision_of: {
+                title: string;
+                description: string | null;
+                url: string;
+            } | null;
         };
         /** MyMaterialResource */
         MyMaterialResource: {
@@ -455,10 +461,7 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
-                        /**
-                         * @description Error overview.
-                         * @example Este conteúdo já foi analisado.
-                         */
+                        /** @description Error overview. */
                         message: string;
                     };
                 };
@@ -853,10 +856,7 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
-                        /**
-                         * @description Error overview.
-                         * @example Este conteúdo já foi analisado.
-                         */
+                        /** @description Error overview. */
                         message: string;
                     };
                 };
