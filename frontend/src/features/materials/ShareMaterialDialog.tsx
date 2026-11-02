@@ -206,7 +206,11 @@ export function ShareMaterialDialog({ discipline, open, onOpenChange, editing }:
                   />
                 )}
 
-                <p className="text-[15px] text-muted-foreground">O material será analisado pela moderação antes de aparecer na disciplina.</p>
+                <p className="text-[15px] text-muted-foreground">
+                  {editing
+                    ? 'A alteração será analisada pela moderação. Até lá, a versão atual continua visível.'
+                    : 'O material será analisado pela moderação antes de aparecer na disciplina.'}
+                </p>
               </div>
 
               <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">

@@ -15,12 +15,11 @@ type Props = {
   material: ModerationMaterial;
   onCancel: () => void;
   onDone: (kind: DecisionKind) => void;
-  onConflict: (message: string) => void;
+  onConflict: (code: string | undefined) => void;
   onCloseAutoFocus?: (event: Event) => void;
 };
 
 const REQUIRED_REASON = 'Informe o motivo da rejeição.';
-const LINK_TAKEN = 'O link desta alteração já foi compartilhado nesta disciplina.';
 
 export function DecisionDialog({ kind, material, onCancel, onDone, onConflict, onCloseAutoFocus }: Props) {
   const approve = useApproveMaterial();
@@ -57,12 +56,12 @@ export function DecisionDialog({ kind, material, onCancel, onDone, onConflict, o
       reset();
       onDone(kind);
     } catch (error) {
-      if (error instanceof ApiError && error.status === 409 && error.message === LINK_TAKEN) {
+      if (error instanceof ApiError && error.code === 'link_taken') {
         // a alteração continua pendente: o moderador pode rejeitar com o motivo
-        setFailed(LINK_TAKEN);
+        setFailed(error.message);
       } else if (error instanceof ApiError && error.status === 409) {
         reset();
-        onConflict(error.message);
+        onConflict(error.code);
       } else if (error instanceof ApiError && error.status === 422 && error.fieldErrors.reason) {
         setReasonError(error.fieldErrors.reason[0]);
       } else {

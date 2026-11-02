@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FormAlert } from '@/components/FormAlert';
 import { Button } from '@/components/ui/button';
 import type { Discipline } from '@/features/profile/hooks';
@@ -10,7 +10,23 @@ import { ShareMaterialDialog } from './ShareMaterialDialog';
 export function MaterialsSection({ discipline }: { discipline: Discipline }) {
   const materials = useDisciplineMaterials(discipline.id);
   const [sharing, setSharing] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
+  const noticeRef = useRef<HTMLDivElement>(null);
   const items = materials.data?.pages.flatMap((page) => page.data) ?? [];
+
+  useEffect(() => {
+    if (notice) noticeRef.current?.focus();
+  }, [notice]);
+
+  const retry = (
+    <button
+      type="button"
+      onClick={() => (materials.isFetchNextPageError ? materials.fetchNextPage() : materials.refetch())}
+      className="font-semibold underline underline-offset-2"
+    >
+      Tentar novamente
+    </button>
+  );
 
   const shareButton = (
     <Button type="button" onClick={() => setSharing(true)} className="h-11 px-5 text-[15px] font-semibold">
@@ -36,16 +52,18 @@ export function MaterialsSection({ discipline }: { discipline: Discipline }) {
         </p>
       )}
 
-      {materials.isError && !materials.data && (
+      {notice && (
+        <div ref={noticeRef} tabIndex={-1} className="mt-5 outline-none">
+          <FormAlert variant="success" onDismiss={() => setNotice(null)}>
+            {notice}
+          </FormAlert>
+        </div>
+      )}
+
+      {/* também com cards na tela (recarga ou "Mostrar mais" que falhou): o aviso aparece e os cards ficam */}
+      {materials.isError && (
         <div className="mt-5">
-          <FormAlert
-            variant="warning"
-            action={
-              <button type="button" onClick={() => materials.refetch()} className="font-semibold underline underline-offset-2">
-                Tentar novamente
-              </button>
-            }
-          >
+          <FormAlert variant="warning" action={retry}>
             Não foi possível carregar os materiais agora.
           </FormAlert>
         </div>
@@ -64,12 +82,12 @@ export function MaterialsSection({ discipline }: { discipline: Discipline }) {
       {items.length > 0 && (
         <div className="mt-5 space-y-4">
           {items.map((material) => (
-            <MaterialCard key={material.id} material={material} discipline={discipline} />
+            <MaterialCard key={material.id} material={material} discipline={discipline} onDeleted={() => setNotice('Material excluído.')} />
           ))}
         </div>
       )}
 
-      {materials.hasNextPage && (
+      {materials.hasNextPage && !materials.isFetchNextPageError && (
         <div className="mt-5 flex justify-center">
           <Button
             type="button"

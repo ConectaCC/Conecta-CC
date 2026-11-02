@@ -10,15 +10,40 @@ import { ConfirmActionDialog } from './ConfirmActionDialog';
 import { ContentItem } from './ContentItem';
 import { FILTERS, type MyFilter, type MyMaterial, useCancelMaterial, useDeleteMaterial, useMyMaterials } from './hooks';
 
-type Pending = { kind: 'cancel' | 'delete'; item: MyMaterial } | null;
+type Action = { kind: 'cancel' | 'delete'; item: MyMaterial };
 
 const GENERIC_ERROR = 'Não foi possível concluir a ação. Tente novamente.';
+
+const COPY = {
+  cancel: {
+    title: 'Cancelar envio?',
+    description: 'O material sai da fila de análise e não será publicado.',
+    confirm: 'Cancelar envio',
+    busy: 'Cancelando…',
+    back: 'Voltar',
+    done: 'Envio cancelado.',
+  },
+  delete: {
+    title: 'Excluir material?',
+    description: 'O material deixará de aparecer na disciplina. Você ainda poderá consultá-lo em Meus conteúdos.',
+    confirm: 'Excluir material',
+    busy: 'Excluindo…',
+    back: 'Cancelar',
+    done: 'Material excluído.',
+  },
+};
 
 function isFilter(value: string | null): value is MyFilter {
   return FILTERS.some((filter) => filter.value === value);
 }
 
+// ?item= vindo de uma notificação: a lista remonta quando o item muda, para abrir e rolar até o novo
 export function MyContentsPage() {
+  const [params] = useSearchParams();
+  return <MyContents key={params.get('item') ?? ''} />;
+}
+
+function MyContents() {
   const [params, setParams] = useSearchParams();
   const filterParam = params.get('filtro');
   const filter: MyFilter = isFilter(filterParam) ? filterParam : 'all';
@@ -27,15 +52,19 @@ export function MyContentsPage() {
   const cancel = useCancelMaterial();
   const remove = useDeleteMaterial();
   const [expanded, setExpanded] = useState<Set<string>>(() => new Set(target ? [target] : []));
-  const [pending, setPending] = useState<Pending>(null);
-  const [editing, setEditing] = useState<MyMaterial | null>(null);
+  // o texto do diálogo fica com a última ação até a animação de saída terminar
+  const [action, setAction] = useState<Action | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [editing, setEditing] = useState<MyMaterial | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const noticeRef = useRef<HTMLDivElement>(null);
+  const focusNotice = useRef(false);
   const scrolled = useRef(false);
 
   const items = materials.data?.pages.flatMap((page) => page.data) ?? [];
   const found = target !== null && items.some((item) => item.code === target);
 
-  // ?item= vindo de uma notificação: carrega as próximas páginas até achar o item
   useEffect(() => {
     if (!target || found || !materials.hasNextPage || materials.isFetchingNextPage || materials.isFetchNextPageError) return;
     materials.fetchNextPage();
@@ -63,22 +92,36 @@ export function MyContentsPage() {
     });
   }
 
+  function ask(kind: Action['kind'], item: MyMaterial) {
+    setAction({ kind, item });
+    setActionError(null);
+    setDialogOpen(true);
+  }
+
   async function confirm() {
-    if (!pending) return;
+    if (!action) return;
     setActionError(null);
     try {
-      if (pending.kind === 'cancel') await cancel.mutateAsync(pending.item);
-      else await remove.mutateAsync(pending.item);
-      setPending(null);
+      if (action.kind === 'cancel') await cancel.mutateAsync(action.item);
+      else await remove.mutateAsync(action.item);
+      setNotice(COPY[action.kind].done);
+      // o botão clicado some depois da ação: o foco vai para o aviso
+      focusNotice.current = true;
+      setDialogOpen(false);
     } catch (error) {
       setActionError(error instanceof ApiError && error.status === 409 ? error.message : GENERIC_ERROR);
     }
   }
 
-  function closeDialog() {
-    setPending(null);
-    setActionError(null);
+  function restoreFocus(event: Event) {
+    if (!focusNotice.current) return;
+    event.preventDefault();
+    focusNotice.current = false;
+    noticeRef.current?.focus();
   }
+
+  const copy = COPY[action?.kind ?? 'cancel'];
+  const refetchFailed = materials.isError && !materials.isFetchNextPageError;
 
   const retry = (
     <button
@@ -124,13 +167,22 @@ export function MyContentsPage() {
       </div>
 
       <div className="mt-6 space-y-4">
+        {notice && (
+          <div ref={noticeRef} tabIndex={-1} className="outline-none">
+            <FormAlert variant="success" onDismiss={() => setNotice(null)}>
+              {notice}
+            </FormAlert>
+          </div>
+        )}
+
         {materials.isPending && (
           <p aria-busy="true" className="text-base text-muted-foreground">
             Carregando seus conteúdos…
           </p>
         )}
 
-        {materials.isError && !materials.isFetchNextPageError && !materials.data && (
+        {/* também quando já há dados na tela: o aviso fica acima e a lista continua */}
+        {refetchFailed && (
           <FormAlert variant="warning" action={retry}>
             Não foi possível carregar seus conteúdos agora.
           </FormAlert>
@@ -150,8 +202,8 @@ export function MyContentsPage() {
                 item={item}
                 expanded={expanded.has(item.code)}
                 onToggle={() => toggle(item.code)}
-                onCancel={() => setPending({ kind: 'cancel', item })}
-                onDelete={() => setPending({ kind: 'delete', item })}
+                onCancel={() => ask('cancel', item)}
+                onDelete={() => ask('delete', item)}
                 onEdit={() => setEditing(item)}
               />
             ))}
@@ -190,20 +242,17 @@ export function MyContentsPage() {
       )}
 
       <ConfirmActionDialog
-        open={pending !== null}
-        title={pending?.kind === 'delete' ? 'Excluir material?' : 'Cancelar envio?'}
-        description={
-          pending?.kind === 'delete'
-            ? 'O material deixará de aparecer na disciplina. Você ainda poderá consultá-lo em Meus conteúdos.'
-            : 'O material sai da fila de análise e não será publicado.'
-        }
-        confirmLabel={pending?.kind === 'delete' ? 'Excluir material' : 'Cancelar envio'}
-        busyLabel={pending?.kind === 'delete' ? 'Excluindo…' : 'Cancelando…'}
-        cancelLabel={pending?.kind === 'delete' ? 'Cancelar' : 'Voltar'}
+        open={dialogOpen}
+        title={copy.title}
+        description={copy.description}
+        confirmLabel={copy.confirm}
+        busyLabel={copy.busy}
+        cancelLabel={copy.back}
         busy={cancel.isPending || remove.isPending}
         error={actionError}
         onConfirm={confirm}
-        onCancel={closeDialog}
+        onCancel={() => setDialogOpen(false)}
+        onCloseAutoFocus={restoreFocus}
       />
     </div>
   );

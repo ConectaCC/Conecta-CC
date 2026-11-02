@@ -83,12 +83,17 @@ export function ContentItem({ item, expanded, onToggle, onCancel, onDelete, onEd
               </a>
             </dd>
           </div>
-          {item.anonymous && <dd className="text-muted-foreground">Compartilhado anonimamente</dd>}
+          {item.anonymous && (
+            <div>
+              <dt className="font-semibold text-foreground">Autoria</dt>
+              <dd className="text-foreground">Compartilhado anonimamente</dd>
+            </div>
+          )}
         </dl>
       )}
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <Button type="button" variant="outline" aria-expanded={expanded} aria-controls={panelId} onClick={onToggle} className={ACTION}>
+        <Button type="button" variant="outline" aria-expanded={expanded} aria-controls={expanded ? panelId : undefined} onClick={onToggle} className={ACTION}>
           Ver dados enviados
           <ChevronDown className={cn('size-4 transition-transform', expanded && 'rotate-180')} aria-hidden />
         </Button>
@@ -102,7 +107,8 @@ export function ContentItem({ item, expanded, onToggle, onCancel, onDelete, onEd
             <Button asChild variant="outline" className={ACTION}>
               <Link to={`/estudos/${item.discipline.slug}`}>Ver conteúdo</Link>
             </Button>
-            {onEdit && (
+            {/* com alteração em análise, uma nova edição seria recusada; o item já mostra a alteração pendente */}
+            {onEdit && !item.pending_revision && (
               <Button type="button" variant="outline" onClick={onEdit} className={ACTION}>
                 Editar
               </Button>

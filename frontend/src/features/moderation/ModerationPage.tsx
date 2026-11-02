@@ -11,7 +11,7 @@ import { ReviewSheet } from './ReviewSheet';
 
 type Notice = { title: string; detail?: string };
 
-const CANCELLED = 'Este conteúdo foi cancelado pelo autor.';
+const CANCELLED = 'material_cancelled';
 
 export function ModerationPage() {
   const queue = useModerationQueue();
@@ -41,7 +41,12 @@ export function ModerationPage() {
     focusTarget.current = 'notice';
     setNotice(
       kind === 'approve'
-        ? { title: 'Conteúdo aprovado com sucesso.', detail: `O material passa a aparecer em Estudos › ${selected.discipline.name}.` }
+        ? {
+            title: 'Conteúdo aprovado com sucesso.',
+            detail: selected.revision_of
+              ? `A alteração passa a valer em Estudos › ${selected.discipline.name}.`
+              : `O material passa a aparecer em Estudos › ${selected.discipline.name}.`,
+          }
         : { title: 'Conteúdo rejeitado.' },
     );
     setDecision(null);
@@ -146,9 +151,9 @@ export function ModerationPage() {
           onCancel={() => setDecision(null)}
           onDone={done}
           onCloseAutoFocus={restoreFocus}
-          onConflict={(message) => {
+          onConflict={(code) => {
             setDecision(null);
-            setConflict(message);
+            setConflict(code ?? 'already_decided');
           }}
         />
       )}

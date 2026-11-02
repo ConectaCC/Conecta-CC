@@ -11,7 +11,8 @@ const UNITS: [Intl.RelativeTimeFormatUnit, number][] = [
 
 // "há 2 dias", "ontem", "agora": a maior unidade cheia
 export function timeAgo(iso: string, now = new Date()): string {
-  const seconds = (new Date(iso).getTime() - now.getTime()) / 1000;
+  // relógio do aparelho atrasado não pode mostrar "em 2 minutos"
+  const seconds = Math.min(0, (new Date(iso).getTime() - now.getTime()) / 1000);
   for (const [unit, size] of UNITS) {
     if (Math.abs(seconds) >= size) return relative.format(Math.trunc(seconds / size), unit);
   }

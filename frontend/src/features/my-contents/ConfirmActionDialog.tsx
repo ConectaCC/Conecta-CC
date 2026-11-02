@@ -14,12 +14,13 @@ type Props = {
   error: string | null;
   onConfirm: () => void;
   onCancel: () => void;
+  onCloseAutoFocus?: (event: Event) => void;
 };
 
-export function ConfirmActionDialog({ open, title, description, confirmLabel, busyLabel, cancelLabel, busy, error, onConfirm, onCancel }: Props) {
+export function ConfirmActionDialog({ open, title, description, confirmLabel, busyLabel, cancelLabel, busy, error, onConfirm, onCancel, onCloseAutoFocus }: Props) {
   return (
     <Dialog open={open} onOpenChange={(next) => !next && !busy && onCancel()}>
-      <DialogContent showCloseButton={false} className="w-[calc(100%-2rem)] max-w-md gap-0 p-6 sm:max-w-md">
+      <DialogContent showCloseButton={false} onCloseAutoFocus={onCloseAutoFocus} className="w-[calc(100%-2rem)] max-w-md gap-0 p-6 sm:max-w-md">
         <DialogTitle className="font-display text-xl font-bold text-foreground">{title}</DialogTitle>
         <DialogDescription className="mt-2 text-[15px] text-muted-foreground">{description}</DialogDescription>
         {error && (

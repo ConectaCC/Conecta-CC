@@ -125,13 +125,13 @@ Todos ficam sob `auth:sanctum`. As disciplinas são acessadas pelo **id** na API
 | Etapa | Método e rota | Quem pode | Resposta |
 |---|---|---|---|
 | 2a | `GET /disciplines/{discipline}/materials?cursor=` | autenticado | os materiais `APROVADO` (sem soft delete e sem `revises_id`), por `published_at` decrescente, 20 por página (`cursorPaginate`) |
-| 2a | `POST /disciplines/{discipline}/materials` | autenticado; throttle `materials` (10/h por usuário) | 201 com o material `PENDENTE` |
+| 2a | `POST /disciplines/{discipline}/materials` | autenticado; 10 envios ou edições por hora por usuário, contando só os que deram certo | 201 com o material `PENDENTE` |
 | 2a | `GET /moderation/materials` | Gate `access-moderation` | os pendentes, do mais antigo para o mais novo. O MODERADOR não recebe os próprios. Sem paginação (`// shortcut: fila inteira numa resposta; paginar se passar de ~200 pendentes`) **(escolha do Claude)** |
 | 2a | `POST /moderation/materials/{material}/approve` | Gate + Policy | 200, 409 ou 403 |
 | 2a | `POST /moderation/materials/{material}/reject` (`reason`) | Gate + Policy | 200, 409, 403 ou 422 |
 | 2b | `GET /me/materials?status=` | autenticado (só os próprios) | lista de Meus conteúdos |
 | 2b | `POST /materials/{material}/cancel` | autor, se `PENDENTE` | 200 ou 409 |
-| 2b | `PUT /materials/{material}` | autor, se `APROVADO`; throttle `materials` | 201 com a alteração `PENDENTE` |
+| 2b | `PUT /materials/{material}` | autor, se `APROVADO`; mesmo limite de envios | 201 com o material original, trazendo a alteração em `pending_revision` (ajustado na implementação: é o que a tela de Meus conteúdos usa) |
 | 2b | `DELETE /materials/{material}` | autor, se `APROVADO` | 204 |
 | 2c | `GET /notifications` | autenticado | as 20 mais recentes e `unread_count` |
 | 2c | `POST /notifications/{id}/read` | dono | 204 |

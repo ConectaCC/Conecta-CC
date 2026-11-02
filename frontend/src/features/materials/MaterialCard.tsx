@@ -1,5 +1,5 @@
 import { ExternalLink, MoreHorizontal } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ConfirmActionDialog } from '@/features/my-contents/ConfirmActionDialog';
@@ -9,21 +9,24 @@ import { hostOf, timeAgo } from '@/lib/format';
 import type { Material } from './hooks';
 import { ShareMaterialDialog } from './ShareMaterialDialog';
 
-type Props = { material: Material; discipline: { id: number; name: string } };
+type Props = { material: Material; discipline: { id: number; name: string }; onDeleted?: () => void };
 
-export function MaterialCard({ material, discipline }: Props) {
+export function MaterialCard({ material, discipline, onDeleted }: Props) {
   const host = hostOf(material.url);
   const when = material.published_at ? ` · ${timeAgo(material.published_at)}` : '';
   const [editing, setEditing] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const remove = useDeleteMaterial();
+  const deleted = useRef(false);
 
   async function confirmDelete() {
     setDeleteError(null);
     try {
       await remove.mutateAsync({ id: material.id, discipline });
+      deleted.current = true;
       setDeleting(false);
+      onDeleted?.();
     } catch (error) {
       setDeleteError(error instanceof ApiError && error.status === 409 ? error.message : 'Não foi possível concluir a ação. Tente novamente.');
     }
@@ -101,6 +104,8 @@ export function MaterialCard({ material, discipline }: Props) {
           setDeleting(false);
           setDeleteError(null);
         }}
+        // o card some depois da exclusão: a seção leva o foco para o aviso, e o diálogo não o devolve ao ⋯
+        onCloseAutoFocus={(event) => deleted.current && event.preventDefault()}
       />
     </article>
   );
