@@ -11,6 +11,68 @@
         }
     ],
     "paths": {
+        "/moderation/materials/{material}/approve": {
+            "post": {
+                "operationId": "v1.approveMaterial",
+                "tags": [
+                    "ApproveMaterial"
+                ],
+                "parameters": [
+                    {
+                        "name": "material",
+                        "in": "path",
+                        "required": true,
+                        "description": "The material ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`ModerationMaterialResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ModerationMaterialResource"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "An error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "examples": [
+                                                "Este conte\u00fado j\u00e1 foi analisado."
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/terms/current": {
             "get": {
                 "operationId": "v1.currentTerms",
@@ -225,6 +287,35 @@
                 }
             }
         },
+        "/moderation/materials": {
+            "get": {
+                "operationId": "v1.listModerationMaterials",
+                "tags": [
+                    "ListModerationMaterials"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of `ModerationMaterialResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ModerationMaterialResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "operationId": "v1.login",
@@ -332,6 +423,81 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/moderation/materials/{material}/reject": {
+            "post": {
+                "operationId": "v1.rejectMaterial",
+                "tags": [
+                    "RejectMaterial"
+                ],
+                "parameters": [
+                    {
+                        "name": "material",
+                        "in": "path",
+                        "required": true,
+                        "description": "The material ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RejectMaterialRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "`ModerationMaterialResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ModerationMaterialResource"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "An error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "examples": [
+                                                "Este conte\u00fado j\u00e1 foi analisado."
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
                     },
                     "422": {
                         "$ref": "#/components/responses/ValidationException"
@@ -501,6 +667,76 @@
                 ],
                 "title": "MaterialResource"
             },
+            "ModerationMaterialResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "anonymous": {
+                        "type": "boolean"
+                    },
+                    "author_name": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "is_own": {
+                        "type": "boolean"
+                    },
+                    "submitted_at": {
+                        "type": "string"
+                    },
+                    "discipline": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "slug": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "name",
+                            "slug"
+                        ]
+                    }
+                },
+                "required": [
+                    "id",
+                    "code",
+                    "title",
+                    "description",
+                    "url",
+                    "anonymous",
+                    "author_name",
+                    "is_own",
+                    "submitted_at",
+                    "discipline"
+                ],
+                "title": "ModerationMaterialResource"
+            },
             "ProfileResource": {
                 "type": "object",
                 "properties": {
@@ -601,6 +837,19 @@
                     "terms_version"
                 ],
                 "title": "RegisterRequest"
+            },
+            "RejectMaterialRequest": {
+                "type": "object",
+                "properties": {
+                    "reason": {
+                        "type": "string",
+                        "maxLength": 500
+                    }
+                },
+                "required": [
+                    "reason"
+                ],
+                "title": "RejectMaterialRequest"
             },
             "Role": {
                 "type": "string",
@@ -791,6 +1040,25 @@
             },
             "ModelNotFoundException": {
                 "description": "Not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Error overview."
+                                }
+                            },
+                            "required": [
+                                "message"
+                            ]
+                        }
+                    }
+                }
+            },
+            "AuthorizationException": {
+                "description": "Authorization error",
                 "content": {
                     "application/json": {
                         "schema": {

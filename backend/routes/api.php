@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ApproveMaterialController;
 use App\Http\Controllers\Api\V1\CurrentTermsController;
 use App\Http\Controllers\Api\V1\ListDisciplineMaterialsController;
 use App\Http\Controllers\Api\V1\ListDisciplinesController;
+use App\Http\Controllers\Api\V1\ListModerationMaterialsController;
 use App\Http\Controllers\Api\V1\LoginController;
 use App\Http\Controllers\Api\V1\LogoutController;
 use App\Http\Controllers\Api\V1\MeController;
 use App\Http\Controllers\Api\V1\RegisterController;
+use App\Http\Controllers\Api\V1\RejectMaterialController;
 use App\Http\Controllers\Api\V1\ShowProfileController;
 use App\Http\Controllers\Api\V1\StoreMaterialController;
 use App\Http\Controllers\Api\V1\UpdateProfileController;
@@ -25,5 +28,11 @@ Route::prefix('v1')->group(function () {
         Route::get('profile', ShowProfileController::class);
         Route::put('profile', UpdateProfileController::class);
         Route::post('logout', LogoutController::class);
+
+        Route::middleware('can:access-moderation')->prefix('moderation')->group(function () {
+            Route::get('materials', ListModerationMaterialsController::class);
+            Route::post('materials/{material}/approve', ApproveMaterialController::class);
+            Route::post('materials/{material}/reject', RejectMaterialController::class);
+        });
     });
 });
