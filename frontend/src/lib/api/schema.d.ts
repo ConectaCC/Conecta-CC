@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/disciplines/{discipline}/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listDisciplineMaterials"];
+        put?: never;
+        post: operations["v1.storeMaterial"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/disciplines": {
         parameters: {
             query?: never;
@@ -135,6 +151,18 @@ export interface components {
             email: string;
             password: string;
         };
+        /** MaterialResource */
+        MaterialResource: {
+            id: number;
+            code: string;
+            title: string;
+            description: string | null;
+            url: string;
+            /** @description anônimo: ninguém recebe o nome na área pública, nem o ADMINISTRADOR (requisitos §1.3) */
+            author_name: string | null;
+            published_at: string | null;
+            is_mine: boolean;
+        };
         /** ProfileResource */
         ProfileResource: {
             display_name: string;
@@ -163,6 +191,13 @@ export interface components {
          * @enum {string}
          */
         Role: "ALUNO" | "MODERADOR" | "ADMINISTRADOR";
+        /** StoreMaterialRequest */
+        StoreMaterialRequest: {
+            title: string;
+            description?: string | null;
+            url: string;
+            anonymous?: boolean;
+        };
         /** UpdateProfileRequest */
         UpdateProfileRequest: {
             display_name: string;
@@ -213,6 +248,18 @@ export interface components {
                 };
             };
         };
+        /** @description Not found */
+        ModelNotFoundException: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description Error overview. */
+                    message: string;
+                };
+            };
+        };
     };
     parameters: never;
     requestBodies: never;
@@ -238,6 +285,79 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
+        };
+    };
+    "v1.listDisciplineMaterials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The discipline ID */
+                discipline: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated set of `MaterialResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["MaterialResource"][];
+                        links: {
+                            first: string | null;
+                            last: string | null;
+                            prev: string | null;
+                            next: string | null;
+                        };
+                        meta: {
+                            /** @description Base path for paginator generated URLs. */
+                            path: string | null;
+                            /** @description Number of items shown per page. */
+                            per_page: number;
+                            /** @description The "cursor" that points to the next set of items. */
+                            next_cursor: string | null;
+                            /** @description The "cursor" that points to the previous set of items. */
+                            prev_cursor: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+        };
+    };
+    "v1.storeMaterial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The discipline ID */
+                discipline: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreMaterialRequest"];
+            };
+        };
+        responses: {
+            /** @description `MaterialResource` */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaterialResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
         };
     };
     "v1.listDisciplines": {
