@@ -43,11 +43,13 @@ export function ModerationPage() {
       kind === 'approve'
         ? {
             title: 'Conteúdo aprovado com sucesso.',
-            detail: selected.revision_of
-              ? `A alteração passa a valer em Estudos › ${selected.discipline.name}.`
-              : `O material passa a aparecer em Estudos › ${selected.discipline.name}.`,
+            detail: `${
+              selected.revision_of
+                ? `A alteração passa a valer em Estudos › ${selected.discipline.name}.`
+                : `O material passa a aparecer em Estudos › ${selected.discipline.name}.`
+            } O autor será notificado.`,
           }
-        : { title: 'Conteúdo rejeitado.' },
+        : { title: 'Conteúdo rejeitado.', detail: 'O autor será notificado.' },
     );
     setDecision(null);
     setSelected(null);

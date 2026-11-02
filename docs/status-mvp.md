@@ -40,7 +40,7 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 | Compartilhamento na Comunidade | ✅ | ✅ | ⏳ | ⏳ |
 | Busca de estudantes | ✅ | ✅ | ⏳ | ⏳ |
 | Configurações | ✅ | ✅ | ⏳ | ⏳ |
-| Notificações | ✅ | ✅ | ⏳ | ⏳ |
+| Notificações | ✅ | ✅ | ✅ (material) | ⏳ |
 | Moderação ADMIN | ✅ | ✅ | ✅ (só material) | ⏳ |
 | Responsividade | ✅ | ✅ | ⏳ | ⏳ |
 | Acessibilidade | ✅ | Considerada no protótipo | ⏳ | ⏳ |

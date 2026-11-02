@@ -248,7 +248,7 @@ Dividida em 2a (materiais e Moderação, entregue), 2b (Meus conteúdos, Editar,
 - [x] cancelar envio pendente.
 - [x] editar material aprovado (alteração moderada, versão publicada mantida até a aprovação).
 - [x] excluir material aprovado (soft delete).
-- [ ] notificações de material e alteração (etapa 2c).
+- [x] notificações de material e alteração (etapa 2c).
 
 ## Referência acadêmica inicial
 
@@ -487,8 +487,8 @@ ADMIN B tenta rejeitar o mesmo conteúdo
 
 Implementar notificações para:
 
-- [ ] Material aprovado.
-- [ ] Material rejeitado.
+- [x] Material aprovado.
+- [x] Material rejeitado.
 - [ ] Publicação aprovada.
 - [ ] Publicação rejeitada.
 - [ ] Oportunidade aprovada.
@@ -496,13 +496,15 @@ Implementar notificações para:
 
 Também implementar:
 
-- [ ] badge numérico;
-- [ ] limite visual 9+;
-- [ ] não lidas;
-- [ ] marcar como lida;
-- [ ] marcar todas como lidas;
-- [ ] estado vazio;
+- [x] badge numérico;
+- [x] limite visual 9+;
+- [x] não lidas;
+- [x] marcar como lida;
+- [x] marcar todas como lidas;
+- [x] estado vazio;
 - [ ] motivo da rejeição quando houver.
+
+> **Atualização (02/11/2026):** o clique marca como lida e leva ao conteúdo (`decisoes.md` 55.5). O motivo da rejeição fica em Meus conteúdos, para onde a notificação de rejeição leva.
 
 Ainda deverá ser definido o comportamento ao clicar em uma notificação.
 
