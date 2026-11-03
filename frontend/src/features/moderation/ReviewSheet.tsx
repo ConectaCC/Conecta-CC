@@ -67,32 +67,43 @@ function ReviewContent({ material, onClose, onDecide }: { material: ModerationMa
           <dt className="font-semibold text-foreground">Disciplina</dt>
           <dd className="mt-1 text-foreground">{material.discipline.name}</dd>
         </div>
-        {material.description && (
-          <div>
-            <dt className="font-semibold text-foreground">Descrição</dt>
-            <dd className="mt-1 [overflow-wrap:anywhere] text-foreground">{material.description}</dd>
-          </div>
+        {!material.revision_of && (
+          <>
+            {material.description && (
+              <div>
+                <dt className="font-semibold text-foreground">Descrição</dt>
+                <dd className="mt-1 [overflow-wrap:anywhere] text-foreground">{material.description}</dd>
+              </div>
+            )}
+            <div>
+              <dt className="font-semibold text-foreground">Link enviado</dt>
+              <dd className="mt-1 break-all text-foreground">
+                <span className="font-semibold">{host}</span>
+                <span className="text-muted-foreground">{pathOf(material.url)}</span>
+              </dd>
+              <dd className="mt-2">
+                <a
+                  href={material.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 font-semibold text-action hover:underline"
+                >
+                  Abrir link enviado
+                  <ExternalLink className="size-4" aria-hidden />
+                  <span className="sr-only">(abre em nova guia, {host})</span>
+                </a>
+              </dd>
+            </div>
+          </>
         )}
-        <div>
-          <dt className="font-semibold text-foreground">Link enviado</dt>
-          <dd className="mt-1 break-all text-foreground">
-            <span className="font-semibold">{host}</span>
-            <span className="text-muted-foreground">{pathOf(material.url)}</span>
-          </dd>
-          <dd className="mt-2">
-            <a
-              href={material.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 font-semibold text-action hover:underline"
-            >
-              Abrir link enviado
-              <ExternalLink className="size-4" aria-hidden />
-              <span className="sr-only">(abre em nova guia, {host})</span>
-            </a>
-          </dd>
-        </div>
       </dl>
+
+      {material.revision_of && (
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <VersionCard heading="Versão publicada" version={material.revision_of} />
+          <VersionCard heading="Alteração proposta" version={material} highlight />
+        </div>
+      )}
 
       <p className="mt-5 rounded-lg bg-ice px-4 py-3 text-[15px] text-foreground">
         Se aprovado, aparecerá em Estudos › {material.discipline.name}
@@ -112,5 +123,31 @@ function ReviewContent({ material, onClose, onDecide }: { material: ModerationMa
         </Button>
       </div>
     </>
+  );
+}
+
+type Version = { title: string; description: string | null; url: string };
+
+function VersionCard({ heading, version, highlight = false }: { heading: string; version: Version; highlight?: boolean }) {
+  const host = hostOf(version.url);
+  return (
+    <section className={highlight ? 'rounded-xl border border-action p-4' : 'rounded-xl border border-blue-200/70 p-4'}>
+      <h4 className={highlight ? 'text-xs font-bold tracking-wide text-action uppercase' : 'text-xs font-bold tracking-wide text-muted-foreground uppercase'}>
+        {heading}
+      </h4>
+      <p className="mt-2 font-semibold [overflow-wrap:anywhere] text-foreground">{version.title}</p>
+      {version.description && <p className="mt-1 text-[15px] [overflow-wrap:anywhere] text-muted-foreground">{version.description}</p>}
+      <a
+        href={version.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-2 inline-flex items-center gap-2 font-semibold break-all text-action hover:underline"
+      >
+        {host}
+        {pathOf(version.url)}
+        <ExternalLink className="size-4 shrink-0" aria-hidden />
+        <span className="sr-only">(abre em nova guia, {host})</span>
+      </a>
+    </section>
   );
 }

@@ -20,7 +20,7 @@ final class ListModerationMaterialsController
         // shortcut: fila inteira numa resposta; paginar se passar de ~200 pendentes
         $materials = Material::where('status', MaterialStatus::Pendente)
             ->when($user->role !== Role::Administrador, fn ($query) => $query->where('user_id', '!=', $user->id))
-            ->with(['author', 'discipline'])
+            ->with(['author', 'discipline', 'revisionOf'])
             ->orderBy('created_at')
             ->orderBy('id')
             ->get();

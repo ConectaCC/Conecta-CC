@@ -10,6 +10,10 @@ ENV VITE_SENTRY_DSN=$VITE_SENTRY_DSN
 RUN npm run build
 
 FROM serversideup/php:8.4-fpm-nginx AS runtime
+# intl: normalização de domínios com acento nos links de material (MaterialUrl)
+USER root
+RUN install-php-extensions intl
+USER www-data
 # migrations e caches rodam na inicialização do container (decisão 9)
 ENV PHP_OPCACHE_ENABLE=1 \
     AUTORUN_ENABLED=true \

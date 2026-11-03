@@ -29,12 +29,17 @@ export function ProfilePage() {
           <span className="self-start rounded-full bg-[#d6e4f7] px-3 py-1 text-sm font-semibold text-navy-900 sm:mt-3">Editando</span>
         ) : (
           ready && (
-            <Button asChild className="h-12 self-start px-5 text-base font-semibold">
-              <Link to="/perfil?editar" replace onClick={() => setSaved(false)}>
-                <PencilLine className="size-5" aria-hidden />
-                Editar perfil
-              </Link>
-            </Button>
+            <div className="flex flex-wrap gap-3 self-start">
+              <Button asChild variant="outline" className="h-12 border-action px-5 text-base font-semibold text-action">
+                <Link to="/perfil/meus-conteudos">Meus conteúdos</Link>
+              </Button>
+              <Button asChild className="h-12 px-5 text-base font-semibold">
+                <Link to="/perfil?editar" replace onClick={() => setSaved(false)}>
+                  <PencilLine className="size-5" aria-hidden />
+                  Editar perfil
+                </Link>
+              </Button>
+            </div>
           )
         )}
       </header>

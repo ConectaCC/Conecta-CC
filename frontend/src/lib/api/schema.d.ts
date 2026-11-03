@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/materials/{material}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.cancelMaterial"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/terms/current": {
         parameters: {
             query?: never;
@@ -31,6 +47,22 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/materials/{material}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["v1.updateMaterial"];
+        post?: never;
+        delete: operations["v1.deleteMaterial"];
         options?: never;
         head?: never;
         patch?: never;
@@ -76,6 +108,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["v1.listModerationMaterials"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/me/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listMyMaterials"];
         put?: never;
         post?: never;
         delete?: never;
@@ -227,6 +275,39 @@ export interface components {
                 name: string;
                 slug: string;
             };
+            /** @description alteração de material publicado: a versão que está no ar hoje, para comparar */
+            revision_of: {
+                title: string;
+                description: string | null;
+                url: string;
+            } | null;
+        };
+        /** MyMaterialResource */
+        MyMaterialResource: {
+            id: number;
+            code: string;
+            title: string;
+            description: string | null;
+            url: string;
+            anonymous: boolean;
+            status: string;
+            rejection_reason: string | null;
+            submitted_at: string;
+            discipline: {
+                id: number;
+                name: string;
+                slug: string;
+            };
+            pending_revision: {
+                title: string;
+                description: string | null;
+                url: string;
+                submitted_at: string;
+            } | null;
+            rejected_revision: {
+                reason: string | null;
+                decided_at: string | null;
+            } | null;
         };
         /** ProfileResource */
         ProfileResource: {
@@ -373,21 +454,32 @@ export interface operations {
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
-            /** @description An error */
-            409: {
+        };
+    };
+    "v1.cancelMaterial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The material ID */
+                material: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `MyMaterialResource` */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /**
-                         * @description Error overview.
-                         * @example Este conteúdo já foi analisado.
-                         */
-                        message: string;
-                    };
+                    "application/json": components["schemas"]["MyMaterialResource"];
                 };
             };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
         };
     };
     "v1.currentTerms": {
@@ -407,6 +499,61 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
+        };
+    };
+    "v1.updateMaterial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The material ID */
+                material: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreMaterialRequest"];
+            };
+        };
+        responses: {
+            /** @description `MyMaterialResource` */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyMaterialResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.deleteMaterial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The material ID */
+                material: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
         };
     };
     "v1.listDisciplineMaterials": {
@@ -481,6 +628,7 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
             422: components["responses"]["ValidationException"];
         };
@@ -526,6 +674,50 @@ export interface operations {
             };
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
+        };
+    };
+    "v1.listMyMaterials": {
+        parameters: {
+            query?: {
+                /** @description Situação: all (padrão), pending, approved, rejected ou deleted. */
+                status?: string;
+                /** @description Cursor da próxima página (meta.next_cursor). */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated set of `MyMaterialResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["MyMaterialResource"][];
+                        links: {
+                            first: string | null;
+                            last: string | null;
+                            prev: string | null;
+                            next: string | null;
+                        };
+                        meta: {
+                            /** @description Base path for paginator generated URLs. */
+                            path: string | null;
+                            /** @description Number of items shown per page. */
+                            per_page: number;
+                            /** @description The "cursor" that points to the next set of items. */
+                            next_cursor: string | null;
+                            /** @description The "cursor" that points to the previous set of items. */
+                            prev_cursor: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
         };
     };
     "v1.login": {
@@ -648,21 +840,6 @@ export interface operations {
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
-            /** @description An error */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /**
-                         * @description Error overview.
-                         * @example Este conteúdo já foi analisado.
-                         */
-                        message: string;
-                    };
-                };
-            };
             422: components["responses"]["ValidationException"];
         };
     };

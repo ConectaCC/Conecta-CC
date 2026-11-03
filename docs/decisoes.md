@@ -1239,3 +1239,19 @@ A parte 2 é entregue em três etapas, cada uma funcionando de ponta a ponta:
   - quatro eventos geram notificação: material aprovado, material rejeitado, alteração aprovada e alteração rejeitada;
   - o painel mostra as 20 mais recentes.
 
+## 55.6 Escolhas da etapa 2b (Meus conteúdos, Editar, Excluir e Cancelar)
+
+- **Paginação:** Meus conteúdos tem "Mostrar mais" de 20 em 20 (decisão do Marcelo). O endereço `?item=MAT-00042` carrega as páginas seguintes até achar o item.
+- **Alteração pendente não é cancelada:** o autor espera a análise, e uma segunda edição recebe "Já existe uma alteração deste material em análise.".
+- **Alteração rejeitada:** aparece no item original como "Alteração não aprovada em dd/mm/aaaa: <motivo>", até a próxima alteração.
+- **"Ver dados enviados"** fica disponível em todos os itens.
+- **Ação não permitida:** responde 409 com "Este envio não pode ser cancelado.", "Este material não pode ser editado." ou "Este material não pode ser excluído.".
+- **Na Moderação,** o envio cancelado pelo autor durante a análise mostra "Este conteúdo foi cancelado pelo autor".
+- **Aprovação de alteração com link repetido:** se o link da alteração passou a repetir outro envio, a aprovação mostra o erro no próprio diálogo, e a alteração continua pendente para ser rejeitada.
+- **Limite de envios:** os 10 envios ou edições por hora contam só os que deram certo. Erros de validação não gastam a cota.
+- **Edição sem nenhuma mudança** é recusada com "Nenhuma alteração foi feita no material.".
+- **Alteração única no banco:** a regra de uma só alteração pendente por material também é garantida no banco (índice parcial). Editar e excluir o mesmo material ao mesmo tempo acontecem um depois do outro (trava no registro).
+- **Código nos erros 409:** os 409 de regra trazem um `code` (`material_cancelled`, `already_decided`, `link_taken`, `revision_pending`, `no_changes`, `not_editable`, `not_deletable`, `not_cancellable`). O front decide pelo código, nunca pelo texto.
+- **Links equivalentes** contam como repetidos: a porta padrão (`:443` e `:80`) some, um endereço sem caminho ganha `/`, e domínios com acento são guardados na forma acentuada (`xn--…` e `münchen.de` viram o mesmo). A imagem de produção ganhou a extensão `intl` para isso.
+- **Bytes nulos** são removidos do texto recebido em toda a API, porque o PostgreSQL recusa gravar esses bytes.
+

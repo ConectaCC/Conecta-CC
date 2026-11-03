@@ -7,7 +7,13 @@ it('normaliza o link do material', function (string $input, string $expected) {
 })->with([
     'sem protocolo' => ['site.com/x', 'https://site.com/x'],
     'espaços e host em maiúsculas' => ['  https://Site.COM/A?b=1#c ', 'https://site.com/A?b=1#c'],
-    'http continua http' => ['http://site.com', 'http://site.com'],
+    'http continua http, com barra' => ['http://site.com', 'http://site.com/'],
+    'porta padrão do https some' => ['https://site.com:443/x', 'https://site.com/x'],
+    'porta padrão do http some' => ['http://site.com:80/x', 'http://site.com/x'],
+    'outra porta continua' => ['https://site.com:8443/x', 'https://site.com:8443/x'],
+    'sem caminho ganha barra' => ['https://site.com', 'https://site.com/'],
+    'punycode vira acento' => ['https://XN--MNCHEN-3YA.de/x', 'https://münchen.de/x'],
+    'acento continua acento' => ['https://München.de/x', 'https://münchen.de/x'],
     'subdomínio sem protocolo' => ['drive.google.com/file/d/1', 'https://drive.google.com/file/d/1'],
 ]);
 

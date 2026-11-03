@@ -26,16 +26,33 @@ final class MaterialUrl
 
         $parts = parse_url($url);
         $scheme = strtolower($parts['scheme'] ?? '');
-        $host = mb_strtolower($parts['host'] ?? '');
+        $host = self::canonicalHost($parts['host'] ?? '');
 
-        if (! in_array($scheme, ['http', 'https'], true) || ! preg_match(self::HOST, $host) || isset($parts['user'])) {
+        if (! in_array($scheme, ['http', 'https'], true) || $host === null || ! preg_match(self::HOST, $host) || isset($parts['user'])) {
             return null;
         }
 
+        // porta padrão e caminho vazio não mudam o endereço: somem para o link repetido ser reconhecido
+        $port = $parts['port'] ?? null;
+        $defaultPort = ($scheme === 'https' && $port === 443) || ($scheme === 'http' && $port === 80);
+
         return $scheme.'://'.$host
-            .(isset($parts['port']) ? ':'.$parts['port'] : '')
-            .($parts['path'] ?? '')
+            .($port !== null && ! $defaultPort ? ':'.$port : '')
+            .(($parts['path'] ?? '') === '' ? '/' : $parts['path'])
             .(isset($parts['query']) ? '?'.$parts['query'] : '')
             .(isset($parts['fragment']) ? '#'.$parts['fragment'] : '');
+    }
+
+    // "XN--MNCHEN-3YA.de" e "München.de" viram o mesmo "münchen.de"
+    private static function canonicalHost(string $host): ?string
+    {
+        if ($host === '') {
+            return null;
+        }
+
+        $ascii = idn_to_ascii($host, IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
+        $unicode = $ascii === false ? false : idn_to_utf8($ascii, IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
+
+        return $unicode === false ? null : mb_strtolower($unicode);
     }
 }

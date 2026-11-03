@@ -14,4 +14,10 @@ final class MaterialPolicy
         return $user->role->canModerate()
             && ($user->role === Role::Administrador || $material->user_id !== $user->id);
     }
+
+    // cancelar, editar e excluir: só o autor, e só sobre o original (nunca sobre uma alteração)
+    public function manage(User $user, Material $material): bool
+    {
+        return $material->user_id === $user->id && $material->revises_id === null;
+    }
 }
