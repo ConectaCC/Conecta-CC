@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Sentry\State\Scope;
@@ -33,6 +34,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         JsonResource::withoutWrapping();
+
+        // id em formato errado na URL dá 404 antes de chegar ao banco (o PostgreSQL daria erro 500)
+        Route::pattern('material', '[0-9]+');
+        Route::pattern('discipline', '[0-9]+');
+        Route::pattern('notification', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}');
 
         Gate::define('access-moderation', fn (User $user): bool => $user->role->canModerate());
 

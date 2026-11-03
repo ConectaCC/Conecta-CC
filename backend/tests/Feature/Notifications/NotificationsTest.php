@@ -155,6 +155,6 @@ it('marca todas como lidas só para o usuário', function () {
 
 it('exige login nas rotas de notificação', function () {
     $this->getJson('/api/v1/notifications')->assertUnauthorized();
-    $this->postJson('/api/v1/notifications/qualquer/read')->assertUnauthorized();
+    $this->postJson('/api/v1/notifications/00000000-0000-0000-0000-000000000000/read')->assertUnauthorized();
     $this->postJson('/api/v1/notifications/read-all')->assertUnauthorized();
 });

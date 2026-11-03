@@ -1,5 +1,5 @@
 import { Bell, Check, X } from 'lucide-react';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { FormAlert } from '@/components/FormAlert';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -15,6 +15,7 @@ export function NotificationsBell() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const titleId = useId();
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const { refetch } = notifications;
 
   // além do polling, cada troca de página traz o contador atualizado
@@ -50,11 +51,15 @@ export function NotificationsBell() {
       </PopoverTrigger>
       <PopoverContent align="end" aria-labelledby={titleId} className="w-[min(380px,calc(100vw-1rem))] gap-0 p-0">
         <div className="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3">
-          <h2 id={titleId} className="text-base font-semibold text-foreground">
+          <h2 id={titleId} ref={titleRef} tabIndex={-1} className="text-base font-semibold text-foreground outline-none">
             Notificações
           </h2>
           {unread > 0 && (
-            <button type="button" onClick={() => readAll.mutate()} className="text-sm font-semibold text-action hover:underline">
+            <button
+              type="button"
+              // o botão some quando não há mais não lidas: o foco vai para o título do painel
+              onClick={() => readAll.mutate(undefined, { onSuccess: () => titleRef.current?.focus() })}
+              className="text-sm font-semibold text-action hover:underline">
               Marcar todas como lidas
             </button>
           )}
