@@ -114,7 +114,7 @@ Uma alteração é uma **nova linha** em `materials`, com `revises_id` apontando
 
 ### 4.3 Notificações (etapa 2c)
 
-As notificações usam o recurso nativo do Laravel (`Notifiable` já está no `User`, canal `database`, tabela `notifications` criada por `make:notifications-table`). Cada notificação é uma classe em `app/Notifications/` (`MaterialApproved`, `MaterialRejected`, `MaterialRevisionApproved`, `MaterialRevisionRejected`). O campo `data` guarda `material_id`, `code`, `discipline_name` e `discipline_slug`. A notificação é criada na mesma transação da decisão.
+As notificações usam o recurso nativo do Laravel (`Notifiable` já está no `User`, canal `database`, tabela `notifications` criada por `make:notifications-table`). Os quatro eventos usam uma única classe, `app/Notifications/MaterialDecided`, com o tipo (`kind`) no construtor. Isso foi ajustado na implementação: a primeira versão desta spec previa quatro classes, e a mudança está registrada em `decisoes.md` 55.7. O campo `data` guarda `material_id`, `code`, `discipline_name` e `discipline_slug`. A notificação é criada na mesma transação da decisão.
 
 ## 5. Backend
 

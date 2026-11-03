@@ -1255,3 +1255,10 @@ A parte 2 é entregue em três etapas, cada uma funcionando de ponta a ponta:
 - **Links equivalentes** contam como repetidos: a porta padrão (`:443` e `:80`) some, um endereço sem caminho ganha `/`, e domínios com acento são guardados na forma acentuada (`xn--…` e `münchen.de` viram o mesmo). A imagem de produção ganhou a extensão `intl` para isso.
 - **Bytes nulos** são removidos do texto recebido em toda a API, porque o PostgreSQL recusa gravar esses bytes.
 
+## 55.7 Escolhas da etapa 2c (Notificações)
+
+- **Uma classe de notificação:** os quatro eventos usam uma só classe (`MaterialDecided`), que muda apenas o tipo. A spec citava quatro classes.
+- **Mesma transação:** a notificação é criada junto com a decisão. Uma decisão recusada (409) não notifica.
+- **Painel:** usa o `Popover` do shadcn e mostra "Não foi possível carregar as notificações agora." quando a lista falha.
+- **Texto de sucesso do envio:** passa a ser "Você receberá uma notificação quando o material for analisado.", mantendo o link para Meus conteúdos.
+

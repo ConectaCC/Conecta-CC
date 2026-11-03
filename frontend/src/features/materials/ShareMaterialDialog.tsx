@@ -104,7 +104,7 @@ export function ShareMaterialDialog({ discipline, open, onOpenChange, editing }:
                   'A versão atual continua visível até a alteração ser aprovada.'
                 ) : (
                   <>
-                    Você pode acompanhar a análise em{' '}
+                    Você receberá uma notificação quando o material for analisado. Você pode acompanhar a análise em{' '}
                     <Link to="/perfil/meus-conteudos" className="font-semibold text-action hover:underline">
                       Meus conteúdos
                     </Link>
