@@ -22,23 +22,23 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 
 | Funcionalidade | Definido | Prototipado | Implementado | Validado |
 |---|---|---|---|---|
-| Identidade visual | ✅ | ✅ | ⏳ | ⏳ |
-| Login | ✅ | ✅ | ⏳ | ⏳ |
-| Cadastro | ✅ | ✅ | ⏳ | ⏳ |
-| Termos de participação | ✅ | ✅ | ⏳ | ⏳ |
-| Recuperação de senha | ✅ | ✅ | ⏳ | ⏳ |
-| Home | ✅ | ✅ | ⏳ | ⏳ |
-| Perfil | ✅ | ✅ | ⏳ | ⏳ |
-| Estudos | ✅ | ✅ | ✅ (leitura) | ⏳ |
-| Página da disciplina | ✅ | ✅ | ✅ (sem materiais) | ⏳ |
+| Identidade visual | ✅ | ✅ | ✅ | ⏳ |
+| Login | ✅ | ✅ | ✅ | ⏳ |
+| Cadastro | ✅ | ✅ | ✅ | ⏳ |
+| Termos de participação | ✅ | ✅ | ✅ | ⏳ |
+| Recuperação de senha | ✅ | ✅ | ⏳ (opcional — decisoes.md 52.9) | ⏳ |
+| Home | ✅ | ✅ | ✅ | ⏳ |
+| Perfil | ✅ | ✅ | ✅ | ⏳ |
+| Estudos | ✅ | ✅ | ✅ | ⏳ |
+| Página da disciplina | ✅ | ✅ | ✅ | ⏳ |
 | Compartilhamento de material | ✅ | ✅ | ✅ (2a) | ⏳ |
-| Oportunidade | ✅ | ✅ | ⏳ | ⏳ |
-| Indicação de oportunidade | ✅ | ✅ | ⏳ | ⏳ |
-| Comunidade | ✅ | ✅ | ⏳ | ⏳ |
+| Oportunidade | ✅ | ✅ | fora do MVP | — |
+| Indicação de oportunidade | ✅ | ✅ | fora do MVP | — |
+| Comunidade | ✅ | ✅ | fora do MVP | — |
 | Perfil público | ✅ | ✅ | ⏳ | ⏳ |
 | Meus conteúdos (materiais) | ✅ | ✅ (esboço) | ✅ (2b) | ⏳ |
-| Compartilhamento na Comunidade | ✅ | ✅ | ⏳ | ⏳ |
-| Busca de estudantes | ✅ | ✅ | ⏳ | ⏳ |
+| Compartilhamento na Comunidade | ✅ | ✅ | fora do MVP | — |
+| Busca de estudantes | ✅ | ✅ | fora do MVP | — |
 | Configurações | ✅ | ✅ | ⏳ | ⏳ |
 | Notificações | ✅ | ✅ | ✅ (material) | ⏳ |
 | Moderação ADMIN | ✅ | ✅ | ✅ (só material) | ⏳ |

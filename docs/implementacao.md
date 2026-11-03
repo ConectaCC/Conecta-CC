@@ -326,6 +326,8 @@ A data original do envio poderá permanecer armazenada internamente.
 
 # 10. Oportunidade
 
+> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
+
 Implementar:
 
 - [ ] oportunidades institucionais;
@@ -358,6 +360,8 @@ A data original do envio permanece como informação interna.
 ---
 
 # 11. Comunidade
+
+> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
 
 Implementar:
 
@@ -620,9 +624,9 @@ Uma ordem possível é:
 5. Home;
 6. Estudos — etapa 1 (leitura);
 7. Estudos parte 2: 2a Materiais + núcleo de Moderação (só MATERIAL), 2b Meus conteúdos e 2c Notificações;
-8. Oportunidade (entra na fila de Moderação);
-9. Comunidade (entra na fila de Moderação);
-10. Perfil público;
+8. ~~Oportunidade~~ e ~~Comunidade~~: fora do MVP (`decisoes.md` 56);
+9. Perfil público;
+10. painel `/admin` (Filament) para o ADMINISTRADOR;
 11. notificações;
 12. Configurações;
 13. estados de erro e loading;

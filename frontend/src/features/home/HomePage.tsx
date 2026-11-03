@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Briefcase, User as UserIcon, Users, type LucideIcon } from 'lucide-react';
+import { ArrowRight, BookOpen, User as UserIcon, type LucideIcon } from 'lucide-react';
 import { Link } from 'react-router';
 import { Skeleton } from '@/components/Skeleton';
 import { useMe } from '@/features/auth/hooks';
@@ -10,8 +10,6 @@ type Shortcut = { to: string; title: string; description: string; cta: string; i
 
 const shortcuts: Shortcut[] = [
   { to: '/estudos', title: 'Estudos', description: 'Acesse suas disciplinas e materiais compartilhados pela comunidade.', cta: 'Ir para Estudos', icon: BookOpen },
-  { to: '/oportunidade', title: 'Oportunidade', description: 'Descubra oportunidades acadêmicas e profissionais.', cta: 'Ver oportunidades', icon: Briefcase },
-  { to: '/comunidade', title: 'Comunidade', description: 'Encontre estudantes, conteúdos e conexões dentro do curso.', cta: 'Explorar Comunidade', icon: Users },
   { to: '/perfil', title: 'Perfil', description: 'Atualize suas informações e disciplinas atuais.', cta: 'Ver perfil', icon: UserIcon },
 ];
 
@@ -60,7 +58,7 @@ export function HomePage() {
         <h2 id="acesso-rapido" className="font-display text-2xl font-bold text-foreground">
           Acesso rápido
         </h2>
-        <ul className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <ul className="mt-6 grid gap-6 md:grid-cols-2">
           {shortcuts.map(({ to, title, description, cta, icon: Icon }) => (
             <li key={to} className="flex flex-col rounded-2xl border border-blue-200/70 bg-white p-7">
               <span className="grid size-14 place-items-center rounded-full bg-[#d6e4f7] text-navy-900">

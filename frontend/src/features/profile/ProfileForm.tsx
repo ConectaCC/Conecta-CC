@@ -264,7 +264,7 @@ export function ProfileForm({ profile, disciplines, focusDisciplines, onSaved, o
         </div>
       </ProfileSection>
 
-      <ProfileSection title="Apoio entre estudantes" description="Ajuda outros estudantes a encontrar apoio na Comunidade.">
+      <ProfileSection title="Apoio entre estudantes" description="Ajuda outros estudantes a encontrar apoio.">
         <div className="grid gap-6 sm:grid-cols-2">
           {(
             [

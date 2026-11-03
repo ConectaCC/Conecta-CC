@@ -293,6 +293,8 @@ Não existe regra definitiva no protótipo.
 
 ## 2.7 Limites de texto
 
+> **Atualização (02/11/2026):** os limites de oportunidade e de publicação não bloqueiam mais o MVP, porque essas áreas saíram dele (`decisoes.md` 56).
+
 Ainda precisam ser definidos limites para campos como:
 
 - Nome de exibição;
@@ -321,6 +323,8 @@ Os limites deverão considerar:
 ---
 
 ## 2.8 Quantidade inicial antes de “Mostrar mais”
+
+> **Atualização (02/11/2026):** feed e lista de estudantes saíram do MVP (`decisoes.md` 56). Esta pendência não bloqueia mais o MVP.
 
 Definir quantos itens serão exibidos inicialmente em:
 

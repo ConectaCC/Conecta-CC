@@ -54,12 +54,9 @@ Pode:
 - acessar Estudos;
 - consultar materiais;
 - compartilhar materiais por link;
-- consultar oportunidades;
-- indicar oportunidades;
-- acessar a Comunidade;
-- compartilhar publicações e links;
-- encontrar outros estudantes;
 - consultar Perfis públicos;
+
+> **Atualização (02/11/2026):** consultar e indicar oportunidades, acessar a Comunidade, compartilhar publicações e encontrar outros estudantes saíram do MVP e ficam para a próxima versão (`decisoes.md` 56).
 - consultar e gerenciar os próprios conteúdos em Perfil → Meus conteúdos;
 - acessar Configurações;
 - alterar senha;
@@ -281,6 +278,8 @@ A data original do envio poderá permanecer registrada internamente.
 
 # 9. Oportunidade
 
+> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
+
 A área Oportunidade possui duas origens diferentes.
 
 ## Oportunidades do IFSul
@@ -324,6 +323,8 @@ A data original do envio permanece como informação interna.
 ---
 
 # 10. Comunidade
+
+> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
 
 A Comunidade busca aproximar estudantes e facilitar a circulação de conhecimentos e informações.
 
@@ -517,9 +518,9 @@ O ADMINISTRADOR pode moderar o próprio conteúdo.
 
 - Home
 - Estudos
-- Oportunidade
-- Comunidade
 - Perfil
+
+(Oportunidade e Comunidade saíram do MVP — `decisoes.md` 56.)
 
 Grupo inferior:
 

@@ -502,6 +502,8 @@ Material enviado na segunda-feira
 
 # 10. Oportunidade
 
+> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
+
 ## RF-40 — Fontes
 
 A área deve separar:
@@ -549,6 +551,8 @@ Essa regra segue o mesmo padrão utilizado para os demais conteúdos colaborativ
 ---
 
 # 11. Comunidade
+
+> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
 
 ## RF-46 — Estrutura
 
@@ -599,6 +603,8 @@ Ao acessar:
 ---
 
 # 12. Busca de estudantes
+
+> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
 
 ## RF-50 — Campos pesquisáveis
 
