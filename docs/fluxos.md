@@ -9,6 +9,9 @@ Os fluxos representam o comportamento esperado do produto e servem como referên
 - testes;
 - validação com usuários.
 
+
+> **Escopo atual (02/11/2026):** Oportunidade, Comunidade (feed, publicações e canais) e a busca de estudantes saíram do MVP e ficam para a próxima versão (`decisoes.md` 56). Os requisitos e fluxos dessas áreas continuam neste documento como referência.
+
 ---
 
 # 1. Cadastro
@@ -335,6 +338,8 @@ ADMIN
 
 # 11. Oportunidade
 
+> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
+
 Fluxo principal:
 
 Sidebar  
@@ -353,6 +358,8 @@ Conteúdos enviados por estudantes e aprovados pela Moderação.
 ---
 
 # 12. Indicar oportunidade
+
+> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
 
 Fluxo:
 
@@ -380,6 +387,8 @@ A oportunidade não aparece imediatamente na página.
 
 # 13. Moderação de oportunidade
 
+> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
+
 Fluxo:
 
 Oportunidade enviada  
@@ -404,6 +413,8 @@ Oportunidade enviada
 
 # 14. Comunidade
 
+> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
+
 Fluxo principal:
 
 Sidebar  
@@ -418,6 +429,8 @@ A Comunidade possui:
 ---
 
 # 15. Compartilhar com a Comunidade
+
+> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
 
 Fluxo:
 
@@ -444,6 +457,8 @@ A publicação não aparece imediatamente no feed.
 
 # 16. Moderação de publicação
 
+> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
+
 Fluxo:
 
 Publicação enviada  
@@ -466,6 +481,8 @@ Publicação enviada
 ---
 
 # 17. Feed da Comunidade
+
+> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
 
 O feed segue ordem cronológica.
 
@@ -502,6 +519,8 @@ O Nome de exibição do autor pode abrir:
 
 # 18. Encontrar estudantes
 
+> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
+
 Fluxo:
 
 Comunidade  
@@ -531,6 +550,8 @@ Filtros:
 ---
 
 # 19. Busca por disciplina
+
+> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
 
 Exemplo:
 
@@ -695,6 +716,8 @@ Fila
 ---
 
 # 25. ADMIN e próprio conteúdo
+
+> **Atualização (02/11/2026):** a regra mudou. O ADMINISTRADOR pode moderar o próprio conteúdo, e o MODERADOR não vê o próprio envio na fila nem pode decidir sobre ele (`decisoes.md` 51.2, implementado na etapa 2a).
 
 Se um ADMIN enviar um conteúdo como estudante:
 

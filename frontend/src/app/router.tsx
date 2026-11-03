@@ -12,8 +12,6 @@ import { StudiesPage } from '@/features/studies/StudiesPage';
 import { UnderConstructionPage } from '@/pages/UnderConstructionPage';
 
 const placeholders = [
-  ['/oportunidade', 'Oportunidade'],
-  ['/comunidade', 'Comunidade'],
   ['/configuracoes', 'Configurações'],
 ] as const;
 

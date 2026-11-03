@@ -77,7 +77,7 @@ Cada tecnologia abaixo está justificada na decisão indicada entre parênteses.
 | Erros                             | Sentry, plano gratuito (8)                              |
 | Repositório, CI, deploy e backup | GitHub e GitHub Actions (9, 10)                         |
 | Desenvolvimento                   | Docker Compose (Sail) com PHP, PostgreSQL e Mailpit (9) |
-| Runtime da imagem                 | `serversideup/php:8.4-fpm-nginx` (9)                    |
+| Runtime da imagem                 | `serversideup/php:8.4-fpm-nginx` com a extensão `intl` (9) |
 | Banco em dev, CI e produção       | PostgreSQL 17 (4)                                       |
 | Node                              | 24 LTS, npm (3)                                         |
 | Fontes                            | Plus Jakarta Sans + Inter, auto-hospedadas (`@fontsource-variable`) |
@@ -158,7 +158,7 @@ As decisões seguem o formato do `decisoes.md`: o que foi decidido, por quê, o 
 - gestão de usuários e papéis;
 - consulta de moderações;
 - atendimento de pedidos de exclusão de conta;
-- cadastros curados (oportunidades do IFSul, canais da Comunidade, catálogo de disciplinas);
+- cadastros curados (oportunidades do IFSul, canais da Comunidade, catálogo de disciplinas). Oportunidades e canais saíram do MVP (`decisoes.md` 56);
 - consulta de dados para suporte.
 
 O que cada função do painel pode fazer está definido no documento de Implementação.

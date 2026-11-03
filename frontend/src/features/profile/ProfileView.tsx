@@ -88,7 +88,7 @@ export function ProfileView({ profile }: { profile: Profile }) {
         </div>
       </ProfileSection>
 
-      <ProfileSection title="Apoio entre estudantes" description="Ajuda outros estudantes a encontrar apoio na Comunidade.">
+      <ProfileSection title="Apoio entre estudantes" description="Ajuda outros estudantes a encontrar apoio.">
         <div className="grid gap-5 sm:grid-cols-2">
           <Field label="Posso ajudar com">
             <Tags items={profile.can_help_with} />

@@ -76,12 +76,12 @@ O MVP atual contempla:
 - Home;
 - Perfil;
 - Estudos;
-- Oportunidade;
-- Comunidade;
 - Perfil público;
 - Configurações;
 - Notificações;
 - Moderação para MODERADOR e ADMINISTRADOR.
+
+Oportunidade e Comunidade ficaram para a próxima versão (decisão de 02/11/2026, `docs/decisoes.md` 56).
 
 O objetivo do MVP é validar a utilidade do ConectaCC antes da inclusão de funcionalidades mais complexas.
 
@@ -93,8 +93,6 @@ O objetivo do MVP é validar a utilidade do ConectaCC antes da inclusão de func
 
 - Home
 - Estudos
-- Oportunidade
-- Comunidade
 - Perfil
 
 Na parte inferior:
@@ -140,18 +138,19 @@ Foi realizada também uma auditoria geral do protótipo para verificar:
 
 O projeto encontra-se na etapa de:
 
-**definição concluída do MVP + prototipação concluída + preparação para implementação.**
+**implementação do MVP em andamento.**
 
 Atualmente:
 
-- ✅ escopo do MVP definido;
+- ✅ escopo do MVP definido (revisto em 02/11/2026: sem Oportunidade e sem Comunidade);
 - ✅ identidade visual definida;
 - ✅ principais fluxos definidos;
 - ✅ requisitos documentados;
 - ✅ dez áreas do MVP prototipadas;
 - ✅ auditoria geral do protótipo realizada;
 - ✅ arquitetura técnica definida;
-- 🚧 implementação em andamento;
+- ✅ Cadastro, Login, Home, Perfil, Estudos, materiais, Moderação de material, Meus conteúdos e notificações implementados;
+- 🚧 faltam Perfil público, Configurações e o painel `/admin` (ver `docs/status-mvp.md`);
 - ⏳ testes técnicos;
 - ⏳ preparação do piloto;
 - ⏳ validação com estudantes.

@@ -326,6 +326,8 @@ A data original do envio poderá permanecer armazenada internamente.
 
 # 10. Oportunidade
 
+> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
+
 Implementar:
 
 - [ ] oportunidades institucionais;
@@ -358,6 +360,8 @@ A data original do envio permanece como informação interna.
 ---
 
 # 11. Comunidade
+
+> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
 
 Implementar:
 
@@ -447,6 +451,8 @@ Implementar fila única para:
 - PUBLICAÇÃO;
 - OPORTUNIDADE.
 
+> **Atualização (02/11/2026):** no MVP, a fila tem só MATERIAL (`decisoes.md` 56).
+
 Funcionalidades:
 
 - [x] listar conteúdos PENDENTES;
@@ -489,10 +495,10 @@ Implementar notificações para:
 
 - [x] Material aprovado.
 - [x] Material rejeitado.
-- [ ] Publicação aprovada.
-- [ ] Publicação rejeitada.
-- [ ] Oportunidade aprovada.
-- [ ] Oportunidade rejeitada.
+- ~~Publicação aprovada~~ (fora do MVP).
+- ~~Publicação rejeitada~~ (fora do MVP).
+- ~~Oportunidade aprovada~~ (fora do MVP).
+- ~~Oportunidade rejeitada~~ (fora do MVP).
 
 Também implementar:
 
@@ -506,9 +512,7 @@ Também implementar:
 
 > **Atualização (02/11/2026):** o clique marca como lida e leva ao conteúdo (`decisoes.md` 55.5). O motivo da rejeição fica em Meus conteúdos, para onde a notificação de rejeição leva.
 
-Ainda deverá ser definido o comportamento ao clicar em uma notificação.
-
-Essa decisão deverá ser tomada antes da implementação definitiva deste módulo.
+~~Ainda deverá ser definido o comportamento ao clicar em uma notificação.~~ Resolvido (`decisoes.md` 55.5).
 
 Ela não bloqueia:
 
@@ -596,8 +600,8 @@ Antes do piloto, realizar testes de:
 - [ ] Perfil;
 - [ ] Estudos;
 - [ ] materiais;
-- [ ] Oportunidade;
-- [ ] Comunidade;
+- ~~Oportunidade~~ (fora do MVP);
+- ~~Comunidade~~ (fora do MVP);
 - [ ] Perfil público;
 - [ ] Configurações;
 - [ ] Moderação;
@@ -620,9 +624,9 @@ Uma ordem possível é:
 5. Home;
 6. Estudos — etapa 1 (leitura);
 7. Estudos parte 2: 2a Materiais + núcleo de Moderação (só MATERIAL), 2b Meus conteúdos e 2c Notificações;
-8. Oportunidade (entra na fila de Moderação);
-9. Comunidade (entra na fila de Moderação);
-10. Perfil público;
+8. ~~Oportunidade~~ e ~~Comunidade~~: fora do MVP (`decisoes.md` 56);
+9. Perfil público;
+10. painel `/admin` (Filament) para o ADMINISTRADOR;
 11. notificações;
 12. Configurações;
 13. estados de erro e loading;

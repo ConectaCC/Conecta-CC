@@ -53,6 +53,8 @@ A decisão deverá estar fechada antes da implementação das áreas afetadas.
 
 ## 1.2 Comportamento das notificações
 
+> **Atualização (02/11/2026):** resolvido (`decisoes.md` 55.5).
+
 Ainda deve ser definido o comportamento ao clicar em uma notificação.
 
 Questões:
@@ -113,6 +115,8 @@ Essa verificação não bloqueia a arquitetura nem as atividades atuais.
 ---
 
 ## 1.4 Anonimato público dos materiais
+
+> **Atualização (02/11/2026):** resolvido antes do previsto. O material mostra o nome do autor, com a opção "Compartilhar anonimamente" (`decisoes.md` 55.2).
 
 No MVP atual, materiais aparecem como:
 
@@ -293,6 +297,8 @@ Não existe regra definitiva no protótipo.
 
 ## 2.7 Limites de texto
 
+> **Atualização (02/11/2026):** os limites de oportunidade e de publicação não bloqueiam mais o MVP, porque essas áreas saíram dele (`decisoes.md` 56).
+
 Ainda precisam ser definidos limites para campos como:
 
 - Nome de exibição;
@@ -321,6 +327,8 @@ Os limites deverão considerar:
 ---
 
 ## 2.8 Quantidade inicial antes de “Mostrar mais”
+
+> **Atualização (02/11/2026):** feed e lista de estudantes saíram do MVP (`decisoes.md` 56). Esta pendência não bloqueia mais o MVP.
 
 Definir quantos itens serão exibidos inicialmente em:
 
@@ -426,6 +434,8 @@ Essa funcionalidade não possui tela automática no MVP atual.
 
 ## 3.3 Quantidade de administradores
 
+> **Atualização (02/11/2026):** o ADMINISTRADOR pode moderar o próprio conteúdo (§51.2), mas o MODERADOR não. Ainda é preciso ter mais de um MODERADOR, ou um ADMINISTRADOR, para analisar o envio de um MODERADOR.
+
 Se usuários ADMIN também participarem do piloto como estudantes, deverá existir mais de um ADMIN.
 
 Isso é necessário porque:
@@ -435,6 +445,8 @@ Isso é necessário porque:
 ---
 
 ## 3.4 Orientação para motivo de rejeição
+
+> **Atualização (02/11/2026):** o motivo é obrigatório para MODERADOR e ADMINISTRADOR, com até 500 caracteres (`decisoes.md` 55.4). A orientação de redação continua pendente.
 
 Antes do piloto, criar orientação simples para administradores.
 

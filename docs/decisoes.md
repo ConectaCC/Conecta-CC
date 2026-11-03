@@ -1262,3 +1262,25 @@ A parte 2 é entregue em três etapas, cada uma funcionando de ponta a ponta:
 - **Painel:** usa o `Popover` do shadcn e mostra "Não foi possível carregar as notificações agora." quando a lista falha.
 - **Texto de sucesso do envio:** passa a ser "Você receberá uma notificação quando o material for analisado.", mantendo o link para Meus conteúdos.
 
+---
+
+# 56. Escopo do MVP: sem Oportunidade e sem Comunidade — 02/11/2026
+
+Decisão do Marcelo: **Oportunidade** e **Comunidade** saem do MVP e ficam para a próxima versão.
+
+## 56.1 O que sai
+
+- **Oportunidade:** oportunidades do IFSul, "Indicar oportunidade" e a moderação de oportunidades.
+- **Comunidade:** feed, publicações, "Compartilhar com a comunidade", canais e **busca de estudantes**. A busca fazia parte da Comunidade, então sai junto.
+- Os tipos PUBLICAÇÃO e OPORTUNIDADE na fila de Moderação e nas notificações.
+- No painel `/admin`: os cadastros curados de oportunidades do IFSul e de canais da Comunidade.
+
+## 56.2 Consequências
+
+- **Navegação do ALUNO:** Home, Estudos e Perfil. No grupo inferior: Configurações e Sair. MODERADOR e ADMINISTRADOR continuam vendo Moderação.
+- **Atalhos da Home:** só Estudos e Perfil. Os endereços `/oportunidade` e `/comunidade` levam à Home.
+- **Moderação:** fica só com materiais, e o filtro por tipo não é necessário no MVP.
+- **Perfil público:** continua no MVP. Sem a busca de estudantes, o caminho até ele passa a ser o nome do autor nos materiais.
+- **Limites de texto e "Mostrar mais":** os de oportunidade e publicação (pendências 2.7) e a quantidade de itens no feed e na busca (pendências 2.8) deixam de bloquear o MVP.
+- **Identidade do projeto:** os pilares (Conexão, Conhecimento, Oportunidades, Comunidade) e os textos institucionais continuam, porque descrevem o ConectaCC como um todo, e não as telas do MVP.
+
