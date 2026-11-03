@@ -12,6 +12,8 @@ https://claude.ai/artifact/Gwv1arQoKYix47kJHF3dF4
 
 ## Telas do MVP
 
+> **Atualização (02/11/2026):** Oportunidade e Comunidade + Perfil público foram prototipadas, mas Oportunidade e Comunidade saíram do MVP (`decisoes.md` 56). O Perfil público continua.
+
 O protótipo foi organizado nas seguintes áreas:
 
 1. Login

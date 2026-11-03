@@ -451,6 +451,8 @@ Implementar fila única para:
 - PUBLICAÇÃO;
 - OPORTUNIDADE.
 
+> **Atualização (02/11/2026):** no MVP, a fila tem só MATERIAL (`decisoes.md` 56).
+
 Funcionalidades:
 
 - [x] listar conteúdos PENDENTES;
@@ -493,10 +495,10 @@ Implementar notificações para:
 
 - [x] Material aprovado.
 - [x] Material rejeitado.
-- [ ] Publicação aprovada.
-- [ ] Publicação rejeitada.
-- [ ] Oportunidade aprovada.
-- [ ] Oportunidade rejeitada.
+- ~~Publicação aprovada~~ (fora do MVP).
+- ~~Publicação rejeitada~~ (fora do MVP).
+- ~~Oportunidade aprovada~~ (fora do MVP).
+- ~~Oportunidade rejeitada~~ (fora do MVP).
 
 Também implementar:
 
@@ -510,9 +512,7 @@ Também implementar:
 
 > **Atualização (02/11/2026):** o clique marca como lida e leva ao conteúdo (`decisoes.md` 55.5). O motivo da rejeição fica em Meus conteúdos, para onde a notificação de rejeição leva.
 
-Ainda deverá ser definido o comportamento ao clicar em uma notificação.
-
-Essa decisão deverá ser tomada antes da implementação definitiva deste módulo.
+~~Ainda deverá ser definido o comportamento ao clicar em uma notificação.~~ Resolvido (`decisoes.md` 55.5).
 
 Ela não bloqueia:
 
@@ -600,8 +600,8 @@ Antes do piloto, realizar testes de:
 - [ ] Perfil;
 - [ ] Estudos;
 - [ ] materiais;
-- [ ] Oportunidade;
-- [ ] Comunidade;
+- ~~Oportunidade~~ (fora do MVP);
+- ~~Comunidade~~ (fora do MVP);
 - [ ] Perfil público;
 - [ ] Configurações;
 - [ ] Moderação;

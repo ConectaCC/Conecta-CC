@@ -446,6 +446,8 @@ Exemplos:
 - oportunidade aprovada;
 - oportunidade rejeitada.
 
+> **Atualização (02/11/2026):** no MVP, só materiais e alterações de material geram notificação. Publicação e Oportunidade saíram do MVP (`decisoes.md` 56).
+
 Quando houver motivo de rejeição, ele poderá aparecer na notificação.
 
 O MVP utiliza:
@@ -473,6 +475,8 @@ Os conteúdos moderados são:
 - MATERIAL;
 - PUBLICAÇÃO;
 - OPORTUNIDADE.
+
+> **Atualização (02/11/2026):** no MVP, a fila tem só MATERIAL (`decisoes.md` 56).
 
 Estados:
 
@@ -576,8 +580,8 @@ O MVP deverá permitir avaliar questões como:
 - os estudantes entendem a proposta do ConectaCC?
 - Estudos facilita o acesso a materiais?
 - estudantes têm interesse em compartilhar conteúdos?
-- a área Oportunidade é útil?
-- a Comunidade facilita a descoberta de colegas e interesses?
+- ~~a área Oportunidade é útil?~~ (fora do MVP)
+- ~~a Comunidade facilita a descoberta de colegas e interesses?~~ (fora do MVP)
 - os recursos institucionais ficam mais fáceis de encontrar?
 - o processo de Moderação é compreensível?
 - quais funcionalidades realmente geram valor?

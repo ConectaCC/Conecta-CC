@@ -11,6 +11,9 @@ O objetivo é servir como referência para:
 
 Os requisitos descritos aqui representam decisões de produto e não definem, por si só, a tecnologia que deverá ser utilizada.
 
+
+> **Escopo atual (02/11/2026):** Oportunidade, Comunidade (feed, publicações e canais) e a busca de estudantes saíram do MVP e ficam para a próxima versão (`decisoes.md` 56). Os requisitos e fluxos dessas áreas continuam neste documento como referência.
+
 ---
 
 # 1. Papéis de usuário
@@ -67,7 +70,7 @@ O usuário ALUNO não pode:
 O MODERADOR é um usuário com permissões adicionais para auxiliar na Moderação. Possui as funcionalidades comuns do usuário e também pode:
 
 - acessar as funções de Moderação que forem permitidas;
-- analisar Material, Publicação e Oportunidade;
+- analisar Material, Publicação e Oportunidade (no MVP, só Material — `decisoes.md` 56);
 - aprovar solicitações permitidas;
 - rejeitar solicitações permitidas, informando o motivo (obrigatório);
 - solicitar revisão/remoção de conteúdo já publicado.

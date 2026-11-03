@@ -65,6 +65,8 @@ Um protótipo navegável e documentado que possa servir como referência para im
 
 ## Situação
 
+> **Atualização (02/11/2026):** Oportunidade e Comunidade foram prototipadas, mas saíram do MVP (`decisoes.md` 56).
+
 **Concluída para o MVP atual.**
 
 As dez áreas principais foram prototipadas:
@@ -170,6 +172,8 @@ Transformar o protótipo em uma aplicação funcional.
 
 ## Ordem inicial sugerida
 
+> **Atualização (02/11/2026):** Oportunidade e Comunidade saíram do MVP (`decisoes.md` 56). Os itens 1 a 5, a Moderação de material e as Notificações já foram entregues. A ordem atual é: Perfil público, Configurações, painel `/admin`, responsividade, acessibilidade e testes.
+
 1. Fundação e autenticação
 2. Layout global
 3. Perfil
@@ -209,10 +213,7 @@ Identificar problemas antes de disponibilizar o sistema para estudantes particip
 - seleção de disciplinas;
 - Estudos;
 - compartilhamento de material;
-- Oportunidade;
-- indicação de oportunidade;
-- Comunidade;
-- busca de estudantes;
+- Meus conteúdos (editar, excluir e cancelar);
 - Perfil público;
 - alteração de senha;
 - Moderação;
@@ -242,7 +243,7 @@ Deverão ser resolvidos itens como:
 - confirmar tecnicamente o domínio ou os domínios institucionais do IFSul utilizados na validação do cadastro;
 - utilizar a Matriz 2023 como referência acadêmica inicial;
 - verificar posteriormente se será necessário contemplar estudantes vinculados à Matriz 2017;
-- definir disciplinas piloto;
+- ~~definir disciplinas piloto~~: todas as disciplinas têm área de materiais (`decisoes.md` 54.2);
 - concluir o levantamento dos links institucionais necessários;
 - revisar Termos de participação;
 - definir tratamento de dados;
@@ -262,6 +263,8 @@ Ela poderá ser avaliada como evolução futura do ConectaCC.
 A recuperação de senha continuará utilizando envio de e-mail normalmente.
 
 ## Disciplinas piloto
+
+> **Atualização (02/11/2026):** substituído. Todas as 49 disciplinas têm área de materiais desde o início (`decisoes.md` 54.2).
 
 O ConectaCC poderá iniciar a área de materiais com um número reduzido de disciplinas.
 
@@ -298,9 +301,7 @@ O grupo poderá ser limitado inicialmente para facilitar acompanhamento e análi
 - utilidade de Estudos;
 - facilidade para encontrar materiais;
 - interesse em compartilhar materiais;
-- utilidade de Oportunidade;
-- uso da Comunidade;
-- facilidade para encontrar estudantes;
+- utilidade de Meus conteúdos e das notificações;
 - compreensão da Moderação;
 - utilidade das notificações;
 - dificuldades de navegação;

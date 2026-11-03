@@ -50,36 +50,21 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 
 # Situação atual
 
-As dez áreas principais do MVP já foram prototipadas e congeladas:
+> **Atualização (02/11/2026):** a implementação está em andamento, e o escopo do MVP foi reduzido: Oportunidade e Comunidade ficaram para a próxima versão (`decisoes.md` 56).
 
-1. Login
-2. Cadastro + Termos
-3. Recuperação de senha
-4. Home
-5. Perfil
-6. Estudos
-7. Oportunidade
-8. Comunidade + Perfil público
-9. Configurações
-10. Moderação — ADMIN
+**Já implementado e publicado** (PRs #2 a #7):
 
-O protótipo representa a especificação visual e funcional planejada para o MVP.
+- fundação técnica (API Laravel, SPA React, CI, deploy no Render);
+- Cadastro, Login, Termos de participação (versão 0.2) e Home;
+- Perfil, com disciplinas atuais e o card "Complete seu perfil";
+- Estudos: catálogo da Matriz 2023, busca, página da disciplina e ementa oficial;
+- materiais por link, identificados ou anônimos, com Moderação de material;
+- Meus conteúdos: editar, excluir e cancelar envio;
+- notificações de material (sino, contador e painel).
 
-Isso **não significa que o sistema já esteja implementado em código**.
+**Ainda falta para o MVP:** ver a seção "O que ainda não está implementado".
 
-A etapa de:
-
-**Produto + UX + documentação do MVP**
-
-está considerada concluída para o checkpoint atual.
-
-O próximo marco será a apresentação do projeto à professora.
-
-Após esse checkpoint:
-
-- eventuais ajustes solicitados serão avaliados;
-- a arquitetura técnica será definida;
-- somente depois será iniciada a implementação em código.
+O protótipo das dez áreas continua sendo a referência visual. Ele inclui Oportunidade e Comunidade, que agora estão fora do MVP.
 
 ---
 
@@ -146,27 +131,30 @@ Atualmente estão definidos, entre outros:
 
 # O que ainda não está implementado
 
-Ainda precisam ser transformados em código:
+> **Atualização (02/11/2026):** lista revista depois das entregas de Estudos (partes 1 e 2) e da saída de Oportunidade e Comunidade do MVP.
 
-- autenticação real;
-- banco de dados;
-- Cadastro;
-- Login;
-- recuperação de senha;
-- papéis e autorização;
-- Home;
-- Perfil;
-- Estudos;
-- Oportunidade;
-- Comunidade;
-- Perfil público;
-- Configurações;
-- notificações;
-- Moderação;
-- integração entre os módulos;
-- persistência dos dados;
-- responsividade real;
-- testes automatizados e manuais.
+**Funcionalidades do MVP:**
+
+- **Perfil público:** a página de um estudante, vista pelos outros. O acesso será pelo nome do autor nos materiais.
+- **Configurações:** e-mail só para leitura e troca de senha, incluindo a política das outras sessões depois da troca.
+- **Painel `/admin` (Filament):** papéis, consulta de moderações e atendimento de exclusão de conta. Ele é necessário porque o Render não tem terminal.
+- **Recuperação de senha:** opcional (`decisoes.md` 52.9).
+
+**Operação:**
+
+- backup semanal do banco (`stack-e-decisoes-tecnicas.md`, decisão 10), que ainda não tem workflow;
+- monitor externo do `/up` e Sentry, com a configuração conferida no Render;
+- `TERMS_VERSION` em `0.2` no Render.
+
+**Antes do piloto** (`pendencias.md` §3):
+
+- revisar os Termos (dados, finalidade, disciplinas visíveis);
+- política de exclusão de conta e dados;
+- definir quem modera (mais de um MODERADOR, porque o MODERADOR não analisa o próprio envio);
+- orientação para escrever o motivo da rejeição;
+- levantamento dos recursos institucionais ainda pendentes.
+
+**Qualidade:** uma rodada de testes ponta a ponta de todos os módulos, cobrindo responsividade, acessibilidade, erros e concorrência (`implementacao.md` §19 a §21).
 
 ---
 
@@ -196,6 +184,8 @@ Caso sejam solicitadas alterações relevantes:
 ---
 
 ## 2. Definição da arquitetura técnica
+
+> **Atualização (02/11/2026):** concluída. Ver `stack-e-decisoes-tecnicas.md`.
 
 Após o checkpoint e eventuais ajustes, a equipe deverá definir como o sistema será construído.
 
@@ -228,6 +218,8 @@ A pergunta central dessa fase será: > **Como vamos construir o produto que já 
 
 Somente depois da definição da arquitetura será iniciada a implementação funcional do MVP.
 
+> **Atualização (02/11/2026):** em andamento. Já foram entregues a fundação, a autenticação, o Perfil, a Home, Estudos (partes 1 e 2), Moderação de material, Meus conteúdos e Notificações. Faltam o Perfil público, Configurações e o painel `/admin`.
+
 ---
 
 # Próximas atividades de produto
@@ -237,7 +229,7 @@ Após o checkpoint com a professora, permanecem atividades como:
 - concluir o levantamento dos recursos institucionais ainda pendentes;
 - decidir onde Informações e Serviços aparecerão no ConectaCC;
 - confirmar tecnicamente o domínio institucional utilizado no cadastro;
-- definir disciplinas piloto;
+- ~~definir disciplinas piloto~~: todas as disciplinas têm área de materiais (`decisoes.md` 54.2);
 - verificar posteriormente se será necessário contemplar estudantes vinculados à Matriz 2017;
 - revisar os Termos antes do piloto;
 - definir política de exclusão e retenção de dados;
@@ -248,13 +240,15 @@ Após o checkpoint com a professora, permanecem atividades como:
 - analisar resultados;
 - priorizar melhorias.
 
-A decisão sobre apresentar ou não publicamente a autoria dos materiais será retomada apenas no próximo semestre, após os primeiros testes com estudantes.
+> **Atualização (02/11/2026):** a autoria foi decidida antes do previsto. O material mostra o nome do autor, e o autor pode escolher compartilhar anonimamente (`decisoes.md` 55.2).
 
 # Decisões futuras que não bloqueiam o projeto
 
 Algumas decisões foram propositalmente adiadas para o momento em que realmente serão necessárias.
 
 ## Antes da implementação de Notificações
+
+> **Atualização (02/11/2026):** resolvido. Clicar marca como lida e leva ao conteúdo: uma aprovação abre a disciplina, e uma rejeição abre o item em Meus conteúdos (`decisoes.md` 55.5).
 
 Definir:
 
@@ -270,6 +264,8 @@ Retomar:
 - levantamento dos links institucionais ainda pendentes.
 
 ## Próximo semestre
+
+> **Atualização (02/11/2026):** resolvido antes do previsto (`decisoes.md` 55.2).
 
 Avaliar, após os primeiros testes:
 
