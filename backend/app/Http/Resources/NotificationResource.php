@@ -25,6 +25,8 @@ final class NotificationResource extends JsonResource
         $data = $this->data;
         // só MaterialDecided grava notificações; um tipo desconhecido é erro de programação, não dado do usuário
         [$title, $detail, $approved] = self::TEXTS[$data['kind']] ?? throw new UnexpectedValueException("Tipo de notificação desconhecido: {$data['kind']}");
+        // (bool) explícito: sem ele o Scramble deduz o tipo pelo array de textos e documenta "ok" como string
+        $approved = (bool) $approved;
 
         return [
             'id' => (string) $this->id,
