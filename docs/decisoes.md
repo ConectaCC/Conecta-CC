@@ -1134,6 +1134,8 @@ Salvar, Compartilhar, Copiar link, Denunciar, notificações por disciplina, mó
 - Filtro por tipo em Meus conteúdos: avaliar se for simples. Busca textual fica para o futuro.
 - Continuam futuros: histórico de versões, linha do tempo, comparação antes/depois, auditoria completa, mostrar ao usuário comum quem moderou, portfólio, métricas, reavaliação e restauração pelo usuário.
 
+> **Atualização (04/11/2026):** o filtro por tipo e a busca textual em Meus conteúdos ficam fora do MVP (§60).
+
 ---
 
 # 53. Perfil e catálogo de disciplinas — 19/10/2026
@@ -1256,6 +1258,8 @@ A parte 2 é entregue em três etapas, cada uma funcionando de ponta a ponta:
 - **Links equivalentes** contam como repetidos: a porta padrão (`:443` e `:80`) some, um endereço sem caminho ganha `/`, e domínios com acento são guardados na forma acentuada (`xn--…` e `münchen.de` viram o mesmo). A imagem de produção ganhou a extensão `intl` para isso.
 - **Bytes nulos** são removidos do texto recebido em toda a API, porque o PostgreSQL recusa gravar esses bytes.
 
+> **Atualização (04/11/2026):** os filtros de Meus conteúdos no MVP são só por situação (§60).
+
 ## 55.7 Escolhas da etapa 2c (Notificações)
 
 - **Uma classe de notificação:** os quatro eventos usam uma só classe (`MaterialDecided`), que muda apenas o tipo. A spec citava quatro classes.
@@ -1372,3 +1376,19 @@ A única cor de fundo especial do item da lista é a de não lida. Ao passar o m
 ## 59.2 Ponto de atenção
 
 O número branco sobre `#C65A2E` tem contraste de 4,28:1, abaixo do mínimo de 4,5:1 (WCAG AA) para texto pequeno. A cor foi aplicada como definida. Leitores de tela não dependem dela, porque o botão anuncia a quantidade de não lidas.
+
+---
+
+# 60. Filtros de Meus conteúdos — 04/11/2026
+
+Revisão de Produto. A implementação atual está correta e não muda. Esta decisão resolve o ponto do filtro por tipo que estava em aberto em §52.11.
+
+## 60.1 O que fica no MVP
+
+Só os filtros por situação: **Todos**, **Em andamento**, **Aprovados**, **Rejeitados** e **Excluídos**.
+
+## 60.2 O que fica para o futuro
+
+O **filtro por tipo de conteúdo** e a **busca textual** ficam de fora de propósito. Não são funcionalidades esquecidas.
+
+No escopo atual, Meus conteúdos trabalha só com Material, então um filtro por tipo não teria utilidade. Se outros tipos de conteúdo entrarem nessa área, a necessidade será revista.
