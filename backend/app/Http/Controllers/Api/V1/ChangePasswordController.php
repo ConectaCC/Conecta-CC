@@ -13,7 +13,8 @@ final class ChangePasswordController
         $session = $request->session();
         $changePassword->handle($request->user(), $request->string('password')->value(), $session->getId());
 
-        // true apaga o id antigo: um cookie roubado não pode sobreviver à troca
+        // true apaga já a linha antiga, sem depender da checagem de hash do AuthenticateSession
+        // shortcut: resposta em andamento com o cookie antigo pode deslogar este aparelho, trocar se houver relato no piloto
         $session->regenerate(true);
 
         return response()->noContent();

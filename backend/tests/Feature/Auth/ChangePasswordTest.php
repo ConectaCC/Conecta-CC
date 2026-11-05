@@ -120,6 +120,36 @@ it('limita a 5 tentativas por usuário', function () {
     changePassword($this, passwordOwner())->assertNoContent();
 });
 
+it('com sessão real, o cookie antigo deixa de valer e o novo continua', function () {
+    // o phpunit.xml usa o driver array; a regra só existe de verdade com as linhas na tabela sessions
+    config(['session.driver' => 'database']);
+    app('session')->forgetDrivers();
+    $user = passwordOwner();
+    $name = config('session.cookie');
+    $withSession = function (string $id) use ($name) {
+        app('auth')->forgetGuards();
+        app()->forgetInstance('session.store');
+        app('session')->forgetDrivers();
+
+        return $this->withCredentials()->withCookie($name, $id);
+    };
+
+    $old = $this->withCredentials()->postJson('/api/v1/login', ['email' => $user->email, 'password' => OLD_PASSWORD])
+        ->assertOk()->getCookie($name)->getValue();
+    $withSession($old)->getJson('/api/v1/me')->assertOk();
+
+    $new = $withSession($old)->putJson('/api/v1/me/password', [
+        'current_password' => OLD_PASSWORD,
+        'password' => 'senha-nova-1',
+        'password_confirmation' => 'senha-nova-1',
+    ])->assertNoContent()->getCookie($name)->getValue();
+
+    expect($new)->not->toBe($old)
+        ->and(DB::table('sessions')->where('id', $old)->exists())->toBeFalse();
+    $withSession($old)->getJson('/api/v1/me')->assertUnauthorized();
+    $withSession($new)->getJson('/api/v1/me')->assertOk();
+});
+
 it('exige sessão', function () {
     $this->putJson('/api/v1/me/password', [])->assertUnauthorized();
 });

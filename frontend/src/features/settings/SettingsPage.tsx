@@ -1,6 +1,7 @@
 import { Loader2 } from 'lucide-react';
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
+import type { Location } from 'react-router';
 import { FormAlert } from '@/components/FormAlert';
 import { useUnsavedChangesGuard } from '@/components/layout/useUnsavedChangesGuard';
 import { Skeleton } from '@/components/Skeleton';
@@ -24,10 +25,16 @@ const required = (
   </span>
 );
 
+// o link da sidebar para esta página não sai dela, então não há o que descartar
+function isSamePage(current: Location, next: Location) {
+  return current.pathname === next.pathname;
+}
+
 export function SettingsPage() {
   const me = useMe();
   const email = me.data?.email ?? '';
   const change = useChangePassword();
+  const noticeRef = useRef<HTMLDivElement>(null);
   const [saved, setSaved] = useState(false);
   const [problem, setProblem] = useState<string | null>(null);
   // trocar a key recria os campos, e as senhas voltam a ficar ocultas
@@ -38,10 +45,21 @@ export function SettingsPage() {
     setError,
     resetField,
     reset,
+    setFocus,
     getValues,
     formState: { errors, isDirty, isSubmitting },
   } = useForm<ChangePasswordInput>({ defaultValues: EMPTY });
-  const { dialogProps } = useUnsavedChangesGuard(isDirty);
+  const { dialogProps } = useUnsavedChangesGuard(isDirty, isSamePage);
+
+  // o envio não é cancelado ao sair: o diálogo espera o resultado e, se a senha mudou, a pessoa fica e vê o aviso
+  useEffect(() => {
+    if (saved && dialogProps.open) dialogProps.onContinue();
+  }, [saved, dialogProps]);
+
+  // os campos são recriados no sucesso e o campo com foco some: o foco vai para o aviso
+  useEffect(() => {
+    if (saved) noticeRef.current?.focus();
+  }, [saved]);
 
   const clearNotices = () => {
     setSaved(false);
@@ -113,9 +131,17 @@ export function SettingsPage() {
 
           <form noValidate onSubmit={submitOnce} aria-labelledby="configuracoes-senha" className="mt-5 max-w-[440px] space-y-5">
             {saved && (
-              <FormAlert variant="success" onDismiss={() => setSaved(false)}>
-                Senha alterada com sucesso.
-              </FormAlert>
+              <div ref={noticeRef} tabIndex={-1} className="outline-none">
+                <FormAlert
+                  variant="success"
+                  onDismiss={() => {
+                    setSaved(false);
+                    setFocus('current_password');
+                  }}
+                >
+                  Senha alterada com sucesso.
+                </FormAlert>
+              </div>
             )}
             {problem && <FormAlert variant="danger">{problem}</FormAlert>}
 
@@ -128,6 +154,7 @@ export function SettingsPage() {
               type="password"
               autoComplete="current-password"
               visibilityLabel="senha atual"
+              aria-required
               readOnly={isSubmitting}
               error={errors.current_password?.message}
               {...register('current_password', { required: 'Informe sua senha atual.', onChange: clearNotices })}
@@ -138,6 +165,7 @@ export function SettingsPage() {
               type="password"
               autoComplete="new-password"
               visibilityLabel="nova senha"
+              aria-required
               readOnly={isSubmitting}
               hint={errors.password ? undefined : MIN_LENGTH}
               error={errors.password?.message}
@@ -153,6 +181,7 @@ export function SettingsPage() {
               type="password"
               autoComplete="new-password"
               visibilityLabel="confirmação da nova senha"
+              aria-required
               readOnly={isSubmitting}
               error={errors.password_confirmation?.message}
               {...register('password_confirmation', {
@@ -176,7 +205,7 @@ export function SettingsPage() {
         </section>
       </div>
 
-      <DiscardChangesDialog {...dialogProps} description="As alterações feitas ainda não foram salvas." />
+      <DiscardChangesDialog {...dialogProps} open={dialogProps.open && !isSubmitting} description="As alterações feitas ainda não foram salvas." />
     </div>
   );
 }
