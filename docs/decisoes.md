@@ -1317,3 +1317,58 @@ A URL usa um **código público aleatório e não sequencial** (`/estudantes/<c�
 
 O link "Voltar" retorna à página anterior, ou a Estudos quando o perfil foi aberto direto pelo endereço. Perfil inexistente mostra "Este perfil não está disponível." com "Voltar para Estudos".
 
+
+---
+
+# 58. Cores dos status — 04/11/2026
+
+Decisão de Produto para manter uma semântica única e evitar interpretações diferentes entre telas.
+
+## 58.1 A regra
+
+| Status ou tag | Cor |
+|---|---|
+| PENDENTE / EM ANÁLISE / EM REVISÃO | amarelo |
+| APROVADO | verde |
+| REJEITADO | vermelho |
+| EXCLUÍDO / RETIRADO | vermelho |
+| CANCELADO | cinza neutro |
+| EDITADO / ALTERAÇÃO | laranja |
+
+- **Amarelo:** algo ainda aguarda decisão ou análise.
+- **Verde:** resultado positivo.
+- **Vermelho:** resultado negativo ou conteúdo retirado.
+- **Cinza:** fluxo encerrado de forma neutra e voluntária pelo próprio usuário.
+- **Laranja:** houve modificação, sem substituir o status principal de Moderação.
+
+## 58.2 Alteração é indicação adicional
+
+"Editado/Alteração" não substitui PENDENTE, APROVADO ou REJEITADO. Um material pode continuar **Aprovado** e ter também a tag **Alteração** quando houver edição relacionada.
+
+## 58.3 Onde vale
+
+- **Meus conteúdos:** o status de cada item e a tag Alteração quando o item tem alteração em análise ou não aprovada.
+- **Moderação:** Pendente em amarelo e Alteração em laranja, na fila e no painel de análise.
+- **Detalhes do envio, histórico, Perfil público, painel `/admin` e módulos futuros:** se o mesmo status aparecer, vale a mesma cor.
+
+A informação não depende só da cor: a tag sempre traz o texto. No front, a regra fica em um único componente, `StatusTag`.
+
+Isso muda o que estava implementado: EXCLUÍDO era cinza e Alteração era neutra. No painel de análise, o destaque de "Alteração proposta" deixa de ser azul e passa a laranja **(escolha do Claude)**.
+
+---
+
+# 59. Cores das Notificações — 04/11/2026
+
+Revisão de Produto do painel de Notificações. Todo o comportamento de §55.5 e §55.7 continua igual: clicar marca como lida e leva ao conteúdo, "Marcar todas como lidas", contador até `9+`, mais recentes primeiro, lidas continuam no painel, indicação "Nova", tempo relativo e polling.
+
+## 59.1 O que muda
+
+- **Contador do sino:** `#C65A2E`, no lugar do vermelho `#B42318`.
+- **Notificação não lida:** fundo `#D9E9F8`, no lugar de `#EEF7FC`. Depois de lida, volta ao fundo normal do painel.
+- **Aprovação e rejeição:** os ícones ✓ e ✕ não têm mais fundo verde ou vermelho. A apresentação é neutra e o resultado é comunicado pelo ícone, pelo título e pelo texto.
+
+A única cor de fundo especial do item da lista é a de não lida. Ao passar o mouse, a não lida fica um pouco mais clara e mantém o tom azul **(escolha do Claude)**.
+
+## 59.2 Ponto de atenção
+
+O número branco sobre `#C65A2E` tem contraste de 4,28:1, abaixo do mínimo de 4,5:1 (WCAG AA) para texto pequeno. A cor foi aplicada como definida. Leitores de tela não dependem dela, porque o botão anuncia a quantidade de não lidas.

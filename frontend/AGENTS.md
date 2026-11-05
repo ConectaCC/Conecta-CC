@@ -12,7 +12,7 @@ React 19 + TypeScript (Vite), React Router (`createBrowserRouter`), TanStack Que
 |---|---|
 | `app/router.tsx` | todas as rotas, com os guards `RequireAuth`, `GuestOnly` e `RequireModeration` |
 | `features/<area>/` | uma pasta por área, com nome em inglês: `auth`, `home`, `profile`, `studies`, `materials`, `moderation`, `my-contents`, `notifications`, `students`. Guarda as páginas, os componentes da área e um `hooks.ts` com as consultas |
-| `components/` | componentes compartilhados da casa: `TextField`, `FormAlert`, `Skeleton`, `Chip`, `TagInput`, `DisciplinePicker`, `Brand` |
+| `components/` | componentes compartilhados da casa: `TextField`, `FormAlert`, `Skeleton`, `Chip`, `StatusTag`, `TagInput`, `DisciplinePicker`, `Brand` |
 | `components/ui/` | componentes gerados pelo CLI do shadcn (`docker compose exec frontend npx --yes shadcn@latest add <nome> --yes`). Não reescrever à mão |
 | `components/layout/` | `AppLayout`, `Sidebar`, `Header`, `UserAvatar` e a guarda de alterações não salvas (`LeaveGuardProvider`) |
 | `lib/api/` | `client.ts` (openapi-fetch com cookie e `X-XSRF-TOKEN`), `errors.ts` (`call`, `ApiError`, `NetworkError`) e `schema.d.ts` (**gerado**) |
@@ -50,6 +50,7 @@ Os textos de tela são **exatamente** os da spec e do protótipo.
 ## Visual
 
 - **Cores:** use os tokens de `index.css` (`navy-900`, `navy-950`, `action`, `functional`, `glow`, `ice`, `danger`, `success`…) e as cores do shadcn (`foreground`, `muted-foreground`). Não use hex solto, salvo onde o padrão já existe.
+- **Status de conteúdo:** sempre com `StatusTag`, que guarda a cor de cada status (`docs/decisoes.md` 58). `Chip` é só para rótulos neutros. Não defina a cor de um status em outra tela.
 - **Card padrão:** `rounded-2xl border border-blue-200/70 bg-white p-6|p-7`.
 - **Títulos:** `font-display font-bold`. O `h1` da página é `text-4xl` (ou `text-3xl sm:text-4xl` quando o título vem de dado e pode ser longo).
 - **Grades responsivas:** `grid gap-4 sm:grid-cols-2 lg:grid-cols-3`, com 1 coluna no mobile.

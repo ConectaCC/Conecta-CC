@@ -223,6 +223,33 @@ Pode ser utilizado para:
 
 ---
 
+## Status e tags de conteúdo
+
+> **Atualização (04/11/2026):** a cor de um status tem o mesmo significado em todas as telas (`decisoes.md` 58).
+
+| Status ou tag | Cor | Significado | Tokens |
+|---|---|---|---|
+| PENDENTE / EM ANÁLISE / EM REVISÃO | amarelo | aguardando decisão ou análise | `warning`, `warning-bg` |
+| APROVADO | verde | resultado positivo | `success`, `success-bg` |
+| REJEITADO | vermelho | resultado negativo | `danger`, `danger-bg` |
+| EXCLUÍDO / RETIRADO | vermelho | conteúdo retirado | `danger`, `danger-bg` |
+| CANCELADO | cinza neutro | encerrado de forma voluntária pelo próprio usuário | `slate-100`, `muted-foreground` |
+| EDITADO / ALTERAÇÃO | laranja | houve modificação | `change`, `change-bg` |
+
+"Editado/Alteração" é uma indicação adicional e nunca substitui o status de Moderação. A tag sempre traz o texto: a informação não depende só da cor.
+
+---
+
+## Notificações
+
+> **Atualização (04/11/2026):** o painel de Notificações usa cores próprias (`decisoes.md` 59).
+
+- Contador do sino: `#C65A2E` (token `badge`).
+- Fundo da notificação não lida: `#D9E9F8` (token `unread`).
+- Ícones de aprovação e rejeição: neutros, sem fundo verde ou vermelho.
+
+---
+
 # 5. Marca ConectaCC
 
 A marca textual utiliza:
