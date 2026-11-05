@@ -99,7 +99,7 @@ O ADMINISTRADOR possui as funcionalidades comuns do usuário e também pode:
 - moderar, inclusive o próprio conteúdo;
 - revisar decisões de Moderação;
 - reverter rejeições;
-- retirar conteúdo previamente aprovado/publicado;
+- retirar conteúdo previamente aprovado/publicado — **Pós-MVP / evolução futura** (`decisoes.md` 63);
 - nomear MODERADORES e remover o papel de MODERADOR;
 - gerenciar papéis e permissões;
 - consultar as informações administrativas necessárias;
@@ -108,6 +108,8 @@ O ADMINISTRADOR possui as funcionalidades comuns do usuário e também pode:
 Nas áreas públicas, o ADMINISTRADOR vê a autoria de conteúdo anônimo como “Comunidade”, igual aos demais usuários. Isso não significa acesso irrestrito a todos os dados.
 
 A UX completa do painel administrativo e o fluxo detalhado das ações de MODERADOR e ADMINISTRADOR (revisão, reversão, retirada, auditoria) serão definidos em rodada específica.
+
+> **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado não é necessária para concluir o `/admin` do MVP (`decisoes.md` 63).
 
 ---
 

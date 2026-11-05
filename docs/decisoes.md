@@ -1202,6 +1202,8 @@ A parte 2 é entregue em três etapas, cada uma funcionando de ponta a ponta:
 
 "Retirar material aprovado" e "solicitar revisão" ficam para uma rodada própria.
 
+> **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado foi classificada como pós-MVP (§63).
+
 ## 55.2 Autoria com opção de anônimo
 
 - O material mostra o **nome de exibição** do autor.
@@ -1455,3 +1457,55 @@ Com texto branco, `#C65A2E` tem contraste de 4,28:1, abaixo do mínimo de 4,5:1 
 - **Ação concluída com sucesso:** aviso verde.
 
 Depois que a Moderação rejeita um conteúdo, o aviso "Conteúdo rejeitado." continua verde, porque confirma que a ação deu certo. Em vermelho, ele poderia ser confundido com uma falha ao rejeitar.
+
+---
+
+# 63. Retirada administrativa de conteúdo aprovado — 04/11/2026
+
+Decisão de Produto. **Classificação: evolução futura / pós-MVP.**
+
+A retirada administrativa de conteúdo já aprovado/publicado pelo ADMINISTRADOR permanece prevista, mas é uma funcionalidade pós-MVP. O MVP pode ser considerado concluído sem esse fluxo.
+
+No futuro, o ADMINISTRADOR poderá retirar um conteúdo publicado quando houver necessidade administrativa, por exemplo:
+
+- conteúdo aprovado por engano;
+- informação posteriormente identificada como incorreta;
+- link inválido ou inadequado;
+- conteúdo desatualizado;
+- problema identificado após a publicação;
+- outras situações administrativas justificadas.
+
+## 63.1 Regra atual para o MVP
+
+Não implementar agora:
+
+- botão de retirada administrativa;
+- endpoint específico para retirada;
+- fluxo de reversão de aprovação;
+- notificações relacionadas;
+- estados administrativos adicionais decorrentes dessa ação;
+- tela específica para esse processo.
+
+O `/admin` do MVP não precisa ter essa funcionalidade.
+
+## 63.2 Regra futura
+
+Quando essa funcionalidade entrar no escopo:
+
+- somente o ADMINISTRADOR poderá realizar a retirada administrativa;
+- o conteúdo deverá deixar de ficar disponível publicamente;
+- a aprovação anterior não deverá ser apagada nem sobrescrita silenciosamente;
+- a ação de retirada deverá ficar registrada nos logs/histórico de auditoria;
+- deverá ser preservado o registro de que o conteúdo havia sido aprovado;
+- o MODERADOR não poderá retirar diretamente um conteúdo publicado.
+
+## 63.3 O que será definido na implementação futura
+
+- necessidade de justificativa obrigatória;
+- status final utilizado, como RETIRADO ou equivalente;
+- possibilidade ou não de restaurar o conteúdo;
+- notificação ao autor;
+- impacto em Meus conteúdos;
+- informações exibidas no histórico;
+- comportamento caso exista uma alteração pendente;
+- regras específicas de auditoria.
