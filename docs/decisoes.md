@@ -1180,6 +1180,7 @@ Todas as 49 disciplinas do catálogo têm área de materiais. Não existe lista 
 
 - Todas as disciplinas aparecem agrupadas por semestre (1º a 8º), em ordem alfabética dentro de cada grupo. A busca ignora acentos e maiúsculas.
 - Cada semestre abre e fecha ao clicar, e todos começam fechados. Durante a busca, os semestres com resultado abrem sozinhos.
+- No card da disciplina, o selo "Minha disciplina" fica no canto superior direito, na mesma linha do nome.
 - A página da disciplina mostra semestre e carga horária junto do link "Ver ementa oficial".
 - O endereço é legível: `/estudos/estrutura-de-dados-iii`. O slug é calculado a partir do nome e não fica guardado no banco.
 

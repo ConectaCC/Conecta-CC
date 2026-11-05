@@ -11,9 +11,9 @@ React 19 + TypeScript (Vite), React Router (`createBrowserRouter`), TanStack Que
 | Pasta | Papel |
 |---|---|
 | `app/router.tsx` | todas as rotas, com os guards `RequireAuth`, `GuestOnly` e `RequireModeration` |
-| `features/<area>/` | uma pasta por área, com nome em inglês: `auth`, `home`, `profile`, `studies`. Guarda as páginas, os componentes da área e um `hooks.ts` com as consultas |
+| `features/<area>/` | uma pasta por área, com nome em inglês: `auth`, `home`, `profile`, `studies`, `materials`, `moderation`, `my-contents`, `notifications`, `students`. Guarda as páginas, os componentes da área e um `hooks.ts` com as consultas |
 | `components/` | componentes compartilhados da casa: `TextField`, `FormAlert`, `Skeleton`, `Chip`, `TagInput`, `DisciplinePicker`, `Brand` |
-| `components/ui/` | componentes gerados pelo shadcn. Não reescrever à mão |
+| `components/ui/` | componentes gerados pelo CLI do shadcn (`docker compose exec frontend npx --yes shadcn@latest add <nome> --yes`). Não reescrever à mão |
 | `components/layout/` | `AppLayout`, `Sidebar`, `Header`, `UserAvatar` e a guarda de alterações não salvas (`LeaveGuardProvider`) |
 | `lib/api/` | `client.ts` (openapi-fetch com cookie e `X-XSRF-TOKEN`), `errors.ts` (`call`, `ApiError`, `NetworkError`) e `schema.d.ts` (**gerado**) |
 | `pages/` | `UnderConstructionPage`, para áreas que ainda não existem |
@@ -29,6 +29,7 @@ React 19 + TypeScript (Vite), React Router (`createBrowserRouter`), TanStack Que
 - **Catálogos que não mudam** (disciplinas) usam `staleTime: Infinity`. Um filtro sobre uma lista pequena e já carregada roda no navegador, sem endpoint novo.
 - **Padrões globais do `queryClient`:** `retry: false` e `refetchOnWindowFocus: false`.
 - **Mutações:** chamam `await ensureCsrfCookie()` antes do envio. No sucesso, atualizam o cache (`setQueryData`) e invalidam `['me']` quando header ou Home dependem do dado.
+- **Conflitos (409):** `ApiError.code` traz o motivo (`material_cancelled`, `link_taken`…). Decida pelo código, nunca pelo texto da mensagem.
 - **Mudou a API?** Rode `make api-types`. Nunca edite `schema.d.ts` nem `openapi.json` à mão.
 
 ## Estados de tela
@@ -64,6 +65,8 @@ Os textos de tela são **exatamente** os da spec e do protótipo.
   - abre com `target="_blank" rel="noopener noreferrer"`;
   - leva o ícone `ExternalLink` com `aria-hidden`;
   - leva um `span.sr-only` com "(abre em nova guia, <host>)".
+- **Foco depois de uma ação:** quando o botão clicado some, leve o foco para o aviso de resultado ou para um título (`tabIndex={-1}`), usando `onCloseAutoFocus` nos diálogos.
+- **Diálogos e menus:** use `showCloseButton={false}` (o X do shadcn diz "Close") e um botão em português. `DropdownMenu` que abre diálogo usa `modal={false}`.
 - Um card clicável é **um único link**. O breadcrumb fica em `nav aria-label="Trilha"`, com `aria-current="page"` no item atual.
 - Foco visível, alvos de toque de pelo menos 44px no mobile, e estados que não dependem só de cor.
 
@@ -79,7 +82,7 @@ Os textos de tela são **exatamente** os da spec e do protótipo.
 - **Sempre:** `make lint` (ESLint + `tsc`). O CI também roda o build.
 - **Testes:**
   - Ainda **não há Vitest nem Playwright no repositório**. Eles entram depois da liberação (decisão 11).
-  - Até lá, a prova de cada entrega é um roteiro **Playwright headless fora do repositório** (no scratchpad), com uma asserção por item da spec.
+  - Até lá, a prova de cada entrega é um roteiro **Playwright headless fora do repositório** (no scratchpad), com uma asserção por item da spec. O scratchpad pode ser apagado entre sessões, então os roteiros precisam ser recriados. Muitos logins seguidos esbarram no limite: rode `php artisan cache:clear` antes.
   - O roteiro roda em desktop (1440×900) e mobile (390×844).
   - Ele cobre recarregar a página em rota profunda, erro de API (`page.route(..., r => r.abort())`) e as entradas do "Foco de revisão" do plano.
 - Confira o visual por screenshot antes de dar a entrega como pronta.

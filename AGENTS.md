@@ -26,6 +26,7 @@ Plataforma acadêmica para estudantes de Ciência da Computação do IFSul – C
 
 ## Fonte de verdade do produto
 
+- **Escopo atual:** Oportunidade, Comunidade e busca de estudantes estão fora do MVP (`decisoes.md` 56). O que falta está em `docs/status-mvp.md`.
 - **Requisitos:** `docs/requisitos.md` (RF-xx). **Fluxos:** `docs/fluxos.md`. **Decisões:** `docs/decisoes.md`.
 - **Visual:** o protótipo congelado (link em `design/README.md`). Layout, textos e estados de tela seguem o protótipo, salvo decisão registrada em contrário.
 - **Funcionalidade prototipada não é funcionalidade implementada.** Confira `docs/status-mvp.md` e `docs/implementacao.md`.
@@ -44,7 +45,7 @@ Plataforma acadêmica para estudantes de Ciência da Computação do IFSul – C
 2. **Plano:** `docs/plans/AAAA-MM-DD-<tema>.md`, com tarefas pequenas, arquivos, interfaces e verificação.
 3. **Branch:** `feat/<tema>` a partir da `main`, com commits pequenos por tarefa.
 4. **Docs no fim:** atualizar `decisoes.md`, `pendencias.md`, `implementacao.md`, `status-mvp.md` e o README conforme a spec (ver `docs/AGENTS.md`).
-5. **PR para a `main`:** o CI precisa estar verde (checks `backend`, `frontend`, `docker`, `gitleaks`). O merge é feito com **merge commit**, como nos PRs #1 a #3.
+5. **PR para a `main`:** o CI precisa estar verde (checks `backend`, `frontend`, `docker`, `gitleaks`). O merge é feito com **merge commit**, como nos PRs anteriores.
 
 Uma escolha que o time não fez e o agente fez fica marcada na spec como **(escolha do Claude)**, para ser revista.
 

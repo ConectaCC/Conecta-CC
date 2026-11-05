@@ -270,6 +270,8 @@ Definir:
 
 ## 2.3 Autorização ALUNO e ADMIN
 
+> **Atualização (04/11/2026):** resolvido: enum `Role` com permissões explícitas, Gate `access-moderation` e `MaterialPolicy`, tudo no backend.
+
 Garantir tecnicamente que:
 
 - somente ADMIN consulte conteúdos pendentes;
@@ -283,6 +285,8 @@ Essa proteção deve existir no backend e no banco, e não apenas na interface.
 
 ## 2.4 Concorrência na Moderação
 
+> **Atualização (04/11/2026):** resolvido: a decisão é um `UPDATE ... WHERE status = 'PENDENTE'`. A segunda tentativa recebe 409 e não altera nada.
+
 Caso dois administradores analisem o mesmo conteúdo:
 
 - a primeira decisão válida deve prevalecer;
@@ -295,6 +299,8 @@ O sistema deverá apresentar o estado:
 ---
 
 ## 2.5 Sessões após alteração ou recuperação de senha
+
+> **Atualização (04/11/2026):** continua pendente. Precisa ser decidido na entrega de Configurações.
 
 Definir se outras sessões ativas serão:
 
@@ -382,6 +388,8 @@ O aceite só deve ser registrado quando a conta for efetivamente criada.
 ---
 
 ## 2.10 Validação de URLs
+
+> **Atualização (04/11/2026):** resolvido também para links de material: `MaterialUrl` aceita só http e https, com host válido, e normaliza porta padrão, barra final e domínios com acento (`decisoes.md` 55.6).
 
 Na implementação, validar no servidor:
 

@@ -121,6 +121,8 @@ Se não houver alterações relevantes:
 
 # Fase 2 — Definição da arquitetura técnica
 
+> **Atualização (04/11/2026):** concluída. Ver `stack-e-decisoes-tecnicas.md`.
+
 ## Objetivo
 
 Definir como o MVP será construído.
@@ -165,6 +167,8 @@ A arquitetura não deve alterar requisitos de produto apenas para facilitar a im
 ---
 
 # Fase 3 — Implementação do MVP
+
+> **Atualização (04/11/2026):** em andamento. O estado atual está em `status-mvp.md`.
 
 ## Objetivo
 
@@ -342,13 +346,7 @@ Transformar feedback em decisões de produto.
 - avaliar a percepção dos estudantes sobre a autoria pública dos materiais;
 - corrigir problemas.
 
-A decisão sobre manter os materiais como:
-
-**Compartilhado pela comunidade**
-
-ou apresentar a autoria publicamente será retomada:
-
-**no próximo semestre, após os primeiros testes com estudantes.**
+> **Atualização (04/11/2026):** a autoria foi decidida antes do previsto. O material mostra o nome do autor, com a opção "Compartilhar anonimamente" (`decisoes.md` 55.2). Depois dos testes, vale avaliar se essa escolha funcionou bem.
 
 ## Resultado esperado
 

@@ -15,7 +15,8 @@ PHP 8.4, Laravel 13, PostgreSQL 17, Sanctum (sessão por cookie, mesma origem da
 | `app/Actions/` | uma classe por caso de uso, com o método `handle(...)` | `UpdateProfile`, `RegisterUser` |
 | `app/Http/Resources/` | formato JSON de saída | `ProfileResource`, `DisciplineResource` |
 | `app/Models/` | Eloquent, casts, relações e accessors | `Discipline::slug` |
-| `app/Support/` | helpers puros, sem HTTP | `ProfileUrl`, `DisciplineCatalog` |
+| `app/Support/` | helpers puros e regras reaproveitadas | `ProfileUrl`, `MaterialUrl`, `DisciplineCatalog`, `Conflict`, `MaterialSubmissionLimit` |
+| `app/Notifications/` | notificações nativas do Laravel (canal `database`) | `MaterialDecided` |
 | `app/Rules/` | regras de validação próprias | `InstitutionalEmail` |
 | `app/Enums/` | enums com permissões explícitas | `Role::canModerate()` |
 | `app/Console/Commands/` | comandos artisan (`conectacc:*`) | `PromoteUser` |
@@ -44,6 +45,12 @@ final class UpdateProfileController
 - O Scramble gera o OpenAPI a partir dos tipos. Todo Resource declara o formato exato em `/** @return array{...} */`, com `string|null` quando aceita nulo. Todo Request tem regras completas.
 - Depois de qualquer mudança na API, rode `make api-types` e commite `frontend/openapi.json` e `frontend/src/lib/api/schema.d.ts`. O CI falha se estiverem desatualizados.
 - Para adicionar um campo calculado ao JSON, prefira um accessor no model (`Attribute::get`) a uma coluna nova, quando não for preciso consultar o banco por ele.
+- **Armadilhas do Scramble:**
+  - comentário dentro do array do Resource vira descrição pública na API: nota interna fica fora do array;
+  - um valor tirado de array misto pode ser documentado com o tipo errado: converta (`(bool)`) antes;
+  - paginação a partir de relação (`$user->materials()`) pode ser documentada como array simples: parta de `Model::query()`;
+  - parâmetro de query lido implicitamente, como `cursor`, precisa de `#[QueryParameter]`.
+- **Parâmetros de rota:** todo parâmetro tem formato restrito em `Route::pattern` (`AppServiceProvider`), para que um valor inválido dê 404, e não 500 no PostgreSQL.
 
 ## Validação e mensagens
 
@@ -52,6 +59,7 @@ final class UpdateProfileController
 - **Payload malformado** (string no lugar de array, array no lugar de string) devolve **422 com mensagem, nunca 500**.
 - **Limites de texto provisórios** ficam em constantes `MAX_*` no Request, com `// shortcut: teto provisório até a definição de pendencias.md 2.7`.
 - **Links externos** aceitam só `http`/`https`, validados no servidor. GitHub e LinkedIn aceitam só o endereço do perfil da pessoa (`decisoes.md` 53.3).
+- **Conteúdo do estudante:** o limite de 10 envios ou edições por hora está em `MaterialSubmissionLimit` e conta só o que deu certo. Bytes nulos são removidos da entrada pelo middleware `StripNullBytes`.
 - **Limite de tentativas:** fica em `AppServiceProvider` (`RateLimiter::for`). Login e Cadastro aceitam 5 por minuto. A resposta 429 diz "Muitas tentativas. Tente novamente em X segundos."
 
 ## Autorização
@@ -61,11 +69,18 @@ final class UpdateProfileController
 - O MODERADOR não modera o próprio conteúdo, nem vê o próprio envio na fila. O ADMINISTRADOR pode moderar o próprio conteúdo (`decisoes.md` §51.2). Duas decisões de Moderação nunca se sobrescrevem (`implementacao.md` §15). Garanta tudo isso no backend (Policy e `UPDATE ... WHERE status = 'PENDENTE'`).
 - Conflitos de regra respondem 409 com `{message, code}` via `App\Support\Conflict::abort()`. O front decide pelo `code`, nunca pelo texto.
 
+## Privacidade
+
+- **Resource público é lista fechada de campos.** E-mail, nome completo, papel e histórico privado nunca entram no Perfil público (`StudentProfileResource`).
+- **Material anônimo:** `author_name` e `author_code` vão nulos na área pública, e o MODERADOR não recebe o nome. Teste com `assertDontSee`.
+- **URL do Perfil público:** usa `users.public_code`, aleatório, nunca o id interno. O código não substitui autorização.
+
 ## Banco de dados
 
 - Use PostgreSQL de propósito: `CHECK` constraints para regras (papel, semestre de 1 a 8), índices parciais e `unaccent` quando houver busca no banco.
 - **Nunca edite uma migration já mergeada**, porque ela já rodou em produção. Crie uma nova.
 - **Migrations de dados** (como a carga do catálogo) chamam código da aplicação (`DisciplineCatalog::sync`). Cuidado: se esse código passar a usar uma coluna criada por uma migration posterior, o `migrate:fresh` quebra. Foi por isso que o `slug` das disciplinas virou accessor.
+- **Valor gerado pelo banco:** colunas como `public_code` não aparecem no model logo depois do `create()`: use `refresh()`. A coluna `data` de `notifications` é texto, então não aceita consulta JSON.
 - **Catálogo de disciplinas:** vem de `resources/catalog/matriz-2023.json`, com upsert pelo nome. São 49 obrigatórias da Matriz 2023, sem eletivas. Para atualizar, veja `docs/operacao.md`.
 - Seeders são só para dev. As contas de teste estão em `database/seeders/DatabaseSeeder.php`.
 

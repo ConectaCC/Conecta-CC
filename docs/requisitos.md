@@ -253,9 +253,9 @@ A Home deve apresentar saudação utilizando o Nome de exibição.
 A Home deve oferecer acesso às principais áreas:
 
 - Estudos;
-- Oportunidade;
-- Comunidade;
 - Perfil.
+
+(Oportunidade e Comunidade saíram do MVP — `decisoes.md` 56.)
 
 ## RF-16 — Perfil incompleto
 
@@ -422,6 +422,8 @@ O link oficial só deve aparecer como link funcional quando a URL estiver confir
 
 ## RF-34 — Disciplina sem materiais
 
+> **Atualização (04/11/2026):** todas as disciplinas têm área de materiais (`decisoes.md` 54.2). Este estado não aparece no MVP.
+
 Se uma disciplina ainda não possuir área de materiais:
 
 - deve continuar acessível;
@@ -433,6 +435,8 @@ Se uma disciplina ainda não possuir área de materiais:
 # 9. Materiais
 
 ## RF-35 — Compartilhar material
+
+> **Atualização (04/11/2026):** vale para todas as disciplinas. O formulário tem também a opção "Compartilhar anonimamente", e os limites são título 200, descrição 2.000 e link 2.048 (`decisoes.md` 55.2 e 55.3). São 10 envios ou edições por hora, contando só os que deram certo.
 
 Em disciplinas habilitadas, o usuário deve poder compartilhar material.
 
@@ -597,6 +601,8 @@ A data original de envio pode permanecer registrada internamente.
 
 ## RF-49 — Material no feed
 
+> **Atualização (04/11/2026):** fora do MVP (`decisoes.md` 56).
+
 Novo material aprovado pode aparecer no feed.
 
 Ao acessar:
@@ -741,6 +747,8 @@ Visualmente:
 
 ## RF-65 — Leitura
 
+> **Atualização (04/11/2026):** clicar numa notificação marca como lida e leva ao conteúdo: uma aprovação abre a disciplina, e uma rejeição abre o item em Meus conteúdos (`decisoes.md` 55.5).
+
 Deve existir suporte para:
 
 - marcar como lida;
@@ -830,11 +838,15 @@ Depois:
 
 ## RF-74 — Próprio conteúdo
 
+> **Atualização (04/11/2026):** substituído. O ADMINISTRADOR pode moderar o próprio conteúdo. O MODERADOR não pode, e o próprio envio não aparece na fila dele (`decisoes.md` 51.2).
+
 ADMIN não pode Aprovar ou Rejeitar conteúdo de sua própria autoria.
 
 Outro ADMIN deverá realizar a análise.
 
 ## RF-75 — Concorrência
+
+> **Atualização (04/11/2026):** se o autor cancelou o envio durante a análise, a mensagem é "Este conteúdo foi cancelado pelo autor." (`decisoes.md` 55.6).
 
 Uma segunda decisão não pode sobrescrever a primeira.
 

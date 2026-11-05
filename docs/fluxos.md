@@ -254,7 +254,7 @@ A página da disciplina pode apresentar:
 - informações da disciplina;
 - acesso à ementa oficial, quando houver URL confirmada;
 - materiais aprovados;
-- opção de compartilhar material, quando habilitada.
+- opção de compartilhar material (todas as disciplinas — `decisoes.md` 54.2).
 
 A referência acadêmica inicial do MVP será a:
 
@@ -294,6 +294,38 @@ Preencher formulário
 
 O material não aparece imediatamente para outros estudantes.
 
+> **Atualização (04/11/2026):** o formulário tem "Compartilhar anonimamente" (`decisoes.md` 55.2). O sucesso avisa que o autor receberá uma notificação e aponta para Meus conteúdos.
+
+## Meus conteúdos, editar, excluir e cancelar
+
+Perfil  
+→ Meus conteúdos  
+→ filtros Todos, Em andamento, Aprovados, Rejeitados e Excluídos  
+→ "Mostrar mais" de 20 em 20.
+
+Em análise  
+→ Cancelar envio  
+→ confirmar  
+→ CANCELADO  
+→ sai da fila.
+
+Aprovado  
+→ Editar (também pelo menu ⋯ no card, só para o autor)  
+→ Enviar para análise  
+→ alteração PENDENTE  
+→ a versão publicada continua no ar até a aprovação.
+
+Aprovado  
+→ Excluir (também pelo menu ⋯)  
+→ confirmar  
+→ some da disciplina  
+→ aparece como Excluído  
+→ a alteração pendente é cancelada.
+
+Rejeitado  
+→ o autor vê o motivo  
+→ para corrigir, faz um envio novo.
+
 ---
 
 # 10. Moderação de material
@@ -321,13 +353,13 @@ Para os demais estudantes, o material continua aparecendo no MVP atual como:
 
 **Compartilhado pela comunidade**
 
-A decisão sobre exibir a autoria publicamente será retomada apenas no próximo semestre, após os primeiros testes com estudantes.
+> **Atualização (04/11/2026):** substituído. O material identificado mostra o nome do autor, com link para o Perfil público. Só o material anônimo aparece como "Compartilhado pela comunidade" (`decisoes.md` 55.2 e 57.2).
 
 ## Se rejeitado
 
 ADMIN  
 → Rejeitar  
-→ motivo opcional  
+→ motivo obrigatório (`decisoes.md` 55.4)  
 → confirmar rejeição  
 → REJEITADO  
 → material sai da fila  
@@ -678,7 +710,7 @@ O MVP possui:
 - marcar todas como lidas;
 - estado vazio.
 
-O comportamento ao clicar em uma notificação específica ainda será definido antes da implementação definitiva.
+> **Atualização (04/11/2026):** resolvido. Clicar marca como lida e leva ao conteúdo: uma aprovação abre a disciplina, e uma rejeição abre o item em Meus conteúdos (`decisoes.md` 55.5).
 
 Essa decisão não bloqueia:
 
