@@ -15,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * @property Role $role
+ * @property-read string $public_code
  * @property string|null $about
  * @property list<string> $interests
  * @property list<string> $can_help_with
