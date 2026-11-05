@@ -73,7 +73,7 @@ O MODERADOR é um usuário com permissões adicionais para auxiliar na Moderaç�
 - analisar Material, Publicação e Oportunidade (no MVP, só Material — `decisoes.md` 56);
 - aprovar solicitações permitidas;
 - rejeitar solicitações permitidas, informando o motivo (obrigatório);
-- solicitar revisão/remoção de conteúdo já publicado.
+- solicitar revisão/remoção de conteúdo já publicado — **Pós-MVP / evolução futura** (`decisoes.md` 63.4).
 
 Regras:
 
@@ -97,8 +97,8 @@ O ADMINISTRADOR possui as funcionalidades comuns do usuário e também pode:
 
 - acessar `/admin`, que é exclusivo de ADMINISTRADORES;
 - moderar, inclusive o próprio conteúdo;
-- revisar decisões de Moderação;
-- reverter rejeições;
+- revisar decisões de Moderação — **Pós-MVP / evolução futura** (`decisoes.md` 63.4);
+- reverter rejeições — **Pós-MVP / evolução futura** (`decisoes.md` 63.4);
 - retirar conteúdo previamente aprovado/publicado — **Pós-MVP / evolução futura** (`decisoes.md` 63);
 - nomear MODERADORES e remover o papel de MODERADOR;
 - gerenciar papéis e permissões;
@@ -109,7 +109,7 @@ Nas áreas públicas, o ADMINISTRADOR vê a autoria de conteúdo anônimo como �
 
 A UX completa do painel administrativo e o fluxo detalhado das ações de MODERADOR e ADMINISTRADOR (revisão, reversão, retirada, auditoria) serão definidos em rodada específica.
 
-> **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado não é necessária para concluir o `/admin` do MVP (`decisoes.md` 63).
+> **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado, a revisão de decisões de Moderação e a reversão de rejeições não são necessárias para concluir o `/admin` do MVP (`decisoes.md` 63).
 
 ---
 

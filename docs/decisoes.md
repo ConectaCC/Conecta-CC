@@ -1509,3 +1509,13 @@ Quando essa funcionalidade entrar no escopo:
 - informações exibidas no histórico;
 - comportamento caso exista uma alteração pendente;
 - regras específicas de auditoria.
+
+## 63.4 Outras ações sobre decisões de Moderação
+
+Também ficam como evolução futura / pós-MVP:
+
+- **MODERADOR:** solicitar revisão ou remoção de conteúdo já publicado;
+- **ADMINISTRADOR:** revisar decisões de Moderação;
+- **ADMINISTRADOR:** reverter rejeições.
+
+O MVP e o `/admin` podem ser considerados concluídos sem esses fluxos. As regras deles serão definidas quando entrarem no escopo.

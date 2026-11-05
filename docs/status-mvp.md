@@ -140,7 +140,7 @@ Atualmente estão definidos, entre outros:
 - **Painel `/admin` (Filament):** papéis, consulta de moderações e atendimento de exclusão de conta. Ele é necessário porque o Render não tem terminal.
 - **Recuperação de senha:** opcional (`decisoes.md` 52.9).
 
-> **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado é pós-MVP e não é uma funcionalidade faltante. O MVP pode ser considerado concluído sem esse fluxo (`decisoes.md` 63).
+> **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado, a solicitação de revisão ou remoção pelo MODERADOR, a revisão de decisões de Moderação e a reversão de rejeições são pós-MVP e não são funcionalidades faltantes. O MVP pode ser considerado concluído sem esses fluxos (`decisoes.md` 63).
 
 **Operação:**
 
