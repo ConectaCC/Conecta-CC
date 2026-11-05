@@ -1289,6 +1289,14 @@ Decisão do Marcelo: **Oportunidade** e **Comunidade** saem do MVP e ficam para 
 - **Limites de texto e "Mostrar mais":** os de oportunidade e publicação (pendências 2.7) e a quantidade de itens no feed e na busca (pendências 2.8) deixam de bloquear o MVP.
 - **Identidade do projeto:** os pilares (Conexão, Conhecimento, Oportunidades, Comunidade) e os textos institucionais continuam, porque descrevem o ConectaCC como um todo, e não as telas do MVP.
 
+## 56.3 Retomada da Comunidade (04/11/2026)
+
+A Comunidade permanece fora do escopo obrigatório do MVP e não deve bloquear as entregas atuais. Porém, caso haja capacidade durante o desenvolvimento ou os testes, poderá ser retomada ainda nesta etapa como funcionalidade adicional.
+
+Se isso acontecer, os fluxos e as informações exibidas — como descoberta de estudantes, cards de Perfil, disciplinas atuais, "Pode ajudar com" e "Procura ajuda com" — deverão ser definidos antes da implementação.
+
+O Perfil público deve continuar funcionando independentemente da existência da Comunidade.
+
 ---
 
 # 57. Perfil público — 04/11/2026
