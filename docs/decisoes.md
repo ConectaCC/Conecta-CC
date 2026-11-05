@@ -1423,7 +1423,11 @@ Trocar a senha encerra as outras sessões da conta, e a pessoa continua logada n
 
 ## 61.4 Escolhas da implementação
 
-- **Sessão atual:** o id antigo é destruído na troca, para que um cookie roubado não continue valendo.
+- **Sessão atual:** o id muda na troca e a linha antiga é apagada na hora. O `AuthenticateSession` já recusaria um cookie antigo pela divergência do hash da senha; apagar a linha é uma camada extra.
+- **Limite conhecido:** se outra requisição do mesmo aparelho estiver em andamento durante a troca (o sino de notificações ou outra aba), a resposta dela pode devolver o cookie antigo e deslogar a pessoa. É raro e nada se perde: a senha nova já vale. Será revisto se houver relato no piloto.
+- **Sair durante o envio:** o envio não é cancelado, então "Descartar alterações?" espera o resultado. Se a senha mudou, a pessoa fica na página e vê o aviso. Se falhou, o diálogo aparece **(escolha do Claude)**.
+- **Link "Configurações" na própria página:** não pergunta nada e mantém os campos, porque não há saída **(escolha do Claude)**.
+- **Foco:** depois do sucesso vai para o aviso; ao fechar o aviso, vai para "Senha atual" **(escolha do Claude)**.
 - **E-mail na API:** `email` entra na resposta de login e de `GET /me`, que só devolvem os dados da própria pessoa. O Perfil público continua sem ele.
 - **E-mail ainda carregando ou indisponível:** a página mostra um esqueleto durante o carregamento e "E-mail indisponível no momento." se a busca falhar **(escolha do Claude)**.
 - **Aviso de sucesso:** usa o botão de fechar que já existe ("Fechar aviso") **(escolha do Claude)**.

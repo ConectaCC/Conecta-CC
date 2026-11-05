@@ -19,7 +19,9 @@
 - Não rodar formatadores no front. Depois de mudar a API, rodar `make api-types`.
 - Os textos de tela são os da seção 5 da spec, e as mensagens de validação são as da seção 4.
 
-**Mudança em relação à spec:** a regeneração da sessão atual destrói o id antigo (`regenerate(true)`). Sem isso, a linha antiga continuaria válida em `sessions`, e um cookie roubado sobreviveria à troca. A spec é corrigida na Tarefa 4.
+**Mudança em relação à spec:** a regeneração da sessão atual destrói o id antigo (`regenerate(true)`). Sem isso, a linha antiga continuaria em `sessions` até expirar.
+
+> **Correção (04/11/2026):** este plano dizia que um cookie roubado sobreviveria à troca. O teste de sessão real mostrou que o `AuthenticateSession` já o recusa pela divergência do hash da senha. O `regenerate(true)` é uma camada extra. A spec é corrigida na Tarefa 4.
 
 ## Foco de revisão
 

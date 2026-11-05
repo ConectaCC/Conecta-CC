@@ -60,7 +60,7 @@ final class UpdateProfileController
 - **Limites de texto provisórios** ficam em constantes `MAX_*` no Request, com `// shortcut: teto provisório até a definição de pendencias.md 2.7`.
 - **Links externos** aceitam só `http`/`https`, validados no servidor. GitHub e LinkedIn aceitam só o endereço do perfil da pessoa (`decisoes.md` 53.3).
 - **Conteúdo do estudante:** o limite de 10 envios ou edições por hora está em `MaterialSubmissionLimit` e conta só o que deu certo. Bytes nulos são removidos da entrada pelo middleware `StripNullBytes`.
-- **Limite de tentativas:** fica em `AppServiceProvider` (`RateLimiter::for`). Login e Cadastro aceitam 5 por minuto. A resposta 429 diz "Muitas tentativas. Tente novamente em X segundos."
+- **Limite de tentativas:** fica em `AppServiceProvider` (`RateLimiter::for`). Login, Cadastro e troca de senha aceitam 5 por minuto. A resposta 429 diz "Muitas tentativas. Tente novamente em X segundos."
 
 ## Autorização
 

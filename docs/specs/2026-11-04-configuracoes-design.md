@@ -67,7 +67,7 @@ Hoje a sidebar leva a uma página "Em construção", e ninguém consegue trocar 
 - Na mesma transação, grava a nova senha e apaga da tabela `sessions` as linhas do usuário cujo id é diferente da sessão atual.
 - Depois da transação, o controller regenera o id da sessão atual e destrói o antigo (`regenerate(true)`).
 
-> **Correção (04/11/2026):** a spec dizia para regenerar "como o login já faz". Assim, a linha antiga continuaria em `sessions`, e um cookie roubado sobreviveria à troca.
+> **Correção (04/11/2026):** a spec dizia para regenerar "como o login já faz". Assim, a linha antiga continuaria em `sessions` até expirar. O `AuthenticateSession` já recusaria esse cookie pela divergência do hash da senha; apagar a linha é uma camada extra.
 - Produção e desenvolvimento usam `SESSION_DRIVER=database`, então apagar as linhas encerra as sessões.
 
 ### Limite (`throttle:password`)
