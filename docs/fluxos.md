@@ -627,7 +627,6 @@ Pode apresentar:
 - avatar;
 - Nome de exibição;
 - Curso;
-- Semestre;
 - Sobre;
 - Interesses;
 - Pode ajudar com;
