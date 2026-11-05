@@ -55,6 +55,10 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('register', fn (Request $request) => Limit::perMinute(5)
             ->by((string) $request->ip())
             ->response(fn (Request $request, array $headers) => self::tooManyAttempts($headers)));
+
+        RateLimiter::for('password', fn (Request $request) => Limit::perMinute(5)
+            ->by((string) $request->user()?->getAuthIdentifier())
+            ->response(fn (Request $request, array $headers) => self::tooManyAttempts($headers)));
     }
 
     /** @param array<string, string|int> $headers */

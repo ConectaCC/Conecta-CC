@@ -17,6 +17,7 @@ it('entra com credenciais corretas e devolve o usuário', function () {
         ->assertExactJson([
             'id' => $this->user->id,
             'name' => 'Ana Silva',
+            'email' => 'aluno@academico.ifsul.edu.br',
             'display_name' => 'Ana Silva',
             'initials' => 'AS',
             'role' => 'ALUNO',
