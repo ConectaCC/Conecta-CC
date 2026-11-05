@@ -38,7 +38,7 @@ Hoje a sidebar leva a uma página "Em construção", e ninguém consegue trocar 
 
 ### Dado do usuário
 
-- **`UserResource`** ganha `email`. Nenhuma resposta da API traz o e-mail hoje, e a página precisa exibi-lo. Esse recurso só é devolvido para o próprio usuário. `StudentProfileResource` continua sem e-mail.
+- **`UserResource`** ganha `email`. Nenhuma resposta da API trazia o e-mail, e a página precisa exibi-lo. Esse recurso só é devolvido para o próprio usuário. `StudentProfileResource` continua sem e-mail.
 
 ### Rota
 
@@ -65,7 +65,9 @@ Hoje a sidebar leva a uma página "Em construção", e ninguém consegue trocar 
 ### Regra (`ChangePassword`)
 
 - Na mesma transação, grava a nova senha e apaga da tabela `sessions` as linhas do usuário cujo id é diferente da sessão atual.
-- Depois da transação, o controller regenera o id da sessão atual, como o login já faz.
+- Depois da transação, o controller regenera o id da sessão atual e destrói o antigo (`regenerate(true)`).
+
+> **Correção (04/11/2026):** a spec dizia para regenerar "como o login já faz". Assim, a linha antiga continuaria em `sessions`, e um cookie roubado sobreviveria à troca.
 - Produção e desenvolvimento usam `SESSION_DRIVER=database`, então apagar as linhas encerra as sessões.
 
 ### Limite (`throttle:password`)
@@ -91,7 +93,9 @@ Pasta `features/settings/`, com `SettingsPage.tsx` e `hooks.ts`. A rota `/config
 
 ### Comportamento
 
-- **E-mail:** vem de `useMe()`, já carregado pelo guard de autenticação. Por isso a página não tem estado próprio de carregamento nem de erro ao carregar.
+- **E-mail:** vem de `useMe()`. O guard de autenticação não espera essa consulta, então a página mostra um esqueleto enquanto ela carrega e "E-mail indisponível no momento." se falhar **(escolha do Claude)**. O `AppLayout` já mostra o aviso com "Tentar novamente".
+
+> **Correção (04/11/2026):** a spec dizia que o e-mail já vinha carregado pelo guard, e a implementação mostrou que não vem.
 - **Validação no navegador:** as mesmas regras e mensagens da seção 4, antes de enviar. O backend continua sendo a fonte de verdade.
 - **Sucesso:** mostra o aviso verde, limpa os três campos e volta a ocultar as senhas.
 - **Senha atual incorreta:** mostra o erro no campo, limpa só esse campo e leva o foco até ele.

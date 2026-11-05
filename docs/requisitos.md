@@ -700,6 +700,8 @@ Usuário autenticado deve poder alterar a senha informando:
 - Nova senha;
 - Confirmar nova senha.
 
+> **Atualização (04/11/2026):** a troca encerra as outras sessões da conta e mantém a atual. O limite é de 5 tentativas por minuto (`decisoes.md` 61).
+
 ## RF-60 — Validação da nova senha
 
 A nova senha deve possuir:

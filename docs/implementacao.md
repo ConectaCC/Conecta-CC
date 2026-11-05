@@ -430,16 +430,16 @@ Não exibir:
 
 Implementar:
 
-- [ ] exibição do e-mail institucional em modo somente leitura;
-- [ ] Senha atual;
-- [ ] Nova senha;
-- [ ] Confirmar nova senha;
-- [ ] alteração de senha;
-- [ ] validações;
-- [ ] loading;
-- [ ] sucesso;
-- [ ] erro;
-- [ ] alterações não salvas.
+- [x] exibição do e-mail institucional em modo somente leitura;
+- [x] Senha atual;
+- [x] Nova senha;
+- [x] Confirmar nova senha;
+- [x] alteração de senha;
+- [x] validações;
+- [x] loading;
+- [x] sucesso;
+- [x] erro;
+- [x] alterações não salvas.
 
 Exclusão de conta não pertence à interface atual do MVP.
 
@@ -632,7 +632,7 @@ Uma ordem possível é:
 9. Perfil público (entregue em 04/11/2026);
 10. painel `/admin` (Filament) para o ADMINISTRADOR;
 11. notificações;
-12. Configurações;
+12. Configurações (entregue em 04/11/2026);
 13. estados de erro e loading;
 14. responsividade;
 15. acessibilidade;

@@ -324,6 +324,8 @@ A decisão deve contemplar:
 
 > **Continua aberta (12/10/2026):** a duração da sessão foi definida (7 dias sem uso), mas o comportamento das outras sessões após trocar a senha será decidido na etapa de Configurações.
 
+> **Atualização (04/11/2026):** resolvida. A troca de senha encerra as outras sessões e mantém a atual. A recuperação de senha, se entrar, fará o mesmo (`decisoes.md` 61.1).
+
 ---
 
 ## 2.6 Tentativas de Login

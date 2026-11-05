@@ -11,14 +11,13 @@ React 19 + TypeScript (Vite), React Router (`createBrowserRouter`), TanStack Que
 | Pasta | Papel |
 |---|---|
 | `app/router.tsx` | todas as rotas, com os guards `RequireAuth`, `GuestOnly` e `RequireModeration` |
-| `features/<area>/` | uma pasta por área, com nome em inglês: `auth`, `home`, `profile`, `studies`, `materials`, `moderation`, `my-contents`, `notifications`, `students`. Guarda as páginas, os componentes da área e um `hooks.ts` com as consultas |
+| `features/<area>/` | uma pasta por área, com nome em inglês: `auth`, `home`, `profile`, `studies`, `materials`, `moderation`, `my-contents`, `notifications`, `students`, `settings`. Guarda as páginas, os componentes da área e um `hooks.ts` com as consultas |
 | `components/` | componentes compartilhados da casa: `TextField`, `FormAlert`, `Skeleton`, `Chip`, `StatusTag`, `TagInput`, `DisciplinePicker`, `Brand` |
 | `components/ui/` | componentes gerados pelo CLI do shadcn (`docker compose exec frontend npx --yes shadcn@latest add <nome> --yes`). Não reescrever à mão |
-| `components/layout/` | `AppLayout`, `Sidebar`, `Header`, `UserAvatar` e a guarda de alterações não salvas (`LeaveGuardProvider`) |
+| `components/layout/` | `AppLayout`, `Sidebar`, `Header`, `UserAvatar` e a guarda de alterações não salvas (`LeaveGuardProvider` e `useUnsavedChangesGuard`) |
 | `lib/api/` | `client.ts` (openapi-fetch com cookie e `X-XSRF-TOKEN`), `errors.ts` (`call`, `ApiError`, `NetworkError`) e `schema.d.ts` (**gerado**) |
-| `pages/` | `UnderConstructionPage`, para áreas que ainda não existem |
 
-- As rotas ficam em português (`/estudos`, `/estudos/:slug`, `/perfil?editar=disciplinas`). Uma área nova substitui o seu placeholder "Em construção" em `router.tsx`.
+- As rotas ficam em português (`/estudos`, `/estudos/:slug`, `/perfil?editar=disciplinas`).
 - Use primeiro um componente da casa. Só depois um do shadcn. Nunca crie um componente que duplica um existente.
 
 ## Dados do servidor
@@ -42,7 +41,7 @@ React 19 + TypeScript (Vite), React Router (`createBrowserRouter`), TanStack Que
 | 422 | `applyFieldErrors(setError, error.fieldErrors, campos)` aplica os erros no formulário (React Hook Form) |
 | 401 | o middleware do cliente limpa `['me']` e o guard leva ao Login |
 | Falha de rede (`NetworkError`) | alerta com "Tentar novamente", sem perder o que foi digitado |
-| Alterações não salvas | guarda de saída (`useLeaveGuard` + `LeaveGuardProvider`) e diálogo "Descartar alterações?" |
+| Alterações não salvas | guarda de saída (`useUnsavedChangesGuard`) e diálogo "Descartar alterações?" (`DiscardChangesDialog`) |
 | Enviando | botão desabilitado, com spinner e texto no gerúndio ("Salvando...", "Entrando...") |
 
 Os textos de tela são **exatamente** os da spec e do protótipo.

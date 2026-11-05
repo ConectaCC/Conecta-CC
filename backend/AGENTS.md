@@ -92,6 +92,7 @@ final class UpdateProfileController
 - Todo endpoint autenticado tem um teste de **401 sem sessão**. Todo endpoint com papel tem teste de **acesso negado**.
 - Use TDD: escreva o teste, veja falhar e só depois implemente. Teste os valores exatos da spec: mensagens, limites, URLs.
 - Para cada entrada que a spec não cobre mas que vai acontecer (variações de URL, maiúsculas, espaços, payload malformado, requisição duplicada), crie um teste.
+- **Dois usuários no mesmo teste:** a sessão guarda o hash da senha (`AuthenticateSession`) e o guard do Sanctum guarda o usuário. Quando o resultado depende de quem é o usuário atual, rode `$this->flushSession()` e `app('auth')->forgetGuards()` antes de trocar.
 
 ## Qualidade
 
