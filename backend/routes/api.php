@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\ApproveMaterialController;
 use App\Http\Controllers\Api\V1\CancelMaterialController;
+use App\Http\Controllers\Api\V1\ChangePasswordController;
 use App\Http\Controllers\Api\V1\CurrentTermsController;
 use App\Http\Controllers\Api\V1\DeleteMaterialController;
 use App\Http\Controllers\Api\V1\ListDisciplineMaterialsController;
@@ -30,6 +31,7 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('me', MeController::class);
+        Route::put('me/password', ChangePasswordController::class)->middleware('throttle:password');
         Route::get('disciplines', ListDisciplinesController::class);
         Route::get('disciplines/{discipline}/materials', ListDisciplineMaterialsController::class);
         Route::post('disciplines/{discipline}/materials', StoreMaterialController::class);

@@ -684,6 +684,8 @@ Após o sucesso:
 
 → limpar os campos de senha.
 
+> **Atualização (04/11/2026):** a troca encerra as outras sessões da conta, e a pessoa continua logada no aparelho atual (`decisoes.md` 61.1).
+
 ---
 
 # 23. Notificações

@@ -39,7 +39,7 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 | Meus conteúdos (materiais) | ✅ | ✅ (esboço) | ✅ (2b) | ⏳ |
 | Compartilhamento na Comunidade | ✅ | ✅ | fora do MVP | — |
 | Busca de estudantes | ✅ | ✅ | fora do MVP | — |
-| Configurações | ✅ | ✅ | ⏳ | ⏳ |
+| Configurações | ✅ | ✅ | ✅ | ⏳ |
 | Notificações | ✅ | ✅ | ✅ (material) | ⏳ |
 | Moderação ADMIN | ✅ | ✅ | ✅ (só material) | ⏳ |
 | Responsividade | ✅ | ✅ | ⏳ | ⏳ |
@@ -136,7 +136,7 @@ Atualmente estão definidos, entre outros:
 
 **Funcionalidades do MVP:**
 
-- **Configurações:** e-mail só para leitura e troca de senha, incluindo a política das outras sessões depois da troca.
+- ~~**Configurações:** e-mail só para leitura e troca de senha, incluindo a política das outras sessões depois da troca.~~ Entregue em 04/11/2026 (`decisoes.md` 61).
 - **Painel `/admin` (Filament):** papéis, consulta de moderações e atendimento de exclusão de conta. Ele é necessário porque o Render não tem terminal.
 - **Recuperação de senha:** opcional (`decisoes.md` 52.9).
 
@@ -219,6 +219,8 @@ A pergunta central dessa fase será: > **Como vamos construir o produto que já 
 Somente depois da definição da arquitetura será iniciada a implementação funcional do MVP.
 
 > **Atualização (02/11/2026):** em andamento. Já foram entregues a fundação, a autenticação, o Perfil, a Home, Estudos (partes 1 e 2), Moderação de material, Meus conteúdos, Notificações e Perfil público. Faltam Configurações e o painel `/admin`.
+
+> **Atualização (04/11/2026):** Configurações foi entregue. Falta o painel `/admin`.
 
 ---
 

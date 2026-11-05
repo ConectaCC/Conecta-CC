@@ -60,7 +60,7 @@ final class UpdateProfileController
 - **Limites de texto provisórios** ficam em constantes `MAX_*` no Request, com `// shortcut: teto provisório até a definição de pendencias.md 2.7`.
 - **Links externos** aceitam só `http`/`https`, validados no servidor. GitHub e LinkedIn aceitam só o endereço do perfil da pessoa (`decisoes.md` 53.3).
 - **Conteúdo do estudante:** o limite de 10 envios ou edições por hora está em `MaterialSubmissionLimit` e conta só o que deu certo. Bytes nulos são removidos da entrada pelo middleware `StripNullBytes`.
-- **Limite de tentativas:** fica em `AppServiceProvider` (`RateLimiter::for`). Login e Cadastro aceitam 5 por minuto. A resposta 429 diz "Muitas tentativas. Tente novamente em X segundos."
+- **Limite de tentativas:** fica em `AppServiceProvider` (`RateLimiter::for`). Login, Cadastro e troca de senha aceitam 5 por minuto. A resposta 429 diz "Muitas tentativas. Tente novamente em X segundos."
 
 ## Autorização
 
@@ -92,6 +92,7 @@ final class UpdateProfileController
 - Todo endpoint autenticado tem um teste de **401 sem sessão**. Todo endpoint com papel tem teste de **acesso negado**.
 - Use TDD: escreva o teste, veja falhar e só depois implemente. Teste os valores exatos da spec: mensagens, limites, URLs.
 - Para cada entrada que a spec não cobre mas que vai acontecer (variações de URL, maiúsculas, espaços, payload malformado, requisição duplicada), crie um teste.
+- **Dois usuários no mesmo teste:** a sessão guarda o hash da senha (`AuthenticateSession`) e o guard do Sanctum guarda o usuário. Quando o resultado depende de quem é o usuário atual, rode `$this->flushSession()` e `app('auth')->forgetGuards()` antes de trocar.
 
 ## Qualidade
 

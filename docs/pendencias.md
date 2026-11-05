@@ -237,6 +237,16 @@ Será tratado junto dessas regras de visibilidade.
 
 ---
 
+# 1.7 Aviso por e-mail da troca de senha (decisão futura)
+
+> **Registrado em 04/11/2026:** o MVP não envia esse aviso (`specs/2026-11-04-configuracoes-design.md`).
+
+Decidir se a pessoa recebe um e-mail quando a senha da conta é alterada.
+
+Sem esse aviso, quem teve a senha trocada por outra pessoa não fica sabendo pelo sistema. O envio depende de o e-mail estar funcionando de forma confiável em produção.
+
+---
+
 # 2. Pendências técnicas de implementação
 
 Estas decisões serão tratadas principalmente durante a definição da arquitetura e implementação.
@@ -313,6 +323,8 @@ A decisão deve contemplar:
 - recuperação de senha.
 
 > **Continua aberta (12/10/2026):** a duração da sessão foi definida (7 dias sem uso), mas o comportamento das outras sessões após trocar a senha será decidido na etapa de Configurações.
+
+> **Atualização (04/11/2026):** resolvida. A troca de senha encerra as outras sessões e mantém a atual. A recuperação de senha, se entrar, fará o mesmo (`decisoes.md` 61.1).
 
 ---
 

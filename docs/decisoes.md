@@ -1400,3 +1400,35 @@ Só os filtros por situação: **Todos**, **Em andamento**, **Aprovados**, **Rej
 O **filtro por tipo de conteúdo** e a **busca textual** ficam de fora de propósito. Não são funcionalidades esquecidas.
 
 No escopo atual, Meus conteúdos trabalha só com Material, então um filtro por tipo não teria utilidade. Se outros tipos de conteúdo entrarem nessa área, a necessidade será revista.
+
+---
+
+# 61. Configurações — 04/11/2026
+
+Decisões tomadas na definição de Configurações (spec `specs/2026-11-04-configuracoes-design.md`).
+
+## 61.1 Outras sessões
+
+Trocar a senha encerra as outras sessões da conta, e a pessoa continua logada no aparelho atual. Se a recuperação de senha entrar depois, ela também encerra as outras sessões. Isso resolve a pendência 2.5.
+
+## 61.2 Regras da troca
+
+- **Nova senha igual à atual** é aceita. As regras continuam sendo as de §30: 8 caracteres e confirmação igual.
+- **Limite:** 5 tentativas por minuto, por usuário, com a mesma mensagem do login.
+
+## 61.3 O que fica de fora
+
+- **E-mail avisando da troca de senha:** não é enviado no MVP. Fica para decisão futura (`pendencias.md` 1.7).
+- **"Esqueci minha senha":** continua opcional (§52.9) e será reavaliado depois do painel `/admin`. Até lá, quem esquecer a senha não consegue recuperá-la pelo app, inclusive durante o piloto.
+
+## 61.4 Escolhas da implementação
+
+- **Sessão atual:** o id muda na troca e a linha antiga é apagada na hora. O `AuthenticateSession` já recusaria um cookie antigo pela divergência do hash da senha; apagar a linha é uma camada extra.
+- **Limite conhecido:** se outra requisição do mesmo aparelho estiver em andamento durante a troca (o sino de notificações ou outra aba), a resposta dela pode devolver o cookie antigo e deslogar a pessoa. É raro e nada se perde: a senha nova já vale. Será revisto se houver relato no piloto.
+- **Sair durante o envio:** o envio não é cancelado, então "Descartar alterações?" espera o resultado. Se a senha mudou, a pessoa fica na página e vê o aviso. Se falhou, o diálogo aparece **(escolha do Claude)**.
+- **Link "Configurações" na própria página:** não pergunta nada e mantém os campos, porque não há saída **(escolha do Claude)**.
+- **Foco:** depois do sucesso vai para o aviso; ao fechar o aviso, vai para "Senha atual" **(escolha do Claude)**.
+- **E-mail na API:** `email` entra na resposta de login e de `GET /me`, que só devolvem os dados da própria pessoa. O Perfil público continua sem ele.
+- **E-mail ainda carregando ou indisponível:** a página mostra um esqueleto durante o carregamento e "E-mail indisponível no momento." se a busca falhar **(escolha do Claude)**.
+- **Aviso de sucesso:** usa o botão de fechar que já existe ("Fechar aviso") **(escolha do Claude)**.
+- **Página "Em construção":** removida, porque Configurações era a última área que a usava.

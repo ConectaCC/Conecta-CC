@@ -8,13 +8,9 @@ import { ModerationPage } from '@/features/moderation/ModerationPage';
 import { MyContentsPage } from '@/features/my-contents/MyContentsPage';
 import { ProfilePage } from '@/features/profile/ProfilePage';
 import { DisciplinePage } from '@/features/studies/DisciplinePage';
+import { SettingsPage } from '@/features/settings/SettingsPage';
 import { StudentProfilePage } from '@/features/students/StudentProfilePage';
 import { StudiesPage } from '@/features/studies/StudiesPage';
-import { UnderConstructionPage } from '@/pages/UnderConstructionPage';
-
-const placeholders = [
-  ['/configuracoes', 'Configurações'],
-] as const;
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +32,7 @@ export const router = createBrowserRouter([
           { path: '/estudos', element: <StudiesPage /> },
           { path: '/estudos/:slug', element: <DisciplinePage /> },
           { path: '/estudantes/:code', element: <StudentProfilePage /> },
-          ...placeholders.map(([path, title]) => ({ path, element: <UnderConstructionPage title={title} /> })),
+          { path: '/configuracoes', element: <SettingsPage /> },
           {
             element: <RequireModeration />,
             children: [{ path: '/moderacao', element: <ModerationPage /> }],
