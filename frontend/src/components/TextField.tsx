@@ -8,10 +8,11 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: ReactNode;
   error?: ReactNode;
   hint?: string;
+  visibilityLabel?: string;
   ref?: Ref<HTMLInputElement>;
 };
 
-export function TextField({ label, error, hint, className, type = 'text', ref, ...props }: Props) {
+export function TextField({ label, error, hint, visibilityLabel = 'senha', className, type = 'text', ref, ...props }: Props) {
   const id = useId();
   const [visible, setVisible] = useState(false);
   const isPassword = type === 'password';
@@ -36,7 +37,7 @@ export function TextField({ label, error, hint, className, type = 'text', ref, .
           <button
             type="button"
             onClick={() => setVisible((current) => !current)}
-            aria-label={visible ? 'Ocultar senha' : 'Mostrar senha'}
+            aria-label={`${visible ? 'Ocultar' : 'Mostrar'} ${visibilityLabel}`}
             aria-pressed={visible}
             className="absolute inset-y-0 right-0 flex w-12 items-center justify-center rounded-md text-muted-foreground hover:text-foreground"
           >

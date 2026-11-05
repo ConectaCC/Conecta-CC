@@ -1,13 +1,13 @@
 import { CircleAlert, Loader2, Lock } from 'lucide-react';
-import { useCallback, useEffect, useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
-import { useBlocker } from 'react-router';
+import type { Location } from 'react-router';
 import { DisciplinePicker } from '@/components/DisciplinePicker';
 import { FormAlert } from '@/components/FormAlert';
 import { TagInput } from '@/components/TagInput';
 import { TextField } from '@/components/TextField';
 import { Button } from '@/components/ui/button';
-import { useLeaveGuard } from '@/components/layout/leaveGuard';
+import { useUnsavedChangesGuard } from '@/components/layout/useUnsavedChangesGuard';
 import { applyFieldErrors } from '@/features/auth/applyFieldErrors';
 import { ApiError } from '@/lib/api/errors';
 import { cn } from '@/lib/utils';
@@ -61,12 +61,16 @@ type Props = {
   onCancel: () => void;
 };
 
+// continuar no modo de edição e a saída já decidida (salvar ou Cancelar confirmado, com leaveEditing no state) não perguntam
+function isFreeExit(current: Location, next: Location) {
+  const staysEditing = next.pathname === current.pathname && new URLSearchParams(next.search).has('editar');
+  return staysEditing || (next.state as { leaveEditing?: boolean } | null)?.leaveEditing === true;
+}
+
 export function ProfileForm({ profile, disciplines, focusDisciplines, onSaved, onCancel }: Props) {
   const id = useId();
   const update = useUpdateProfile();
-  const { setLeaveCheck } = useLeaveGuard();
   const [problem, setProblem] = useState<'invalid' | 'failed' | null>(null);
-  const [confirm, setConfirm] = useState<((discard: boolean) => void) | null>(null);
   const {
     register,
     control,
@@ -77,43 +81,7 @@ export function ProfileForm({ profile, disciplines, focusDisciplines, onSaved, o
   } = useForm<FormValues>({ defaultValues: toForm(profile) });
   const displayName = useWatch({ control, name: 'display_name' });
 
-  // abre o "Descartar alterações?" e responde se a pessoa escolheu descartar
-  const askDiscard = useCallback(
-    () =>
-      new Promise<boolean>((resolve) => {
-        setConfirm(() => (discard: boolean) => {
-          setConfirm(null);
-          resolve(discard);
-        });
-      }),
-    [],
-  );
-
-  // pergunta em qualquer saída do modo de edição (outra página, voltar do navegador, "Perfil" na sidebar).
-  // Ficam livres: /login (o Sair já confirmou antes do logout e a sessão expirada não pergunta)
-  // e a saída já decidida ao salvar ou confirmar o Cancelar (leaveEditing no state da navegação).
-  const blocker = useBlocker(({ currentLocation, nextLocation }) => {
-    const staysEditing = nextLocation.pathname === currentLocation.pathname && new URLSearchParams(nextLocation.search).has('editar');
-    const decided = (nextLocation.state as { leaveEditing?: boolean } | null)?.leaveEditing === true;
-    return isDirty && !decided && !staysEditing && nextLocation.pathname !== '/login';
-  });
-
-  useEffect(() => {
-    if (blocker.state !== 'blocked') return;
-    askDiscard().then((discard) => (discard ? blocker.proceed() : blocker.reset()));
-  }, [blocker, askDiscard]);
-
-  useEffect(() => {
-    setLeaveCheck(isDirty ? askDiscard : null);
-    return () => setLeaveCheck(null);
-  }, [isDirty, askDiscard, setLeaveCheck]);
-
-  useEffect(() => {
-    if (!isDirty) return;
-    const warn = (event: BeforeUnloadEvent) => event.preventDefault();
-    window.addEventListener('beforeunload', warn);
-    return () => window.removeEventListener('beforeunload', warn);
-  }, [isDirty]);
+  const { askDiscard, dialogProps } = useUnsavedChangesGuard(isDirty, isFreeExit);
 
   useEffect(() => {
     if (focusDisciplines) setFocus('discipline_ids');
@@ -329,7 +297,7 @@ export function ProfileForm({ profile, disciplines, focusDisciplines, onSaved, o
         </Button>
       </div>
 
-      <DiscardChangesDialog open={confirm !== null} onContinue={() => confirm?.(false)} onDiscard={() => confirm?.(true)} />
+      <DiscardChangesDialog {...dialogProps} />
     </form>
   );
 }
