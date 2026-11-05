@@ -43,7 +43,7 @@ export function NotificationsBell() {
         >
           <Bell className="size-6" aria-hidden />
           {unread > 0 && (
-            <span aria-hidden className="absolute top-1 right-1 grid min-w-5 place-items-center rounded-full bg-danger px-1 text-xs font-bold text-white">
+            <span aria-hidden className="absolute top-1 right-1 grid min-w-5 place-items-center rounded-full bg-badge px-1 text-xs font-bold text-white">
               {unread > 9 ? '9+' : unread}
             </span>
           )}
@@ -97,15 +97,9 @@ export function NotificationsBell() {
                   <button
                     type="button"
                     onClick={() => openItem(item)}
-                    className={cn('flex w-full items-start gap-3 px-4 py-3 text-left hover:bg-ice/70', !item.read && 'bg-ice')}
+                    className={cn('flex w-full items-start gap-3 px-4 py-3 text-left', item.read ? 'hover:bg-ice/70' : 'bg-unread hover:bg-unread/80')}
                   >
-                    <span
-                      aria-hidden
-                      className={cn(
-                        'mt-0.5 grid size-7 shrink-0 place-items-center rounded-full',
-                        item.ok ? 'bg-success-bg text-success' : 'bg-danger-bg text-danger',
-                      )}
-                    >
+                    <span aria-hidden className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-ice text-navy-900">
                       {item.ok ? <Check className="size-4" /> : <X className="size-4" />}
                     </span>
                     <span className="min-w-0 flex-1">

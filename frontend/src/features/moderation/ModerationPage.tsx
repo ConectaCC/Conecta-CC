@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Chip } from '@/components/Chip';
 import { FormAlert } from '@/components/FormAlert';
 import { Skeleton } from '@/components/Skeleton';
+import { StatusTag } from '@/components/StatusTag';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { timeAgo } from '@/lib/format';
@@ -120,8 +121,10 @@ export function ModerationPage() {
                   <p className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
                     <span>Tipo: Material</span>
                     <span aria-hidden>·</span>
-                    <span>Status: Pendente</span>
-                    {material.revision_of && <Chip>Alteração</Chip>}
+                    <span className="inline-flex items-center gap-2">
+                      Status: <StatusTag status="PENDENTE" label="Pendente" />
+                    </span>
+                    {material.revision_of && <StatusTag status="ALTERACAO" />}
                     {material.is_own && <Chip>Seu envio</Chip>}
                   </p>
                   <h3 className="mt-2 font-display text-lg font-bold [overflow-wrap:anywhere] text-foreground">{material.title}</h3>

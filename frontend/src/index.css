@@ -53,6 +53,10 @@
     --color-warning: #7a4b00;
     --color-warning-bg: #fff4dc;
     --color-warning-border: #f2d38a;
+    --color-change: #9c3a00;
+    --color-change-bg: #ffe3cc;
+    --color-badge: #c65a2e;
+    --color-unread: #d9e9f8;
 }
 
 :root {
