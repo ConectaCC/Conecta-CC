@@ -2,18 +2,11 @@ import { ChevronDown, ExternalLink } from 'lucide-react';
 import { useId } from 'react';
 import { Link } from 'react-router';
 import { Chip } from '@/components/Chip';
+import { StatusTag } from '@/components/StatusTag';
 import { Button } from '@/components/ui/button';
 import { formatDate, hostOf } from '@/lib/format';
 import { cn } from '@/lib/utils';
 import type { MyMaterial } from './hooks';
-
-const STATUS: Record<string, { label: string; className: string }> = {
-  PENDENTE: { label: 'Em análise', className: 'bg-warning-bg text-warning' },
-  APROVADO: { label: 'Aprovado', className: 'bg-success-bg text-success' },
-  REJEITADO: { label: 'Rejeitado', className: 'bg-danger-bg text-danger' },
-  CANCELADO: { label: 'Cancelado', className: 'bg-slate-100 text-muted-foreground' },
-  EXCLUIDO: { label: 'Excluído', className: 'bg-slate-100 text-muted-foreground' },
-};
 
 type Props = {
   item: MyMaterial;
@@ -27,7 +20,6 @@ type Props = {
 const ACTION = 'h-10 border-action px-4 text-[15px] font-semibold text-action';
 
 export function ContentItem({ item, expanded, onToggle, onCancel, onDelete, onEdit }: Props) {
-  const status = STATUS[item.status] ?? STATUS.PENDENTE;
   const panelId = useId();
 
   return (
@@ -43,7 +35,10 @@ export function ContentItem({ item, expanded, onToggle, onCancel, onDelete, onEd
             {item.anonymous && <Chip>Anônimo</Chip>}
           </p>
         </div>
-        <span className={cn('shrink-0 rounded-full px-3 py-1 text-sm font-semibold', status.className)}>{status.label}</span>
+        <div className="flex flex-wrap items-center gap-2">
+          <StatusTag status={item.status} />
+          {(item.pending_revision || item.rejected_revision) && <StatusTag status="ALTERACAO" />}
+        </div>
       </div>
 
       {item.pending_revision && (

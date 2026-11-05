@@ -326,6 +326,8 @@ Rejeitado
 → o autor vê o motivo  
 → para corrigir, faz um envio novo.
 
+> **Atualização (04/11/2026):** as tags seguem uma cor por status: Em análise em amarelo, Aprovado em verde, Rejeitado e Excluído em vermelho, Cancelado em cinza. Item com alteração em análise ou não aprovada mantém o status e ganha também a tag Alteração, em laranja (`decisoes.md` 58).
+
 ---
 
 # 10. Moderação de material
@@ -625,7 +627,6 @@ Pode apresentar:
 - avatar;
 - Nome de exibição;
 - Curso;
-- Semestre;
 - Sobre;
 - Interesses;
 - Pode ajudar com;

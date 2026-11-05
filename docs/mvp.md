@@ -167,7 +167,6 @@ O Perfil permite ao estudante apresentar informações acadêmicas e interesses 
 
 ## Opcionais
 
-- Semestre;
 - Sobre mim;
 - Interesses;
 - Posso ajudar com;
@@ -380,7 +379,6 @@ Pode apresentar:
 - avatar;
 - Nome de exibição;
 - Curso;
-- Semestre;
 - Sobre;
 - Interesses;
 - Pode ajudar com;

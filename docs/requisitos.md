@@ -288,7 +288,6 @@ O usuário deve conseguir consultar o próprio Perfil.
 O usuário deve conseguir editar:
 
 - Nome de exibição;
-- Semestre;
 - Disciplinas atuais;
 - Sobre mim;
 - Interesses;
@@ -662,7 +661,6 @@ Podem aparecer:
 - avatar;
 - Nome de exibição;
 - Curso;
-- Semestre;
 - Sobre;
 - Interesses;
 - Pode ajudar com;

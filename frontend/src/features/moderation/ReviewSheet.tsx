@@ -1,5 +1,6 @@
 import { ExternalLink, X } from 'lucide-react';
 import { Chip } from '@/components/Chip';
+import { StatusTag } from '@/components/StatusTag';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { formatDateTime, hostOf, pathOf, timeAgo } from '@/lib/format';
@@ -40,10 +41,13 @@ function ReviewContent({ material, onClose, onDecide }: { material: ModerationMa
       </div>
       <SheetDescription className="sr-only">Dados enviados para análise da moderação.</SheetDescription>
 
-      <p className="mt-4 flex flex-wrap gap-2 text-sm text-muted-foreground">
+      <p className="mt-4 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
         <span>Tipo: Material</span>
         <span aria-hidden>·</span>
-        <span>Status: Pendente</span>
+        <span className="inline-flex items-center gap-2">
+          Status: <StatusTag status="PENDENTE" label="Pendente" />
+        </span>
+        {material.revision_of && <StatusTag status="ALTERACAO" />}
         {material.is_own && <Chip>Seu envio</Chip>}
       </p>
       <h3 className="mt-3 font-display text-lg font-bold [overflow-wrap:anywhere] text-foreground">{material.title}</h3>
@@ -131,8 +135,8 @@ type Version = { title: string; description: string | null; url: string };
 function VersionCard({ heading, version, highlight = false }: { heading: string; version: Version; highlight?: boolean }) {
   const host = hostOf(version.url);
   return (
-    <section className={highlight ? 'rounded-xl border border-action p-4' : 'rounded-xl border border-blue-200/70 p-4'}>
-      <h4 className={highlight ? 'text-xs font-bold tracking-wide text-action uppercase' : 'text-xs font-bold tracking-wide text-muted-foreground uppercase'}>
+    <section className={highlight ? 'rounded-xl border border-change p-4' : 'rounded-xl border border-blue-200/70 p-4'}>
+      <h4 className={highlight ? 'text-xs font-bold tracking-wide text-change uppercase' : 'text-xs font-bold tracking-wide text-muted-foreground uppercase'}>
         {heading}
       </h4>
       <p className="mt-2 font-semibold [overflow-wrap:anywhere] text-foreground">{version.title}</p>

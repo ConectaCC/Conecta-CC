@@ -1134,6 +1134,8 @@ Salvar, Compartilhar, Copiar link, Denunciar, notificações por disciplina, mó
 - Filtro por tipo em Meus conteúdos: avaliar se for simples. Busca textual fica para o futuro.
 - Continuam futuros: histórico de versões, linha do tempo, comparação antes/depois, auditoria completa, mostrar ao usuário comum quem moderou, portfólio, métricas, reavaliação e restauração pelo usuário.
 
+> **Atualização (04/11/2026):** o filtro por tipo e a busca textual em Meus conteúdos ficam fora do MVP (§60).
+
 ---
 
 # 53. Perfil e catálogo de disciplinas — 19/10/2026
@@ -1256,6 +1258,8 @@ A parte 2 é entregue em três etapas, cada uma funcionando de ponta a ponta:
 - **Links equivalentes** contam como repetidos: a porta padrão (`:443` e `:80`) some, um endereço sem caminho ganha `/`, e domínios com acento são guardados na forma acentuada (`xn--…` e `münchen.de` viram o mesmo). A imagem de produção ganhou a extensão `intl` para isso.
 - **Bytes nulos** são removidos do texto recebido em toda a API, porque o PostgreSQL recusa gravar esses bytes.
 
+> **Atualização (04/11/2026):** os filtros de Meus conteúdos no MVP são só por situação (§60).
+
 ## 55.7 Escolhas da etapa 2c (Notificações)
 
 - **Uma classe de notificação:** os quatro eventos usam uma só classe (`MaterialDecided`), que muda apenas o tipo. A spec citava quatro classes.
@@ -1284,6 +1288,14 @@ Decisão do Marcelo: **Oportunidade** e **Comunidade** saem do MVP e ficam para 
 - **Perfil público:** continua no MVP. Sem a busca de estudantes, o caminho até ele passa a ser o nome do autor nos materiais.
 - **Limites de texto e "Mostrar mais":** os de oportunidade e publicação (pendências 2.7) e a quantidade de itens no feed e na busca (pendências 2.8) deixam de bloquear o MVP.
 - **Identidade do projeto:** os pilares (Conexão, Conhecimento, Oportunidades, Comunidade) e os textos institucionais continuam, porque descrevem o ConectaCC como um todo, e não as telas do MVP.
+
+## 56.3 Retomada da Comunidade (04/11/2026)
+
+A Comunidade permanece fora do escopo obrigatório do MVP e não deve bloquear as entregas atuais. Porém, caso haja capacidade durante o desenvolvimento ou os testes, poderá ser retomada ainda nesta etapa como funcionalidade adicional.
+
+Se isso acontecer, os fluxos e as informações exibidas — como descoberta de estudantes, cards de Perfil, disciplinas atuais, "Pode ajudar com" e "Procura ajuda com" — deverão ser definidos antes da implementação.
+
+O Perfil público deve continuar funcionando independentemente da existência da Comunidade.
 
 ---
 
@@ -1317,3 +1329,74 @@ A URL usa um **código público aleatório e não sequencial** (`/estudantes/<c�
 
 O link "Voltar" retorna à página anterior, ou a Estudos quando o perfil foi aberto direto pelo endereço. Perfil inexistente mostra "Este perfil não está disponível." com "Voltar para Estudos".
 
+
+---
+
+# 58. Cores dos status — 04/11/2026
+
+Decisão de Produto para manter uma semântica única e evitar interpretações diferentes entre telas.
+
+## 58.1 A regra
+
+| Status ou tag | Cor |
+|---|---|
+| PENDENTE / EM ANÁLISE / EM REVISÃO | amarelo |
+| APROVADO | verde |
+| REJEITADO | vermelho |
+| EXCLUÍDO / RETIRADO | vermelho |
+| CANCELADO | cinza neutro |
+| EDITADO / ALTERAÇÃO | laranja |
+
+- **Amarelo:** algo ainda aguarda decisão ou análise.
+- **Verde:** resultado positivo.
+- **Vermelho:** resultado negativo ou conteúdo retirado.
+- **Cinza:** fluxo encerrado de forma neutra e voluntária pelo próprio usuário.
+- **Laranja:** houve modificação, sem substituir o status principal de Moderação.
+
+## 58.2 Alteração é indicação adicional
+
+"Editado/Alteração" não substitui PENDENTE, APROVADO ou REJEITADO. Um material pode continuar **Aprovado** e ter também a tag **Alteração** quando houver edição relacionada.
+
+## 58.3 Onde vale
+
+- **Meus conteúdos:** o status de cada item e a tag Alteração quando o item tem alteração em análise ou não aprovada.
+- **Moderação:** Pendente em amarelo e Alteração em laranja, na fila e no painel de análise.
+- **Detalhes do envio, histórico, Perfil público, painel `/admin` e módulos futuros:** se o mesmo status aparecer, vale a mesma cor.
+
+A informação não depende só da cor: a tag sempre traz o texto. No front, a regra fica em um único componente, `StatusTag`.
+
+Isso muda o que estava implementado: EXCLUÍDO era cinza e Alteração era neutra. No painel de análise, o destaque de "Alteração proposta" deixa de ser azul e passa a laranja **(escolha do Claude)**.
+
+---
+
+# 59. Cores das Notificações — 04/11/2026
+
+Revisão de Produto do painel de Notificações. Todo o comportamento de §55.5 e §55.7 continua igual: clicar marca como lida e leva ao conteúdo, "Marcar todas como lidas", contador até `9+`, mais recentes primeiro, lidas continuam no painel, indicação "Nova", tempo relativo e polling.
+
+## 59.1 O que muda
+
+- **Contador do sino:** `#C65A2E`, no lugar do vermelho `#B42318`.
+- **Notificação não lida:** fundo `#D9E9F8`, no lugar de `#EEF7FC`. Depois de lida, volta ao fundo normal do painel.
+- **Aprovação e rejeição:** os ícones ✓ e ✕ não têm mais fundo verde ou vermelho. A apresentação é neutra e o resultado é comunicado pelo ícone, pelo título e pelo texto.
+
+A única cor de fundo especial do item da lista é a de não lida. Ao passar o mouse, a não lida fica um pouco mais clara e mantém o tom azul **(escolha do Claude)**.
+
+## 59.2 Ponto de atenção
+
+O número branco sobre `#C65A2E` tem contraste de 4,28:1, abaixo do mínimo de 4,5:1 (WCAG AA) para texto pequeno. A cor foi aplicada como definida. Leitores de tela não dependem dela, porque o botão anuncia a quantidade de não lidas.
+
+---
+
+# 60. Filtros de Meus conteúdos — 04/11/2026
+
+Revisão de Produto. A implementação atual está correta e não muda. Esta decisão resolve o ponto do filtro por tipo que estava em aberto em §52.11.
+
+## 60.1 O que fica no MVP
+
+Só os filtros por situação: **Todos**, **Em andamento**, **Aprovados**, **Rejeitados** e **Excluídos**.
+
+## 60.2 O que fica para o futuro
+
+O **filtro por tipo de conteúdo** e a **busca textual** ficam de fora de propósito. Não são funcionalidades esquecidas.
+
+No escopo atual, Meus conteúdos trabalha só com Material, então um filtro por tipo não teria utilidade. Se outros tipos de conteúdo entrarem nessa área, a necessidade será revista.
