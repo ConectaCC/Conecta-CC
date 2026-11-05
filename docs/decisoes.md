@@ -1381,9 +1381,13 @@ Revisão de Produto do painel de Notificações. Todo o comportamento de §55.5 
 
 A única cor de fundo especial do item da lista é a de não lida. Ao passar o mouse, a não lida fica um pouco mais clara e mantém o tom azul **(escolha do Claude)**.
 
+> **Atualização (04/11/2026):** a cor do contador passou a ser `#BD5228` (§62.1).
+
 ## 59.2 Ponto de atenção
 
 O número branco sobre `#C65A2E` tem contraste de 4,28:1, abaixo do mínimo de 4,5:1 (WCAG AA) para texto pequeno. A cor foi aplicada como definida. Leitores de tela não dependem dela, porque o botão anuncia a quantidade de não lidas.
+
+> **Atualização (04/11/2026):** resolvido com a troca da cor (§62.1).
 
 ---
 
@@ -1432,3 +1436,22 @@ Trocar a senha encerra as outras sessões da conta, e a pessoa continua logada n
 - **E-mail ainda carregando ou indisponível:** a página mostra um esqueleto durante o carregamento e "E-mail indisponível no momento." se a busca falhar **(escolha do Claude)**.
 - **Aviso de sucesso:** usa o botão de fechar que já existe ("Fechar aviso") **(escolha do Claude)**.
 - **Página "Em construção":** removida, porque Configurações era a última área que a usava.
+
+---
+
+# 62. Ajustes das cores de status e das Notificações — 04/11/2026
+
+Decisões de Produto sobre os dois pontos abertos das §58 e §59.
+
+## 62.1 Cor do contador do sino
+
+O contador passa de `#C65A2E` para `#BD5228`. Isso substitui a cor definida em §59.1.
+
+Com texto branco, `#C65A2E` tem contraste de 4,28:1, abaixo do mínimo de 4,5:1 (WCAG AA) para texto pequeno. `#BD5228` chega a 4,77:1 e mantém praticamente a mesma identidade visual.
+
+## 62.2 Status e confirmação de ação são coisas diferentes
+
+- **Status REJEITADO:** vermelho em tags, badges e demais representações do status (§58).
+- **Ação concluída com sucesso:** aviso verde.
+
+Depois que a Moderação rejeita um conteúdo, o aviso "Conteúdo rejeitado." continua verde, porque confirma que a ação deu certo. Em vermelho, ele poderia ser confundido com uma falha ao rejeitar.

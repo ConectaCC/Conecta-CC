@@ -238,13 +238,15 @@ Pode ser utilizado para:
 
 "Editado/Alteração" é uma indicação adicional e nunca substitui o status de Moderação. A tag sempre traz o texto: a informação não depende só da cor.
 
+> **Atualização (04/11/2026):** esta tabela vale para a representação do status. O aviso que confirma uma ação concluída com sucesso continua verde, mesmo quando a ação é rejeitar (`decisoes.md` 62.2).
+
 ---
 
 ## Notificações
 
 > **Atualização (04/11/2026):** o painel de Notificações usa cores próprias (`decisoes.md` 59).
 
-- Contador do sino: `#C65A2E` (token `badge`).
+- Contador do sino: `#BD5228` (token `badge`). Substitui `#C65A2E`, que ficava abaixo do contraste mínimo com o número branco (`decisoes.md` 62.1).
 - Fundo da notificação não lida: `#D9E9F8` (token `unread`).
 - Ícones de aprovação e rejeição: neutros, sem fundo verde ou vermelho.
 
