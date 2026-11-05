@@ -213,7 +213,7 @@ O Perfil é considerado completo quando possui:
 - Nome de exibição;
 - pelo menos uma disciplina atual.
 
-Também deverá ser implementada a visibilidade adequada das informações para outros estudantes autenticados (fica para o Perfil público).
+Também deverá ser implementada a visibilidade adequada das informações para outros estudantes autenticados (entregue no Perfil público, `decisoes.md` 57).
 
 Implementado em 19/10/2026 (spec `specs/2026-10-19-perfil-design.md`). Catálogo com as 49 disciplinas obrigatórias da Matriz 2023 (decisoes.md 53.2).
 
@@ -398,20 +398,20 @@ A busca deve considerar:
 
 Implementar:
 
-- [ ] avatar;
-- [ ] Nome de exibição;
-- [ ] Curso;
-- [ ] Semestre;
-- [ ] Sobre;
-- [ ] Interesses;
-- [ ] Pode ajudar com;
-- [ ] Procura ajuda com;
-- [ ] Disciplinas atuais;
-- [ ] GitHub;
-- [ ] LinkedIn;
-- [ ] estados de loading;
-- [ ] erro;
-- [ ] Perfil indisponível.
+- [x] avatar;
+- [x] Nome de exibição;
+- [x] Curso;
+- ~~Semestre~~ (fora do MVP — `decisoes.md` 57);
+- [x] Sobre;
+- [x] Interesses;
+- [x] Pode ajudar com;
+- [x] Procura ajuda com;
+- [x] Disciplinas atuais;
+- [x] GitHub;
+- [x] LinkedIn;
+- [x] estados de loading;
+- [x] erro;
+- [x] Perfil indisponível.
 
 Não exibir:
 

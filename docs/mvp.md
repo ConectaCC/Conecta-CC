@@ -377,6 +377,8 @@ Links ainda não confirmados não devem ser inventados.
 
 # 11. Perfil público
 
+> **Atualização (04/11/2026):** implementado sem o Semestre e sem lista de materiais. O acesso é pelo nome do autor no material, numa URL com código aleatório (`decisoes.md` 57).
+
 O Perfil público pode ser visualizado apenas por usuários autenticados no ConectaCC.
 
 Pode apresentar:

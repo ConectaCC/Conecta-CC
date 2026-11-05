@@ -24,7 +24,7 @@ Referência visual: protótipo, artboards `PerfilPublico` e `PP-*`. Itens marcad
 - Lista de materiais no perfil.
 - "Ver como outros estudantes veem meu perfil": o usuário vê e edita o próprio Perfil normalmente.
 - Semestre: será tratado junto das regras de visibilidade.
-- Controle de visibilidade e Perfil oculto ou anônimo (ver `pendencias.md` 1.5).
+- Controle de visibilidade e Perfil oculto ou anônimo (ver `pendencias.md` 1.6).
 
 ### Nunca aparece
 

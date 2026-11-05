@@ -172,7 +172,7 @@ Transformar o protótipo em uma aplicação funcional.
 
 ## Ordem inicial sugerida
 
-> **Atualização (02/11/2026):** Oportunidade e Comunidade saíram do MVP (`decisoes.md` 56). Os itens 1 a 5, a Moderação de material e as Notificações já foram entregues. A ordem atual é: Perfil público, Configurações, painel `/admin`, responsividade, acessibilidade e testes.
+> **Atualização (02/11/2026):** Oportunidade e Comunidade saíram do MVP (`decisoes.md` 56). Os itens 1 a 5, a Moderação de material e as Notificações já foram entregues. O Perfil público foi entregue em 04/11/2026. A ordem atual é: Configurações, painel `/admin`, responsividade, acessibilidade e testes.
 
 1. Fundação e autenticação
 2. Layout global

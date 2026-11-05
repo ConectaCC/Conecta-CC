@@ -1,5 +1,6 @@
 import { ExternalLink, MoreHorizontal } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { Link } from 'react-router';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ConfirmActionDialog } from '@/features/my-contents/ConfirmActionDialog';
@@ -59,7 +60,10 @@ export function MaterialCard({ material, discipline, onDeleted }: Props) {
       <p className="mt-2 text-[15px] text-muted-foreground">
         {material.author_name ? (
           <>
-            Compartilhado por <span className="font-semibold text-foreground">{material.author_name}</span>
+            Compartilhado por{' '}
+            <Link to={material.is_mine ? '/perfil' : `/estudantes/${material.author_code}`} className="font-semibold text-action hover:underline">
+              {material.author_name}
+            </Link>
             {when}
           </>
         ) : (

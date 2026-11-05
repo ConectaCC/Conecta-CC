@@ -35,7 +35,7 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 | Oportunidade | ✅ | ✅ | fora do MVP | — |
 | Indicação de oportunidade | ✅ | ✅ | fora do MVP | — |
 | Comunidade | ✅ | ✅ | fora do MVP | — |
-| Perfil público | ✅ | ✅ | ⏳ | ⏳ |
+| Perfil público | ✅ | ✅ | ✅ | ⏳ |
 | Meus conteúdos (materiais) | ✅ | ✅ (esboço) | ✅ (2b) | ⏳ |
 | Compartilhamento na Comunidade | ✅ | ✅ | fora do MVP | — |
 | Busca de estudantes | ✅ | ✅ | fora do MVP | — |
@@ -60,7 +60,8 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 - Estudos: catálogo da Matriz 2023, busca, página da disciplina e ementa oficial;
 - materiais por link, identificados ou anônimos, com Moderação de material;
 - Meus conteúdos: editar, excluir e cancelar envio;
-- notificações de material (sino, contador e painel).
+- notificações de material (sino, contador e painel);
+- Perfil público, aberto pelo nome do autor nos materiais.
 
 **Ainda falta para o MVP:** ver a seção "O que ainda não está implementado".
 
@@ -135,7 +136,6 @@ Atualmente estão definidos, entre outros:
 
 **Funcionalidades do MVP:**
 
-- **Perfil público:** a página de um estudante, vista pelos outros. O acesso será pelo nome do autor nos materiais.
 - **Configurações:** e-mail só para leitura e troca de senha, incluindo a política das outras sessões depois da troca.
 - **Painel `/admin` (Filament):** papéis, consulta de moderações e atendimento de exclusão de conta. Ele é necessário porque o Render não tem terminal.
 - **Recuperação de senha:** opcional (`decisoes.md` 52.9).
@@ -218,7 +218,7 @@ A pergunta central dessa fase será: > **Como vamos construir o produto que já 
 
 Somente depois da definição da arquitetura será iniciada a implementação funcional do MVP.
 
-> **Atualização (02/11/2026):** em andamento. Já foram entregues a fundação, a autenticação, o Perfil, a Home, Estudos (partes 1 e 2), Moderação de material, Meus conteúdos e Notificações. Faltam o Perfil público, Configurações e o painel `/admin`.
+> **Atualização (02/11/2026):** em andamento. Já foram entregues a fundação, a autenticação, o Perfil, a Home, Estudos (partes 1 e 2), Moderação de material, Meus conteúdos, Notificações e Perfil público. Faltam Configurações e o painel `/admin`.
 
 ---
 

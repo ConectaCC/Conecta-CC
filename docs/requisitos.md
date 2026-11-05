@@ -643,6 +643,8 @@ Isso não significa que ele marcou:
 
 # 13. Perfil público
 
+> **Atualização (04/11/2026):** implementado sem o Semestre e sem lista de materiais. O acesso é pelo nome do autor no material, numa URL com código aleatório (`decisoes.md` 57).
+
 ## RF-54 — Acesso
 
 Perfis públicos são visíveis somente para usuários autenticados do ConectaCC.

@@ -577,11 +577,16 @@ As duas informações são independentes.
 
 # 20. Perfil público
 
-Fluxo:
+> **Atualização (04/11/2026):** implementado sem o Semestre e sem lista de materiais. O acesso é pelo nome do autor no material, numa URL com código aleatório (`decisoes.md` 57).
 
-Comunidade  
-→ Ver perfil  
+Fluxo no MVP:
+
+Página da disciplina  
+→ material identificado  
+→ clicar no Nome de exibição do autor  
 → Perfil público.
+
+O material anônimo não dá acesso ao perfil do autor.
 
 Pode apresentar:
 
