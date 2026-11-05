@@ -1180,6 +1180,7 @@ Todas as 49 disciplinas do catálogo têm área de materiais. Não existe lista 
 
 - Todas as disciplinas aparecem agrupadas por semestre (1º a 8º), em ordem alfabética dentro de cada grupo. A busca ignora acentos e maiúsculas.
 - Cada semestre abre e fecha ao clicar, e todos começam fechados. Durante a busca, os semestres com resultado abrem sozinhos.
+- No card da disciplina, o selo "Minha disciplina" fica no canto superior direito, na mesma linha do nome.
 - A página da disciplina mostra semestre e carga horária junto do link "Ver ementa oficial".
 - O endereço é legível: `/estudos/estrutura-de-dados-iii`. O slug é calculado a partir do nome e não fica guardado no banco.
 
@@ -1283,4 +1284,36 @@ Decisão do Marcelo: **Oportunidade** e **Comunidade** saem do MVP e ficam para 
 - **Perfil público:** continua no MVP. Sem a busca de estudantes, o caminho até ele passa a ser o nome do autor nos materiais.
 - **Limites de texto e "Mostrar mais":** os de oportunidade e publicação (pendências 2.7) e a quantidade de itens no feed e na busca (pendências 2.8) deixam de bloquear o MVP.
 - **Identidade do projeto:** os pilares (Conexão, Conhecimento, Oportunidades, Comunidade) e os textos institucionais continuam, porque descrevem o ConectaCC como um todo, e não as telas do MVP.
+
+---
+
+# 57. Perfil público — 04/11/2026
+
+Decisões tomadas na definição do Perfil público (spec `specs/2026-11-04-perfil-publico-design.md`).
+
+## 57.1 O que é
+
+"Perfil público" significa **visível para outros usuários autenticados no ConectaCC**, não público para a internet.
+
+- **Aparecem:** Nome de exibição, avatar pelas iniciais, Curso, Disciplinas atuais e, quando preenchidos, Sobre mim, Interesses, Pode ajudar com, Procura ajuda com, GitHub e LinkedIn.
+- **Nunca aparecem:** e-mail institucional, Nome completo da conta, dados de autenticação, informações administrativas, Meus conteúdos e histórico privado.
+- **Semestre** fica de fora. Será tratado junto das regras de visibilidade.
+- **Materiais da pessoa** não são listados no perfil.
+- **Disciplinas atuais** ficam visíveis para estudantes autenticados e não há opção de escondê-las no MVP.
+
+## 57.2 Como se chega ao perfil
+
+Material identificado → clicar no Nome de exibição do autor → Perfil público. O material anônimo continua com "Compartilhado pela comunidade" e não dá acesso ao perfil real do autor: a API não envia o código dele.
+
+O próprio nome num material leva a `/perfil`. "Ver como outros estudantes veem meu perfil" fica para o futuro.
+
+Se houver tempo, a Comunidade pode voltar ainda durante a etapa de testes, criando novas formas de descobrir estudantes (ver §56).
+
+## 57.3 Código público na URL
+
+A URL usa um **código público aleatório e não sequencial** (`/estudantes/<código>`), e não o id interno, por causa da evolução futura para perfil oculto. O código não substitui autorização: se um perfil puder ser ocultado no futuro, conhecer a URL não poderá dar acesso a ele.
+
+## 57.4 Navegação
+
+O link "Voltar" retorna à página anterior, ou a Estudos quando o perfil foi aberto direto pelo endereço. Perfil inexistente mostra "Este perfil não está disponível." com "Voltar para Estudos".
 

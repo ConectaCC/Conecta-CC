@@ -859,6 +859,43 @@
                     }
                 }
             }
+        },
+        "/students/{student}": {
+            "get": {
+                "operationId": "v1.showStudentProfile",
+                "tags": [
+                    "ShowStudentProfile"
+                ],
+                "parameters": [
+                    {
+                        "name": "student",
+                        "in": "path",
+                        "required": true,
+                        "description": "The student public code",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`StudentProfileResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StudentProfileResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -943,6 +980,12 @@
                         ],
                         "description": "an\u00f4nimo: ningu\u00e9m recebe o nome na \u00e1rea p\u00fablica, nem o ADMINISTRADOR (requisitos \u00a71.3)"
                     },
+                    "author_code": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
                     "published_at": {
                         "type": [
                             "string",
@@ -960,6 +1003,7 @@
                     "description",
                     "url",
                     "author_name",
+                    "author_code",
                     "published_at",
                     "is_mine"
                 ],
@@ -1374,6 +1418,71 @@
                     "url"
                 ],
                 "title": "StoreMaterialRequest"
+            },
+            "StudentProfileResource": {
+                "type": "object",
+                "properties": {
+                    "display_name": {
+                        "type": "string"
+                    },
+                    "initials": {
+                        "type": "string"
+                    },
+                    "about": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "interests": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "can_help_with": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "needs_help_with": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "github_url": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "linkedin_url": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "disciplines": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DisciplineResource"
+                        }
+                    }
+                },
+                "required": [
+                    "display_name",
+                    "initials",
+                    "about",
+                    "interests",
+                    "can_help_with",
+                    "needs_help_with",
+                    "github_url",
+                    "linkedin_url",
+                    "disciplines"
+                ],
+                "title": "StudentProfileResource"
             },
             "UpdateProfileRequest": {
                 "type": "object",

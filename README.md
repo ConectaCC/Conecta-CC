@@ -149,8 +149,8 @@ Atualmente:
 - ✅ dez áreas do MVP prototipadas;
 - ✅ auditoria geral do protótipo realizada;
 - ✅ arquitetura técnica definida;
-- ✅ Cadastro, Login, Home, Perfil, Estudos, materiais, Moderação de material, Meus conteúdos e notificações implementados;
-- 🚧 faltam Perfil público, Configurações e o painel `/admin` (ver `docs/status-mvp.md`);
+- ✅ Cadastro, Login, Home, Perfil, Estudos, materiais, Moderação de material, Meus conteúdos, notificações e Perfil público implementados;
+- 🚧 faltam Configurações e o painel `/admin` (ver `docs/status-mvp.md`);
 - ⏳ testes técnicos;
 - ⏳ preparação do piloto;
 - ⏳ validação com estudantes.
@@ -186,7 +186,7 @@ A documentação do projeto está organizada em:
 
 ## Estado da implementação
 
-Fundação técnica, Cadastro, Login e Home implementados (ver [`docs/specs/2026-10-12-fundacao-design.md`](docs/specs/2026-10-12-fundacao-design.md)). Estudos implementado na etapa 1, só leitura (ver [`docs/specs/2026-10-31-estudos-design.md`](docs/specs/2026-10-31-estudos-design.md)). Compartilhamento de materiais (identificado ou anônimo) e Moderação de material implementados na etapa 2a, Meus conteúdos com editar, excluir e cancelar na etapa 2b, e Notificações de material na etapa 2c (ver [`docs/specs/2026-11-02-estudos-parte-2-design.md`](docs/specs/2026-11-02-estudos-parte-2-design.md)).
+Fundação técnica, Cadastro, Login e Home implementados (ver [`docs/specs/2026-10-12-fundacao-design.md`](docs/specs/2026-10-12-fundacao-design.md)). Estudos implementado na etapa 1, só leitura (ver [`docs/specs/2026-10-31-estudos-design.md`](docs/specs/2026-10-31-estudos-design.md)). Compartilhamento de materiais (identificado ou anônimo) e Moderação de material implementados na etapa 2a, Meus conteúdos com editar, excluir e cancelar na etapa 2b, e Notificações de material na etapa 2c (ver [`docs/specs/2026-11-02-estudos-parte-2-design.md`](docs/specs/2026-11-02-estudos-parte-2-design.md)). Perfil público implementado (ver [`docs/specs/2026-11-04-perfil-publico-design.md`](docs/specs/2026-11-04-perfil-publico-design.md)).
 
 As decisões de stack e arquitetura estão em [`docs/stack-e-decisoes-tecnicas.md`](docs/stack-e-decisoes-tecnicas.md). Elas são conduzidas principalmente por **Marcelo Henrique Germiniani Panho**, com revisão da equipe para garantir aderência aos requisitos definidos.
 
@@ -219,7 +219,7 @@ Possíveis etapas:
 1. definição e prototipação;
 2. arquitetura e implementação do MVP;
 3. testes internos;
-4. disciplinas piloto;
+4. preparação do piloto;
 5. piloto com estudantes;
 6. revisão com base em feedback;
 7. possível continuidade institucional;

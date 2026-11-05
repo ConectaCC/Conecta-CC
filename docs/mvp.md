@@ -79,6 +79,8 @@ Possui as funcionalidades disponíveis ao estudante, pode moderar (inclusive o p
 
 # 4. Áreas do MVP
 
+> **Atualização (04/11/2026):** Oportunidade e Comunidade saíram do MVP (`decisoes.md` 56).
+
 ## 4.1 Autenticação
 
 O MVP contempla:
@@ -128,6 +130,8 @@ O aceite deverá ser registrado de forma versionada durante a implementação.
 ---
 
 # 5. Home
+
+> **Atualização (04/11/2026):** os atalhos são só para Estudos e Perfil (`decisoes.md` 56).
 
 A Home funciona como ponto inicial do ConectaCC.
 
@@ -217,7 +221,7 @@ A Matriz 2023 organiza o curso do:
 
 A necessidade de contemplar estudantes ainda vinculados à Matriz 2017 será verificada posteriormente e não bloqueia as atividades atuais.
 
-As disciplinas piloto para compartilhamento de materiais ainda deverão ser escolhidas.
+> **Atualização (04/11/2026):** substituído. Todas as disciplinas têm área de materiais (`decisoes.md` 54.2).
 
 ## Página da disciplina
 
@@ -226,7 +230,7 @@ Uma disciplina pode apresentar:
 - informações acadêmicas;
 - acesso à fonte oficial da ementa, quando confirmada;
 - materiais aprovados pela Moderação;
-- opção para compartilhar material, quando a disciplina estiver habilitada.
+- opção para compartilhar material.
 
 ---
 
@@ -255,17 +259,7 @@ Se rejeitado:
 
 → material não é publicado.
 
-Nos cards públicos, a autoria não é destacada.
-
-O material aparece como:
-
-**Compartilhado pela comunidade**
-
-Esse comportamento será mantido durante o MVP atual.
-
-A decisão sobre apresentar ou não a autoria publicamente será retomada:
-
-**no próximo semestre, após os primeiros testes com estudantes.**
+> **Atualização (04/11/2026):** substituído. O card mostra o nome de exibição do autor, com link para o Perfil público. Com a opção "Compartilhar anonimamente", o card mostra "Compartilhado pela comunidade", sem link, e o sistema continua guardando quem enviou (`decisoes.md` 55.2 e 57.2).
 
 O ADMIN continua identificando quem realizou o envio para fins de Moderação e notificação.
 
@@ -376,6 +370,8 @@ Links ainda não confirmados não devem ser inventados.
 ---
 
 # 11. Perfil público
+
+> **Atualização (04/11/2026):** implementado sem o Semestre e sem lista de materiais. O acesso é pelo nome do autor no material, numa URL com código aleatório (`decisoes.md` 57).
 
 O Perfil público pode ser visualizado apenas por usuários autenticados no ConectaCC.
 
@@ -506,7 +502,7 @@ Quando rejeitado:
 
 - não aparece publicamente;
 - autor recebe notificação;
-- motivo da rejeição é opcional.
+- motivo da rejeição é obrigatório (`decisoes.md` 55.4).
 
 ## Conflito de interesse
 
@@ -542,6 +538,8 @@ A navegação exata de MODERADOR e ADMINISTRADOR será definida na rodada espec�
 ---
 
 # 16. O que NÃO pertence ao MVP
+
+> **Atualização (04/11/2026):** além da lista abaixo, Oportunidade, Comunidade e busca de estudantes ficam para a próxima versão (`decisoes.md` 56). Se houver tempo, a Comunidade pode voltar ainda durante a etapa de testes (57.2).
 
 Não implementar nesta primeira versão:
 

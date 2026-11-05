@@ -9,7 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /** @mixin Material */
 final class MaterialResource extends JsonResource
 {
-    /** @return array{id: int, code: string, title: string, description: string|null, url: string, author_name: string|null, published_at: string|null, is_mine: bool} */
+    /** @return array{id: int, code: string, title: string, description: string|null, url: string, author_name: string|null, author_code: string|null, published_at: string|null, is_mine: bool} */
     public function toArray(Request $request): array
     {
         return [
@@ -20,6 +20,7 @@ final class MaterialResource extends JsonResource
             'url' => $this->url,
             // anônimo: ninguém recebe o nome na área pública, nem o ADMINISTRADOR (requisitos §1.3)
             'author_name' => $this->anonymous ? null : $this->author->display_name,
+            'author_code' => $this->anonymous ? null : $this->author->public_code,
             'published_at' => $this->published_at?->toIso8601String(),
             'is_mine' => $request->user()?->id === $this->user_id,
         ];

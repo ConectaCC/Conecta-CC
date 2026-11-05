@@ -81,7 +81,7 @@ Cabeçalho: "Estudos", com o subtítulo "Acesse suas disciplinas e materiais com
 - O aviso do protótipo "Lista de demonstração do protótipo…" não entra, porque o catálogo agora é o oficial.
 
 **Card de disciplina** (o mesmo nas duas seções)
-- Nome da disciplina, o selo "Minha disciplina" quando ela está em `profile.disciplines` e a ação "Ver disciplina", que leva a `/estudos/<slug>`. O card inteiro é um único link.
+- Nome da disciplina, o selo "Minha disciplina" no canto superior direito (decisão do Marcelo) quando ela está em `profile.disciplines` e a ação "Ver disciplina", que leva a `/estudos/<slug>`. O card inteiro é um único link.
 - **A linha de status do protótipo ("Materiais disponíveis") não entra. (escolha do Claude)** Como toda disciplina tem área de materiais, a linha seria igual em todos os cards e não informaria nada. A etapa 2 pode trocá-la pela quantidade de materiais.
 
 **Estados**

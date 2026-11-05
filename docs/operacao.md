@@ -37,7 +37,7 @@ Criadas pelos seeders (só em desenvolvimento). Senha de todas: `password`.
 | moderador2@academico.ifsul.edu.br | MODERADOR |
 | admin@academico.ifsul.edu.br | ADMINISTRADOR |
 
-O `MaterialSeeder` cria alguns materiais de exemplo (aprovados e pendentes) e pode ser rodado sozinho, sem recriar o banco: `docker compose exec -u sail app php artisan db:seed --class=MaterialSeeder`.
+O `MaterialSeeder` cria materiais de exemplo (aprovados, pendentes, rejeitado, cancelado e uma alteração pendente), e o `NotificationSeeder` cria duas notificações para o `aluno@`. Os dois podem ser rodados sozinhos, sem recriar o banco: `docker compose exec -u sail app php artisan db:seed --class=MaterialSeeder`.
 
 ### Comandos
 

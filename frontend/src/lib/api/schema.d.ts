@@ -276,6 +276,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/students/{student}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.showStudentProfile"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -304,6 +320,7 @@ export interface components {
             url: string;
             /** @description anônimo: ninguém recebe o nome na área pública, nem o ADMINISTRADOR (requisitos §1.3) */
             author_name: string | null;
+            author_code: string | null;
             published_at: string | null;
             is_mine: boolean;
         };
@@ -406,6 +423,18 @@ export interface components {
             description?: string | null;
             url: string;
             anonymous?: boolean;
+        };
+        /** StudentProfileResource */
+        StudentProfileResource: {
+            display_name: string;
+            initials: string;
+            about: string | null;
+            interests: string[];
+            can_help_with: string[];
+            needs_help_with: string[];
+            github_url: string | null;
+            linkedin_url: string | null;
+            disciplines: components["schemas"]["DisciplineResource"][];
         };
         /** UpdateProfileRequest */
         UpdateProfileRequest: {
@@ -1010,6 +1039,31 @@ export interface operations {
             };
             401: components["responses"]["AuthenticationException"];
             422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.showStudentProfile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The student public code */
+                student: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `StudentProfileResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentProfileResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
         };
     };
 }

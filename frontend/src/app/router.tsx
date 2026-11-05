@@ -8,6 +8,7 @@ import { ModerationPage } from '@/features/moderation/ModerationPage';
 import { MyContentsPage } from '@/features/my-contents/MyContentsPage';
 import { ProfilePage } from '@/features/profile/ProfilePage';
 import { DisciplinePage } from '@/features/studies/DisciplinePage';
+import { StudentProfilePage } from '@/features/students/StudentProfilePage';
 import { StudiesPage } from '@/features/studies/StudiesPage';
 import { UnderConstructionPage } from '@/pages/UnderConstructionPage';
 
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
           { path: '/perfil/meus-conteudos', element: <MyContentsPage /> },
           { path: '/estudos', element: <StudiesPage /> },
           { path: '/estudos/:slug', element: <DisciplinePage /> },
+          { path: '/estudantes/:code', element: <StudentProfilePage /> },
           ...placeholders.map(([path, title]) => ({ path, element: <UnderConstructionPage title={title} /> })),
           {
             element: <RequireModeration />,

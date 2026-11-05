@@ -10,6 +10,8 @@ A implementação técnica será realizada posteriormente, após a definição d
 
 # 1. Situação atual
 
+> **Atualização (04/11/2026):** a arquitetura foi definida e a implementação está em andamento. O estado atual está em `status-mvp.md`.
+
 Atualmente o ConectaCC possui:
 
 - escopo do MVP definido;
@@ -159,11 +161,11 @@ A navegação deve diferenciar corretamente:
 
 - Home
 - Estudos
-- Oportunidade
-- Comunidade
 - Perfil
 - Configurações
 - Sair
+
+(Oportunidade e Comunidade saíram do MVP — `decisoes.md` 56. Moderação aparece também para MODERADOR.)
 
 ## ADMIN
 
@@ -213,7 +215,7 @@ O Perfil é considerado completo quando possui:
 - Nome de exibição;
 - pelo menos uma disciplina atual.
 
-Também deverá ser implementada a visibilidade adequada das informações para outros estudantes autenticados (fica para o Perfil público).
+Também deverá ser implementada a visibilidade adequada das informações para outros estudantes autenticados (entregue no Perfil público, `decisoes.md` 57).
 
 Implementado em 19/10/2026 (spec `specs/2026-10-19-perfil-design.md`). Catálogo com as 49 disciplinas obrigatórias da Matriz 2023 (decisoes.md 53.2).
 
@@ -280,6 +282,8 @@ No MVP não existe upload direto de arquivos.
 
 # 9. Materiais
 
+> **Atualização (04/11/2026):** a autoria mudou: o material mostra o nome do autor, com a opção de compartilhar anonimamente (`decisoes.md` 55.2). MODERADOR e ADMINISTRADOR analisam, e o motivo da rejeição é obrigatório (55.4).
+
 Campos principais:
 
 - Título;
@@ -313,7 +317,7 @@ No MVP atual, a autoria pública permanecerá como:
 
 **Compartilhado pela comunidade**
 
-A decisão sobre apresentar a autoria aos demais estudantes será retomada apenas no próximo semestre, após os primeiros testes.
+~~A decisão sobre apresentar a autoria aos demais estudantes será retomada apenas no próximo semestre.~~ Decidida em 02/11/2026 (`decisoes.md` 55.2).
 
 ## Data pública
 
@@ -398,20 +402,20 @@ A busca deve considerar:
 
 Implementar:
 
-- [ ] avatar;
-- [ ] Nome de exibição;
-- [ ] Curso;
-- [ ] Semestre;
-- [ ] Sobre;
-- [ ] Interesses;
-- [ ] Pode ajudar com;
-- [ ] Procura ajuda com;
-- [ ] Disciplinas atuais;
-- [ ] GitHub;
-- [ ] LinkedIn;
-- [ ] estados de loading;
-- [ ] erro;
-- [ ] Perfil indisponível.
+- [x] avatar;
+- [x] Nome de exibição;
+- [x] Curso;
+- ~~Semestre~~ (fora do MVP — `decisoes.md` 57);
+- [x] Sobre;
+- [x] Interesses;
+- [x] Pode ajudar com;
+- [x] Procura ajuda com;
+- [x] Disciplinas atuais;
+- [x] GitHub;
+- [x] LinkedIn;
+- [x] estados de loading;
+- [x] erro;
+- [x] Perfil indisponível.
 
 Não exibir:
 
@@ -553,7 +557,7 @@ Antes ou durante a implementação deverão ser definidos limites para:
 - descrição de publicação;
 - motivo da rejeição.
 
-Esses valores ainda não estão definidos.
+Os valores de Perfil são provisórios (`pendencias.md` 2.7). Os de material estão definidos: título 200, descrição 2.000, link 2.048 e motivo da rejeição 500 (`decisoes.md` 55.3 e 55.4). Oportunidade e publicação saíram do MVP.
 
 ---
 
@@ -622,10 +626,10 @@ Uma ordem possível é:
 3. layout global;
 4. Perfil;
 5. Home;
-6. Estudos — etapa 1 (leitura);
-7. Estudos parte 2: 2a Materiais + núcleo de Moderação (só MATERIAL), 2b Meus conteúdos e 2c Notificações;
+6. Estudos — etapa 1 (leitura) (entregue);
+7. Estudos parte 2: 2a Materiais + núcleo de Moderação (só MATERIAL), 2b Meus conteúdos e 2c Notificações (entregues);
 8. ~~Oportunidade~~ e ~~Comunidade~~: fora do MVP (`decisoes.md` 56);
-9. Perfil público;
+9. Perfil público (entregue em 04/11/2026);
 10. painel `/admin` (Filament) para o ADMINISTRADOR;
 11. notificações;
 12. Configurações;
