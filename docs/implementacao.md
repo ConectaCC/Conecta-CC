@@ -476,6 +476,8 @@ Funcionalidades:
 
 A autorização deve existir no backend e no banco, não apenas na interface.
 
+**Evolução prevista, fora do checklist do MVP:** retirada administrativa de conteúdo publicado, pelo ADMINISTRADOR (`decisoes.md` 63).
+
 ---
 
 # 15. Concorrência na Moderação

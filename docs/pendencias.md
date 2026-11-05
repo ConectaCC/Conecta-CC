@@ -565,7 +565,7 @@ Itens já identificados como possíveis evoluções e que não fazem parte da pr
 
 - prevenção automática de conteúdo duplicado;
 - aviso de link já compartilhado;
-- remoção de conteúdo já aprovado;
+- **Retirada administrativa de conteúdo publicado — pós-MVP:** definir e implementar futuramente o fluxo pelo qual ADMINISTRADOR poderá retirar conteúdo anteriormente aprovado, preservando aprovação anterior e ação de retirada nos logs/auditoria (`decisoes.md` 63);
 - histórico administrativo;
 - auditoria de decisões;
 - contador de pendências na Moderação;
