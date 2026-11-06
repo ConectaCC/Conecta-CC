@@ -16,4 +16,19 @@ enum Role: string
             self::Aluno => false,
         };
     }
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::Aluno => 'Aluno',
+            self::Moderador => 'Moderador',
+            self::Administrador => 'Administrador',
+        };
+    }
+
+    /** @return array<string, string> */
+    public static function labels(): array
+    {
+        return collect(self::cases())->mapWithKeys(fn (self $role) => [$role->value => $role->label()])->all();
+    }
 }

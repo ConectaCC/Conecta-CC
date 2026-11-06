@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\Role;
 use Database\Factories\UserFactory;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,7 +28,7 @@ use Illuminate\Notifications\Notifiable;
 // role fica fora do Fillable: papel só muda por código explícito
 #[Fillable(['name', 'display_name', 'email', 'password', 'about', 'interests', 'can_help_with', 'needs_help_with', 'github_url', 'linkedin_url'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -46,6 +48,11 @@ class User extends Authenticatable
             'can_help_with' => 'array',
             'needs_help_with' => 'array',
         ];
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->role === Role::Administrador;
     }
 
     /** @return HasMany<TermsAcceptance, $this> */
