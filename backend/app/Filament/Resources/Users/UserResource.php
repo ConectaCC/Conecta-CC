@@ -30,6 +30,9 @@ final class UserResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
+    // é a primeira do menu, então o painel abre aqui
+    protected static ?int $navigationSort = 1;
+
     public static function table(Table $table): Table
     {
         return $table
