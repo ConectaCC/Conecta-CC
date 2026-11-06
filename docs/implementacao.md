@@ -138,6 +138,8 @@ Essa decisão não altera a recuperação de senha, que continuará utilizando e
 - **Domínio aceito:** `academico.ifsul.edu.br`, configurável por `ALLOWED_EMAIL_DOMAINS`. A comparação é exata: subdomínios e sufixos são recusados.
 - **Mudança de papel:** pelo comando `conectacc:promote`, executado em produção pelo workflow "Promover usuário" do GitHub Actions (o Render gratuito não tem Shell).
 
+> **Atualização (05/11/2026):** a mudança de papel agora é feita no painel `/admin` (§24). O workflow fica como saída de emergência e para criar o primeiro ADMINISTRADOR.
+
 ---
 
 # 5. Layout global
@@ -445,6 +447,8 @@ Exclusão de conta não pertence à interface atual do MVP.
 
 Sua política deverá ser definida antes do piloto.
 
+> **Atualização (05/11/2026):** a política foi definida em `decisoes.md` 64. A implementação continua fora do MVP.
+
 ---
 
 # 14. Moderação
@@ -632,7 +636,7 @@ Uma ordem possível é:
 7. Estudos parte 2: 2a Materiais + núcleo de Moderação (só MATERIAL), 2b Meus conteúdos e 2c Notificações (entregues);
 8. ~~Oportunidade~~ e ~~Comunidade~~: fora do MVP (`decisoes.md` 56);
 9. Perfil público (entregue em 04/11/2026);
-10. painel `/admin` (Filament) para o ADMINISTRADOR;
+10. painel `/admin` (Filament) para o ADMINISTRADOR (entregue em 05/11/2026);
 11. notificações;
 12. Configurações (entregue em 04/11/2026);
 13. estados de erro e loading;
@@ -668,3 +672,41 @@ Não fazem parte da implementação atual, mas poderão ser avaliadas futurament
 - revisão da autoria pública dos materiais após testes com estudantes.
 10. priorizar melhorias;
 11. planejar a próxima versão do ConectaCC.
+
+---
+
+# 24. Painel `/admin`
+
+Entregue em 05/11/2026 (`decisoes.md` 65). É só para ADMINISTRADOR, e o papel é conferido a cada requisição.
+
+## Usuários
+
+- [x] lista com nome, nome de exibição, e-mail, papel e, a partir de 1280 px, data de cadastro;
+- [x] busca por nome, nome de exibição e e-mail;
+- [x] filtro por papel;
+- [x] alteração de papel de outras contas, com confirmação;
+- [x] recusa de mudança do próprio papel, na tela e na regra;
+- [x] linha de log só com IDs internos e papéis.
+
+O painel não cria, edita nem exclui contas.
+
+## Moderações
+
+- [x] lista de materiais em todas as situações, inclusive excluídos e alterações;
+- [x] autor com a marca "Enviado anonimamente", quando for o caso;
+- [x] quem decidiu e quando;
+- [x] busca por título e autor;
+- [x] filtro por situação;
+- [x] detalhe com descrição, link, motivo da rejeição e dados originais da alteração.
+
+O painel não aprova, rejeita, retira nem reverte conteúdo.
+
+## Acesso
+
+- [x] login próprio em `/admin/login`, com a mesma sessão do app;
+- [x] página 403 em português para os demais papéis;
+- [x] link "Painel administrativo" na sidebar, só para ADMINISTRADOR;
+- [x] "Voltar ao ConectaCC" no rodapé da sidebar do painel;
+- [x] tabelas sem rolagem lateral de 320 a 1920 px, empilhadas no celular;
+- [x] layout igual ao do app (`backend/public/css/conectacc-admin.css`);
+- [x] avatar desenhado localmente, sem serviço externo.

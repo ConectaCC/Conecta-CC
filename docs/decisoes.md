@@ -1519,3 +1519,122 @@ Também ficam como evolução futura / pós-MVP:
 - **ADMINISTRADOR:** reverter rejeições.
 
 O MVP e o `/admin` podem ser considerados concluídos sem esses fluxos. As regras deles serão definidas quando entrarem no escopo.
+
+---
+
+# 64. Exclusão de conta: política do piloto — 05/11/2026
+
+Complementa a §29, responde a `pendencias.md` 3.2 e detalha o RF-61.
+
+## 64.1 Classificação
+
+A política de exclusão de conta é necessária antes do piloto e fica definida nesta seção.
+
+**A implementação fica fora do MVP.** Isso vale para a autoexclusão pelo próprio usuário e para a ação de exclusão no painel `/admin`.
+
+Não implementar agora:
+
+- botão ou ação "Excluir conta" no `/admin`;
+- tela de autoexclusão;
+- endpoint de exclusão;
+- fila de pedidos de exclusão.
+
+## 64.2 Fluxo inicial
+
+1. A pessoa solicita a exclusão por e-mail ou canal de contato.
+2. O ADMINISTRADOR executa a exclusão administrativamente.
+
+O canal de contato ainda precisa ser confirmado.
+
+## 64.3 Dados da conta
+
+Ao excluir a conta, devem ser removidos ou desvinculados os dados pessoais da conta, incluindo:
+
+- nome;
+- e-mail;
+- senha;
+- perfil;
+- disciplinas atuais;
+- sessões ativas;
+- notificações;
+- demais dados pessoais associados à conta.
+
+A conta deixa de existir como conta utilizável. O Perfil público deixa de existir. O mesmo e-mail poderá fazer um novo cadastro futuramente.
+
+## 64.4 Materiais
+
+- **Solicitações pendentes:** são canceladas.
+- **Materiais aprovados ou publicados:** permanecem publicados. A autoria deixa de estar vinculada à conta excluída, e o material passa a aparecer como **"Compartilhado pela comunidade"**.
+
+**Motivo:** preservar o conteúdo útil aos colegas sem manter a identificação pessoal do autor excluído.
+
+## 64.5 Observações
+
+- A política deve ser refletida nos Termos (`pendencias.md` 3.1).
+- A implementação e a redação final devem ser avaliadas à luz da LGPD e das orientações institucionais.
+- É uma política do piloto e pode ser refinada depois.
+- A autoexclusão pelo próprio usuário pode ser tratada futuramente, se necessário.
+
+## 64.6 Ainda em aberto
+
+- qual é o canal de contato;
+- como atender um pedido durante o piloto, já que a ação não será implementada no MVP (`pendencias.md` 3.2);
+- por quanto tempo algum dado precisa ser retido;
+- o que acontece com materiais rejeitados, cancelados ou já excluídos da conta.
+
+---
+
+# 65. Painel `/admin` — 05/11/2026
+
+Decisões da entrega do painel (spec `specs/2026-11-05-painel-admin-design.md`).
+
+## 65.1 O que o painel cobre
+
+- **Usuários:** lista, busca, filtro por papel e alteração de papel.
+- **Moderações:** consulta somente leitura de todos os materiais, inclusive excluídos e alterações.
+
+Ficam fora: exclusão de conta (§64), retirada, revisão e reversão de decisões (§63), catálogo de disciplinas, tela inicial com contadores, edição de nome e e-mail, redefinição de senha e tela de auditoria.
+
+## 65.2 Papéis
+
+- O ADMINISTRADOR define ALUNO, MODERADOR ou ADMINISTRADOR em outras contas, com confirmação.
+- Ninguém muda o próprio papel. Assim, quem está usando o painel não se tranca para fora.
+- O workflow "Promover usuário" continua como saída de emergência e para criar o primeiro ADMINISTRADOR.
+
+## 65.3 Acesso
+
+- O painel tem login próprio em `/admin/login` e usa a mesma sessão do app.
+- Sair do painel também encerra o app.
+- ALUNO e MODERADOR recebem a página "Você não tem permissão para acessar esta página.".
+- O papel é conferido a cada requisição.
+
+## 65.4 Autoria nas Moderações
+
+Vale a §55.2: o ADMINISTRADOR vê o nome de exibição do autor, com a marca "Enviado anonimamente". O MODERADOR não acessa o painel.
+
+## 65.5 Escolhas do Claude
+
+Estas escolhas não foram decididas pelo time e podem ser revistas:
+
+- **Tabelas:** filtro por papel em Usuários; mais recentes primeiro nas duas telas; empilhadas no celular.
+- **Situação:** "Alteração" aparece como uma marca ao lado da situação, em Moderações, conforme a §58.
+- **Login:** título "Painel administrativo" e botão "Entrar". Sem "Lembrar de mim", como no app.
+- **Painel:** sem modo escuro, busca global e notificações em banco. O rodapé da sidebar tem "Voltar ao ConectaCC".
+- **Link no app:** "Painel administrativo" abre na mesma aba.
+- **Log:** cada mudança de papel gera uma linha só com IDs internos e os papéis.
+- **Dois ADMINISTRADORES ao mesmo tempo:** se um retirar o papel do outro no mesmo instante, o sistema pode ficar sem ADMINISTRADOR. O caso é raro, e o workflow resolve.
+
+## 65.6 Layout do painel
+
+O painel segue o layout do resto do sistema: sidebar azul-marinho, cabeçalho branco com o nome da pessoa, fundo claro, fontes e tags de status iguais às do app.
+
+As tabelas não têm rolagem lateral. Para isso, as colunas foram agrupadas:
+
+- **Moderações:** "Material" reúne título, código e disciplina, e "Decisão" reúne quem decidiu e a data.
+- **Usuários:** "Nome" reúne nome e nome de exibição.
+
+"Enviado em" e "Cadastro" só aparecem em telas a partir de 1280 px. O detalhe de Moderações continua mostrando todos os campos, e a data e a hora do envio.
+
+## 65.7 Avatar sem serviço externo
+
+O avatar padrão do Filament é buscado em `ui-avatars.com`, o que enviaria as iniciais da pessoa para fora. O painel desenha o avatar localmente, com as mesmas iniciais do app.

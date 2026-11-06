@@ -464,6 +464,8 @@ Antes do piloto real, revisar o texto para incluir explicitamente:
 - finalidade dos dados;
 - informações relevantes sobre o período de testes.
 
+> **Atualização (05/11/2026):** a revisão também precisa refletir a política de exclusão de conta (`decisoes.md` 64), incluindo a permanência dos materiais aprovados como "Compartilhado pela comunidade". A redação final deve ser avaliada à luz da LGPD e das orientações institucionais. O texto da versão 0.2 ainda não foi alterado.
+
 ---
 
 ## 3.2 Exclusão de conta e dados
@@ -479,6 +481,8 @@ Definir:
 - impacto sobre oportunidades indicadas.
 
 Essa funcionalidade não possui tela automática no MVP atual.
+
+> **Atualização (05/11/2026):** a política foi definida em `decisoes.md` 64, e a implementação fica fora do MVP. **Continuam pendentes antes do piloto:** confirmar o canal de contato, decidir como atender um pedido enquanto não houver ação no `/admin` e avaliar a política à luz da LGPD e das orientações institucionais. Também ficam em aberto a retenção de dados e o destino de materiais rejeitados, cancelados ou já excluídos. Publicações e oportunidades indicadas saíram do MVP (`decisoes.md` 56).
 
 ---
 

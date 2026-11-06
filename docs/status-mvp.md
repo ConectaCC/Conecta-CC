@@ -42,6 +42,7 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 | Configurações | ✅ | ✅ | ✅ | ⏳ |
 | Notificações | ✅ | ✅ | ✅ (material) | ⏳ |
 | Moderação ADMIN | ✅ | ✅ | ✅ (só material) | ⏳ |
+| Painel `/admin` | ✅ | — | ✅ | ⏳ |
 | Responsividade | ✅ | ✅ | ⏳ | ⏳ |
 | Acessibilidade | ✅ | Considerada no protótipo | ⏳ | ⏳ |
 | Testes com estudantes | Planejado | — | — | ⏳ |
@@ -137,8 +138,10 @@ Atualmente estão definidos, entre outros:
 **Funcionalidades do MVP:**
 
 - ~~**Configurações:** e-mail só para leitura e troca de senha, incluindo a política das outras sessões depois da troca.~~ Entregue em 04/11/2026 (`decisoes.md` 61).
-- **Painel `/admin` (Filament):** papéis, consulta de moderações e atendimento de exclusão de conta. Ele é necessário porque o Render não tem terminal.
+- ~~**Painel `/admin` (Filament):** papéis, consulta de moderações e atendimento de exclusão de conta. Ele é necessário porque o Render não tem terminal.~~ Entregue em 05/11/2026, com papéis e consulta de moderações (`decisoes.md` 65).
 - **Recuperação de senha:** opcional (`decisoes.md` 52.9).
+
+> **Atualização (05/11/2026):** o atendimento de exclusão de conta sai do escopo do painel no MVP. A política está em `decisoes.md` 64.
 
 > **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado, a solicitação de revisão ou remoção pelo MODERADOR, a revisão de decisões de Moderação e a reversão de rejeições são pós-MVP e não são funcionalidades faltantes. O MVP pode ser considerado concluído sem esses fluxos (`decisoes.md` 63).
 
@@ -151,7 +154,7 @@ Atualmente estão definidos, entre outros:
 **Antes do piloto** (`pendencias.md` §3):
 
 - revisar os Termos (dados, finalidade, disciplinas visíveis);
-- política de exclusão de conta e dados;
+- política de exclusão de conta e dados: definida em `decisoes.md` 64. Falta confirmar o canal de contato, decidir como atender um pedido durante o piloto e avaliar a política à luz da LGPD;
 - definir quem modera (mais de um MODERADOR, porque o MODERADOR não analisa o próprio envio);
 - orientação para escrever o motivo da rejeição;
 - levantamento dos recursos institucionais ainda pendentes.
@@ -223,6 +226,8 @@ Somente depois da definição da arquitetura será iniciada a implementação fu
 > **Atualização (02/11/2026):** em andamento. Já foram entregues a fundação, a autenticação, o Perfil, a Home, Estudos (partes 1 e 2), Moderação de material, Meus conteúdos, Notificações e Perfil público. Faltam Configurações e o painel `/admin`.
 
 > **Atualização (04/11/2026):** Configurações foi entregue. Falta o painel `/admin`.
+
+> **Atualização (05/11/2026):** o painel `/admin` foi entregue. Não falta nenhuma funcionalidade obrigatória do MVP. Continuam a recuperação de senha, que é opcional, os itens de operação, a rodada de testes e a preparação do piloto.
 
 ---
 

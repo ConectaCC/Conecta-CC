@@ -180,6 +180,8 @@ Transformar o protótipo em uma aplicação funcional.
 
 > **Atualização (04/11/2026):** Configurações foi entregue. A ordem atual é: painel `/admin`, responsividade, acessibilidade e testes.
 
+> **Atualização (05/11/2026):** o painel `/admin` foi entregue (`decisoes.md` 65). A ordem atual é: responsividade, acessibilidade e testes.
+
 1. Fundação e autenticação
 2. Layout global
 3. Perfil
@@ -257,6 +259,8 @@ Deverão ser resolvidos itens como:
 - definir administradores;
 - preparar instrumento de feedback;
 - definir participantes.
+
+> **Atualização (05/11/2026):** a política de exclusão de conta foi definida em `decisoes.md` 64, com implementação fora do MVP. Antes do piloto, ela precisa ser refletida nos Termos, e falta decidir o canal de contato e como atender um pedido.
 
   ## Confirmação de e-mail
 

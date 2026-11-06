@@ -111,6 +111,8 @@ A UX completa do painel administrativo e o fluxo detalhado das ações de MODERA
 
 > **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado, a revisão de decisões de Moderação e a reversão de rejeições não são necessárias para concluir o `/admin` do MVP (`decisoes.md` 63).
 
+> **Atualização (05/11/2026):** o `/admin` do MVP cobre a consulta de usuários, a alteração de papéis e a consulta de moderações (`decisoes.md` 65). "Gerenciar permissões" significa definir o papel da pessoa.
+
 ---
 
 # 2. Cadastro
@@ -716,6 +718,8 @@ A nova senha deve possuir:
 Exclusão automática de conta não faz parte da interface do MVP atual.
 
 A política deverá ser definida antes do piloto.
+
+> **Atualização (05/11/2026):** a política foi definida em `decisoes.md` 64: a pessoa solicita por e-mail ou canal de contato, e o ADMINISTRADOR executa. Os dados pessoais são removidos ou desvinculados, as solicitações pendentes são canceladas, e os materiais aprovados continuam publicados como "Compartilhado pela comunidade". A implementação, inclusive a ação no `/admin`, fica fora do MVP.
 
 ---
 

@@ -163,6 +163,8 @@ As decisões seguem o formato do `decisoes.md`: o que foi decidido, por quê, o 
 
 O que cada função do painel pode fazer está definido no documento de Implementação.
 
+> **Atualização (05/11/2026):** o atendimento de pedidos de exclusão de conta fica fora do painel no MVP (`decisoes.md` 64).
+
 **Motivo.** O Render gratuito não é um ambiente confiável para comandos manuais em produção; o painel substitui mecanismos improvisados e é gratuito, mantido e construído sobre os models existentes.
 
 **Consequência.** É a única exceção à regra de nenhuma tela renderizada no servidor: o Filament usa Livewire e a sessão do Laravel. A versão do Filament precisa ser compatível com a do Laravel adotada.
