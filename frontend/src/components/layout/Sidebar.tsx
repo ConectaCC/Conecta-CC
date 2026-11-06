@@ -1,8 +1,8 @@
-import { BookOpen, House, LogOut, Settings, ShieldCheck, User as UserIcon, X, type LucideIcon } from 'lucide-react';
+import { BookOpen, House, LayoutDashboard, LogOut, Settings, ShieldCheck, User as UserIcon, X, type LucideIcon } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router';
 import { Brand } from '@/components/Brand';
 import { useLogout, type User } from '@/features/auth/hooks';
-import { canModerate } from '@/features/auth/roles';
+import { canModerate, isAdmin } from '@/features/auth/roles';
 import { cn } from '@/lib/utils';
 import { useLeaveGuard } from './leaveGuard';
 
@@ -62,8 +62,15 @@ export function Sidebar({ user, onClose }: { user?: User; onClose?: () => void }
 
         <div className="mt-auto space-y-1">
           {user && canModerate(user.role) && (
-            <div className="border-t border-white/10 pt-4">
+            <div className="space-y-1 border-t border-white/10 pt-4">
               <NavItem item={{ to: '/moderacao', label: 'Moderação', icon: ShieldCheck }} onNavigate={onClose} />
+              {isAdmin(user.role) && (
+                // o painel é renderizado pelo Laravel, fora do React Router
+                <a href="/admin" className={itemClass}>
+                  <LayoutDashboard className="size-5" aria-hidden />
+                  Painel administrativo
+                </a>
+              )}
             </div>
           )}
           <div className="space-y-1 border-t border-white/10 pt-4">
