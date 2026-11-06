@@ -55,6 +55,16 @@ it('altera para cada papel sem mudar outros campos', function (Role $from, Role 
     [Role::Administrador, Role::Aluno],
 ]);
 
+it('recusa um papel que não existe', function () {
+    $user = User::factory()->create();
+
+    Livewire::test(ListUsers::class)
+        ->callAction(TestAction::make('changeRole')->table($user), ['role' => 'SUPERADMIN'])
+        ->assertHasActionErrors(['role']);
+
+    expect($user->fresh()->role)->toBe(Role::Aluno);
+});
+
 it('avisa no modal o que o papel de ADMINISTRADOR libera', function () {
     $user = User::factory()->create();
 

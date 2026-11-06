@@ -111,6 +111,8 @@ A UX completa do painel administrativo e o fluxo detalhado das ações de MODERA
 
 > **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado, a revisão de decisões de Moderação e a reversão de rejeições não são necessárias para concluir o `/admin` do MVP (`decisoes.md` 63).
 
+> **Atualização (05/11/2026):** o `/admin` do MVP cobre a consulta de usuários, a alteração de papéis e a consulta de moderações (`decisoes.md` 65). "Gerenciar permissões" significa definir o papel da pessoa.
+
 ---
 
 # 2. Cadastro

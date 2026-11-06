@@ -1581,3 +1581,45 @@ A conta deixa de existir como conta utilizável. O Perfil público deixa de exis
 - como atender um pedido durante o piloto, já que a ação não será implementada no MVP (`pendencias.md` 3.2);
 - por quanto tempo algum dado precisa ser retido;
 - o que acontece com materiais rejeitados, cancelados ou já excluídos da conta.
+
+---
+
+# 65. Painel `/admin` — 05/11/2026
+
+Decisões da entrega do painel (spec `specs/2026-11-05-painel-admin-design.md`).
+
+## 65.1 O que o painel cobre
+
+- **Usuários:** lista, busca, filtro por papel e alteração de papel.
+- **Moderações:** consulta somente leitura de todos os materiais, inclusive excluídos e alterações.
+
+Ficam fora: exclusão de conta (§64), retirada, revisão e reversão de decisões (§63), catálogo de disciplinas, tela inicial com contadores, edição de nome e e-mail, redefinição de senha e tela de auditoria.
+
+## 65.2 Papéis
+
+- O ADMINISTRADOR define ALUNO, MODERADOR ou ADMINISTRADOR em outras contas, com confirmação.
+- Ninguém muda o próprio papel. Assim, quem está usando o painel não se tranca para fora.
+- O workflow "Promover usuário" continua como saída de emergência e para criar o primeiro ADMINISTRADOR.
+
+## 65.3 Acesso
+
+- O painel tem login próprio em `/admin/login` e usa a mesma sessão do app.
+- Sair do painel também encerra o app.
+- ALUNO e MODERADOR recebem a página "Você não tem permissão para acessar esta página.".
+- O papel é conferido a cada requisição.
+
+## 65.4 Autoria nas Moderações
+
+Vale a §55.2: o ADMINISTRADOR vê o nome de exibição do autor, com a marca "Enviado anonimamente". O MODERADOR não acessa o painel.
+
+## 65.5 Escolhas do Claude
+
+Estas escolhas não foram decididas pelo time e podem ser revistas:
+
+- **Tabelas:** filtro por papel e coluna "Nome de exibição" em Usuários; mais recentes primeiro nas duas telas; empilhadas no celular.
+- **Situação:** "Alteração" aparece como uma marca ao lado da situação, em Moderações, conforme a §58.
+- **Login:** título "Painel administrativo" e botão "Entrar". Sem "Lembrar de mim", como no app.
+- **Painel:** sem modo escuro, busca global e notificações em banco. O menu do usuário tem "Voltar ao ConectaCC".
+- **Link no app:** "Painel administrativo" abre na mesma aba.
+- **Log:** cada mudança de papel gera uma linha só com IDs internos e os papéis.
+- **Dois ADMINISTRADORES ao mesmo tempo:** se um retirar o papel do outro no mesmo instante, o sistema pode ficar sem ADMINISTRADOR. O caso é raro, e o workflow resolve.

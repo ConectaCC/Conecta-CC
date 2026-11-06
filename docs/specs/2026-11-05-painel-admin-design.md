@@ -48,7 +48,7 @@ Decisões anteriores que valem aqui:
 
 - `User` implementa `FilamentUser`. `canAccessPanel()` só libera `Role::Administrador`.
 - A verificação roda a cada requisição, então quem perde o papel perde o acesso na requisição seguinte.
-- O login só aceita ADMINISTRADOR, e o e-mail é normalizado como no login do app (sem espaços nas pontas e em minúsculas).
+- O login só aceita ADMINISTRADOR, e o e-mail é normalizado como no login do app (sem espaços nas pontas e em minúsculas). Tem o título "Painel administrativo" e o botão "Entrar", sem "Lembrar de mim" **(escolha do Claude)**.
 - O painel não tem cadastro, perfil, recuperação de senha, busca global, notificações em banco nem modo escuro **(escolha do Claude)**.
 
 ### Usuários (`/admin/usuarios`)
@@ -87,13 +87,15 @@ Inclui todos os materiais, inclusive excluídos e alterações. Não há ação 
 | Coluna | Conteúdo |
 |---|---|
 | Código | `MAT-00001` |
-| Título | título, com a marca "Alteração" quando `revises_id` existe |
+| Título | título |
 | Disciplina | nome |
 | Autor | nome de exibição, com "Enviado anonimamente" quando for o caso |
-| Situação | Pendente, Aprovado, Rejeitado, Cancelado ou Excluído |
+| Situação | Pendente, Aprovado, Rejeitado, Cancelado ou Excluído, mais a marca "Alteração" quando `revises_id` existe |
 | Enviado em | `created_at` |
 | Decidido por | nome de exibição, ou "—" |
 | Decidido em | `decided_at`, ou "—" |
+
+> **Correção (05/11/2026):** a marca "Alteração" estava na coluna Título. Ela foi para Situação, junto com o status, porque a §58 diz que Alteração não substitui o status.
 
 - **Excluído:** `deleted_at` preenchido vale mais que o status, como em `MyMaterialResource`.
 - **Ordem:** envios mais recentes primeiro **(escolha do Claude)**.
@@ -118,6 +120,7 @@ No painel, o menu do usuário tem "Voltar ao ConectaCC", que leva a `/home` **(e
 - **Menu:** "Usuários" e "Moderações". Marca: "ConectaCC".
 - **Interface:** usa a tradução `pt_BR` do Filament.
 - **Mensagens de validação:** o projeto não tem `lang/pt_BR`, então as validações padrão do Laravel podem aparecer como chave. Nenhuma mensagem pode aparecer em inglês ou como chave.
+- **Campo obrigatório no login:** o aviso nativo do navegador segue o idioma do navegador.
 - **Página 403:** "Você não tem permissão para acessar esta página." e o link "Voltar ao ConectaCC" **(escolha do Claude)**.
 
 ## 7. Produção

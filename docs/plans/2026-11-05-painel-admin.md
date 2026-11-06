@@ -18,7 +18,7 @@
 - `role` continua fora do `Fillable`.
 - Não rodar formatadores no front.
 - Os textos de tela são os das seções 4 a 6 da spec.
-- Só o commit de cada tarefa depois de o teste e o lint passarem de verdade (código de saída), nunca encadeado com `;`.
+- Cada commit só acontece depois de os testes e o lint passarem, conferindo o código de saída.
 
 ## Foco de revisão
 

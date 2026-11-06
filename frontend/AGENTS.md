@@ -86,3 +86,7 @@ Os textos de tela são **exatamente** os da spec e do protótipo.
   - O roteiro roda em desktop (1440×900) e mobile (390×844).
   - Ele cobre recarregar a página em rota profunda, erro de API (`page.route(..., r => r.abort())`) e as entradas do "Foco de revisão" do plano.
 - Confira o visual por screenshot antes de dar a entrega como pronta.
+
+## Painel `/admin`
+
+O painel é renderizado pelo Laravel (Filament), fora da SPA. A sidebar só tem um link comum para ele, visível ao ADMINISTRADOR, e o proxy do `vite.config.ts` encaminha as rotas do painel em desenvolvimento.

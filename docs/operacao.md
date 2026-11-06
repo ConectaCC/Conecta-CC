@@ -88,7 +88,11 @@ Todas as contas pertencem à conta Google do projeto (decisão 9).
 
 ## Mudar o papel de alguém em produção
 
-Actions → **Promover usuário** → Run workflow, informando e-mail e papel. O e-mail é mascarado no log e o comando não o imprime. Só quem tem permissão de escrita no repositório consegue disparar. O Render gratuito não tem Shell, por isso o comando roda no GitHub Actions.
+**Pelo painel (caminho normal):** um ADMINISTRADOR entra em `/admin`, abre **Usuários** e usa **Alterar papel**. Ninguém muda o próprio papel. Cada mudança gera a linha de log `Papel alterado`, só com IDs internos e os papéis.
+
+**Pelo workflow (emergência ou primeiro ADMINISTRADOR):** Actions → **Promover usuário** → Run workflow, informando e-mail e papel. O e-mail é mascarado no log e o comando não o imprime. Só quem tem permissão de escrita no repositório consegue disparar. O Render gratuito não tem Shell, por isso o comando roda no GitHub Actions.
+
+Os arquivos públicos do Filament são gerados pelo `composer` (script `post-autoload-dump`), inclusive no build da imagem, e não entram no Git. Depois de atualizar a branch no ambiente local, rode `composer install` dentro do container se o painel abrir sem estilo.
 
 ## Trocar os Termos de participação
 
