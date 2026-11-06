@@ -1,0 +1,283 @@
+/* aproxima o painel do app: mesmos tokens de frontend/src/index.css e medidas de Sidebar e Header */
+@font-face {
+    font-family: 'Plus Jakarta Sans Variable';
+    src: url('../fonts/conectacc/plus-jakarta-sans-latin-wght-normal.woff2') format('woff2-variations');
+    font-weight: 200 800;
+    font-display: swap;
+}
+
+.fi-body {
+    background: #eef7fc;
+    color: #0f172a;
+}
+
+.conectacc-brand {
+    font-family: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: #071f43;
+}
+
+.conectacc-brand span {
+    color: #2259b9;
+}
+
+.fi-sidebar .conectacc-brand {
+    font-size: 28px;
+    color: #fff;
+}
+
+.fi-sidebar .conectacc-brand span {
+    color: #a3c5f2;
+}
+
+/* sidebar */
+.fi-main-sidebar {
+    background: #071f43;
+}
+
+.fi-main-sidebar .fi-sidebar-header {
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+}
+
+.fi-main-sidebar .fi-sidebar-nav {
+    padding-inline: 16px;
+    scrollbar-gutter: auto;
+}
+
+.fi-main-sidebar .fi-sidebar-nav-groups {
+    margin-inline: 0;
+}
+
+.fi-main-sidebar .fi-sidebar-item-btn {
+    position: relative;
+    min-height: 56px;
+    padding-inline: 16px;
+    gap: 16px;
+    border-radius: 8px;
+    background: transparent;
+}
+
+.fi-main-sidebar .fi-sidebar-item-label {
+    font-size: 17px;
+    font-weight: 400;
+    color: #a3c5f2;
+}
+
+.fi-main-sidebar .fi-sidebar-item-btn > svg,
+.fi-main-sidebar .fi-sidebar-item-btn .fi-icon {
+    color: #a3c5f2;
+}
+
+.fi-main-sidebar .fi-sidebar-item-btn:hover {
+    background: rgb(255 255 255 / 0.05);
+}
+
+.fi-main-sidebar .fi-sidebar-item-btn:hover .fi-sidebar-item-label,
+.fi-main-sidebar .fi-sidebar-item-btn:hover .fi-icon,
+.fi-main-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-label,
+.fi-main-sidebar .fi-sidebar-item.fi-active .fi-icon {
+    color: #fff;
+}
+
+.fi-main-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+    background: #1d3c74;
+}
+
+.fi-main-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-label {
+    font-weight: 600;
+}
+
+.fi-main-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-btn::before {
+    content: '';
+    position: absolute;
+    inset-block: 8px;
+    left: 0;
+    width: 4px;
+    border-radius: 999px;
+    background: #a3c5f2;
+}
+
+.fi-main-sidebar .fi-sidebar-item-btn:focus-visible,
+.conectacc-back-link:focus-visible {
+    outline: 2px solid #a3c5f2;
+    outline-offset: 2px;
+}
+
+.conectacc-back-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 56px;
+    margin: 16px 16px 24px;
+    padding-inline: 16px;
+    border-radius: 8px;
+    font-size: 17px;
+    color: #a3c5f2;
+    box-shadow: 0 -17px 0 -16px rgb(255 255 255 / 0.1);
+}
+
+.conectacc-back-link:hover {
+    background: rgb(255 255 255 / 0.05);
+    color: #fff;
+}
+
+/* barra superior */
+.fi-topbar {
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: none;
+}
+
+.fi-topbar-end {
+    gap: 12px;
+}
+
+.fi-topbar-end .fi-user-menu {
+    order: 1;
+}
+
+.fi-topbar-end .fi-user-avatar {
+    width: 44px;
+    height: 44px;
+}
+
+.conectacc-user-name {
+    order: 2;
+    display: none;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+@media (max-width: 63.99rem) {
+    .fi-topbar-start {
+        display: flex;
+        margin-inline-end: auto;
+    }
+}
+
+@media (min-width: 64rem) {
+    .conectacc-user-name {
+        display: inline;
+    }
+
+    /* no computador, a sidebar ocupa a altura toda e leva a marca, como no app */
+    .fi-main-sidebar {
+        position: fixed;
+        inset-block: 0;
+        left: 0;
+        z-index: 30;
+        height: 100dvh;
+        width: 275px;
+        max-height: none;
+    }
+
+    .fi-main-sidebar .fi-sidebar-header-ctn {
+        display: block;
+    }
+
+    .fi-main-sidebar .fi-sidebar-header {
+        display: flex;
+        height: auto;
+        padding: 32px 28px 16px 16px;
+    }
+
+    .fi-main-sidebar .fi-sidebar-header-logo-ctn {
+        display: block;
+    }
+
+    .fi-topbar-ctn {
+        padding-left: 275px;
+    }
+
+    .fi-topbar {
+        min-height: 88px;
+        padding-inline: 44px;
+    }
+
+    .fi-topbar-start {
+        display: none;
+    }
+
+    .fi-topbar-end {
+        margin-left: auto;
+    }
+
+    .fi-main-ctn {
+        margin-left: 275px;
+    }
+
+    .fi-main {
+        padding: 48px 44px;
+    }
+
+    .fi-page-header-main-ctn {
+        padding-top: 0;
+    }
+}
+
+/* cabeçalho e cartões */
+.fi-header-heading {
+    font-family: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: #0f172a;
+}
+
+.fi-header-subheading {
+    font-size: 18px;
+    color: #475569;
+}
+
+.fi-ta-ctn,
+.fi-simple-main {
+    border-radius: 16px;
+    box-shadow: 0 0 0 1px rgb(191 219 254 / 0.7);
+}
+
+/* as tags de status são iguais às do StatusTag do app */
+.fi-ta-cell .fi-badge,
+.fi-in-text .fi-badge {
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: none;
+}
+
+.fi-ta-cell .fi-badge.fi-color-warning, .fi-in-text .fi-badge.fi-color-warning { background: #fff4dc; color: #7a4b00; }
+.fi-ta-cell .fi-badge.fi-color-success, .fi-in-text .fi-badge.fi-color-success { background: #e8f5ec; color: #1e6b3a; }
+.fi-ta-cell .fi-badge.fi-color-danger, .fi-in-text .fi-badge.fi-color-danger { background: #fdecec; color: #b42318; }
+.fi-ta-cell .fi-badge.fi-color-change, .fi-in-text .fi-badge.fi-color-change { background: #ffe3cc; color: #9c3a00; }
+.fi-ta-cell .fi-badge.fi-color-gray, .fi-in-text .fi-badge.fi-color-gray { background: #f1f5f9; color: #475569; }
+
+/* as células encolhem antes de surgir rolagem lateral na tabela */
+.fi-ta-cell .fi-ta-text.fi-wrapped {
+    overflow-wrap: break-word;
+}
+
+/* título e e-mail podem ter uma palavra longa demais; só eles quebram no meio */
+.fi-ta-cell-title .fi-ta-text.fi-wrapped,
+.fi-ta-cell-email .fi-ta-text.fi-wrapped {
+    overflow-wrap: anywhere;
+}
+
+.fi-ta-cell .fi-ta-text-has-badges {
+    flex-wrap: wrap;
+    white-space: normal;
+}
+
+@media (min-width: 40rem) and (max-width: 96rem) {
+    .fi-ta-cell .fi-ta-text,
+    .fi-ta-header-cell {
+        padding-inline: 12px;
+    }
+
+    .fi-ta-header-cell:first-child {
+        padding-inline-start: 24px;
+    }
+}

@@ -39,11 +39,14 @@ final class UserResource extends Resource
             ->stackedOnMobile()
             ->defaultSort('created_at', 'desc')
             ->columns([
-                TextColumn::make('name')->label('Nome')->searchable(),
-                TextColumn::make('display_name')->label('Nome de exibição')->searchable(),
-                TextColumn::make('email')->label('E-mail')->searchable(),
+                TextColumn::make('name')
+                    ->label('Nome')
+                    ->description(fn (User $record): string => $record->display_name)
+                    ->wrap()
+                    ->searchable(['name', 'display_name']),
+                TextColumn::make('email')->label('E-mail')->wrap()->searchable(),
                 TextColumn::make('role')->label('Papel')->formatStateUsing(fn (Role $state): string => $state->label()),
-                TextColumn::make('created_at')->label('Cadastro')->dateTime('d/m/Y H:i')->sortable(),
+                TextColumn::make('created_at')->label('Cadastro')->date('d/m/Y')->sortable()->visibleFrom('xl'),
             ])
             ->filters([
                 SelectFilter::make('role')->label('Papel')->options(Role::labels()),

@@ -29,6 +29,14 @@ it('abre o painel para o ADMINISTRADOR', function () {
     $this->get('/admin/usuarios')->assertOk()->assertSee('Usuários')->assertSee('Voltar ao ConectaCC');
 });
 
+it('mostra o nome e as iniciais sem enviar o nome a serviços externos', function () {
+    $this->actingAs(panelUser(attributes: ['display_name' => 'Alice Administradora']), 'web')->get('/admin/usuarios')
+        ->assertOk()
+        ->assertSee('Alice Administradora')
+        ->assertSee('css/conectacc-admin.css')
+        ->assertDontSee('ui-avatars.com');
+});
+
 it('tira o acesso na requisição seguinte quando o papel muda', function () {
     $admin = panelUser();
     $this->actingAs($admin, 'web')->get('/admin/usuarios')->assertOk();

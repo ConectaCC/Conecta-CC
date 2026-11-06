@@ -681,7 +681,7 @@ Entregue em 05/11/2026 (`decisoes.md` 65). É só para ADMINISTRADOR, e o papel 
 
 ## Usuários
 
-- [x] lista com nome, nome de exibição, e-mail, papel e data de cadastro;
+- [x] lista com nome, nome de exibição, e-mail, papel e, a partir de 1280 px, data de cadastro;
 - [x] busca por nome, nome de exibição e e-mail;
 - [x] filtro por papel;
 - [x] alteração de papel de outras contas, com confirmação;
@@ -706,5 +706,7 @@ O painel não aprova, rejeita, retira nem reverte conteúdo.
 - [x] login próprio em `/admin/login`, com a mesma sessão do app;
 - [x] página 403 em português para os demais papéis;
 - [x] link "Painel administrativo" na sidebar, só para ADMINISTRADOR;
-- [x] "Voltar ao ConectaCC" no menu do painel;
-- [x] telas empilhadas no celular.
+- [x] "Voltar ao ConectaCC" no rodapé da sidebar do painel;
+- [x] tabelas sem rolagem lateral de 320 a 1920 px, empilhadas no celular;
+- [x] layout igual ao do app (`backend/public/css/conectacc-admin.css`);
+- [x] avatar desenhado localmente, sem serviço externo.

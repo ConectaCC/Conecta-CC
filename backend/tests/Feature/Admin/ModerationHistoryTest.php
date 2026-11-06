@@ -75,6 +75,14 @@ it('mostra quem decidiu e usa traço quando ninguém decidiu', function () {
         ->assertSee('—');
 });
 
+it('mostra o código e a disciplina junto com o título', function () {
+    $material = historyMaterial(attributes: ['title' => 'Resumo de Cálculo']);
+
+    Livewire::test(ListMaterials::class)
+        ->assertSee('Resumo de Cálculo')
+        ->assertSee($material->code.' · '.$material->discipline->name);
+});
+
 it('filtra pela situação', function (string $filter) {
     $pending = historyMaterial();
     $approved = historyMaterial(MaterialStatus::Aprovado);
@@ -110,7 +118,7 @@ it('mostra no detalhe a descrição, o link, o motivo e os dados originais', fun
 
     Livewire::test(ListMaterials::class)
         ->mountAction(TestAction::make('view')->table($revision))
-        ->assertMountedActionModalSee(['Descrição enviada', 'https://example.com/novo', 'Link fora do tema.', 'Título original', 'https://example.com/original']);
+        ->assertMountedActionModalSee(['Descrição enviada', 'https://example.com/novo', 'Link fora do tema.', 'Título original', 'https://example.com/original', 'Enviado em', 'Decidido por', 'Decidido em']);
 });
 
 it('não oferece nenhuma ação que altere dados', function () {

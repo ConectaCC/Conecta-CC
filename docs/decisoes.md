@@ -1616,10 +1616,25 @@ Vale a §55.2: o ADMINISTRADOR vê o nome de exibição do autor, com a marca "E
 
 Estas escolhas não foram decididas pelo time e podem ser revistas:
 
-- **Tabelas:** filtro por papel e coluna "Nome de exibição" em Usuários; mais recentes primeiro nas duas telas; empilhadas no celular.
+- **Tabelas:** filtro por papel em Usuários; mais recentes primeiro nas duas telas; empilhadas no celular.
 - **Situação:** "Alteração" aparece como uma marca ao lado da situação, em Moderações, conforme a §58.
 - **Login:** título "Painel administrativo" e botão "Entrar". Sem "Lembrar de mim", como no app.
-- **Painel:** sem modo escuro, busca global e notificações em banco. O menu do usuário tem "Voltar ao ConectaCC".
+- **Painel:** sem modo escuro, busca global e notificações em banco. O rodapé da sidebar tem "Voltar ao ConectaCC".
 - **Link no app:** "Painel administrativo" abre na mesma aba.
 - **Log:** cada mudança de papel gera uma linha só com IDs internos e os papéis.
 - **Dois ADMINISTRADORES ao mesmo tempo:** se um retirar o papel do outro no mesmo instante, o sistema pode ficar sem ADMINISTRADOR. O caso é raro, e o workflow resolve.
+
+## 65.6 Layout do painel
+
+O painel segue o layout do resto do sistema: sidebar azul-marinho, cabeçalho branco com o nome da pessoa, fundo claro, fontes e tags de status iguais às do app.
+
+As tabelas não têm rolagem lateral. Para isso, as colunas foram agrupadas:
+
+- **Moderações:** "Material" reúne título, código e disciplina, e "Decisão" reúne quem decidiu e a data.
+- **Usuários:** "Nome" reúne nome e nome de exibição.
+
+"Enviado em" e "Cadastro" só aparecem em telas a partir de 1280 px. O detalhe de Moderações continua mostrando todos os campos, e a data e a hora do envio.
+
+## 65.7 Avatar sem serviço externo
+
+O avatar padrão do Filament é buscado em `ui-avatars.com`, o que enviaria as iniciais da pessoa para fora. O painel desenha o avatar localmente, com as mesmas iniciais do app.

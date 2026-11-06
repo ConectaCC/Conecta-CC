@@ -8,4 +8,9 @@ use Filament\Resources\Pages\ListRecords;
 final class ListUsers extends ListRecords
 {
     protected static string $resource = UserResource::class;
+
+    public function getSubheading(): string
+    {
+        return 'Consulte as contas e altere o papel de cada pessoa.';
+    }
 }

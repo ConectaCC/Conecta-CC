@@ -4,7 +4,11 @@ Data: 05/11/2026
 Responsável: Marcelo Henrique Germiniani Panho
 Base: `main` (após o PR #13)
 
-Referência visual: o protótipo não tem o painel. O visual é o padrão do Filament, com as cores e o logo do ConectaCC. Itens marcados **(escolha do Claude)** podem ser trocados na revisão.
+Referência visual: o protótipo não tem o painel. O visual segue o layout do app: sidebar azul-marinho de altura total, cabeçalho branco, fundo claro, fontes e tags de status iguais.
+
+> **Correção (05/11/2026):** a spec previa o visual padrão do Filament com as cores e o logo do ConectaCC. Na revisão, o time pediu um layout mais parecido com o resto do sistema.
+
+ Itens marcados **(escolha do Claude)** podem ser trocados na revisão.
 
 ## 1. Intenção
 
@@ -55,11 +59,10 @@ Decisões anteriores que valem aqui:
 
 | Coluna | Origem |
 |---|---|
-| Nome | `name` |
-| Nome de exibição | `display_name` |
+| Nome | `name`, com `display_name` abaixo |
 | E-mail | `email` |
 | Papel | `role`, em português |
-| Cadastro | `created_at` |
+| Cadastro | `created_at`, só a data e em telas a partir de 1280 px |
 
 - **Ordem:** cadastros mais recentes primeiro **(escolha do Claude)**.
 - **Busca:** nome, nome de exibição e e-mail.
@@ -86,14 +89,13 @@ Inclui todos os materiais, inclusive excluídos e alterações. Não há ação 
 
 | Coluna | Conteúdo |
 |---|---|
-| Código | `MAT-00001` |
-| Título | título |
-| Disciplina | nome |
+| Material | título, com `MAT-00001 · Disciplina` abaixo |
 | Autor | nome de exibição, com "Enviado anonimamente" quando for o caso |
 | Situação | Pendente, Aprovado, Rejeitado, Cancelado ou Excluído, mais a marca "Alteração" quando `revises_id` existe |
-| Enviado em | `created_at` |
-| Decidido por | nome de exibição, ou "—" |
-| Decidido em | `decided_at`, ou "—" |
+| Enviado em | `created_at`, só a data e em telas a partir de 1280 px |
+| Decisão | nome de exibição de quem decidiu, com a data abaixo, ou "—" |
+
+> **Correção (05/11/2026):** eram oito colunas, que causavam rolagem lateral. As colunas foram agrupadas para caber na tela, e o detalhe continua mostrando todos os campos.
 
 > **Correção (05/11/2026):** a marca "Alteração" estava na coluna Título. Ela foi para Situação, junto com o status, porque a §58 diz que Alteração não substitui o status.
 
@@ -101,7 +103,8 @@ Inclui todos os materiais, inclusive excluídos e alterações. Não há ação 
 - **Ordem:** envios mais recentes primeiro **(escolha do Claude)**.
 - **Busca:** título e autor.
 - **Filtro:** por situação.
-- **Detalhe ("Ver"):** também mostra descrição, link (abre em nova aba), motivo da rejeição e, numa alteração, o título e o link originais.
+- **Detalhe ("Ver"):** mostra todos os campos da tabela, com data e hora, e também descrição, link (abre em nova aba), motivo da rejeição e, numa alteração, o título e o link originais.
+- **Largura:** as duas tabelas não têm rolagem lateral de 320 a 1920 px, e ficam empilhadas no celular.
 - **Cores:** Pendente amarelo, Aprovado verde, Rejeitado e Excluído vermelho, Cancelado cinza e Alteração laranja.
 
 Não muda a API, então `make api-types` não é necessário.
@@ -113,7 +116,7 @@ Não muda a API, então `make api-types` não é necessário.
 - É um link comum, com recarga completa da página e na mesma aba **(escolha do Claude)**. Se houver alteração não salva, vale o aviso que o navegador já mostra ao sair.
 - O link precisa funcionar em produção e no ambiente de desenvolvimento, em que o app roda em outra porta.
 
-No painel, o menu do usuário tem "Voltar ao ConectaCC", que leva a `/home` **(escolha do Claude)**. Sair do painel encerra a mesma sessão do app.
+No painel, o rodapé da sidebar tem "Voltar ao ConectaCC", que leva a `/home` **(escolha do Claude)**. Sair do painel encerra a mesma sessão do app.
 
 ## 6. Textos e idioma
 

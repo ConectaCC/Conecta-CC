@@ -60,21 +60,28 @@ final class MaterialResource extends Resource
             ->stackedOnMobile()
             ->defaultSort('created_at', 'desc')
             ->columns([
-                TextColumn::make('code')->label('Código'),
-                TextColumn::make('title')->label('Título')->wrap()->searchable(),
-                TextColumn::make('discipline.name')->label('Disciplina')->wrap(),
+                // colunas agrupadas para caber sem rolagem lateral; o detalhe mostra todos os campos
+                TextColumn::make('title')
+                    ->label('Material')
+                    ->description(fn (Material $record): string => $record->code.' · '.$record->discipline->name)
+                    ->wrap()
+                    ->searchable(),
                 TextColumn::make('author.display_name')
                     ->label('Autor')
                     ->description(fn (Material $record): ?string => $record->anonymous ? 'Enviado anonimamente' : null)
+                    ->wrap()
                     ->searchable(),
                 TextColumn::make('situation')
                     ->label('Situação')
                     ->state(fn (Material $record): array => self::situation($record))
                     ->badge()
                     ->color(fn (string $state): string => self::situationColor($state)),
-                TextColumn::make('created_at')->label('Enviado em')->dateTime('d/m/Y H:i')->sortable(),
-                TextColumn::make('decider.display_name')->label('Decidido por')->placeholder('—'),
-                TextColumn::make('decided_at')->label('Decidido em')->dateTime('d/m/Y H:i')->placeholder('—'),
+                TextColumn::make('created_at')->label('Enviado em')->date('d/m/Y')->sortable()->visibleFrom('xl'),
+                TextColumn::make('decider.display_name')
+                    ->label('Decisão')
+                    ->description(fn (Material $record): ?string => $record->decided_at?->format('d/m/Y'))
+                    ->placeholder('—')
+                    ->wrap(),
             ])
             ->filters([
                 SelectFilter::make('situation')
@@ -105,6 +112,9 @@ final class MaterialResource extends Resource
                 ->state(fn (Material $record): array => self::situation($record))
                 ->badge()
                 ->color(fn (string $state): string => self::situationColor($state)),
+            TextEntry::make('created_at')->label('Enviado em')->dateTime('d/m/Y H:i'),
+            TextEntry::make('decider.display_name')->label('Decidido por')->placeholder('—'),
+            TextEntry::make('decided_at')->label('Decidido em')->dateTime('d/m/Y H:i')->placeholder('—'),
             TextEntry::make('description')->label('Descrição')->placeholder('—'),
             TextEntry::make('url')->label('Link')->color('primary')->url(fn (Material $record): string => $record->url)->openUrlInNewTab(),
             TextEntry::make('rejection_reason')->label('Motivo da rejeição')->visible(fn (Material $record): bool => $record->rejection_reason !== null),

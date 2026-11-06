@@ -19,7 +19,7 @@ export default defineConfig(({ command }) => ({
       '/sanctum': target,
       '/up': target,
       // painel /admin: o Filament e o Livewire ficam no Laravel
-      '^/(admin|filament|livewire-|css/filament|fonts/filament|js/filament)': { target, changeOrigin: false },
+      '^/(admin|filament|livewire-|css/|fonts/|js/filament)': { target, changeOrigin: false },
     },
   },
   build: { outDir: '../backend/public/spa', emptyOutDir: true },
