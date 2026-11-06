@@ -36,6 +36,7 @@ final class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->stackedOnMobile()
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')->label('Nome')->searchable(),

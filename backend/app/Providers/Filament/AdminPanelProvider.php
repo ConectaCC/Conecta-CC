@@ -32,7 +32,12 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('ConectaCC')
             ->brandLogo(new HtmlString('<span style="font-size:1.5rem;font-weight:700;color:#071f43">Conecta<span style="color:#2259b9">CC</span></span>'))
             ->colors([
-                'primary' => Color::hex('#2259b9'),
+                // o Color::hex deixa o tom 600 claro demais para texto branco, e o botão perderia a cor da marca
+                'primary' => array_replace(Color::hex('#2259b9'), [
+                    500 => 'oklch(0.545 0.163 260.71)',
+                    600 => 'oklch(0.485 0.163 260.71)',
+                    700 => 'oklch(0.425 0.163 260.71)',
+                ]),
                 'gray' => Color::Slate,
                 'success' => Color::hex('#1e6b3a'),
                 'warning' => Color::hex('#b7791f'),

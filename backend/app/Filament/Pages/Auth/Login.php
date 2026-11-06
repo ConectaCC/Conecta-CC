@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages\Auth;
 
+use Filament\Actions\Action;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse;
 use Filament\Auth\Pages\Login as BaseLogin;
 use Filament\Schemas\Schema;
@@ -18,6 +19,21 @@ final class Login extends BaseLogin
         $this->data['email'] = Str::lower(trim((string) ($this->data['email'] ?? '')));
 
         return parent::authenticate();
+    }
+
+    public function getTitle(): string
+    {
+        return 'Entrar';
+    }
+
+    public function getHeading(): string
+    {
+        return 'Painel administrativo';
+    }
+
+    protected function getAuthenticateFormAction(): Action
+    {
+        return parent::getAuthenticateFormAction()->label('Entrar');
     }
 
     // o app não tem "Lembrar de mim": a sessão já dura 7 dias sem uso

@@ -57,6 +57,7 @@ final class MaterialResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->stackedOnMobile()
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('code')->label('Código'),
@@ -105,10 +106,15 @@ final class MaterialResource extends Resource
                 ->badge()
                 ->color(fn (string $state): string => self::situationColor($state)),
             TextEntry::make('description')->label('Descrição')->placeholder('—'),
-            TextEntry::make('url')->label('Link')->url(fn (Material $record): string => $record->url)->openUrlInNewTab(),
+            TextEntry::make('url')->label('Link')->color('primary')->url(fn (Material $record): string => $record->url)->openUrlInNewTab(),
             TextEntry::make('rejection_reason')->label('Motivo da rejeição')->visible(fn (Material $record): bool => $record->rejection_reason !== null),
             TextEntry::make('revisionOf.title')->label('Título original')->visible(fn (Material $record): bool => $record->revises_id !== null),
-            TextEntry::make('revisionOf.url')->label('Link original')->visible(fn (Material $record): bool => $record->revises_id !== null),
+            TextEntry::make('revisionOf.url')
+                ->label('Link original')
+                ->color('primary')
+                ->url(fn (Material $record): ?string => $record->revisionOf?->url)
+                ->openUrlInNewTab()
+                ->visible(fn (Material $record): bool => $record->revises_id !== null),
         ]);
     }
 

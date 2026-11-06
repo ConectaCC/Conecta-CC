@@ -70,6 +70,8 @@ it('mostra em português a validação do login e não oferece "lembrar de mim"'
 
     Livewire::test(Login::class)
         ->assertDontSee('data.remember')
+        ->assertSee('Painel administrativo')
+        ->assertSee('Entrar')
         ->call('authenticate')
         ->assertHasErrors(['data.email'])
         ->assertSee('obrigatório')
