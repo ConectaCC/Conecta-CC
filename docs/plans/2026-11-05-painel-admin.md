@@ -23,7 +23,7 @@
 ## Foco de revisão
 
 1. **Chamada direta à ação escondida:** um ADMINISTRADOR forjando a chamada Livewire da própria linha não muda o próprio papel. Testado na Tarefa 2.
-2. **Conta sem nome de exibição em Moderações e Usuários:** a tela abre e mostra "—", sem erro 500. Testado nas Tarefas 2 e 3.
+2. **Material sem decisor em Moderações:** a tela abre e mostra "—", sem erro 500. O nome de exibição é obrigatório no banco, então não precisa desse tratamento. Testado na Tarefa 3.
 3. **Material cujo autor ou decisor existe, em todas as combinações de status e exclusão:** a coluna Situação nunca quebra, e `deleted_at` vale mais que o status. Testado na Tarefa 3.
 4. **URLs do Livewire e arquivos do Filament:** não caem no fallback da SPA, em desenvolvimento nem na imagem de produção. Testado nas Tarefas 1 e 5.
 5. **Validação vazia no login e no modal de papel:** a mensagem aparece em português, nunca como `validation.required`. Testado na Tarefa 1 e no navegador.
@@ -84,7 +84,6 @@
 - [ ] Escrever `ManageUsersTest`:
   - lista e busca por nome, nome de exibição e e-mail;
   - filtro por papel;
-  - conta sem nome de exibição não quebra a tela;
   - altera para os três papéis, sem mudar outros campos;
   - a ação fica escondida na própria linha, e a chamada forjada não muda o papel;
   - `ChangeUserRole` responde 403 ao mudar o próprio papel ou quando quem altera não é ADMINISTRADOR;
