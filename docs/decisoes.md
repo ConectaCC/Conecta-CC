@@ -1519,3 +1519,65 @@ Também ficam como evolução futura / pós-MVP:
 - **ADMINISTRADOR:** reverter rejeições.
 
 O MVP e o `/admin` podem ser considerados concluídos sem esses fluxos. As regras deles serão definidas quando entrarem no escopo.
+
+---
+
+# 64. Exclusão de conta: política do piloto — 05/11/2026
+
+Complementa a §29, responde a `pendencias.md` 3.2 e detalha o RF-61.
+
+## 64.1 Classificação
+
+A política de exclusão de conta é necessária antes do piloto e fica definida nesta seção.
+
+**A implementação fica fora do MVP.** Isso vale para a autoexclusão pelo próprio usuário e para a ação de exclusão no painel `/admin`.
+
+Não implementar agora:
+
+- botão ou ação "Excluir conta" no `/admin`;
+- tela de autoexclusão;
+- endpoint de exclusão;
+- fila de pedidos de exclusão.
+
+## 64.2 Fluxo inicial
+
+1. A pessoa solicita a exclusão por e-mail ou canal de contato.
+2. O ADMINISTRADOR executa a exclusão administrativamente.
+
+O canal de contato ainda precisa ser confirmado.
+
+## 64.3 Dados da conta
+
+Ao excluir a conta, devem ser removidos ou desvinculados os dados pessoais da conta, incluindo:
+
+- nome;
+- e-mail;
+- senha;
+- perfil;
+- disciplinas atuais;
+- sessões ativas;
+- notificações;
+- demais dados pessoais associados à conta.
+
+A conta deixa de existir como conta utilizável. O Perfil público deixa de existir. O mesmo e-mail poderá fazer um novo cadastro futuramente.
+
+## 64.4 Materiais
+
+- **Solicitações pendentes:** são canceladas.
+- **Materiais aprovados ou publicados:** permanecem publicados. A autoria deixa de estar vinculada à conta excluída, e o material passa a aparecer como **"Compartilhado pela comunidade"**.
+
+**Motivo:** preservar o conteúdo útil aos colegas sem manter a identificação pessoal do autor excluído.
+
+## 64.5 Observações
+
+- A política deve ser refletida nos Termos (`pendencias.md` 3.1).
+- A implementação e a redação final devem ser avaliadas à luz da LGPD e das orientações institucionais.
+- É uma política do piloto e pode ser refinada depois.
+- A autoexclusão pelo próprio usuário pode ser tratada futuramente, se necessário.
+
+## 64.6 Ainda em aberto
+
+- qual é o canal de contato;
+- como atender um pedido durante o piloto, já que a ação não será implementada no MVP (`pendencias.md` 3.2);
+- por quanto tempo algum dado precisa ser retido;
+- o que acontece com materiais rejeitados, cancelados ou já excluídos da conta.

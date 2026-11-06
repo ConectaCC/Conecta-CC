@@ -717,6 +717,8 @@ Exclusão automática de conta não faz parte da interface do MVP atual.
 
 A política deverá ser definida antes do piloto.
 
+> **Atualização (05/11/2026):** a política foi definida em `decisoes.md` 64: a pessoa solicita por e-mail ou canal de contato, e o ADMINISTRADOR executa. Os dados pessoais são removidos ou desvinculados, as solicitações pendentes são canceladas, e os materiais aprovados continuam publicados como "Compartilhado pela comunidade". A implementação, inclusive a ação no `/admin`, fica fora do MVP.
+
 ---
 
 # 15. Notificações

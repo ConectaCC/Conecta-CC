@@ -445,6 +445,8 @@ Exclusão de conta não pertence à interface atual do MVP.
 
 Sua política deverá ser definida antes do piloto.
 
+> **Atualização (05/11/2026):** a política foi definida em `decisoes.md` 64. A implementação continua fora do MVP.
+
 ---
 
 # 14. Moderação

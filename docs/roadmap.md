@@ -258,6 +258,8 @@ Deverão ser resolvidos itens como:
 - preparar instrumento de feedback;
 - definir participantes.
 
+> **Atualização (05/11/2026):** a política de exclusão de conta foi definida em `decisoes.md` 64, com implementação fora do MVP. Antes do piloto, ela precisa ser refletida nos Termos, e falta decidir o canal de contato e como atender um pedido.
+
   ## Confirmação de e-mail
 
 A confirmação de propriedade do e-mail por link ou código:
