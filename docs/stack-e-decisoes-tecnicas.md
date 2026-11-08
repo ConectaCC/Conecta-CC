@@ -271,7 +271,9 @@ O que cada função do painel pode fazer está definido no documento de Implemen
 - **Cabeçalhos de segurança** em toda resposta, e **CSP** na SPA, só com scripts do próprio site.
 - **CORS fechado**, porque a SPA e a API são da mesma origem.
 - **Limites:** Login por e-mail e IP (5 por minuto) e só por e-mail (10 por minuto), e um teto geral de 120 pedidos por minuto na API.
-- **Proxy:** só os cabeçalhos de IP, protocolo e porta vindos do Render são aceitos.
+- **Proxy:** só o protocolo e a porta vêm do proxy. O IP real é resolvido pelo nginx da imagem, que confia no Cloudflare e na rede do Render.
+
+> **Atualização (08/11/2026):** na primeira conferência em produção, o nginx da imagem duplicava os cabeçalhos (com `X-Frame-Options` em conflito) e o Laravel relia o `X-Forwarded-For`, chegando ao IP do Cloudflare. O `security.conf` do nginx ficou vazio, e o Laravel passou a usar o IP que o nginx já resolve.
 - **Dependências:** auditoria do Composer e do npm sem avisos, e o Dependabot acompanhando as versões.
 
 **Motivo.** A revisão de segurança de 08/11/2026 (OWASP Top 10) achou a API sem cabeçalhos de segurança, o host aceito do `X-Forwarded-Host`, o login sem limite por e-mail quando o IP muda e o Symfony com avisos de segurança.
