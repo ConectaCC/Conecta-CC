@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\CancelMaterialController;
 use App\Http\Controllers\Api\V1\ChangePasswordController;
 use App\Http\Controllers\Api\V1\CurrentTermsController;
 use App\Http\Controllers\Api\V1\DeleteMaterialController;
+use App\Http\Controllers\Api\V1\ListCommunityFeedController;
 use App\Http\Controllers\Api\V1\ListDisciplineMaterialsController;
 use App\Http\Controllers\Api\V1\ListDisciplinesController;
 use App\Http\Controllers\Api\V1\ListModerationMaterialsController;
@@ -34,6 +35,7 @@ Route::prefix('v1')->group(function () {
         Route::put('me/password', ChangePasswordController::class)->middleware('throttle:password');
         Route::get('disciplines', ListDisciplinesController::class);
         Route::get('disciplines/{discipline}/materials', ListDisciplineMaterialsController::class);
+        Route::get('community/feed', ListCommunityFeedController::class);
         Route::post('disciplines/{discipline}/materials', StoreMaterialController::class);
         Route::get('profile', ShowProfileController::class);
         Route::get('me/materials', ListMyMaterialsController::class);

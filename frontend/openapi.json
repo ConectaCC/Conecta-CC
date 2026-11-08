@@ -222,6 +222,124 @@
                 }
             }
         },
+        "/community/feed": {
+            "get": {
+                "operationId": "v1.listCommunityFeed",
+                "tags": [
+                    "ListCommunityFeed"
+                ],
+                "parameters": [
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "description": "Cursor da pr\u00f3xima p\u00e1gina (meta.next_cursor).",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated set of `CommunityFeedItemResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/CommunityFeedItemResource"
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object",
+                                            "properties": {
+                                                "first": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "last": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "prev": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "next": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "first",
+                                                "last",
+                                                "prev",
+                                                "next"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "path": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "description": "Base path for paginator generated URLs."
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "description": "Number of items shown per page.",
+                                                    "minimum": 0
+                                                },
+                                                "next_cursor": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "description": "The \"cursor\" that points to the next set of items."
+                                                },
+                                                "prev_cursor": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "description": "The \"cursor\" that points to the previous set of items."
+                                                }
+                                            },
+                                            "required": [
+                                                "path",
+                                                "per_page",
+                                                "next_cursor",
+                                                "prev_cursor"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data",
+                                        "links",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/disciplines/{discipline}/materials": {
             "get": {
                 "operationId": "v1.listDisciplineMaterials",
@@ -949,6 +1067,72 @@
                     "password_confirmation"
                 ],
                 "title": "ChangePasswordRequest"
+            },
+            "CommunityFeedItemResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "published_at": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "discipline": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "slug": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "name",
+                            "slug"
+                        ]
+                    },
+                    "author_name": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "an\u00f4nimo: ningu\u00e9m recebe o autor no mural, nem o ADMINISTRADOR nem o pr\u00f3prio autor (decisoes.md \u00a755.2)"
+                    },
+                    "author_code": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "is_mine": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "code",
+                    "title",
+                    "url",
+                    "published_at",
+                    "discipline",
+                    "author_name",
+                    "author_code",
+                    "is_mine"
+                ],
+                "title": "CommunityFeedItemResource"
             },
             "DisciplineResource": {
                 "type": "object",
