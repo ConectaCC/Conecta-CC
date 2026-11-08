@@ -4,7 +4,7 @@ Leia antes o [`AGENTS.md`](../AGENTS.md) da raiz. Decisões de stack: `docs/stac
 
 ## Stack
 
-PHP 8.4, Laravel 13, PostgreSQL 17, Sanctum (sessão por cookie, mesma origem da SPA), Scramble (OpenAPI gerado do código), Pest, Pint e Larastan nível 6. Filament fica reservado para o painel `/admin`, que só o ADMINISTRADOR acessa.
+PHP 8.4, Laravel 13, PostgreSQL 17, Sanctum (sessão por cookie, mesma origem da SPA), Scramble (OpenAPI gerado do código), Pest, Pint e Larastan nível 10. Filament fica reservado para o painel `/admin`, que só o ADMINISTRADOR acessa.
 
 ## Estrutura e responsabilidades
 
@@ -57,7 +57,9 @@ final class UpdateProfileController
 ## Validação e mensagens
 
 - As mensagens ficam em português e são **exatamente** as da spec. Exemplos: "Informe seu nome de exibição.", "E-mail ou senha incorretos.".
-- Normalize a entrada em `prepareForValidation()`: `trim`, e-mail em minúsculas, links de perfil no formato canônico (`https://github.com/usuario`).
+- Os middlewares globais `TrimStrings` e `ConvertEmptyStringsToNull` já tiram os espaços das pontas e transformam texto vazio em `null`. Não repita isso no Request.
+- Normalize em `prepareForValidation()` só o resto: e-mail em minúsculas, links de perfil no formato canônico (`https://github.com/usuario`).
+- Valor que não é texto (lista no lugar de texto) recebe a mensagem padrão de `lang/pt_BR/validation.php`, em português.
 - **Payload malformado** (string no lugar de array, array no lugar de string) devolve **422 com mensagem, nunca 500**.
 - **Limites de texto provisórios** ficam em constantes `MAX_*` no Request, com `// shortcut: teto provisório até a definição de pendencias.md 2.7`.
 - **Links externos** aceitam só `http`/`https`, validados no servidor. GitHub e LinkedIn aceitam só o endereço do perfil da pessoa (`decisoes.md` 53.3).
@@ -96,7 +98,20 @@ final class UpdateProfileController
 - Para cada entrada que a spec não cobre mas que vai acontecer (variações de URL, maiúsculas, espaços, payload malformado, requisição duplicada), crie um teste.
 - **Dois usuários no mesmo teste:** a sessão guarda o hash da senha (`AuthenticateSession`) e o guard do Sanctum guarda o usuário. Quando o resultado depende de quem é o usuário atual, rode `$this->flushSession()` e `app('auth')->forgetGuards()` antes de trocar.
 
+- **Formato das respostas:** `tests/Feature/ResponseShapesTest.php` confere, campo a campo, os itens que a SPA consome. Campo novo num Resource entra lá.
+
 ## Qualidade
 
-- `make lint` roda o Pint (estilo Laravel) e o Larastan nível 6. Arrays recebem tipo em docblock (`list<int>`, `array{...}`) e accessors recebem `@property-read`.
+- `make lint` roda o Pint (estilo Laravel) e o Larastan nível 10. Arrays recebem tipo em docblock (`list<int>`, `array{...}`) e accessors recebem `@property-read`. Valor `mixed` (de `config()`, `env()`, `input()`) é conferido com `is_string` e afins, ou lido com `config()->string()` e `$request->string()`.
+- **Antes do PR, rode `make mutate`.** Ele exige 100% de cobertura de linhas e nota de mutação de pelo menos 90% nas classes de `app/` alteradas em relação à `origin/main`. O CI roda o mesmo.
+- **Mutante que sobreviveu:** primeiro veja se o código é redundante e pode sair (validação repetida por outra regra ou por índice do banco, cast que o model já faz). Se é lacuna, escreva o teste. Só se a mudança não altera o comportamento, marque a linha:
+
+  ```php
+  // a rota exige sessão: o ?-> só satisfaz o tipo
+  'is_mine' => $request->user()?->id === $this->user_id, // @pest-mutate-ignore: RemoveNullSafeOperator
+  ```
+
+  O motivo fica na linha de cima. Depois dos dois-pontos vão só os nomes dos mutadores, separados por vírgula: qualquer texto a mais vira nome de mutador e a marca deixa de valer.
+- **No `/admin`,** o teste cobre a regra (consulta, filtro, o que o detalhe mostra, permissão). O que é só layout (`columns(1)`, placeholder de select) fica marcado.
+- **`preventLazyLoading`** está ligado fora de produção. Um N+1 em lista vira erro no teste. O Filament já carrega junto as relações das colunas.
 - Comandos artisan recusam entrada inválida com mensagem clara e código de saída diferente de zero. Em produção, rodam pelo workflow do GitHub Actions.

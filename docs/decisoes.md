@@ -2034,3 +2034,29 @@ O detalhe está em `identidade-visual.md`.
 - **Cabeçalho padrão (§73):** Estudos, Oportunidades, Comunidade, Moderação, Perfil e Configurações.
 - **Logos de terceiros:** em nenhuma tela. Os ícones são genéricos até haver os arquivos oficiais.
 
+
+# 74. Qualidade dos testes e análise estática (back) — 08/11/2026
+
+Decisões tomadas na definição da qualidade dos testes (spec `specs/2026-11-08-qualidade-testes-design.md`). O detalhe técnico está em `stack-e-decisoes-tecnicas.md` 12.
+
+## 74.1 Rodada completa de mutação
+
+O teste de mutação rodou em todas as classes de `backend/app`. Cada mutante sobrevivente teve um destino:
+
+- **Código redundante:** foi apagado. Exemplos: o `trim` que os middlewares já fazem, regras repetidas pela regra do link, checagens que um índice do banco já garante, eager loads que o Filament já faz e a regeneração de sessão que o login do Laravel já faz.
+- **Lacuna real:** ganhou teste. Exemplos: link com espaço no caminho era aceito, valor que não é texto devolvia a chave crua `validation.string`, e o formato das respostas que a SPA consome não era conferido.
+- **Mutante equivalente:** ficou marcado na linha, com o motivo.
+
+## 74.2 Análise estática
+
+O Larastan subiu do nível 6 para o 10, com todos os erros corrigidos e sem lista de exceções.
+
+## 74.3 Fluxo das próximas entregas
+
+- Antes do PR, `make mutate` precisa estar verde. O CI roda o mesmo passo.
+- A mutação roda só nas classes de `backend/app` alteradas em relação à base do PR, com nota mínima de **90%**.
+- A cobertura de linhas do back fica em **100%**, para que código novo sem teste não passe **(escolha do Claude)**.
+
+## 74.4 Front
+
+O front (TypeScript estrito, testes com Vitest e Testing Library, mutação com StrykerJS e nota mínima de 80%, ponta a ponta com Playwright) vem numa entrega separada, depois desta.

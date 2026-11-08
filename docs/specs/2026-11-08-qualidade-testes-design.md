@@ -36,12 +36,31 @@ A **análise estática pesada** pega, sem rodar nada, erros de tipo que os teste
 
 | Comando | O que faz |
 |---|---|
-| `make mutate` | teste de mutação nas classes de `backend/app` alteradas em relação à `main`, com nota mínima de 90% |
+| `make mutate` | cobertura de linhas de 100% e teste de mutação nas classes de `backend/app` alteradas em relação à `origin/main`, com nota mínima de 90%. Outra base: `make mutate BASE=...` |
 | `make lint` | já existente; passa a rodar o Larastan no nível 10 |
 
 ### CI
 
-O job `backend` liga a cobertura (PCOV) e ganha um passo que roda `make mutate`, ou o equivalente, só quando o PR altera `backend/app`.
+O job `backend` liga a cobertura (PCOV), baixa o histórico completo do Git e roda os testes com `--coverage --min=100`. Em PR, roda a mutação nas classes alteradas em relação à base do PR.
+
+### Como ficou (08/11/2026)
+
+- **Classes alteradas:** `scripts/changed-php-classes.sh` lista os arquivos de `backend/app` criados ou alterados desde o ponto em que a branch saiu da base, incluindo o que ainda não foi commitado, e converte em nomes de classe. O mesmo script serve ao `make mutate` e ao CI.
+- **PR que só apaga código:** a lista fica vazia, e o passo de mutação termina sem erro.
+- **`--covered-only`:** o Pest trata atributos e propriedades de classe (`#[Fillable]`, `$timestamps`) como linhas não executadas e os conta como mutantes sem teste, mesmo testados. Por isso a mutação roda com `--covered-only`, e a cobertura de linhas de 100% garante que código novo sem teste não passe **(escolha do Claude)**.
+- **Marca de mutante equivalente:** `// @pest-mutate-ignore: Mutador1,Mutador2` no fim da linha, com o motivo na linha de cima. Texto depois dos dois-pontos é lido como nome de mutador.
+- **`preventLazyLoading`** ligado fora de produção, para que um N+1 em lista falhe no teste **(escolha do Claude)**.
+
+### Resultado da rodada completa (08/11/2026)
+
+| | Antes | Depois |
+|---|---|---|
+| Nota de mutação (`backend/app`, 93 arquivos) | 75,8% | 100% (1.402 mutantes, nenhum sobrevivente) |
+| Cobertura de linhas | — | 100% |
+| Larastan | nível 6 | nível 10, sem erros |
+| Testes | 422 | 502 |
+
+A rodada completa leva cerca de 11 minutos: `docker compose exec -u sail app vendor/bin/pest --mutate --everything --covered-only --parallel`.
 
 ### Limite conhecido
 

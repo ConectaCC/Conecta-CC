@@ -59,5 +59,6 @@ Toda escolha que o time não fez leva a marca **(escolha do Claude)**. Se a impl
 3. **Foco de revisão:** as 5 entradas que a spec não cita mas que vão acontecer (busca só com espaços, URL com maiúsculas, recarregar a página, nome longo no celular…). Cada uma ligada à tarefa que a testa.
 4. **Mapa de arquivos.**
 5. **Tarefas** (`### Tarefa N`), cada uma com **Arquivos**, **Interfaces** (o que consome e o que produz, com assinaturas exatas) e passos em checkbox: teste que falha, ver falhar, implementar, ver passar, commit.
+6. **Verificação final:** `make lint` e `make mutate` verdes antes do PR (`stack-e-decisoes-tecnicas.md` 12).
 
 O plano decide nomes, assinaturas, valores e testes. O corpo do código fica para quem implementa. Um plano maior que o código que descreve passou do ponto.

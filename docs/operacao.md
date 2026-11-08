@@ -46,7 +46,8 @@ O `MaterialSeeder` cria materiais de exemplo (aprovados, pendentes, rejeitado, c
 | `make migrate` | roda migrations pendentes |
 | `make fresh` | recria o banco com os seeders |
 | `make test` | testes da API (Pest, contra PostgreSQL) |
-| `make lint` | Pint, Larastan, ESLint e TypeScript |
+| `make lint` | Pint, Larastan (nível 10), ESLint e TypeScript |
+| `make mutate` | antes do PR: cobertura de linhas de 100% e teste de mutação nas classes do back alteradas em relação à `origin/main`, com nota mínima de 90%. Outra base: `make mutate BASE=main` |
 | `make api-types` | exporta o OpenAPI e regenera os tipos do front; rode sempre que mudar a API e commite `frontend/openapi.json` e `frontend/src/lib/api/schema.d.ts` |
 | `make shell` | terminal dentro do container do Laravel |
 
