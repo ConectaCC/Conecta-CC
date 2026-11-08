@@ -6,6 +6,7 @@ use App\Enums\MaterialStatus;
 use App\Http\Requests\ListCommunityFeedRequest;
 use App\Http\Resources\CommunityFeedItemResource;
 use App\Models\Material;
+use App\Support\UnaccentSearch;
 use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -30,23 +31,16 @@ final class ListCommunityFeedController
         return CommunityFeedItemResource::collection($materials);
     }
 
-    /**
-     * shortcut: unaccent sem índice percorre a tabela inteira; criar um índice com expressão se o mural ficar lento
-     *
-     * @param  Builder<Material>  $query
-     */
+    /** @param  Builder<Material>  $query */
     private function search(Builder $query, string $term): void
     {
-        $pattern = '%'.addcslashes(mb_strtolower($term), '\\%_').'%';
-        $matches = fn (string $column) => ["unaccent(lower({$column})) LIKE unaccent(?)", [$pattern]];
-
-        $query->where(function (Builder $query) use ($matches): void {
-            $query->whereRaw(...$matches('materials.title'))
-                ->orWhereHas('discipline', fn (Builder $discipline) => $discipline->whereRaw(...$matches('disciplines.name')))
+        $query->where(function (Builder $query) use ($term): void {
+            UnaccentSearch::where($query, 'materials.title', $term)
+                ->orWhereHas('discipline', fn (Builder $discipline) => UnaccentSearch::where($discipline, 'disciplines.name', $term))
                 // o nome do autor só conta no material identificado: no anônimo, a busca revelaria quem enviou
                 ->orWhere(fn (Builder $identified) => $identified
                     ->where('anonymous', false)
-                    ->whereHas('author', fn (Builder $author) => $author->whereRaw(...$matches('users.display_name'))));
+                    ->whereHas('author', fn (Builder $author) => UnaccentSearch::where($author, 'users.display_name', $term)));
         });
     }
 }

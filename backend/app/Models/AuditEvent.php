@@ -13,11 +13,13 @@ use Illuminate\Support\Carbon;
  * @property int|null $actor_id
  * @property int|null $user_id
  * @property int|null $material_id
+ * @property int|null $opportunity_id
  * @property array<string, mixed> $data
  * @property Carbon $created_at
  * @property-read User|null $actor
  * @property-read User|null $user
  * @property-read Material|null $material
+ * @property-read Opportunity|null $opportunity
  */
 class AuditEvent extends Model
 {
@@ -50,5 +52,11 @@ class AuditEvent extends Model
     public function material(): BelongsTo
     {
         return $this->belongsTo(Material::class)->withTrashed();
+    }
+
+    /** @return BelongsTo<Opportunity, $this> */
+    public function opportunity(): BelongsTo
+    {
+        return $this->belongsTo(Opportunity::class)->withTrashed();
     }
 }

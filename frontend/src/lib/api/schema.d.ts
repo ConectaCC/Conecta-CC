@@ -180,6 +180,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/opportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listOpportunities"];
+        put?: never;
+        post: operations["v1.storeOpportunity"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/login": {
         parameters: {
             query?: never;
@@ -455,6 +471,28 @@ export interface components {
             link: string;
             created_at: string;
         };
+        /**
+         * OpportunityModality
+         * @enum {string}
+         */
+        OpportunityModality: "REMOTO" | "HIBRIDO" | "PRESENCIAL";
+        /** OpportunityResource */
+        OpportunityResource: {
+            id: number;
+            code: string;
+            type: string;
+            title: string;
+            description: string;
+            url: string;
+            modality: string;
+            deadline: string | null;
+            published_at: string | null;
+        };
+        /**
+         * OpportunityType
+         * @enum {string}
+         */
+        OpportunityType: "ESTAGIO" | "EMPREGO" | "EVENTO" | "PROJETO" | "OUTRO";
         /** ProfileResource */
         ProfileResource: {
             display_name: string;
@@ -493,6 +531,16 @@ export interface components {
             description?: string | null;
             url: string;
             anonymous?: boolean;
+        };
+        /** StoreOpportunityRequest */
+        StoreOpportunityRequest: {
+            type: components["schemas"]["OpportunityType"];
+            title: string;
+            description: string;
+            url: string;
+            modality: components["schemas"]["OpportunityModality"];
+            /** Format: date */
+            deadline?: string | null;
         };
         /** StudentProfileResource */
         StudentProfileResource: {
@@ -969,6 +1017,77 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "v1.listOpportunities": {
+        parameters: {
+            query?: {
+                q?: string | null;
+                type?: components["schemas"]["OpportunityType"] | null;
+                /** @description Cursor da próxima página (meta.next_cursor). */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated set of `OpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["OpportunityResource"][];
+                        links: {
+                            first: string | null;
+                            last: string | null;
+                            prev: string | null;
+                            next: string | null;
+                        };
+                        meta: {
+                            /** @description Base path for paginator generated URLs. */
+                            path: string | null;
+                            /** @description Number of items shown per page. */
+                            per_page: number;
+                            /** @description The "cursor" that points to the next set of items. */
+                            next_cursor: string | null;
+                            /** @description The "cursor" that points to the previous set of items. */
+                            prev_cursor: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.storeOpportunity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreOpportunityRequest"];
+            };
+        };
+        responses: {
+            /** @description `OpportunityResource` */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OpportunityResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
         };
     };
     "v1.login": {

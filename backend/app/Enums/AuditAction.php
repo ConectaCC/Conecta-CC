@@ -13,6 +13,11 @@ enum AuditAction: string
     case MaterialDeleted = 'material_deleted';
     case MaterialApproved = 'material_approved';
     case MaterialRejected = 'material_rejected';
+    case OpportunitySubmitted = 'opportunity_submitted';
+    case OpportunityCancelled = 'opportunity_cancelled';
+    case OpportunityDeleted = 'opportunity_deleted';
+    case OpportunityApproved = 'opportunity_approved';
+    case OpportunityRejected = 'opportunity_rejected';
 
     public function label(): string
     {
@@ -26,6 +31,11 @@ enum AuditAction: string
             self::MaterialDeleted => 'Material excluído',
             self::MaterialApproved => 'Aprovado',
             self::MaterialRejected => 'Rejeitado',
+            self::OpportunitySubmitted => 'Oportunidade enviada',
+            self::OpportunityCancelled => 'Oportunidade cancelada',
+            self::OpportunityDeleted => 'Oportunidade excluída',
+            self::OpportunityApproved => 'Oportunidade aprovada',
+            self::OpportunityRejected => 'Oportunidade rejeitada',
         };
     }
 
