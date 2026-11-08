@@ -31,6 +31,9 @@ services:
         value: 'true'
       - key: ALLOWED_EMAIL_DOMAINS
         value: academico.ifsul.edu.br
+      # período de teste fechado: e-mails convidados, separados por vírgula; vazio abre o cadastro ao domínio
+      - key: ALLOWED_EMAILS
+        sync: false
       - key: TERMS_VERSION
         value: '0.2'
       - key: APP_KEY

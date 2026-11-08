@@ -101,3 +101,17 @@ it('e-mail já cadastrado: fecha os Termos e oferece entrar', async () => {
   expect(screen.getByRole('link', { name: 'entre' })).toHaveAttribute('href', '/login');
   expect(get).toHaveBeenCalledOnce(); // os Termos não mudaram: não busca de novo
 });
+
+it('fora da lista de convidados: mostra a restrição, sem oferecer entrar', async () => {
+  mockApi('GET', reply(200, TERMS));
+  mockApi('POST', reply(422, { message: 'x', errors: { email: ['O cadastro está restrito às pessoas convidadas para o período de teste.'] } }));
+  renderRegister();
+
+  await fill();
+  const dialog = await screen.findByRole('dialog');
+  await userEvent.click(await within(dialog).findByLabelText('Li e aceito os Termos.'));
+  await userEvent.click(within(dialog).getByRole('button', { name: 'Concordar e criar conta' }));
+
+  expect(await screen.findByText('O cadastro está restrito às pessoas convidadas para o período de teste.')).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'entre' })).not.toBeInTheDocument();
+});

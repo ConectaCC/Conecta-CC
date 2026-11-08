@@ -2330,3 +2330,30 @@ Revisão de todo o repositório antes do deploy, guiada pelo OWASP Top 10. O det
 - **Sessão de 7 dias** (`SESSION_LIFETIME`), escolhida pela comodidade.
 - **As ações do GitHub usam versão por tag**, e não por hash. O Dependabot acompanha as versões.
 
+# 79. Período de teste fechado — 08/11/2026
+
+Em produção, o ConectaCC começa com o Cadastro restrito a pessoas convidadas.
+
+## 79.1 Como funciona
+
+- A variável `ALLOWED_EMAILS`, no Render, guarda os e-mails convidados, separados por vírgula.
+- **Com a lista preenchida,** só esses e-mails criam conta. Eles continuam precisando ser do domínio institucional (`ALLOWED_EMAIL_DOMAINS`).
+- **Com a lista vazia,** o Cadastro fica aberto a todo o domínio, como antes.
+- Mudar a lista não exige deploy de código: o Render publica de novo ao salvar a variável.
+- A lista vale só para o Cadastro. Quem já tem conta continua entrando, mesmo se sair da lista.
+
+## 79.2 Mensagem
+
+Quem não está na lista vê: "O cadastro está restrito às pessoas convidadas para o período de teste." **(escolha do Claude)**
+
+A conferência da lista vem antes da de e-mail já cadastrado. Assim, quem não foi convidado não descobre se o e-mail já tem conta.
+
+## 79.3 Começo do teste
+
+A lista começa só com Marcelo e Viviane. Os dois se cadastram e viram ADMINISTRADOR pelo workflow "Promover usuário".
+
+## 79.4 O que ficou de fora
+
+- **Senha no site inteiro (HTTP Basic Auth):** as telas de Login e Cadastro continuam visíveis, mas sem conta não há nada além delas.
+- **Contas criadas pelo ADMINISTRADOR:** seria funcionalidade nova, com tela e convite.
+

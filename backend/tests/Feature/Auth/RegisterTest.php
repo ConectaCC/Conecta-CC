@@ -122,3 +122,37 @@ it('limita o Cadastro a 5 tentativas por minuto por IP', function () {
         ->assertTooManyRequests()
         ->assertJsonPath('message', fn (string $message) => str_starts_with($message, 'Muitas tentativas. Tente novamente em '));
 });
+
+// período de teste fechado (decisoes.md §79)
+
+it('com a lista de convidados, só cria a conta de quem está nela', function () {
+    config(['conectacc.allowed_emails' => ['ana.silva@academico.ifsul.edu.br']]);
+
+    $this->postJson('/api/v1/register', registerPayload(['email' => 'Ana.Silva@academico.ifsul.edu.br']))->assertCreated();
+
+    $this->postJson('/api/v1/register', registerPayload(['email' => 'outra@academico.ifsul.edu.br']))
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.email', ['O cadastro está restrito às pessoas convidadas para o período de teste.']);
+    expect(User::pluck('email')->all())->toBe(['ana.silva@academico.ifsul.edu.br']);
+});
+
+it('com a lista de convidados, não revela se um e-mail de fora dela já tem conta', function () {
+    config(['conectacc.allowed_emails' => ['ana.silva@academico.ifsul.edu.br']]);
+    User::factory()->create(['email' => 'outra@academico.ifsul.edu.br']);
+
+    $this->postJson('/api/v1/register', registerPayload(['email' => 'outra@academico.ifsul.edu.br']))
+        ->assertJsonPath('errors.email', ['O cadastro está restrito às pessoas convidadas para o período de teste.']);
+});
+
+it('a lista não libera e-mail de fora do domínio institucional', function () {
+    config(['conectacc.allowed_emails' => ['ana@gmail.com']]);
+
+    $this->postJson('/api/v1/register', registerPayload(['email' => 'ana@gmail.com']))
+        ->assertJsonPath('errors.email', ['Use seu e-mail institucional do IFSul.']);
+});
+
+it('sem a lista de convidados, o cadastro fica aberto ao domínio institucional', function () {
+    config(['conectacc.allowed_emails' => []]);
+
+    $this->postJson('/api/v1/register', registerPayload())->assertCreated();
+});
