@@ -184,7 +184,27 @@ A confirmação técnica do domínio ou dos domínios exatos utilizados pelo IFS
 
 A possibilidade de aceitar e-mails institucionais de outras instituições fica fora do MVP atual e poderá ser avaliada somente em uma eventual expansão futura do ConectaCC.
 
-## RF-05.1 — Confirmação de propriedade do e-mail
+## RF-05.1 — Cadastro restrito durante o período de testes
+
+Durante o período de testes, o Cadastro poderá ser restrito às pessoas previamente convidadas para participar do piloto.
+
+Além de utilizar um e-mail do domínio institucional permitido, o endereço deverá estar presente na lista de convidados configurada para o período de testes.
+
+A regra funciona da seguinte forma:
+
+- com a lista de convidados preenchida, somente os e-mails presentes nela podem criar conta;
+- os e-mails convidados continuam obrigatoriamente sujeitos à validação do domínio institucional;
+- com a lista vazia, o Cadastro fica disponível para todos os e-mails do domínio institucional permitido;
+- a restrição se aplica somente à criação de novas contas;
+- remover um e-mail da lista não impede o Login de uma conta já existente.
+
+Quando o e-mail institucional não estiver autorizado para o período de testes, o sistema deverá apresentar:
+
+**O cadastro está restrito às pessoas convidadas para o período de teste.**
+
+A lista de convidados e seu funcionamento estão detalhados em `decisoes.md` §79.
+
+## RF-05.2 — Confirmação de propriedade do e-mail
 
 No MVP e no piloto:
 
@@ -194,7 +214,7 @@ O sistema não precisa exigir que o usuário confirme a propriedade do endereço
 
 Essa funcionalidade poderá ser avaliada em uma evolução futura do ConectaCC.
 
-Essa regra não altera a recuperação de senha, que continuará utilizando envio de e-mail.
+Essa regra é independente da recuperação de senha, que permanece opcional nesta versão (`decisoes.md` §52.9).
 ---
 
 # 3. Login
