@@ -182,6 +182,8 @@ Transformar o protótipo em uma aplicação funcional.
 
 > **Atualização (05/11/2026):** o painel `/admin` foi entregue (`decisoes.md` 65). A ordem atual é: responsividade, acessibilidade e testes.
 
+> **Atualização (08/11/2026):** a Comunidade voltou como mural de materiais (`decisoes.md` 68). A próxima entrega é Oportunidades, integrada ao mural.
+
 1. Fundação e autenticação
 2. Layout global
 3. Perfil

@@ -369,6 +369,8 @@ A data original do envio permanece como informação interna.
 
 > **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
 
+> **Atualização (08/11/2026):** entregue o mural de materiais (`decisoes.md` 68): feed cronológico, autoria ou "Comunidade" no anônimo, links para o perfil, a disciplina e o material, e "Mostrar mais". Os demais itens abaixo continuam fora.
+
 Implementar:
 
 - [ ] feed cronológico;

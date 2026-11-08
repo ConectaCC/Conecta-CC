@@ -319,6 +319,8 @@ A data original do envio permanece como informação interna.
 
 > **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
 
+> **Atualização (08/11/2026):** a Comunidade voltou como mural de descoberta dos materiais aprovados, sem publicações próprias (`decisoes.md` 68). Continuam fora: publicações, comentários, canais e busca de estudantes.
+
 A Comunidade busca aproximar estudantes e facilitar a circulação de conhecimentos e informações.
 
 Ela possui três áreas principais:

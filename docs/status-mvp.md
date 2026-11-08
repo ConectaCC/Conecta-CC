@@ -34,7 +34,7 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 | Compartilhamento de material | ✅ | ✅ | ✅ (2a) | ⏳ |
 | Oportunidade | ✅ | ✅ | fora do MVP | — |
 | Indicação de oportunidade | ✅ | ✅ | fora do MVP | — |
-| Comunidade | ✅ | ✅ | fora do MVP | — |
+| Comunidade | ✅ | ✅ | ✅ (mural de materiais, adicional) | ⏳ |
 | Perfil público | ✅ | ✅ | ✅ | ⏳ |
 | Meus conteúdos (materiais) | ✅ | ✅ (esboço) | ✅ (2b) | ⏳ |
 | Compartilhamento na Comunidade | ✅ | ✅ | fora do MVP | — |
@@ -66,6 +66,8 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 - Perfil público, aberto pelo nome do autor nos materiais.
 
 **Ainda falta para o MVP:** ver a seção "O que ainda não está implementado".
+
+> **Atualização (08/11/2026):** a Comunidade voltou como mural de materiais, como funcionalidade adicional prevista na §56.3 (`decisoes.md` 68). A próxima entrega é Oportunidades, já integrada ao mural.
 
 O protótipo das dez áreas continua sendo a referência visual. Ele inclui Oportunidade e Comunidade, que agora estão fora do MVP.
 

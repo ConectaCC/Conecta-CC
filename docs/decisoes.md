@@ -1756,3 +1756,48 @@ Esta seção substitui, para esses dois fluxos, a frase final da §63.4 ("As reg
 - o registro no histórico e na auditoria;
 - os resultados possíveis da análise;
 - uma eventual relação com sanções ou bloqueios.
+
+---
+
+# 68. Comunidade: mural de materiais — 08/11/2026
+
+Decisões da volta da Comunidade como mural (spec `specs/2026-11-08-comunidade-mural-design.md`). É a retomada prevista na §56.3: funcionalidade adicional, fora do escopo obrigatório do MVP.
+
+## 68.1 O que é
+
+A Comunidade volta como **camada de descoberta**: um mural cronológico do que foi compartilhado no curso.
+
+O mural não guarda cópia de nada. Estudos é dono do material, e a Comunidade só aponta para ele, consultando os materiais aprovados.
+
+Ficam fora desta versão: tópicos, respostas, comentários, curtidas, posts de texto livre, canais e busca de estudantes.
+
+## 68.2 O que aparece
+
+- **O que gera uma publicação:** a primeira aprovação de um material. Uma alteração aprovada não gera outra publicação, e o mural mostra o título atual.
+- **Exclusão:** material excluído sai do mural.
+- **Ordem:** mais recentes primeiro, pela data de publicação, com o tempo relativo. O mural carrega 20 por vez, com "Mostrar mais".
+
+## 68.3 Autoria
+
+- **Material identificado:** "Marcos compartilhou “Resumo de Grafos” em Estrutura de Dados II". O nome leva ao Perfil público, ou a `/perfil` quando é a própria pessoa.
+- **Material anônimo:** "Comunidade compartilhou…", sem link de perfil, para todo mundo, inclusive o próprio autor e o ADMINISTRADOR. A API não envia o autor (§55.2 e §57.2).
+
+## 68.4 Links
+
+- **Título:** abre a disciplina já rolada até o material, com um destaque rápido. Se o material estiver mais abaixo na lista, a página carrega os próximos itens até achá-lo.
+- **Disciplina:** abre a página da disciplina.
+
+## 68.5 Navegação
+
+"Comunidade" volta à sidebar, entre Estudos e Perfil, e `/comunidade` abre o mural. A Home não muda.
+
+## 68.6 Próxima entrega
+
+Oportunidades entra integrada ao mural, sempre com "Comunidade" como autoria pública. Os filtros "Tudo", "Materiais" e "Oportunidades" chegam junto com ela.
+
+## 68.7 Escolhas do Claude
+
+- **Paginação por cursor:** um material aprovado enquanto a pessoa lê não repete nem esconde itens em "Mostrar mais".
+- **Subtítulo:** "Veja o que a comunidade de Ciência da Computação tem compartilhado.".
+- **Estado vazio:** "Quando um material for aprovado em Estudos, ele aparece aqui.", com o link "Ir para Estudos".
+- **Avatar:** as iniciais no material identificado e um ícone neutro de pessoas no anônimo.

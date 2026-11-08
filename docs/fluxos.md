@@ -518,6 +518,8 @@ Publicação enviada
 
 > **Fora do MVP (02/11/2026):** `decisoes.md` 56.
 
+> **Atualização (08/11/2026):** o feed voltou como mural dos materiais aprovados (`decisoes.md` 68). Fluxo: Sidebar → Comunidade → mural → nome do autor (Perfil público), título (disciplina rolada até o material) ou disciplina. No material anônimo, "Comunidade" aparece sem link.
+
 O feed segue ordem cronológica.
 
 Para conteúdos que passaram por Moderação, a ordenação pública considera a:
