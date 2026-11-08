@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Route, Routes, useLocation } from 'react-router';
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { mockApi, reply } from '@/test/api';
 import { renderWithProviders } from '@/test/render';
 import { RegisterPage } from './RegisterPage';
@@ -23,7 +23,7 @@ function renderRegister() {
   );
 }
 
-async function fill({ name = 'Ana Silva', email = 'Ana@academico.ifsul.edu.br', password = 'segredo123', confirmation = 'segredo123' } = {}) {
+async function fill({ name = 'Ana Silva', email = '  Ana@academico.ifsul.edu.br ', password = 'segredo123', confirmation = 'segredo123' } = {}) {
   if (name) await userEvent.type(screen.getByLabelText('Nome completo'), name);
   if (email) await userEvent.type(screen.getByLabelText('E-mail institucional'), email);
   if (password) await userEvent.type(screen.getByLabelText('Senha'), password);
@@ -72,8 +72,22 @@ it('cria a conta depois do aceite e leva ao Login com o e-mail em minúsculas', 
   });
 });
 
+it('versão dos Termos desatualizada: busca o texto novo', async () => {
+  const get = mockApi('GET', reply(200, TERMS), reply(200, { ...TERMS, version: '2026-12' }));
+  mockApi('POST', reply(422, { message: 'x', errors: { terms_version: ['Os Termos de participação foram atualizados. Leia e aceite novamente.'] } }));
+  renderRegister();
+
+  await fill();
+  const dialog = await screen.findByRole('dialog');
+  await userEvent.click(await within(dialog).findByLabelText('Li e aceito os Termos.'));
+  await userEvent.click(within(dialog).getByRole('button', { name: 'Concordar e criar conta' }));
+
+  expect(await screen.findByText('Os Termos de participação foram atualizados. Leia e aceite novamente.')).toBeInTheDocument();
+  await vi.waitFor(() => expect(get).toHaveBeenCalledTimes(2));
+});
+
 it('e-mail já cadastrado: fecha os Termos e oferece entrar', async () => {
-  mockApi('GET', reply(200, TERMS));
+  const get = mockApi('GET', reply(200, TERMS));
   mockApi('POST', reply(422, { message: 'x', errors: { email: ['Não foi possível criar uma conta com este e-mail. Se você já possui cadastro, entre.'] } }));
   renderRegister();
 
@@ -85,4 +99,5 @@ it('e-mail já cadastrado: fecha os Termos e oferece entrar', async () => {
   expect(await screen.findByText(/Não foi possível criar uma conta com este e-mail/)).toBeInTheDocument();
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'entre' })).toHaveAttribute('href', '/login');
+  expect(get).toHaveBeenCalledOnce(); // os Termos não mudaram: não busca de novo
 });

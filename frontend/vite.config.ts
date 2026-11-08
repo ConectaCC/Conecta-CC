@@ -27,7 +27,5 @@ export default defineConfig(({ command }) => ({
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
-    // datas e horas dos testes no fuso do câmpus
-    env: { TZ: 'America/Sao_Paulo' },
   },
 }));

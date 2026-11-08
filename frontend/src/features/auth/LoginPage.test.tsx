@@ -1,16 +1,21 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Route, Routes } from 'react-router';
+import { Route, Routes, useNavigationType } from 'react-router';
 import { expect, it } from 'vitest';
 import { failNetwork, mockApi, reply } from '@/test/api';
 import { renderWithProviders } from '@/test/render';
 import { LoginPage } from './LoginPage';
 
+function Home() {
+  // REPLACE: voltar no navegador não leva de novo ao Login
+  return <p>Página inicial ({useNavigationType()})</p>;
+}
+
 function renderLogin() {
   renderWithProviders(
     <Routes>
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/home" element={<p>Página inicial</p>} />
+      <Route path="/home" element={<Home />} />
     </Routes>,
     { route: '/login' },
   );
@@ -52,7 +57,7 @@ it('entra e vai para a página inicial', async () => {
   await userEvent.type(form.password, 'segredo123');
   await form.submit();
 
-  expect(await screen.findByText('Página inicial')).toBeInTheDocument();
+  expect(await screen.findByText('Página inicial (REPLACE)')).toBeInTheDocument();
   expect(post).toHaveBeenCalledWith('/login', { body: { email: 'aluno@academico.ifsul.edu.br', password: 'segredo123' } });
 });
 

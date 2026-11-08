@@ -63,6 +63,15 @@ it('mostra no campo o erro de link vindo da API', async () => {
   expect(await screen.findByText('Informe o endereço do seu perfil no GitHub, como https://github.com/usuario.')).toBeInTheDocument();
 });
 
+it('erro de um item da lista vai para o campo da lista', async () => {
+  mockApi('PUT', reply(422, { message: 'x', errors: { 'interests.0': ['Use no máximo 255 caracteres por assunto.'] } }));
+  const form = renderForm(profile({ interests: ['UX'] }));
+
+  await form.save();
+
+  expect(await screen.findByText('Use no máximo 255 caracteres por assunto.')).toBeInTheDocument();
+});
+
 it('atualiza a prévia das iniciais enquanto digita o nome', async () => {
   renderForm(profile());
 

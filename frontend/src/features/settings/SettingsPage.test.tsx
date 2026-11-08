@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, it } from 'vitest';
 import { mockApi, reply } from '@/test/api';
@@ -8,12 +8,13 @@ import { SettingsPage } from './SettingsPage';
 const ME = { id: 1, name: 'Ana', email: 'ana@academico.ifsul.edu.br', display_name: 'Ana', initials: 'A', role: 'ALUNO', profile_complete: true };
 
 function renderSettings() {
-  renderWithDataRouter(<SettingsPage />, { path: '/configuracoes', query: { me: ME } });
+  const { router } = renderWithDataRouter(<SettingsPage />, { path: '/configuracoes', query: { me: ME }, routes: [{ path: '/home', element: <p>Página inicial</p> }] });
   return {
     current: screen.getByLabelText(/^Senha atual/),
     password: screen.getByLabelText(/^Nova senha/),
     confirmation: screen.getByLabelText(/^Confirmar nova senha/),
     save: () => userEvent.click(screen.getByRole('button', { name: 'Salvar nova senha' })),
+    router,
   };
 }
 
@@ -89,4 +90,19 @@ it('falha inesperada: avisa sem perder o que foi digitado', async () => {
 
   expect(await screen.findByText('Não foi possível alterar sua senha agora. Tente novamente.')).toBeInTheDocument();
   expect(form.password).toHaveValue('senha-nova-1');
+});
+
+it('ao sair com alterações não salvas, pergunta antes e respeita a escolha', async () => {
+  const form = renderSettings();
+  await userEvent.type(form.current, 'senha-antiga');
+
+  await act(() => form.router.navigate('/home'));
+  expect(await screen.findByText('As alterações feitas ainda não foram salvas.')).toBeInTheDocument();
+  await userEvent.click(screen.getByRole('button', { name: 'Continuar editando' }));
+  expect(form.router.state.location.pathname).toBe('/configuracoes');
+  expect(form.current).toHaveValue('senha-antiga');
+
+  await act(() => form.router.navigate('/home'));
+  await userEvent.click(await screen.findByRole('button', { name: 'Descartar alterações' }));
+  expect(await screen.findByText('Página inicial')).toBeInTheDocument();
 });

@@ -46,7 +46,8 @@ export function RegisterPage() {
     const values = getValues();
     try {
       await registerAccount.mutateAsync({ ...values, terms_version: termsVersion });
-      void navigate('/login', { state: { registeredEmail: values.email.trim().toLowerCase() } });
+      // o campo type="email" já tira os espaços das pontas
+      void navigate('/login', { state: { registeredEmail: values.email.toLowerCase() } });
     } catch (error) {
       if (error instanceof ApiError && error.status === 422) {
         // versão dos Termos mudou: buscar o texto novo antes de a pessoa aceitar de novo
