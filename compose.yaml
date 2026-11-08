@@ -60,6 +60,18 @@ services:
     depends_on:
       - app
 
+  # make e2e: Playwright com o navegador já instalado na imagem, na mesma versão do @playwright/test
+  e2e:
+    image: mcr.microsoft.com/playwright:v1.65.0-noble
+    profiles: [e2e]
+    # mesma origem do navegador de quem desenvolve (localhost:5173), que a sessão do Sanctum exige
+    network_mode: host
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - frontend-node-modules:/app/node_modules
+    command: npx playwright test
+
 volumes:
   backend-vendor:
   pgsql-data:

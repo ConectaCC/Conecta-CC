@@ -10,7 +10,8 @@
     "typecheck": "tsc -b",
     "api-types": "openapi-typescript openapi.json -o src/lib/api/schema.d.ts",
     "test": "TZ=America/Sao_Paulo vitest run",
-    "mutate": "TZ=America/Sao_Paulo stryker run"
+    "mutate": "TZ=America/Sao_Paulo stryker run",
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",
