@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TermsAcceptance extends Model
 {
@@ -14,11 +13,5 @@ class TermsAcceptance extends Model
     protected function casts(): array
     {
         return ['accepted_at' => 'datetime'];
-    }
-
-    /** @return BelongsTo<User, $this> */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 }

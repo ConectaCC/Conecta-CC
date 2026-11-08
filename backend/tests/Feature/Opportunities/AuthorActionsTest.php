@@ -70,7 +70,8 @@ it('lista as próprias oportunidades em todas as situações, inclusive encerrad
 
     expect($this->actingAs($me)->getJson('/api/v1/me/opportunities?status=pending')->json('data.*.id'))->toBe([$pending->id])
         ->and($this->actingAs($me)->getJson('/api/v1/me/opportunities?status=deleted')->json('data.*.id'))->toBe([$deleted->id])
-        ->and($this->actingAs($me)->getJson('/api/v1/me/opportunities?status=approved')->json('data.*.id'))->toBe([$expired->id]);
+        ->and($this->actingAs($me)->getJson('/api/v1/me/opportunities?status=approved')->json('data.*.id'))->toBe([$expired->id])
+        ->and($this->actingAs($me)->getJson('/api/v1/me/opportunities?status=rejected')->json('data.*.id'))->toBe([$rejected->id]);
 });
 
 it('encerra só a aprovada, e só depois do último dia do prazo', function (string $status, string $deadline, string $expected) {

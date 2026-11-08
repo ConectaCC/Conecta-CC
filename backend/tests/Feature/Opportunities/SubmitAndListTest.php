@@ -1,10 +1,12 @@
 <?php
 
+use App\Actions\CreateOpportunity;
 use App\Enums\AuditAction;
 use App\Enums\MaterialStatus;
 use App\Models\AuditEvent;
 use App\Models\Opportunity;
 use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
 const OPPORTUNITIES = '/api/v1/opportunities';
 
@@ -207,4 +209,12 @@ it('ordena pela publicação e pagina de 20 em 20 sem repetir', function () {
 it('exige sessão', function () {
     $this->getJson(OPPORTUNITIES)->assertUnauthorized();
     $this->postJson(OPPORTUNITIES, opportunityPayload())->assertUnauthorized();
+});
+
+it('transforma a corrida de link repetido em erro de validação', function () {
+    // simula o segundo de dois envios simultâneos: a validação passou, mas o link já foi gravado
+    Opportunity::factory()->create(['url' => 'https://empresa.com/corrida']);
+
+    expect(fn () => app(CreateOpportunity::class)->handle(User::factory()->create(), [...opportunityPayload(), 'url' => 'https://empresa.com/corrida']))
+        ->toThrow(fn (ValidationException $e) => expect($e->errors())->toBe(['url' => ['Essa oportunidade já foi compartilhada.']]));
 });
