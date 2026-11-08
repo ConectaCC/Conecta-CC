@@ -260,9 +260,10 @@
     overflow-wrap: break-word;
 }
 
-/* título e e-mail podem ter uma palavra longa demais; só eles quebram no meio */
+/* título, e-mail e o material da auditoria podem ter uma palavra longa demais; só eles quebram no meio */
 .fi-ta-cell-title .fi-ta-text.fi-wrapped,
-.fi-ta-cell-email .fi-ta-text.fi-wrapped {
+.fi-ta-cell-email .fi-ta-text.fi-wrapped,
+.fi-ta-cell-subject .fi-ta-text.fi-wrapped {
     overflow-wrap: anywhere;
 }
 

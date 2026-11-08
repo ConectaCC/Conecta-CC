@@ -572,6 +572,9 @@ Itens já identificados como possíveis evoluções e que não fazem parte da pr
 - **Retirada administrativa de conteúdo publicado — pós-MVP:** definir e implementar futuramente o fluxo pelo qual ADMINISTRADOR poderá retirar conteúdo anteriormente aprovado, preservando aprovação anterior e ação de retirada nos logs/auditoria (`decisoes.md` 63);
 - histórico administrativo;
 - auditoria de decisões;
+
+> **Atualização (07/11/2026):** a auditoria de ações que mudam dados foi entregue (`decisoes.md` 66). Continuam futuras: a auditoria de consultas e de login, a exportação de eventos e a regra final de retenção.
+
 - contador de pendências na Moderação;
 - controle de visibilidade do Perfil;
 - opção de não aparecer na Comunidade;

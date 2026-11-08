@@ -1638,3 +1638,69 @@ As tabelas não têm rolagem lateral. Para isso, as colunas foram agrupadas:
 ## 65.7 Avatar sem serviço externo
 
 O avatar padrão do Filament é buscado em `ui-avatars.com`, o que enviaria as iniciais da pessoa para fora. O painel desenha o avatar localmente, com as mesmas iniciais do app.
+
+---
+
+# 66. Auditoria — 07/11/2026
+
+Decisões da auditoria do `/admin` (spec `specs/2026-11-07-auditoria-design.md`).
+
+## 66.1 O que significa "revisar os logs"
+
+O ADMINISTRADOR revisa as ações na tela **Auditoria** do `/admin`. Ela é o registro oficial do que foi feito no sistema e por quem. A linha `Papel alterado` continua no log técnico do Render, só para operação.
+
+## 66.2 O que é registrado
+
+Toda ação que muda dados gera um evento, na mesma transação da ação:
+
+- cadastro;
+- troca de senha;
+- papel alterado, pelo painel ou pelo workflow;
+- material enviado;
+- alteração enviada;
+- envio cancelado;
+- material excluído;
+- aprovado;
+- rejeitado.
+
+Login, logout e consultas não são registrados. Isso inclui o ADMINISTRADOR ver o autor de um material anônimo.
+
+## 66.3 O que o evento guarda
+
+O evento guarda:
+
+- quem fez;
+- a ação;
+- a conta ou o material afetado;
+- a data;
+- um resumo da mudança, com o título que o material tinha naquele momento;
+- se o envio era anônimo e se era uma alteração;
+- na aprovação de uma alteração, a versão publicada antes.
+
+**Nunca guarda:** IP, e-mail, senha, hash, token, sessão ou o texto do motivo da rejeição.
+
+## 66.4 Quem vê
+
+Só o ADMINISTRADOR, na tela Auditoria, com filtros por ação, pessoa e período. O MODERADOR não vê.
+
+O envio anônimo mostra quem enviou, com a marca "Enviado anonimamente", como em Moderações (§55.2). A marca aparece só abaixo do autor, e não de quem moderou.
+
+## 66.5 Imutabilidade e retenção
+
+- **Imutabilidade:** uma trigger do PostgreSQL recusa alterar, apagar ou esvaziar eventos, inclusive pelo painel ou por um comando manual. Remover um evento exige uma migration deliberada.
+- **Retenção:** os eventos ficam guardados durante o piloto. Quando a exclusão de conta for implementada (§64), o evento continua existindo e a pessoa aparece como "Conta excluída". A regra final de retenção entra na revisão dos Termos e da LGPD.
+- **Histórico anterior:** não foi reconstruído, e a auditoria conta a partir do deploy.
+
+## 66.6 Workflow
+
+A troca de papel pelo workflow "Promover usuário" aparece como "Workflow do GitHub".
+
+## 66.7 Regra para entregas futuras
+
+Toda ação administrativa sensível nova (reversão de rejeição, retirada de conteúdo, exclusão de conta) só entra junto com o evento de auditoria dela.
+
+## 66.8 Horário do painel
+
+O banco guarda as datas em UTC. O painel mostra as datas e filtra o período no horário de Brasília (`America/Sao_Paulo`), como o app já faz no navegador.
+
+Isso corrige as datas de Usuários e Moderações, que apareciam três horas adiantadas desde a §65.

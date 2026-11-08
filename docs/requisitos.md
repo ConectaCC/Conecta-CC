@@ -113,6 +113,8 @@ A UX completa do painel administrativo e o fluxo detalhado das ações de MODERA
 
 > **Atualização (05/11/2026):** o `/admin` do MVP cobre a consulta de usuários, a alteração de papéis e a consulta de moderações (`decisoes.md` 65). "Gerenciar permissões" significa definir o papel da pessoa.
 
+> **Atualização (07/11/2026):** o `/admin` também tem a tela Auditoria, com um evento imutável para cada ação que muda dados (`decisoes.md` 66). Revisão, reversão e retirada continuam pós-MVP, e cada uma deve entrar junto com o seu evento de auditoria.
+
 ---
 
 # 2. Cadastro

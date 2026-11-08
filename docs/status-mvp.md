@@ -43,6 +43,7 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 | Notificações | ✅ | ✅ | ✅ (material) | ⏳ |
 | Moderação ADMIN | ✅ | ✅ | ✅ (só material) | ⏳ |
 | Painel `/admin` | ✅ | — | ✅ | ⏳ |
+| Auditoria | ✅ | — | ✅ | ⏳ |
 | Responsividade | ✅ | ✅ | ⏳ | ⏳ |
 | Acessibilidade | ✅ | Considerada no protótipo | ⏳ | ⏳ |
 | Testes com estudantes | Planejado | — | — | ⏳ |
@@ -139,6 +140,7 @@ Atualmente estão definidos, entre outros:
 
 - ~~**Configurações:** e-mail só para leitura e troca de senha, incluindo a política das outras sessões depois da troca.~~ Entregue em 04/11/2026 (`decisoes.md` 61).
 - ~~**Painel `/admin` (Filament):** papéis, consulta de moderações e atendimento de exclusão de conta. Ele é necessário porque o Render não tem terminal.~~ Entregue em 05/11/2026, com papéis e consulta de moderações (`decisoes.md` 65).
+- ~~**Auditoria:**~~ entregue em 07/11/2026 (`decisoes.md` 66).
 - **Recuperação de senha:** opcional (`decisoes.md` 52.9).
 
 > **Atualização (05/11/2026):** o atendimento de exclusão de conta sai do escopo do painel no MVP. A política está em `decisoes.md` 64.

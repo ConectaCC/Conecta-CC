@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Materials;
 
 use App\Filament\Resources\Materials\Pages\ListMaterials;
 use App\Models\Material;
+use App\Providers\Filament\AdminPanelProvider;
 use BackedEnum;
 use Filament\Actions\ViewAction;
 use Filament\Infolists\Components\TextEntry;
@@ -76,10 +77,10 @@ final class MaterialResource extends Resource
                     ->state(fn (Material $record): array => self::situation($record))
                     ->badge()
                     ->color(fn (string $state): string => self::situationColor($state)),
-                TextColumn::make('created_at')->label('Enviado em')->date('d/m/Y')->sortable()->visibleFrom('xl'),
+                TextColumn::make('created_at')->label('Enviado em')->date('d/m/Y', AdminPanelProvider::TIMEZONE)->sortable()->visibleFrom('xl'),
                 TextColumn::make('decider.display_name')
                     ->label('Decisão')
-                    ->description(fn (Material $record): ?string => $record->decided_at?->format('d/m/Y'))
+                    ->description(fn (Material $record): ?string => $record->decided_at?->setTimezone(AdminPanelProvider::TIMEZONE)->format('d/m/Y'))
                     ->placeholder('—')
                     ->wrap(),
             ])

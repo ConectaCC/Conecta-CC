@@ -76,11 +76,13 @@ Também entra a tela **Auditoria** no `/admin`, só de leitura.
 | Ação | `data` |
 |---|---|
 | Alteração de papel | `from` e `to`, e `via`: `painel` ou `workflow` |
-| Envio, alteração, cancelamento, exclusão, aprovação e rejeição | `anonymous` (se o envio era anônimo) e `revision` (se é uma alteração) |
+| Envio, alteração, cancelamento, exclusão, aprovação e rejeição | `title` (o título naquele momento), `anonymous` (se o envio era anônimo) e `revision` (se é uma alteração) |
 | Aprovação de alteração | também `previous`: `title`, `description` e `url` publicados antes |
 | Cadastro e troca de senha | vazio |
 
-O código e o título do material vêm da própria tabela `materials`, que não apaga registros.
+O código do material vem da tabela `materials`, que não apaga registros.
+
+> **Correção (07/11/2026):** o título também vinha da tabela, mas a aprovação de uma alteração sobrescreve o original, e o evento "Material enviado" passava a mostrar o título novo. O título agora fica no evento.
 
 ### Gravação
 
@@ -94,13 +96,14 @@ Terceiro item do menu, depois de Usuários e Moderações. O subtítulo é "Cons
 
 | Coluna | Conteúdo |
 |---|---|
-| Data | data e hora |
+| Data | data, com a hora abaixo, no horário de Brasília |
 | Ação | o nome em português (seção 6) |
 | Quem fez | nome de exibição, "Workflow do GitHub" ou "Conta excluída". Em envio anônimo, mostra a marca "Enviado anonimamente" abaixo |
 | Sobre | a conta (nome de exibição) ou o material (`MAT-00012 · título`) |
 | Resumo | por exemplo, "Aluno → Moderador" ou "Alteração" |
 
 - **Ordem:** mais recentes primeiro.
+- **Horário:** o banco guarda em UTC. A tela mostra e filtra o período no horário de Brasília, e isso vale para todo o painel.
 - **Filtros:** ação, quem fez e período (de/até).
 - **Detalhe ("Ver"):** mostra tudo da linha. Numa aprovação de alteração, mostra também a versão anterior.
 - **Sem ações que alterem dados.** Mesmas regras de largura do painel: sem rolagem lateral e empilhada no celular.

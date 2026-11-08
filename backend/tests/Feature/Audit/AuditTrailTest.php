@@ -56,7 +56,7 @@ it('registra o envio anônimo com o autor real', function () {
 
     $event = onlyEvent(AuditAction::MaterialSubmitted);
     expect([$event->actor_id, $event->material_id, $event->user_id])->toBe([$author->id, $material->id, null])
-        ->and($event->data)->toEqual(['anonymous' => true, 'revision' => false]);
+        ->and($event->data)->toEqual(['title' => 'Resumo', 'anonymous' => true, 'revision' => false]);
 });
 
 it('não registra envio com link repetido', function () {
@@ -75,7 +75,7 @@ it('registra o envio de alteração', function () {
 
     $event = onlyEvent(AuditAction::RevisionSubmitted);
     expect([$event->actor_id, $event->material_id])->toBe([$original->user_id, $revision->id])
-        ->and($event->data)->toEqual(['anonymous' => false, 'revision' => true]);
+        ->and($event->data)->toEqual(['title' => 'Novo', 'anonymous' => false, 'revision' => true]);
 });
 
 it('registra o cancelamento só quando o envio ainda estava pendente', function () {
@@ -90,12 +90,12 @@ it('registra o cancelamento só quando o envio ainda estava pendente', function 
 });
 
 it('registra a exclusão, e não registra quando ela é recusada', function () {
-    $material = Material::factory()->approved()->create(['anonymous' => true]);
+    $material = Material::factory()->approved()->create(['anonymous' => true, 'title' => 'Excluído']);
 
     app(DeleteMaterial::class)->handle($material);
     $event = onlyEvent(AuditAction::MaterialDeleted);
     expect([$event->actor_id, $event->material_id])->toBe([$material->user_id, $material->id])
-        ->and($event->data)->toEqual(['anonymous' => true, 'revision' => false]);
+        ->and($event->data)->toEqual(['title' => 'Excluído', 'anonymous' => true, 'revision' => false]);
 
     expect(fn () => app(DeleteMaterial::class)->handle(auditMaterial()))->toThrow(HttpResponseException::class);
     expect(AuditEvent::count())->toBe(1);
@@ -104,7 +104,7 @@ it('registra a exclusão, e não registra quando ela é recusada', function () {
 it('registra a aprovação e a rejeição com quem decidiu', function () {
     $moderator = User::factory()->create(['role' => Role::Moderador]);
     $approved = auditMaterial();
-    $rejected = auditMaterial();
+    $rejected = auditMaterial(['title' => 'Rejeitado']);
 
     app(ApproveMaterial::class)->handle($approved, $moderator);
     app(RejectMaterial::class)->handle($rejected, $moderator, 'Fora do tema.');
@@ -113,7 +113,7 @@ it('registra a aprovação e a rejeição com quem decidiu', function () {
     $rejection = AuditEvent::where('action', AuditAction::MaterialRejected)->sole();
     expect([$approval->actor_id, $approval->material_id])->toBe([$moderator->id, $approved->id])
         ->and([$rejection->actor_id, $rejection->material_id])->toBe([$moderator->id, $rejected->id])
-        ->and($rejection->data)->toEqual(['anonymous' => false, 'revision' => false]);
+        ->and($rejection->data)->toEqual(['title' => 'Rejeitado', 'anonymous' => false, 'revision' => false]);
 });
 
 it('não registra decisão que chega tarde', function () {
@@ -135,6 +135,7 @@ it('guarda na aprovação da alteração a versão publicada antes', function ()
     $event = AuditEvent::where('action', AuditAction::MaterialApproved)->sole();
     expect($event->material_id)->toBe($revision->id)
         ->and($event->data)->toEqual([
+            'title' => 'Novo',
             'anonymous' => false,
             'revision' => true,
             'previous' => ['title' => 'Antigo', 'description' => 'Texto antigo', 'url' => 'https://example.com/antigo'],
@@ -154,5 +155,5 @@ it('nenhum evento guarda e-mail, senha, hash, token ou IP', function () {
     $hash = $user->fresh()->password;
     expect($stored)->not->toContain('ana@', 'senha-segura', 'outra-senha-1', $hash, 'Motivo sigiloso', '127.0.0.1');
     expect(collect(AuditEvent::pluck('data'))->flatMap(fn (array $data) => array_keys($data))->unique()->sort()->values()->all())
-        ->toBe(['anonymous', 'revision']);
+        ->toBe(['anonymous', 'revision', 'title']);
 });

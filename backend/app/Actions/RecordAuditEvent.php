@@ -14,7 +14,8 @@ final class RecordAuditEvent
     public function handle(AuditAction $action, ?User $actor, ?User $user = null, ?Material $material = null, array $data = []): void
     {
         if ($material !== null) {
-            $data = ['anonymous' => $material->anonymous, 'revision' => $material->revises_id !== null, ...$data];
+            // o título fica no evento porque a aprovação de uma alteração sobrescreve o original
+            $data = ['title' => $material->title, 'anonymous' => $material->anonymous, 'revision' => $material->revises_id !== null, ...$data];
         }
 
         AuditEvent::create([

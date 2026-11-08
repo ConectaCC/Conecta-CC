@@ -83,6 +83,13 @@ it('mostra o código e a disciplina junto com o título', function () {
         ->assertSee($material->code.' · '.$material->discipline->name);
 });
 
+it('mostra as datas no horário de Brasília', function () {
+    $this->travelTo('2026-11-08 02:30:00'); // UTC: ainda é dia 07 em Brasília
+    historyMaterial(MaterialStatus::Aprovado, ['decided_by' => $this->admin->id, 'decided_at' => now()]);
+
+    Livewire::test(ListMaterials::class)->assertSee('07/11/2026')->assertDontSee('08/11/2026');
+});
+
 it('filtra pela situação', function (string $filter) {
     $pending = historyMaterial();
     $approved = historyMaterial(MaterialStatus::Aprovado);

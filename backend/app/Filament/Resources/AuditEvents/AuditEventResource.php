@@ -6,6 +6,7 @@ use App\Enums\AuditAction;
 use App\Enums\Role;
 use App\Filament\Resources\AuditEvents\Pages\ListAuditEvents;
 use App\Models\AuditEvent;
+use App\Providers\Filament\AdminPanelProvider;
 use BackedEnum;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
@@ -18,6 +19,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
 
 // só leitura: a tabela recusa alterações no banco (trigger audit_events_immutable)
 final class AuditEventResource extends Resource
@@ -56,8 +58,11 @@ final class AuditEventResource extends Resource
             ->stackedOnMobile()
             ->defaultSort(fn (Builder $query) => $query->orderByDesc('created_at')->orderByDesc('id'))
             ->columns([
-                TextColumn::make('created_at')->label('Data')->dateTime('d/m/Y H:i'),
-                TextColumn::make('action')->label('Ação')->state(fn (AuditEvent $record): string => $record->action->label()),
+                TextColumn::make('created_at')
+                    ->label('Data')
+                    ->date('d/m/Y', AdminPanelProvider::TIMEZONE)
+                    ->description(fn (AuditEvent $record): string => $record->created_at->setTimezone(AdminPanelProvider::TIMEZONE)->format('H:i')),
+                TextColumn::make('action')->label('Ação')->state(fn (AuditEvent $record): string => $record->action->label())->wrap(),
                 TextColumn::make('actor')
                     ->label('Quem fez')
                     ->state(fn (AuditEvent $record): string => self::actor($record))
@@ -75,8 +80,8 @@ final class AuditEventResource extends Resource
                         DatePicker::make('until')->label('Até'),
                     ])
                     ->query(fn (Builder $query, array $data): Builder => $query
-                        ->when($data['from'] ?? null, fn (Builder $query, string $date) => $query->whereDate('created_at', '>=', $date))
-                        ->when($data['until'] ?? null, fn (Builder $query, string $date) => $query->whereDate('created_at', '<=', $date))),
+                        ->when($data['from'] ?? null, fn (Builder $query, string $date) => $query->where('created_at', '>=', self::startOfLocalDay($date)))
+                        ->when($data['until'] ?? null, fn (Builder $query, string $date) => $query->where('created_at', '<', self::startOfLocalDay($date)->addDay()))),
             ])
             ->recordActions([
                 ViewAction::make()->label('Ver')->modalHeading('Detalhes do evento'),
@@ -107,6 +112,12 @@ final class AuditEventResource extends Resource
         return ['index' => ListAuditEvents::route('/')];
     }
 
+    // o dia escolhido no filtro é o dia em Brasília; o banco guarda em UTC
+    private static function startOfLocalDay(string $date): Carbon
+    {
+        return Carbon::parse($date, AdminPanelProvider::TIMEZONE)->startOfDay()->utc();
+    }
+
     private static function actor(AuditEvent $event): string
     {
         return $event->actor_id === null ? 'Workflow do GitHub' : (string) $event->actor?->display_name;
@@ -121,7 +132,7 @@ final class AuditEventResource extends Resource
     private static function subject(AuditEvent $event): string
     {
         if ($event->material !== null) {
-            return $event->material->code.' · '.$event->material->title;
+            return $event->material->code.' · '.($event->data['title'] ?? $event->material->title);
         }
 
         return (string) $event->user?->display_name;

@@ -87,6 +87,34 @@ it('filtra por ação, por quem fez e por período', function () {
         ->assertCanSeeTableRecords([$roleEvent])->assertCanNotSeeTableRecords([$passwordEvent]);
 });
 
+it('mostra as horas e filtra o período no horário de Brasília', function () {
+    $this->travelTo('2026-11-08 02:30:00'); // UTC: ainda é dia 07 em Brasília
+    app(RecordAuditEvent::class)->handle(AuditAction::PasswordChanged, $this->admin, $this->admin);
+    $event = AuditEvent::sole();
+
+    Livewire::test(ListAuditEvents::class)
+        ->assertSee('07/11/2026')
+        ->assertSee('23:30')
+        ->filterTable('period', ['from' => '2026-11-07', 'until' => '2026-11-07'])
+        ->assertCanSeeTableRecords([$event]);
+
+    Livewire::test(ListAuditEvents::class)
+        ->filterTable('period', ['from' => '2026-11-08', 'until' => null])
+        ->assertCanNotSeeTableRecords([$event]);
+});
+
+it('mostra o título que o material tinha na hora do evento', function () {
+    $author = User::factory()->create();
+    $original = app(CreateMaterial::class)->handle($author, Discipline::first(), ['title' => 'Título antigo', 'description' => null, 'url' => 'https://example.com/v1', 'anonymous' => false]);
+    app(ApproveMaterial::class)->handle($original, $this->admin);
+    $revision = app(ReviseMaterial::class)->handle($original->fresh(), ['title' => 'Título novo', 'description' => null, 'url' => 'https://example.com/v2', 'anonymous' => false]);
+    app(ApproveMaterial::class)->handle($revision, $this->admin);
+    $submitted = AuditEvent::where('action', AuditAction::MaterialSubmitted)->sole();
+
+    expect($original->fresh()->title)->toBe('Título novo');
+    Livewire::test(ListAuditEvents::class)->assertTableColumnStateSet('subject', $original->code.' · Título antigo', $submitted);
+});
+
 it('mostra no detalhe a versão publicada antes da alteração', function () {
     $original = Material::factory()->approved()->create(['title' => 'Título antigo', 'url' => 'https://example.com/antigo']);
     $revision = app(ReviseMaterial::class)->handle($original, ['title' => 'Título novo', 'description' => null, 'url' => 'https://example.com/novo', 'anonymous' => false]);

@@ -20,6 +20,7 @@ PHP 8.4, Laravel 13, PostgreSQL 17, Sanctum (sessão por cookie, mesma origem da
 | `app/Rules/` | regras de validação próprias | `InstitutionalEmail` |
 | `app/Enums/` | enums com permissões explícitas | `Role::canModerate()` |
 | `app/Console/Commands/` | comandos artisan (`conectacc:*`) | `PromoteUser` |
+| `app/Actions/RecordAuditEvent.php` | toda Action que muda dados grava o evento de auditoria na mesma transação (`decisoes.md` 66) | `RecordAuditEvent` |
 | `app/Filament/`, `app/Providers/Filament/`, `public/css/conectacc-admin.css` | painel `/admin`. A regra fica em uma Action, e a tela só a chama. O CSS aproxima o painel do app | `UserResource`, `MaterialResource` |
 | `routes/api.php` | rotas em `Route::prefix('v1')`, protegidas por `auth:sanctum` | — |
 

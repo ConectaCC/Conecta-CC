@@ -13,6 +13,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
+use Filament\Support\Facades\FilamentTimezone;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -24,6 +25,14 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
+    // o banco guarda em UTC; o painel mostra e filtra no horário do câmpus, como o app faz no navegador
+    public const TIMEZONE = 'America/Sao_Paulo';
+
+    public function boot(): void
+    {
+        FilamentTimezone::set(self::TIMEZONE);
+    }
+
     public function panel(Panel $panel): Panel
     {
         return $panel
