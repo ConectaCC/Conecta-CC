@@ -9,7 +9,7 @@ ARG VITE_SENTRY_DSN=""
 ENV VITE_SENTRY_DSN=$VITE_SENTRY_DSN
 RUN npm run build
 
-FROM serversideup/php:8.4-fpm-nginx AS runtime
+FROM serversideup/php:8.5-fpm-nginx AS runtime
 # intl: normalização de domínios com acento nos links de material (MaterialUrl)
 USER root
 RUN install-php-extensions intl
