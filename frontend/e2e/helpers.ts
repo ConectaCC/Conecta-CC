@@ -3,6 +3,8 @@ import { expect, type Browser, type Page } from '@playwright/test';
 export const ACCOUNTS = {
   aluno: 'aluno@academico.ifsul.edu.br',
   moderador: 'moderador@academico.ifsul.edu.br',
+  // sem disciplinas no DatabaseSeeder: perfil incompleto
+  moderador2: 'moderador2@academico.ifsul.edu.br',
   admin: 'admin@academico.ifsul.edu.br',
 } as const;
 
