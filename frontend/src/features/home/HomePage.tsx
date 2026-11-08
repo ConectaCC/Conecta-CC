@@ -30,7 +30,13 @@ export function HomePage() {
       )}
 
       <div className={cn('mt-10 grid gap-6', showCompleteProfile && 'xl:grid-cols-[minmax(0,1fr)_340px]')}>
-        <section className="flex flex-col justify-between gap-8 rounded-2xl border border-blue-200/70 bg-gradient-to-r from-white to-[#d9e7f8] p-6 sm:p-8 lg:p-11 xl:flex-row xl:items-center">
+        {/* com o card "Complete seu perfil" ao lado não sobra largura para o texto e os atalhos lado a lado: ficam em coluna */}
+        <section
+          className={cn(
+            'flex flex-col justify-between gap-8 rounded-2xl border border-blue-200/70 bg-gradient-to-r from-white to-[#d9e7f8] p-6 sm:p-8 lg:p-11',
+            !showCompleteProfile && 'xl:flex-row xl:items-center',
+          )}
+        >
           <div className="max-w-2xl min-w-0 flex-1">
             <h2 className="font-display text-2xl font-bold leading-snug text-foreground lg:text-3xl">
               Conecte-se, aprenda e cresça junto com a comunidade.
