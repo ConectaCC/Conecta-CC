@@ -15,16 +15,16 @@ final class ListOpportunitiesController
     #[QueryParameter('cursor', description: 'Cursor da próxima página (meta.next_cursor).', type: 'string')]
     public function __invoke(ListOpportunitiesRequest $request): AnonymousResourceCollection
     {
-        $term = $request->validated('q');
+        $term = $request->string('q')->value();
         $type = $request->validated('type');
 
         $opportunities = Opportunity::query()
             ->visible()
             ->when($type !== null, fn (Builder $query) => $query->where('type', $type))
-            ->when($term !== null, fn (Builder $query) => $query->where(fn (Builder $query) => UnaccentSearch::where(
-                UnaccentSearch::where($query, 'opportunities.title', (string) $term),
+            ->when($term !== '', fn (Builder $query) => $query->where(fn (Builder $query) => UnaccentSearch::where(
+                UnaccentSearch::where($query, 'opportunities.title', $term),
                 'opportunities.description',
-                (string) $term,
+                $term,
                 'or',
             )))
             ->orderByDesc('published_at')

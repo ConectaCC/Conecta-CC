@@ -11,9 +11,9 @@ final class InstitutionalEmail implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         // texto depois do último @, comparado por igualdade: subdomínios e sufixos não passam
-        $domain = Str::lower(Str::afterLast((string) $value, '@'));
+        $domain = Str::lower(Str::afterLast(is_string($value) ? $value : '', '@'));
 
-        if (! in_array($domain, config('conectacc.allowed_email_domains'), true)) {
+        if (! in_array($domain, config()->array('conectacc.allowed_email_domains'), true)) {
             $fail('Use seu e-mail institucional do IFSul.');
         }
     }

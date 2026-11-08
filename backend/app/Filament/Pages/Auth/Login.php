@@ -16,7 +16,8 @@ final class Login extends BaseLogin
     public function authenticate(): ?LoginResponse
     {
         // a mesma normalização do LoginRequest da API
-        $this->data['email'] = Str::lower(trim((string) ($this->data['email'] ?? '')));
+        $email = $this->data['email'] ?? '';
+        $this->data['email'] = is_string($email) ? Str::lower(trim($email)) : $email;
 
         return parent::authenticate();
     }

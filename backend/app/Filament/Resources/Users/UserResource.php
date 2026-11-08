@@ -75,7 +75,9 @@ final class UserResource extends Resource
                 /** @var User $actor */
                 $actor = Filament::auth()->user();
 
-                app(ChangeUserRole::class)->handle($actor, $record, Role::from($data['role']));
+                // o select só aceita os valores de Role; outro valor é recusado antes de chegar aqui
+                $role = $data['role'] ?? null;
+                app(ChangeUserRole::class)->handle($actor, $record, Role::from(is_string($role) ? $role : ''));
                 $action->success();
             });
     }

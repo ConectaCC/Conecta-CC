@@ -35,7 +35,7 @@ return new class extends Migration
             $table->index(['user_id', 'created_at']);
         });
 
-        $in = fn (array $cases) => collect($cases)->map(fn ($case) => "'{$case->value}'")->implode(',');
+        $in = fn (array $cases) => collect($cases)->map(fn (mixed $case) => $case instanceof BackedEnum ? "'{$case->value}'" : '')->implode(',');
         DB::statement('ALTER TABLE opportunities ADD CONSTRAINT opportunities_type_check CHECK (type IN ('.$in(OpportunityType::cases()).'))');
         DB::statement('ALTER TABLE opportunities ADD CONSTRAINT opportunities_modality_check CHECK (modality IN ('.$in(OpportunityModality::cases()).'))');
         DB::statement("ALTER TABLE opportunities ADD CONSTRAINT opportunities_status_check CHECK (status IN ('PENDENTE','APROVADO','REJEITADO','CANCELADO'))");

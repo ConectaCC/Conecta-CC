@@ -95,7 +95,8 @@ final class StoreMaterialRequest extends FormRequest
     private function urlRule(): Closure
     {
         return function (string $attribute, mixed $value, Closure $fail): void {
-            $url = MaterialUrl::normalize((string) $value);
+            // a regra 'string', antes desta com bail, já garante texto
+            $url = MaterialUrl::normalize(is_string($value) ? $value : '');
 
             if ($url === null) {
                 $fail('Informe um link válido.');
@@ -118,7 +119,7 @@ final class StoreMaterialRequest extends FormRequest
             $taken = Material::where('discipline_id', $discipline->id)
                 ->where('url', $url)
                 ->whereNull('revises_id')
-                ->when($editing instanceof Material, fn ($query) => $query->whereKeyNot($editing->id))
+                ->when($editing instanceof Material, fn ($query) => $query->whereKeyNot($editing instanceof Material ? $editing->id : null))
                 ->whereIn('status', [MaterialStatus::Pendente, MaterialStatus::Aprovado])
                 ->exists();
 

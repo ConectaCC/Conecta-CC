@@ -9,7 +9,11 @@ final class LoginRequest extends FormRequest
 {
     protected function prepareForValidation(): void
     {
-        $this->merge(['email' => Str::lower(trim((string) $this->input('email')))]);
+        // só normaliza texto: outro tipo segue como veio e a regra 'string' recusa com 422
+        $email = $this->input('email');
+        if (is_string($email)) {
+            $this->merge(['email' => Str::lower(trim($email))]);
+        }
     }
 
     /** @return array<string, mixed> */

@@ -10,7 +10,7 @@ final class LoginController
 {
     public function __invoke(LoginRequest $request, AuthenticateUser $authenticate): UserResource
     {
-        $user = $authenticate->handle($request->validated('email'), $request->validated('password'));
+        $user = $authenticate->handle($request->string('email')->value(), $request->string('password')->value());
 
         $request->session()->regenerate(); // evita fixação de sessão
 

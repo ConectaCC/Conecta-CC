@@ -45,12 +45,12 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('access-moderation', fn (User $user): bool => $user->role->canModerate());
 
         RateLimiter::for('login', fn (Request $request) => Limit::perMinute(5)
-            ->by(Str::lower(trim((string) $request->input('email'))).'|'.$request->ip())
+            ->by(self::emailKey($request).'|'.$request->ip())
             ->response(fn (Request $request, array $headers) => self::tooManyAttempts($headers)));
 
         // decisão 8: o usuário é identificado no Sentry só pelo ID interno
         Event::listen(Authenticated::class, function (Authenticated $event): void {
-            configureScope(fn (Scope $scope) => $scope->setUser(['id' => (string) $event->user->getAuthIdentifier()]));
+            configureScope(fn (Scope $scope) => $scope->setUser(['id' => self::idKey($event->user->getAuthIdentifier())]));
         });
 
         RateLimiter::for('register', fn (Request $request) => Limit::perMinute(5)
@@ -58,15 +58,30 @@ class AppServiceProvider extends ServiceProvider
             ->response(fn (Request $request, array $headers) => self::tooManyAttempts($headers)));
 
         RateLimiter::for('password', fn (Request $request) => Limit::perMinute(5)
-            ->by((string) $request->user()?->getAuthIdentifier())
+            ->by(self::idKey($request->user()?->getAuthIdentifier()))
             ->response(fn (Request $request, array $headers) => self::tooManyAttempts($headers)));
     }
 
-    /** @param array<string, string|int> $headers */
+    private static function emailKey(Request $request): string
+    {
+        $email = $request->input('email');
+
+        return is_string($email) ? Str::lower(trim($email)) : '';
+    }
+
+    private static function idKey(mixed $id): string
+    {
+        return is_int($id) || is_string($id) ? (string) $id : '';
+    }
+
+    /** @param array<array-key, mixed> $headers */
     private static function tooManyAttempts(array $headers): JsonResponse
     {
+        $seconds = $headers['Retry-After'] ?? 0;
+        $seconds = is_numeric($seconds) ? (int) $seconds : 0;
+
         return response()->json(
-            ['message' => "Muitas tentativas. Tente novamente em {$headers['Retry-After']} segundos."],
+            ['message' => "Muitas tentativas. Tente novamente em {$seconds} segundos."],
             429,
             $headers,
         );

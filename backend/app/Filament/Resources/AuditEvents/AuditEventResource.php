@@ -80,9 +80,18 @@ final class AuditEventResource extends Resource
                         DatePicker::make('from')->label('De'),
                         DatePicker::make('until')->label('Até'),
                     ])
-                    ->query(fn (Builder $query, array $data): Builder => $query
-                        ->when($data['from'] ?? null, fn (Builder $query, string $date) => $query->where('created_at', '>=', self::startOfLocalDay($date)))
-                        ->when($data['until'] ?? null, fn (Builder $query, string $date) => $query->where('created_at', '<', self::startOfLocalDay($date)->addDay()))),
+                    ->query(function (Builder $query, array $data): Builder {
+                        $from = $data['from'] ?? null;
+                        $until = $data['until'] ?? null;
+                        if (is_string($from) && $from !== '') {
+                            $query->where('created_at', '>=', self::startOfLocalDay($from));
+                        }
+                        if (is_string($until) && $until !== '') {
+                            $query->where('created_at', '<', self::startOfLocalDay($until)->addDay());
+                        }
+
+                        return $query;
+                    }),
             ])
             ->recordActions([
                 ViewAction::make()->label('Ver')->modalHeading('Detalhes do evento'),
@@ -130,14 +139,22 @@ final class AuditEventResource extends Resource
         return ($event->data['anonymous'] ?? false) && in_array($event->action, self::AUTHOR_ACTIONS, true) ? 'Enviado anonimamente' : null;
     }
 
+    // data é JSON gravado pelo próprio sistema; o tipo de cada campo é conferido aqui na leitura
+    private static function text(AuditEvent $event, string $key): ?string
+    {
+        $value = $event->data[$key] ?? null;
+
+        return is_string($value) ? $value : null;
+    }
+
     private static function subject(AuditEvent $event): string
     {
         if ($event->opportunity !== null) {
-            return $event->opportunity->code.' · '.($event->data['title'] ?? $event->opportunity->title);
+            return $event->opportunity->code.' · '.(self::text($event, 'title') ?? $event->opportunity->title);
         }
 
         if ($event->material !== null) {
-            return $event->material->code.' · '.($event->data['title'] ?? $event->material->title);
+            return $event->material->code.' · '.(self::text($event, 'title') ?? $event->material->title);
         }
 
         return (string) $event->user?->display_name;
@@ -146,11 +163,11 @@ final class AuditEventResource extends Resource
     private static function summary(AuditEvent $event): ?string
     {
         if ($event->action === AuditAction::RoleChanged) {
-            return Role::from($event->data['from'])->label().' → '.Role::from($event->data['to'])->label();
+            return Role::tryFrom((string) self::text($event, 'from'))?->label().' → '.Role::tryFrom((string) self::text($event, 'to'))?->label();
         }
 
-        if (isset($event->data['type'])) {
-            return OpportunityType::tryFrom($event->data['type'])?->label();
+        if (self::text($event, 'type') !== null) {
+            return OpportunityType::tryFrom((string) self::text($event, 'type'))?->label();
         }
 
         return ($event->data['revision'] ?? false) ? 'Alteração' : null;

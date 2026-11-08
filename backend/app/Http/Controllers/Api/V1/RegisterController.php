@@ -11,10 +11,10 @@ final class RegisterController
     public function __invoke(RegisterRequest $request, RegisterUser $registerUser): JsonResponse
     {
         $registerUser->handle(
-            $request->validated('name'),
-            $request->validated('email'),
-            $request->validated('password'),
-            $request->validated('terms_version'),
+            $request->string('name')->value(),
+            $request->string('email')->value(),
+            $request->string('password')->value(),
+            $request->string('terms_version')->value(),
         );
 
         return response()->json(['message' => 'Conta criada.'], 201);

@@ -20,7 +20,7 @@ final class ListCommunityFeedController
     #[QueryParameter('cursor', description: 'Cursor da próxima página (meta.next_cursor).', type: 'string')]
     public function __invoke(ListCommunityFeedRequest $request): AnonymousResourceCollection
     {
-        $term = $request->validated('q');
+        $term = $request->string('q')->value();
         $type = $request->validated('type');
         $direction = $request->validated('order') === 'oldest' ? 'asc' : 'desc';
 
@@ -28,15 +28,15 @@ final class ListCommunityFeedController
             ->selectRaw("'material' as kind, id, published_at")
             ->where('status', MaterialStatus::Aprovado)
             ->whereNull('revises_id')
-            ->when($term !== null, fn (Builder $query) => $this->searchMaterials($query, (string) $term));
+            ->when($term !== '', fn (Builder $query) => $this->searchMaterials($query, $term));
 
         $opportunities = Opportunity::query()
             ->selectRaw("'opportunity' as kind, id, published_at")
             ->visible()
-            ->when($term !== null, fn (Builder $query) => $query->where(fn (Builder $query) => UnaccentSearch::where(
-                UnaccentSearch::where($query, 'opportunities.title', (string) $term),
+            ->when($term !== '', fn (Builder $query) => $query->where(fn (Builder $query) => UnaccentSearch::where(
+                UnaccentSearch::where($query, 'opportunities.title', $term),
                 'opportunities.description',
-                (string) $term,
+                $term,
                 'or',
             )));
 
@@ -47,7 +47,7 @@ final class ListCommunityFeedController
         };
 
         // kind entra na ordem para desempatar item de tabelas diferentes publicado no mesmo instante
-        /** @var CursorPaginator<int, object{kind: string, id: int}> $page */
+        /** @var CursorPaginator<int, \stdClass> $page */
         $page = DB::query()->fromSub($union, 'feed')
             ->orderBy('published_at', $direction)
             ->orderBy('kind', $direction)
@@ -61,8 +61,9 @@ final class ListCommunityFeedController
         ];
 
         // a linha original fica no item: o cursor da próxima página é calculado a partir de kind, id e published_at
-        return CommunityFeedItemResource::collection($page->through(function (object $row) use ($loaded): object {
-            $row->model = $loaded[$row->kind][$row->id];
+        return CommunityFeedItemResource::collection($page->through(function (\stdClass $row) use ($loaded): \stdClass {
+            $kind = $row->kind === 'opportunity' ? 'opportunity' : 'material';
+            $row->model = $loaded[$kind][is_numeric($row->id) ? (int) $row->id : 0];
 
             return $row;
         }));

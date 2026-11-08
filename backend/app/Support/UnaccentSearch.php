@@ -15,6 +15,7 @@ final class UnaccentSearch
      * @template TModel of \Illuminate\Database\Eloquent\Model
      *
      * @param  Builder<TModel>  $query
+     * @param  literal-string  $column  nome de coluna escrito no código, nunca vindo da requisição
      * @return Builder<TModel>
      */
     public static function where(Builder $query, string $column, string $term, string $boolean = 'and'): Builder
