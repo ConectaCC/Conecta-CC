@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Enums\AuditAction;
 use App\Enums\MaterialStatus;
 use App\Models\Material;
 use App\Models\User;
@@ -33,7 +34,10 @@ final class ApproveMaterial
                 }
 
                 // alteração: a versão publicada recebe os dados novos; a data pública do original não muda
+                $previous = [];
                 if ($material->revises_id !== null) {
+                    // a auditoria guarda o que estava publicado, porque o original é sobrescrito
+                    $previous = ['previous' => Material::whereKey($material->revises_id)->first(['title', 'description', 'url'])?->only(['title', 'description', 'url'])];
                     Material::whereKey($material->revises_id)->update([
                         'title' => $material->title,
                         'description' => $material->description,
@@ -43,6 +47,7 @@ final class ApproveMaterial
 
                 // na mesma transação: se a decisão não valer, a notificação também não existe
                 $material->author->notify(MaterialDecided::for($material, approved: true));
+                app(RecordAuditEvent::class)->handle(AuditAction::MaterialApproved, $moderator, material: $material, data: $previous);
 
                 return true;
             });

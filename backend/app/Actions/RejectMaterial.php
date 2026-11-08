@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Enums\AuditAction;
 use App\Enums\MaterialStatus;
 use App\Models\Material;
 use App\Models\User;
@@ -25,6 +26,7 @@ final class RejectMaterial
 
             if ($rejected) {
                 $material->author->notify(MaterialDecided::for($material, approved: false));
+                app(RecordAuditEvent::class)->handle(AuditAction::MaterialRejected, $moderator, material: $material);
             }
 
             return $rejected;
