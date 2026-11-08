@@ -2034,3 +2034,65 @@ O detalhe está em `identidade-visual.md`.
 - **Cabeçalho padrão (§73):** Estudos, Oportunidades, Comunidade, Moderação, Perfil e Configurações.
 - **Logos de terceiros:** em nenhuma tela. Os ícones são genéricos até haver os arquivos oficiais.
 
+# 74. Favoritar oportunidades — evolução futura
+
+A funcionalidade de favoritos em Oportunidades fica definida como uma evolução pós-MVP e não deve ser implementada na versão atual.
+
+No futuro, usuários autenticados poderão salvar oportunidades para consultá-las posteriormente.
+
+## 74.1 Comportamento previsto
+
+- Cada card de oportunidade poderá apresentar um ícone de **bookmark/favorito**.
+- Ao selecionar o ícone, a oportunidade será salva nos favoritos daquele usuário.
+- Ao selecionar novamente, a oportunidade será removida dos favoritos.
+- Os favoritos são individuais e não ficam visíveis para outros usuários.
+- Salvar uma oportunidade não altera sua situação, prazo, autoria, publicação ou posição na listagem geral.
+- A funcionalidade não interfere na Moderação da oportunidade.
+
+## 74.2 Consulta das oportunidades salvas
+
+A página **Oportunidades** deverá permitir que o usuário visualize somente as oportunidades que salvou.
+
+A opção de visualizar oportunidades salvas será independente do filtro de tipo.
+
+O filtro de tipo continua utilizando as categorias:
+
+- Todos os tipos;
+- Estágio;
+- Emprego;
+- Evento;
+- Projeto;
+- Outro.
+
+**Salvas** não deve ser tratada como um tipo de oportunidade.
+
+A direção visual preferida para essa funcionalidade é manter os controles de busca e filtragem na mesma área, por exemplo:
+
+**Buscar oportunidades…** | **Todos os tipos ▾** | **☆ Somente salvas**
+
+O controle **Somente salvas** funcionará como um filtro independente, podendo ser ativado ou desativado pelo usuário.
+
+Isso permitirá combinar filtros. Exemplos:
+
+- **Todos os tipos + Somente salvas** → mostra todas as oportunidades favoritadas pelo usuário;
+- **Estágio + Somente salvas** → mostra apenas os estágios favoritados;
+- **Evento + Somente salvas** → mostra apenas os eventos favoritados.
+
+Quando **Somente salvas** não estiver ativo, a página continua exibindo normalmente as oportunidades de acordo com a busca e o tipo selecionado.
+
+A aparência definitiva desse controle poderá ser refinada na implementação, mas ele deverá permanecer separado do filtro de tipo.
+
+## 74.3 O que fica para a futura implementação
+
+Ficam para a rodada em que a funcionalidade for implementada:
+
+- posição exata do ícone de bookmark dentro do card;
+- aparência dos estados **salva** e **não salva**;
+- aparência definitiva do controle **Somente salvas**;
+- comportamento de oportunidades encerradas que estavam salvas;
+- comportamento de oportunidades excluídas ou retiradas que estavam salvas;
+- estado vazio quando o usuário ainda não possuir oportunidades salvas;
+- paginação;
+- persistência e detalhes técnicos de armazenamento.
+
+A regra principal já está decidida: **o usuário poderá favoritar oportunidades por meio de um bookmark nos cards e utilizar um filtro separado para visualizar somente as oportunidades salvas, sem transformar “Salvas” em um tipo de oportunidade.**
