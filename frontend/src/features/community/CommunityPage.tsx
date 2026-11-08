@@ -1,46 +1,21 @@
 import { LayoutGrid, List, Loader2, Search, Users } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router';
+import { Link } from 'react-router';
 import { FormAlert } from '@/components/FormAlert';
 import { Skeleton } from '@/components/Skeleton';
 import { Button } from '@/components/ui/button';
+import { useUrlParams, useUrlSearch } from '@/lib/useUrlSearch';
 import { cn } from '@/lib/utils';
 import { CommunityAside } from './CommunityAside';
 import { FeedEntry } from './FeedEntry';
 import { useCommunityFeed, type FeedOrder } from './hooks';
 
-const SEARCH_DELAY_MS = 300;
-
 export function CommunityPage() {
-  const [params, setParams] = useSearchParams();
-  const q = (params.get('busca') ?? '').trim();
+  const { params, setParam } = useUrlParams();
+  const { draft, setDraft, term: q, clear: clearSearch } = useUrlSearch('busca');
   const order: FeedOrder = params.get('ordem') === 'antigos' ? 'oldest' : 'recent';
   const grid = params.get('visualizacao') === 'grade';
-  const [draft, setDraft] = useState(params.get('busca') ?? '');
   const feed = useCommunityFeed(q, order);
   const items = feed.data?.pages.flatMap((page) => page.data) ?? [];
-
-  function setParam(key: string, value: string | null) {
-    // parte do endereço atual, e não da última renderização: a busca com atraso não desfaz a ordem ou a visualização
-    const next = new URLSearchParams(window.location.search);
-    if (value) next.set(key, value);
-    else next.delete(key);
-    setParams(next, { replace: true });
-  }
-
-  // a busca vai para o endereço (e para a API) só quando a pessoa para de digitar e o texto mudou
-  useEffect(() => {
-    const term = draft.trim();
-    if (term === (new URLSearchParams(window.location.search).get('busca') ?? '')) return;
-    const timer = setTimeout(() => setParam('busca', term || null), SEARCH_DELAY_MS);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- setParam muda a cada render; o gatilho é só o texto
-  }, [draft]);
-
-  function clearSearch() {
-    setDraft('');
-    setParam('busca', null);
-  }
 
   return (
     <div>

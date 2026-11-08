@@ -1,9 +1,9 @@
 import { Loader2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router';
 import { FormAlert } from '@/components/FormAlert';
 import { Button } from '@/components/ui/button';
 import type { Discipline } from '@/features/profile/hooks';
+import { useScrollToHashItem } from '@/lib/useScrollToHashItem';
 import { useDisciplineMaterials } from './hooks';
 import { MaterialCard } from './MaterialCard';
 import { ShareMaterialDialog } from './ShareMaterialDialog';
@@ -15,27 +15,7 @@ export function MaterialsSection({ discipline }: { discipline: Discipline }) {
   const noticeRef = useRef<HTMLDivElement>(null);
   const items = materials.data?.pages.flatMap((page) => page.data) ?? [];
 
-  // vindo do mural da Comunidade (#material-<id>): carrega até achar, rola e destaca, como em Meus conteúdos
-  const { hash } = useLocation();
-  const target = /^#material-\d+$/.test(hash) ? Number(hash.slice('#material-'.length)) : null;
-  const found = target !== null && items.some((item) => item.id === target);
-  const scrolled = useRef<number | null>(null);
-
-  useEffect(() => {
-    if (target === null || found || !materials.hasNextPage || materials.isFetchingNextPage || materials.isFetchNextPageError) return;
-    materials.fetchNextPage();
-  }, [target, found, materials]);
-
-  useEffect(() => {
-    if (!found || scrolled.current === target) return;
-    scrolled.current = target;
-    const card = document.getElementById(`material-${target}`);
-    card?.scrollIntoView({ block: 'center' });
-    // destaque passageiro: só visual, por isso direto no elemento e não em estado
-    card?.classList.add('ring-4', 'ring-glow');
-    const timer = setTimeout(() => card?.classList.remove('ring-4', 'ring-glow'), 2000);
-    return () => clearTimeout(timer);
-  }, [found, target]);
+  useScrollToHashItem('material', items.map((item) => item.id), materials);
 
   useEffect(() => {
     if (notice) noticeRef.current?.focus();

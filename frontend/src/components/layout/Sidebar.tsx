@@ -1,4 +1,4 @@
-import { BookOpen, House, LayoutDashboard, LogOut, Settings, ShieldCheck, User as UserIcon, Users, X, type LucideIcon } from 'lucide-react';
+import { BookOpen, Briefcase, House, LayoutDashboard, LogOut, Settings, ShieldCheck, User as UserIcon, Users, X, type LucideIcon } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router';
 import { Brand } from '@/components/Brand';
 import { useLogout, type User } from '@/features/auth/hooks';
@@ -11,6 +11,7 @@ type Item = { to: string; label: string; icon: LucideIcon };
 const mainItems: Item[] = [
   { to: '/home', label: 'Home', icon: House },
   { to: '/estudos', label: 'Estudos', icon: BookOpen },
+  { to: '/oportunidade', label: 'Oportunidade', icon: Briefcase },
   { to: '/comunidade', label: 'Comunidade', icon: Users },
   { to: '/perfil', label: 'Perfil', icon: UserIcon },
 ];
