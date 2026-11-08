@@ -6,7 +6,10 @@ design
 docker
 **/node_modules
 backend/vendor
-backend/.env
+# nenhum .env entra na imagem: os segredos de produção vêm do Render
+**/.env
+**/.env.*
+!**/.env.example
 backend/public/spa
 backend/storage/logs/*
 backend/storage/framework/cache/*

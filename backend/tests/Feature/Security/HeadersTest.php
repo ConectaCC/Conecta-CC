@@ -1,0 +1,70 @@
+<?php
+
+use App\Models\User;
+use Illuminate\Support\Facades\File;
+
+it('manda os cabeçalhos de segurança em toda resposta', function (string $url) {
+    $this->get($url)
+        ->assertHeader('X-Content-Type-Options', 'nosniff')
+        ->assertHeader('X-Frame-Options', 'DENY')
+        ->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin')
+        ->assertHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()')
+        ->assertHeader('Cross-Origin-Opener-Policy', 'same-origin');
+})->with(['/api/v1/terms/current', '/up', '/admin/login']);
+
+it('só manda o HSTS por HTTPS', function () {
+    $this->get('https://localhost/up')->assertHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    $this->get('http://localhost/up')->assertHeaderMissing('Strict-Transport-Security');
+});
+
+it('a SPA sai com uma política de conteúdo que só aceita scripts do próprio site', function () {
+    $index = public_path('spa/index.html');
+    $existed = is_file($index);
+    if (! $existed) {
+        File::ensureDirectoryExists(dirname($index));
+        File::put($index, '<!doctype html><title>ConectaCC</title>');
+    }
+
+    try {
+        $csp = $this->get('/login')->assertOk()->headers->get('Content-Security-Policy');
+    } finally {
+        if (! $existed) {
+            File::delete($index);
+        }
+    }
+
+    expect($csp)->toContain("default-src 'self'")
+        ->toContain("script-src 'self'")
+        ->toContain("object-src 'none'")
+        ->toContain("frame-ancestors 'none'")
+        ->toContain("base-uri 'self'")
+        ->toContain("form-action 'self'")
+        ->toContain("font-src 'self' data:")
+        ->not->toContain("'unsafe-eval'")
+        ->and(str($csp)->after('script-src')->before(';')->value())->not->toContain('unsafe-inline');
+});
+
+it('não responde a pedidos de outra origem (a SPA é da mesma origem)', function () {
+    $this->withHeaders(['Origin' => 'https://evil.example'])->getJson('/api/v1/terms/current')
+        ->assertHeaderMissing('Access-Control-Allow-Origin');
+    $this->withHeaders(['Origin' => 'https://evil.example', 'Access-Control-Request-Method' => 'POST'])->options('/api/v1/login')
+        ->assertHeaderMissing('Access-Control-Allow-Origin');
+});
+
+it('não confia no host vindo do proxy para montar endereços', function () {
+    $this->withHeaders(['X-Forwarded-Host' => 'evil.example'])->get('/up');
+
+    expect(request()->getHost())->not->toBe('evil.example');
+});
+
+it('limita a API a 120 pedidos por minuto por pessoa', function () {
+    $user = User::factory()->create();
+
+    foreach (range(1, 120) as $ignored) {
+        $this->actingAs($user)->getJson('/api/v1/disciplines')->assertOk();
+    }
+
+    $this->actingAs($user)->getJson('/api/v1/disciplines')->assertTooManyRequests()
+        ->assertJsonPath('message', fn (string $message) => str_starts_with($message, 'Muitas tentativas. Tente novamente em '));
+    $this->actingAs(User::factory()->create())->getJson('/api/v1/disciplines')->assertOk();
+});
