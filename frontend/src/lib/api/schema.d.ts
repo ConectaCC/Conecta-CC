@@ -689,9 +689,9 @@ export interface components {
             about?: string | null;
             github_url?: string | null;
             linkedin_url?: string | null;
-            interests: string[];
-            can_help_with: string[];
-            needs_help_with: string[];
+            interests?: string[];
+            can_help_with?: string[];
+            needs_help_with?: string[];
         };
         /** UserResource */
         UserResource: {

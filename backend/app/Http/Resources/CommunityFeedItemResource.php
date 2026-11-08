@@ -20,14 +20,14 @@ final class CommunityFeedItemResource extends JsonResource
         // material anônimo e oportunidade não têm autoria pública (decisoes.md §55.2 e §70)
         $author = $material !== null && ! $material->anonymous ? $material->author : null;
 
+        // os casts só fixam o tipo no OpenAPI: os dois modelos já trazem esses valores assim
+        // o mural só tem itens publicados, e a rota exige sessão
         return [
             'kind' => $opportunity !== null ? 'opportunity' : 'material',
-            // os casts só fixam o tipo no OpenAPI: os dois modelos já trazem esses valores assim
             'id' => (int) $item->id, // @pest-mutate-ignore: RemoveIntegerCast
             'code' => (string) $item->code, // @pest-mutate-ignore: RemoveStringCast
             'title' => (string) $item->title, // @pest-mutate-ignore: RemoveStringCast
             'url' => (string) $item->url, // @pest-mutate-ignore: RemoveStringCast
-            // o mural só tem itens publicados, e a rota exige sessão
             'published_at' => $item->published_at?->toIso8601String(), // @pest-mutate-ignore: RemoveNullSafeOperator
             'discipline' => $material !== null ? ['name' => $material->discipline->name, 'slug' => $material->discipline->slug] : null,
             'opportunity_type' => $opportunity?->type->value,
