@@ -2248,3 +2248,37 @@ O Larastan subiu do nível 6 para o 10, com todos os erros corrigidos e sem list
 ## 76.4 Front
 
 O front (TypeScript estrito, testes com Vitest e Testing Library, mutação com StrykerJS e nota mínima de 80%, ponta a ponta com Playwright) vem numa entrega separada, depois desta.
+
+# 77. Qualidade dos testes e análise estática (front) — 08/11/2026
+
+Segunda parte da spec `specs/2026-11-08-qualidade-testes-design.md`, depois do back (§76). O detalhe técnico está em `stack-e-decisoes-tecnicas.md` 12.
+
+## 77.1 Análise estática
+
+- O TypeScript passou a usar `strict` e `noUncheckedIndexedAccess`.
+- O ESLint passou a usar as regras que conferem tipos (`strictTypeChecked`), com os ajustes que o typescript-eslint sugere para React.
+- Promessa que não é esperada leva `void` explícito.
+- `exactOptionalPropertyTypes` ficou de fora, como previsto na spec.
+
+## 77.2 Testes
+
+O Vitest e a Testing Library entram como dependências de desenvolvimento. Os testes cobrem:
+
+- **Lógica:** datas, prazos, links, busca e filtros no endereço, rolagem até o item e iniciais.
+- **Privacidade na tela:** o material anônimo e a oportunidade nunca mostram quem enviou.
+- **Formulários:** Login, Cadastro, envio de material e de oportunidade, Perfil e troca de senha.
+- **Cache:** depois de cada ação, as telas que mostram o item mudado buscam os dados de novo.
+
+## 77.3 Mutação nas linhas alteradas
+
+- O StrykerJS muta só as **linhas** de `frontend/src` alteradas em relação à base do PR, e não o arquivo inteiro **(escolha do Claude)**.
+- A nota mínima é **80%**.
+- Textos fixos não são mutados, e o código gerado fica de fora.
+- Nesta entrega, a nota nas linhas alteradas foi de 97,1%. Os dois mutantes que sobraram trocam "buscar só os Termos de novo" por "buscar tudo de novo", o que não muda a tela.
+
+## 77.4 Ponta a ponta
+
+- As specs do Playwright estão no repositório e rodam com `make e2e`, só no ambiente local.
+- Elas rodam num container com o navegador, na rede do host, para a sessão do Sanctum valer em `localhost:5173` **(escolha do Claude)**.
+- Os testes criam conteúdo de teste no banco de dev.
+

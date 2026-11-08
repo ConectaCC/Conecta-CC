@@ -1,6 +1,6 @@
 # AGENTS.md — frontend (SPA React)
 
-Leia antes o [`AGENTS.md`](../AGENTS.md) da raiz. Decisões de stack: `docs/stack-e-decisoes-tecnicas.md` (decisões 3 e 11). Identidade visual: `docs/identidade-visual.md`.
+Leia antes o [`AGENTS.md`](../AGENTS.md) da raiz. Decisões de stack: `docs/stack-e-decisoes-tecnicas.md` (decisões 3, 11 e 12). Identidade visual: `docs/identidade-visual.md`.
 
 ## Stack
 
@@ -81,11 +81,17 @@ Os textos de tela são **exatamente** os da spec e do protótipo.
 ## Verificação
 
 - **Sempre:** `make lint` (ESLint + `tsc`). O CI também roda o build.
-- **Testes:**
-  - Ainda **não há Vitest nem Playwright no repositório**. Eles entram depois da liberação (decisão 11).
-  - Até lá, a prova de cada entrega é um roteiro **Playwright headless fora do repositório** (no scratchpad), com uma asserção por item da spec. O scratchpad pode ser apagado entre sessões, então os roteiros precisam ser recriados. Muitos logins seguidos esbarram no limite: rode `php artisan cache:clear` antes.
-  - O roteiro roda em desktop (1440×900) e mobile (390×844).
-  - Ele cobre recarregar a página em rota profunda, erro de API (`page.route(..., r => r.abort())`) e as entradas do "Foco de revisão" do plano.
+- **Análise estática:** TypeScript com `strict` e `noUncheckedIndexedAccess`, e ESLint com `strictTypeChecked`. Promessa que não é esperada leva `void` (`void navigate('/home')`, `void client.invalidateQueries(...)`).
+- **Testes (Vitest e Testing Library):** `make test-front`.
+  - Ficam ao lado do código, em `*.test.ts(x)`. O fuso dos testes é o do câmpus.
+  - `src/test/render.tsx` monta a tela com Router e React Query (`renderWithProviders`), com data router para telas com aviso de alterações não salvas (`renderWithDataRouter`) e para hooks (`renderHookWithClient`, que também diz quais chaves foram invalidadas).
+  - `src/test/api.ts` troca o cliente da API por respostas prontas (`mockApi('POST', reply(422, {...}))`).
+  - Teste o que a pessoa vê: rótulos, mensagens exatas, links e o que **não** aparece (autor de material anônimo e de oportunidade).
+- **Antes do PR, `make mutate-front`:** StrykerJS só nas linhas de `frontend/src` alteradas em relação à `origin/main`, com nota mínima de 80%. Textos fixos (classes CSS e textos de tela) não são mutados. `src/components/ui`, o `schema.d.ts` e o `main.tsx` ficam fora. O CI roda o mesmo.
+- **Ponta a ponta (Playwright):** `make e2e`, com o ambiente de pé (`make up`). Só local, fora do CI.
+  - As specs ficam em `frontend/e2e/` e rodam num container com o navegador, na rede do host, para a sessão do Sanctum valer em `localhost:5173`. Isso funciona no Docker do Linux; no Docker Desktop, a rede do host precisa estar ligada.
+  - Os testes criam materiais e oportunidades com "e2e" no título, no banco de dev. O `make e2e` limpa o cache antes, para não esbarrar no limite de envios.
+  - Cubra em desktop (1440×900) e mobile (390×844), e inclua as entradas do "Foco de revisão" do plano.
 - Confira o visual por screenshot antes de dar a entrega como pronta.
 
 ## Painel `/admin`

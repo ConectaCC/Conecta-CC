@@ -83,7 +83,25 @@ O job `frontend` passa a rodar os testes e, quando o PR altera `frontend/src`, o
 ### Fora do teste de mutação
 
 - `src/components/ui`, gerado pelo shadcn;
-- `src/lib/api/schema.d.ts`, gerado a partir da API.
+- `src/lib/api/schema.d.ts`, gerado a partir da API;
+- `src/main.tsx`, só a montagem da aplicação **(escolha do Claude)**.
+
+### Como ficou (08/11/2026)
+
+- **Linhas, e não arquivos:** `scripts/changed-front-lines.sh` lista os trechos de `frontend/src` alterados desde que a branch saiu da base, no formato `src/arquivo.tsx:10-14`, que o StrykerJS aceita. Só o que mudou é mutado **(escolha do Claude)**. Sem linha alterada, o passo termina sem erro.
+- **Fuso dos testes:** os scripts `test` e `mutate` do `package.json` definem `TZ=America/Sao_Paulo`, e o setup dos testes também. O `Intl` guarda o fuso no primeiro uso, então o processo precisa começar com ele.
+- **Ponta a ponta:** `frontend/e2e/`, com o serviço `e2e` do `compose.yaml` (perfil `e2e`, imagem do Playwright na mesma versão do `@playwright/test`, rede do host) **(escolha do Claude)**.
+- **Branch:** a do front saiu da do back, para não conflitar no Makefile, no CI e na documentação **(escolha do Claude)**.
+
+### Resultado (08/11/2026)
+
+| | Front |
+|---|---|
+| TypeScript | `strict` e `noUncheckedIndexedAccess`, sem erros |
+| ESLint | `strictTypeChecked`, sem erros (168 apontamentos corrigidos) |
+| Testes (Vitest) | 125 |
+| Mutação nas linhas alteradas | 97,1% |
+| Ponta a ponta (Playwright) | 6 cenários |
 
 ## 5. Documentação a atualizar
 
