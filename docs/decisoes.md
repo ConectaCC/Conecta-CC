@@ -1771,6 +1771,12 @@ O mural não guarda cópia de nada. Estudos é dono do material, e a Comunidade 
 
 Ficam fora desta versão: tópicos, respostas, comentários, curtidas, posts de texto livre, canais e busca de estudantes.
 
+A proposta futura de **Publicação** é permitir que estudantes divulguem no mural links para publicações próprias realizadas em plataformas externas, inicialmente com foco em conteúdos publicados no LinkedIn.
+
+O ConectaCC funcionará apenas como meio de descoberta e direcionamento para a publicação original. As interações, como curtidas e comentários, ocorrerão na plataforma externa e não serão reproduzidas dentro do ConectaCC.
+
+Essa funcionalidade não faz parte da versão atual.
+
 ## 68.2 O que aparece
 
 - **O que gera uma publicação:** a primeira aprovação de um material. Uma alteração aprovada não gera outra publicação, e o mural mostra o título atual.
