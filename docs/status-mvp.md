@@ -147,6 +147,8 @@ Atualmente estão definidos, entre outros:
 
 > **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado, a solicitação de revisão ou remoção pelo MODERADOR, a revisão de decisões de Moderação e a reversão de rejeições são pós-MVP e não são funcionalidades faltantes. O MVP pode ser considerado concluído sem esses fluxos (`decisoes.md` 63).
 
+> **Atualização (08/11/2026):** a regra principal da reversão de rejeição (REJEITADO → APROVADO direto, só pelo ADMINISTRADOR) e da denúncia de conteúdo por usuários autenticados foi decidida (`decisoes.md` 67). Os dois fluxos continuam pós-MVP e não são funcionalidades faltantes.
+
 **Operação:**
 
 - backup semanal do banco (`stack-e-decisoes-tecnicas.md`, decisão 10), que ainda não tem workflow;

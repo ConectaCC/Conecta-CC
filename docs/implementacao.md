@@ -482,6 +482,8 @@ A autorização deve existir no backend e no banco, não apenas na interface.
 
 **Evolução prevista, fora do checklist do MVP:** retirada administrativa de conteúdo publicado, pelo ADMINISTRADOR (`decisoes.md` 63).
 
+> **Atualização (08/11/2026):** também ficam fora do checklist, com a regra principal já decidida (`decisoes.md` 67): a reversão de rejeição pelo ADMINISTRADOR, direto de REJEITADO para APROVADO, e a denúncia ou solicitação de revisão de conteúdo publicado por usuários autenticados e pelo MODERADOR. Quando entrarem, cada uma traz o seu evento de auditoria (§66.7).
+
 ---
 
 # 15. Concorrência na Moderação

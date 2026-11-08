@@ -572,6 +572,18 @@ Itens já identificados como possíveis evoluções e que não fazem parte da pr
 - **Retirada administrativa de conteúdo publicado — pós-MVP:** definir e implementar futuramente o fluxo pelo qual ADMINISTRADOR poderá retirar conteúdo anteriormente aprovado, preservando aprovação anterior e ação de retirada nos logs/auditoria (`decisoes.md` 63);
 - histórico administrativo;
 - auditoria de decisões;
+- **Reversão de rejeição pelo ADMINISTRADOR — pós-MVP, regra decidida (`decisoes.md` 67.1):** REJEITADO → APROVADO direto. Falta definir a UX, se a justificativa será obrigatória, as notificações e o que o autor vê;
+- **Denúncia e solicitação de revisão de conteúdo publicado — pós-MVP, regra decidida (`decisoes.md` 67.2):** feitas por usuários autenticados e pelo MODERADOR, sem remoção automática. Falta definir:
+  - categorias ou motivos;
+  - justificativa;
+  - quem recebe;
+  - denúncias repetidas;
+  - cancelamento da denúncia;
+  - notificações;
+  - conteúdo anônimo;
+  - registro no histórico e na auditoria;
+  - resultados possíveis;
+  - relação com sanções ou bloqueios;
 
 > **Atualização (07/11/2026):** a auditoria de ações que mudam dados foi entregue (`decisoes.md` 66). Continuam futuras: a auditoria de consultas e de login, a exportação de eventos e a regra final de retenção.
 
