@@ -286,6 +286,8 @@ Os dois são usados em Estudos, em "Recursos acadêmicos" (`decisoes.md` 72).
 
 **Status:** 🟡 A confirmar
 
+> **Atualização (08/11/2026):** o time confirmou o site de extensão do câmpus, `https://extensao.passofundo.ifsul.edu.br/src/home/home.html`, usado em Oportunidades no link "Projetos e estágios" (`decisoes.md` 70.10).
+
 Sabemos que existe uma área institucional relacionada a estágios.
 
 No MVP, ela está prevista em:
@@ -309,6 +311,8 @@ Confirmar a URL oficial antes de tornar o card clicável.
 ## 4.2 Projetos de Extensão
 
 **Status:** 🟡 A confirmar
+
+> **Atualização (08/11/2026):** o time confirmou o site de extensão do câmpus, `https://extensao.passofundo.ifsul.edu.br/src/home/home.html`, usado em Oportunidades no link "Projetos e estágios" (`decisoes.md` 70.10).
 
 Previsto em:
 

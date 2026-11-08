@@ -1931,6 +1931,17 @@ A página segue uma imagem de referência do time:
 Os tipos ficam num **filtro de seleção**, e não em botões no estilo de abas, mantendo os cinco tipos. O logo do IFSul só entra com o arquivo oficial; até lá, o card usa um ícone.
 
 
+
+## 70.10 Card das oportunidades do IFSul (08/11/2026)
+
+O card passou a cobrir mais do que bolsas:
+
+- **Título:** "Conheça as oportunidades do IFSul", com a marca "Fonte oficial · IFSul".
+- **Texto:** "Consulte oportunidades de bolsas, projetos de extensão, estágios e outras iniciativas para complementar sua formação acadêmica e profissional.".
+- **Links**, confirmados pelo time e abrindo em nova aba:
+  - "Bolsas e programas ↗" → `https://www.ifsul.edu.br/estudante-pronatec`;
+  - "Projetos e estágios ↗" → `https://extensao.passofundo.ifsul.edu.br/src/home/home.html`.
+
 ---
 
 # 71. Home: visual e acessos institucionais — 08/11/2026

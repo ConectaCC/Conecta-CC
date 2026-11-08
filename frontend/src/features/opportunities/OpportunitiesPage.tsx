@@ -12,8 +12,11 @@ import { useOpportunities } from './hooks';
 import { TYPE_LABELS } from './labels';
 import { OpportunityCard } from './OpportunityCard';
 
-// link confirmado pelo time (decisoes.md §70); o card só redireciona, nada é copiado
-const IFSUL_SCHOLARSHIPS_URL = 'https://www.ifsul.edu.br/estudante-pronatec';
+// links confirmados pelo time (decisoes.md §70.10); o card só redireciona, nada é copiado
+const IFSUL_LINKS = [
+  { href: 'https://www.ifsul.edu.br/estudante-pronatec', label: 'Bolsas e programas', host: 'ifsul.edu.br' },
+  { href: 'https://extensao.passofundo.ifsul.edu.br/src/home/home.html', label: 'Projetos e estágios', host: 'extensao.passofundo.ifsul.edu.br' },
+];
 
 export function OpportunitiesPage() {
   const { params, setParam } = useUrlParams();
@@ -52,20 +55,32 @@ export function OpportunitiesPage() {
             </span>
             <div className="min-w-0">
               <h2 id="ifsul" className="font-display text-lg leading-snug font-bold text-foreground">
-                Conheça as oportunidades de bolsas do IFSul
+                Conheça as oportunidades do IFSul
               </h2>
               <p className="mt-0.5 text-sm font-semibold text-navy-900">Fonte oficial · IFSul</p>
-              <p className="mt-2 text-[15px] text-muted-foreground">Consulte bolsas, programas e oportunidades disponibilizadas oficialmente pelo IFSul.</p>
-              <a
-                href={IFSUL_SCHOLARSHIPS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(buttonVariants(), 'mt-4 h-11 gap-2 px-5 text-[15px] font-semibold')}
-              >
-                Ver oportunidades
-                <ExternalLink className="size-5" aria-hidden />
-                <span className="sr-only">(abre em nova aba, ifsul.edu.br)</span>
-              </a>
+              <p className="mt-2 text-[15px] text-muted-foreground">
+                Consulte oportunidades de <strong className="font-semibold text-foreground">bolsas, projetos de extensão, estágios e outras iniciativas</strong>{' '}
+                para complementar sua formação acadêmica e profissional.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {IFSUL_LINKS.map(({ href, label, host }, index) => (
+                  <a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      buttonVariants({ variant: index === 0 ? 'default' : 'outline' }),
+                      'h-11 gap-2 px-4 text-[15px] font-semibold',
+                      index > 0 && 'border-action text-action',
+                    )}
+                  >
+                    {label}
+                    <ExternalLink className="size-5" aria-hidden />
+                    <span className="sr-only">(abre em nova aba, {host})</span>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </section>
