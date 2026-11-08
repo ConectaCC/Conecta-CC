@@ -88,7 +88,16 @@ Todas as contas pertencem à conta Google do projeto (decisão 9).
 ## Configuração do repositório (admin)
 
 1. Settings → Code security → **Secret scanning: Enable** e **Push protection: Enable**.
-2. Settings → Branches → regra para `main`: exigir pull request e os checks `backend`, `frontend`, `docker` e `gitleaks`.
+2. Settings → Code security → **Dependabot alerts** e **Dependabot security updates: Enable**. O `.github/dependabot.yml` já abre PRs semanais de versão.
+3. Settings → Branches → regra para `main`: exigir pull request e os checks `backend`, `frontend`, `docker` e `gitleaks`.
+
+## Segurança
+
+- **Antes de cada publicação:** `docker compose exec -u sail app composer audit` e `docker compose exec frontend npm audit --omit=dev` sem avisos.
+- **Cabeçalhos e CSP:** a resposta da SPA leva a política de conteúdo (`backend/routes/web.php`). Depois do deploy, confira no navegador (DevTools → Console) que não há aviso "Content Security Policy".
+- **Cookies:** em produção, `SESSION_SECURE_COOKIE=true` (já no `render.yaml`). O cookie da sessão é `HttpOnly` e `SameSite=Lax`.
+- **`APP_DEBUG=false` em produção:** um erro mostra a página genérica, nunca o rastro da pilha.
+- **Segredos:** só nas variáveis do Render e nos secrets do GitHub. Nenhum `.env` entra na imagem (`.dockerignore`).
 
 ## Auditoria
 

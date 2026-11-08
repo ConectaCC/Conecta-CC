@@ -264,6 +264,25 @@ O que cada função do painel pode fazer está definido no documento de Implemen
 - No front, o StrykerJS aceita intervalos de linha, então a mutação vai só no que mudou. Uma entrega que mexe em muitos arquivos de forma mecânica não precisa testar os arquivos inteiros.
 - Os testes de ponta a ponta não rodam no CI: precisariam do ambiente completo (Laravel, Postgres e SPA) no runner.
 
+### 13. Segurança da aplicação
+
+**Decisão.**
+
+- **Cabeçalhos de segurança** em toda resposta, e **CSP** na SPA, só com scripts do próprio site.
+- **CORS fechado**, porque a SPA e a API são da mesma origem.
+- **Limites:** Login por e-mail e IP (5 por minuto) e só por e-mail (10 por minuto), e um teto geral de 120 pedidos por minuto na API.
+- **Proxy:** só os cabeçalhos de IP, protocolo e porta vindos do Render são aceitos.
+- **Dependências:** auditoria do Composer e do npm sem avisos, e o Dependabot acompanhando as versões.
+
+**Motivo.** A revisão de segurança de 08/11/2026 (OWASP Top 10) achou a API sem cabeçalhos de segurança, o host aceito do `X-Forwarded-Host`, o login sem limite por e-mail quando o IP muda e o Symfony com avisos de segurança.
+
+**Alternativas descartadas.**
+
+- **CSP também no `/admin`:** o Filament e o Livewire precisam de `unsafe-eval` e de scripts inline. O painel fica com os outros cabeçalhos e o acesso restrito ao ADMINISTRADOR.
+- **`trustHosts`:** recusaria o health check do Render, que pode chegar com outro host.
+
+**Consequência.** Um recurso externo novo na SPA precisa entrar na política de conteúdo, ou o navegador o bloqueia.
+
 ## Planos condicionados
 
 Nada abaixo entra no MVP. Cada item tem um gatilho objetivo, e a maioria é troca de driver ou configuração no Laravel, sem reescrever código. O público do MVP são estudantes de CC de um câmpus, na casa das centenas; a "fila de Moderação" é uma fila de produto (consulta por status), não uma fila de mensagens.
