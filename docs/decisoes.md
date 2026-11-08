@@ -2324,8 +2324,8 @@ Revisão de todo o repositório antes do deploy, guiada pelo OWASP Top 10. O det
 
 ## 78.3 Riscos aceitos no MVP
 
-- **Sem confirmação de e-mail:** qualquer pessoa pode criar uma conta com um e-mail institucional que não é dela (§51, `roadmap.md`). Recomendado antes de um piloto maior.
-- **O Cadastro revela se o e-mail já existe**, pela decisão de texto do protótipo.
+- **Sem confirmação de e-mail:** qualquer pessoa pode criar uma conta com um e-mail institucional que não é dela (§51.4, `roadmap.md`). Recomendado antes de um piloto maior.
+- **O Cadastro revela se o e-mail já existe** (§51.4).
 - **Sem segundo fator no `/admin`:** o painel depende só da senha do ADMINISTRADOR.
 - **Sessão de 7 dias** (`SESSION_LIFETIME`), escolhida pela comodidade.
 - **As ações do GitHub usam versão por tag**, e não por hash. O Dependabot acompanha as versões.
