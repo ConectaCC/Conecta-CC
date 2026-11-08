@@ -523,6 +523,10 @@ Material enviado na segunda-feira
 
 > **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
 
+> **Atualização (08/11/2026):** Oportunidade voltou como funcionalidade adicional (`decisoes.md` 70). Os tipos continuam os cinco; a descrição curta passou a ser obrigatória, e entraram a modalidade e o prazo "Inscrições até" (15 dias depois da aprovação quando fica vazio). A autoria nunca aparece na área pública.
+
+> No RF-42, a "Descrição opcional" foi substituída pela descrição curta obrigatória (`decisoes.md` 70.2).
+
 ## RF-40 — Fontes
 
 A área deve separar:

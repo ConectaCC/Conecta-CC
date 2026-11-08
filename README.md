@@ -151,7 +151,7 @@ Atualmente:
 - ✅ dez áreas do MVP prototipadas;
 - ✅ auditoria geral do protótipo realizada;
 - ✅ arquitetura técnica definida;
-- ✅ Cadastro, Login, Home, Perfil, Estudos, materiais, Moderação de material, Meus conteúdos, notificações, Perfil público, Configurações, o painel `/admin`, com auditoria, e o mural da Comunidade implementados;
+- ✅ Cadastro, Login, Home, Perfil, Estudos, materiais, Moderação de material, Meus conteúdos, notificações, Perfil público, Configurações, o painel `/admin`, com auditoria, o mural da Comunidade e Oportunidades implementados;
 - ⏳ testes técnicos;
 - ⏳ preparação do piloto;
 - ⏳ validação com estudantes.

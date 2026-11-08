@@ -179,3 +179,11 @@ Mudou a API: rodar `make api-types`.
 - Se as Actions e a policy da oportunidade reaproveitam código do material por herança, por um trait ou só copiando o padrão.
 - Como montar o mural misturando os dois tipos (`UNION` com cursor ou outra forma), desde que a paginação não repita nem pule itens.
 - O formato do campo de data e da modalidade no modal.
+
+## 9. Correções feitas na implementação (08/11/2026)
+
+- **Nomes dos eventos de auditoria:** "Oportunidade enviada", "Oportunidade cancelada", "Oportunidade excluída", "Oportunidade aprovada" e "Oportunidade rejeitada". Os rótulos "Envio cancelado", "Aprovada" e "Rejeitada" ficariam iguais ou parecidos com os do material no filtro da Auditoria.
+- **Botão da Comunidade:** "Compartilhar conteúdo", com um menu ("Material" e "Oportunidade") **(escolha do Claude)**.
+- **"A comunidade em números":** virou uma lista, porque "Oportunidades" não cabia em três blocos lado a lado na coluna lateral.
+- **Situação da oportunidade nas tags:** no feminino, por exemplo "Aprovada", "Rejeitada" e "Encerrada".
+

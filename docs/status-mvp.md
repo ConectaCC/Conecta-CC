@@ -32,8 +32,8 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 | Estudos | ✅ | ✅ | ✅ | ⏳ |
 | Página da disciplina | ✅ | ✅ | ✅ | ⏳ |
 | Compartilhamento de material | ✅ | ✅ | ✅ (2a) | ⏳ |
-| Oportunidade | ✅ | ✅ | fora do MVP | — |
-| Indicação de oportunidade | ✅ | ✅ | fora do MVP | — |
+| Oportunidade | ✅ | ✅ | ✅ (adicional) | ⏳ |
+| Indicação de oportunidade | ✅ | ✅ | ✅ (adicional) | ⏳ |
 | Comunidade | ✅ | ✅ | ✅ (mural de materiais, adicional) | ⏳ |
 | Perfil público | ✅ | ✅ | ✅ | ⏳ |
 | Meus conteúdos (materiais) | ✅ | ✅ (esboço) | ✅ (2b) | ⏳ |
@@ -68,6 +68,8 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 **Ainda falta para o MVP:** ver a seção "O que ainda não está implementado".
 
 > **Atualização (08/11/2026):** a Comunidade voltou como mural de materiais, com busca, ordem, lista ou grade e números, como funcionalidade adicional prevista na §56.3 (`decisoes.md` 68). A próxima entrega é Oportunidades, já integrada ao mural, com um filtro por tipo (sem abas) e "Compartilhar" para material e oportunidade (`decisoes.md` 69).
+
+> **Atualização (08/11/2026):** Oportunidades foi entregue como funcionalidade adicional, integrada ao mural (`decisoes.md` 70).
 
 O protótipo das dez áreas continua sendo a referência visual. Ele inclui Oportunidade e Comunidade, que agora estão fora do MVP.
 

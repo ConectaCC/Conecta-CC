@@ -374,6 +374,8 @@ ADMIN
 
 > **Fora do MVP (02/11/2026):** `decisoes.md` 56.
 
+> **Atualização (08/11/2026):** fluxo atual (`decisoes.md` 70): Sidebar → Oportunidade → card das bolsas do IFSul (abre em nova aba) ou lista → buscar, filtrar por tipo → "Acessar oportunidade". "+ Adicionar oportunidade" (ou Comunidade → "Compartilhar conteúdo" → Oportunidade) → modal → "Enviar para análise" → Moderação → aprovada: aparece na página e no mural, com notificação; rejeitada: notificação leva a Meus conteúdos com o motivo.
+
 Fluxo principal:
 
 Sidebar  

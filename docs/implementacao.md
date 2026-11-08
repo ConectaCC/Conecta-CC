@@ -334,6 +334,8 @@ A data original do envio poderá permanecer armazenada internamente.
 
 > **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
 
+> **Atualização (08/11/2026):** entregue (`decisoes.md` 70): página com o card das bolsas do IFSul, busca, filtro por tipo, envio moderado com prazo, Meus conteúdos (cancelar e excluir), notificações, auditoria, `/admin` → Oportunidades e integração com o mural. Não entram edição nem envio anônimo.
+
 Implementar:
 
 - [ ] oportunidades institucionais;

@@ -26,7 +26,7 @@ Plataforma acadêmica para estudantes de Ciência da Computação do IFSul – C
 
 ## Fonte de verdade do produto
 
-- **Escopo atual:** Oportunidade e busca de estudantes estão fora do MVP (`decisoes.md` 56). A Comunidade voltou só como mural dos materiais aprovados, sem publicações próprias (`decisoes.md` 68). O que falta está em `docs/status-mvp.md`.
+- **Escopo atual:** a busca de estudantes está fora do MVP (`decisoes.md` 56). A Comunidade voltou como mural dos conteúdos aprovados, sem publicações próprias (`decisoes.md` 68), e Oportunidade voltou como funcionalidade adicional, sem autoria pública (`decisoes.md` 70). O que falta está em `docs/status-mvp.md`.
 - **Requisitos:** `docs/requisitos.md` (RF-xx). **Fluxos:** `docs/fluxos.md`. **Decisões:** `docs/decisoes.md`.
 - **Visual:** o protótipo congelado (link em `design/README.md`). Layout, textos e estados de tela seguem o protótipo, salvo decisão registrada em contrário.
 - **Funcionalidade prototipada não é funcionalidade implementada.** Confira `docs/status-mvp.md` e `docs/implementacao.md`.
