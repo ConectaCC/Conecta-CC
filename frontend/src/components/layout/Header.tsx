@@ -7,7 +7,7 @@ import { UserAvatar } from './UserAvatar';
 
 export function Header({ user, loading, onOpenMenu }: { user?: User | null; loading: boolean; onOpenMenu: () => void }) {
   return (
-    <header className="sticky top-0 z-10 flex h-[72px] items-center gap-3 border-b border-slate-200 bg-white px-4 sm:px-8 lg:h-[88px] lg:justify-end lg:px-11">
+    <header className="sticky top-0 z-10 flex h-[72px] items-center gap-3 bg-white px-4 sm:px-8 lg:h-[88px] lg:justify-end lg:px-11">
       <button type="button" onClick={onOpenMenu} aria-label="Abrir menu" className="grid size-11 place-items-center rounded-lg text-navy-900 lg:hidden">
         <Menu className="size-7" aria-hidden />
       </button>
