@@ -7,6 +7,8 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Sentry\Laravel\Integration;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -29,4 +31,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+        // a mensagem padrão do 404 cita o modelo procurado ("No query results for model [App\Models\User]") e sai em inglês
+        $exceptions->render(fn (NotFoundHttpException $e, Request $request) => $request->is('api/*')
+            ? response()->json(['message' => 'Não encontramos o que você procurou.'], 404)
+            : null);
+        $exceptions->render(fn (MethodNotAllowedHttpException $e, Request $request) => $request->is('api/*')
+            ? response()->json(['message' => 'Esta ação não é permitida neste endereço.'], 405, $e->getHeaders())
+            : null);
     })->create();
