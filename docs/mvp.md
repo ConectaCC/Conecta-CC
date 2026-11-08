@@ -273,6 +273,8 @@ A data original do envio poderá permanecer registrada internamente.
 
 > **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
 
+> **Atualização (08/11/2026):** Oportunidade voltou como funcionalidade adicional (`decisoes.md` 70). Os tipos continuam os cinco; a descrição curta passou a ser obrigatória, e entraram a modalidade e o prazo "Inscrições até" (15 dias depois da aprovação quando fica vazio). A autoria nunca aparece na área pública.
+
 A área Oportunidade possui duas origens diferentes.
 
 ## Oportunidades do IFSul

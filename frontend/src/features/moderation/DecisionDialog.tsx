@@ -6,13 +6,13 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/compone
 import { Label } from '@/components/ui/label';
 import { ApiError } from '@/lib/api/errors';
 import { cn } from '@/lib/utils';
-import { type ModerationMaterial, useApproveMaterial, useRejectMaterial } from './hooks';
+import { type QueueItem, useApprove, useReject } from './hooks';
 
 export type DecisionKind = 'approve' | 'reject';
 
 type Props = {
   kind: DecisionKind | null;
-  material: ModerationMaterial;
+  queued: QueueItem;
   onCancel: () => void;
   onDone: (kind: DecisionKind) => void;
   onConflict: (code: string | undefined) => void;
@@ -21,9 +21,10 @@ type Props = {
 
 const REQUIRED_REASON = 'Informe o motivo da rejeição.';
 
-export function DecisionDialog({ kind, material, onCancel, onDone, onConflict, onCloseAutoFocus }: Props) {
-  const approve = useApproveMaterial();
-  const reject = useRejectMaterial();
+export function DecisionDialog({ kind, queued, onCancel, onDone, onConflict, onCloseAutoFocus }: Props) {
+  const approve = useApprove();
+  const reject = useReject();
+  const title = queued.item.title;
   const [reason, setReason] = useState('');
   const [reasonError, setReasonError] = useState<string | null>(null);
   const [failed, setFailed] = useState<string | null>(null);
@@ -51,8 +52,8 @@ export function DecisionDialog({ kind, material, onCancel, onDone, onConflict, o
       return;
     }
     try {
-      if (isReject) await reject.mutateAsync({ material, reason });
-      else await approve.mutateAsync(material);
+      if (isReject) await reject.mutateAsync({ queued, reason });
+      else await approve.mutateAsync(queued);
       reset();
       onDone(kind);
     } catch (error) {
@@ -77,10 +78,10 @@ export function DecisionDialog({ kind, material, onCancel, onDone, onConflict, o
       <DialogContent showCloseButton={false} onCloseAutoFocus={onCloseAutoFocus} className="w-[calc(100%-2rem)] max-w-md gap-0 p-6 sm:max-w-md">
         <DialogTitle className="font-display text-xl font-bold text-foreground">{isReject ? 'Rejeitar conteúdo?' : 'Aprovar conteúdo?'}</DialogTitle>
         {isReject ? (
-          <DialogDescription className="mt-2 text-[15px] font-semibold [overflow-wrap:anywhere] text-foreground">{material.title}</DialogDescription>
+          <DialogDescription className="mt-2 text-[15px] font-semibold [overflow-wrap:anywhere] text-foreground">{title}</DialogDescription>
         ) : (
           <>
-            <p className="mt-2 text-[15px] font-semibold [overflow-wrap:anywhere] text-foreground">{material.title}</p>
+            <p className="mt-2 text-[15px] font-semibold [overflow-wrap:anywhere] text-foreground">{title}</p>
             <DialogDescription className="mt-2 text-[15px] text-muted-foreground">
               Depois da aprovação, este conteúdo ficará disponível na área correspondente do ConectaCC.
             </DialogDescription>

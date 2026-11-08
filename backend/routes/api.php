@@ -1,16 +1,22 @@
 <?php
 
 use App\Http\Controllers\Api\V1\ApproveMaterialController;
+use App\Http\Controllers\Api\V1\ApproveOpportunityController;
 use App\Http\Controllers\Api\V1\CancelMaterialController;
+use App\Http\Controllers\Api\V1\CancelOpportunityController;
 use App\Http\Controllers\Api\V1\ChangePasswordController;
 use App\Http\Controllers\Api\V1\CurrentTermsController;
 use App\Http\Controllers\Api\V1\DeleteMaterialController;
+use App\Http\Controllers\Api\V1\DeleteOpportunityController;
 use App\Http\Controllers\Api\V1\ListCommunityFeedController;
 use App\Http\Controllers\Api\V1\ListDisciplineMaterialsController;
 use App\Http\Controllers\Api\V1\ListDisciplinesController;
 use App\Http\Controllers\Api\V1\ListModerationMaterialsController;
+use App\Http\Controllers\Api\V1\ListModerationOpportunitiesController;
 use App\Http\Controllers\Api\V1\ListMyMaterialsController;
+use App\Http\Controllers\Api\V1\ListMyOpportunitiesController;
 use App\Http\Controllers\Api\V1\ListNotificationsController;
+use App\Http\Controllers\Api\V1\ListOpportunitiesController;
 use App\Http\Controllers\Api\V1\LoginController;
 use App\Http\Controllers\Api\V1\LogoutController;
 use App\Http\Controllers\Api\V1\MeController;
@@ -18,10 +24,12 @@ use App\Http\Controllers\Api\V1\ReadAllNotificationsController;
 use App\Http\Controllers\Api\V1\ReadNotificationController;
 use App\Http\Controllers\Api\V1\RegisterController;
 use App\Http\Controllers\Api\V1\RejectMaterialController;
+use App\Http\Controllers\Api\V1\RejectOpportunityController;
 use App\Http\Controllers\Api\V1\ShowCommunityStatsController;
 use App\Http\Controllers\Api\V1\ShowProfileController;
 use App\Http\Controllers\Api\V1\ShowStudentProfileController;
 use App\Http\Controllers\Api\V1\StoreMaterialController;
+use App\Http\Controllers\Api\V1\StoreOpportunityController;
 use App\Http\Controllers\Api\V1\UpdateMaterialController;
 use App\Http\Controllers\Api\V1\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +46,11 @@ Route::prefix('v1')->group(function () {
         Route::get('disciplines/{discipline}/materials', ListDisciplineMaterialsController::class);
         Route::get('community/feed', ListCommunityFeedController::class);
         Route::get('community/stats', ShowCommunityStatsController::class);
+        Route::get('opportunities', ListOpportunitiesController::class);
+        Route::post('opportunities', StoreOpportunityController::class);
+        Route::post('opportunities/{opportunity}/cancel', CancelOpportunityController::class);
+        Route::delete('opportunities/{opportunity}', DeleteOpportunityController::class);
+        Route::get('me/opportunities', ListMyOpportunitiesController::class);
         Route::post('disciplines/{discipline}/materials', StoreMaterialController::class);
         Route::get('profile', ShowProfileController::class);
         Route::get('me/materials', ListMyMaterialsController::class);
@@ -55,6 +68,9 @@ Route::prefix('v1')->group(function () {
             Route::get('materials', ListModerationMaterialsController::class);
             Route::post('materials/{material}/approve', ApproveMaterialController::class);
             Route::post('materials/{material}/reject', RejectMaterialController::class);
+            Route::get('opportunities', ListModerationOpportunitiesController::class);
+            Route::post('opportunities/{opportunity}/approve', ApproveOpportunityController::class);
+            Route::post('opportunities/{opportunity}/reject', RejectOpportunityController::class);
         });
     });
 });

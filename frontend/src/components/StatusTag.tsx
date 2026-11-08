@@ -7,6 +7,7 @@ const TAGS: Record<string, { label: string; className: string }> = {
   REJEITADO: { label: 'Rejeitado', className: 'bg-danger-bg text-danger' },
   EXCLUIDO: { label: 'Excluído', className: 'bg-danger-bg text-danger' },
   CANCELADO: { label: 'Cancelado', className: 'bg-slate-100 text-muted-foreground' },
+  ENCERRADO: { label: 'Encerrado', className: 'bg-slate-100 text-muted-foreground' },
   ALTERACAO: { label: 'Alteração', className: 'bg-change-bg text-change' },
 };
 

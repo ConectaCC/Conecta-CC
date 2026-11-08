@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/moderation/opportunities/{opportunity}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.approveOpportunity"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/materials/{material}/cancel": {
         parameters: {
             query?: never;
@@ -30,6 +46,22 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["v1.cancelMaterial"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/opportunities/{opportunity}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.cancelOpportunity"];
         delete?: never;
         options?: never;
         head?: never;
@@ -79,6 +111,22 @@ export interface paths {
         put: operations["v1.updateMaterial"];
         post?: never;
         delete: operations["v1.deleteMaterial"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/opportunities/{opportunity}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["v1.deleteOpportunity"];
         options?: never;
         head?: never;
         patch?: never;
@@ -148,6 +196,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/moderation/opportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listModerationOpportunities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/me/materials": {
         parameters: {
             query?: never;
@@ -156,6 +220,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["v1.listMyMaterials"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/me/opportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listMyOpportunities"];
         put?: never;
         post?: never;
         delete?: never;
@@ -174,6 +254,22 @@ export interface paths {
         get: operations["v1.listNotifications"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/opportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listOpportunities"];
+        put?: never;
+        post: operations["v1.storeOpportunity"];
         delete?: never;
         options?: never;
         head?: never;
@@ -292,6 +388,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/moderation/opportunities/{opportunity}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.rejectOpportunity"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/community/stats": {
         parameters: {
             query?: never;
@@ -352,6 +464,8 @@ export interface components {
         };
         /** CommunityFeedItemResource */
         CommunityFeedItemResource: {
+            /** @enum {string} */
+            kind: "opportunity" | "material";
             id: number;
             code: string;
             title: string;
@@ -360,11 +474,11 @@ export interface components {
             discipline: {
                 name: string;
                 slug: string;
-            };
-            /** @description anônimo: ninguém recebe o autor no mural, nem o ADMINISTRADOR nem o próprio autor (decisoes.md §55.2) */
+            } | null;
+            opportunity_type: string | null;
             author_name: string | null;
             author_code: string | null;
-            is_mine: string;
+            is_mine: boolean;
         };
         /** DisciplineResource */
         DisciplineResource: {
@@ -417,6 +531,21 @@ export interface components {
                 url: string;
             } | null;
         };
+        /** ModerationOpportunityResource */
+        ModerationOpportunityResource: {
+            id: number;
+            code: string;
+            type: string;
+            title: string;
+            description: string;
+            url: string;
+            modality: string;
+            deadline: string | null;
+            /** @description na análise, quem modera sempre sabe quem enviou: oportunidade não tem envio anônimo (decisoes.md §70) */
+            author_name: string;
+            is_own: boolean;
+            submitted_at: string;
+        };
         /** MyMaterialResource */
         MyMaterialResource: {
             id: number;
@@ -444,6 +573,21 @@ export interface components {
                 decided_at: string | null;
             } | null;
         };
+        /** MyOpportunityResource */
+        MyOpportunityResource: {
+            id: number;
+            code: string;
+            type: string;
+            title: string;
+            description: string;
+            url: string;
+            modality: string;
+            deadline: string | null;
+            /** @description ENCERRADO: aprovada, mas o prazo passou e ela saiu da página */
+            status: string;
+            rejection_reason: string | null;
+            submitted_at: string;
+        };
         /** NotificationResource */
         NotificationResource: {
             id: string;
@@ -451,10 +595,32 @@ export interface components {
             detail: string;
             ok: boolean;
             read: boolean;
-            /** @description aprovado leva à disciplina; rejeitado leva ao item em Meus conteúdos (onde está o motivo) */
+            /** @description aprovado leva ao conteúdo; rejeitado leva ao item em Meus conteúdos (onde está o motivo) */
             link: string;
             created_at: string;
         };
+        /**
+         * OpportunityModality
+         * @enum {string}
+         */
+        OpportunityModality: "REMOTO" | "HIBRIDO" | "PRESENCIAL";
+        /** OpportunityResource */
+        OpportunityResource: {
+            id: number;
+            code: string;
+            type: string;
+            title: string;
+            description: string;
+            url: string;
+            modality: string;
+            deadline: string | null;
+            published_at: string | null;
+        };
+        /**
+         * OpportunityType
+         * @enum {string}
+         */
+        OpportunityType: "ESTAGIO" | "EMPREGO" | "EVENTO" | "PROJETO" | "OUTRO";
         /** ProfileResource */
         ProfileResource: {
             display_name: string;
@@ -493,6 +659,16 @@ export interface components {
             description?: string | null;
             url: string;
             anonymous?: boolean;
+        };
+        /** StoreOpportunityRequest */
+        StoreOpportunityRequest: {
+            type: components["schemas"]["OpportunityType"];
+            title: string;
+            description: string;
+            url: string;
+            modality: components["schemas"]["OpportunityModality"];
+            /** Format: date */
+            deadline?: string | null;
         };
         /** StudentProfileResource */
         StudentProfileResource: {
@@ -615,6 +791,32 @@ export interface operations {
             404: components["responses"]["ModelNotFoundException"];
         };
     };
+    "v1.approveOpportunity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The opportunity ID */
+                opportunity: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `ModerationOpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModerationOpportunityResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+        };
+    };
     "v1.cancelMaterial": {
         parameters: {
             query?: never;
@@ -634,6 +836,32 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MyMaterialResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+        };
+    };
+    "v1.cancelOpportunity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The opportunity ID */
+                opportunity: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `MyOpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyOpportunityResource"];
                 };
             };
             401: components["responses"]["AuthenticationException"];
@@ -739,11 +967,36 @@ export interface operations {
             404: components["responses"]["ModelNotFoundException"];
         };
     };
+    "v1.deleteOpportunity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The opportunity ID */
+                opportunity: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+        };
+    };
     "v1.listCommunityFeed": {
         parameters: {
             query?: {
                 q?: string | null;
                 order?: "recent" | "oldest" | null;
+                type?: "material" | "opportunity" | null;
                 /** @description Cursor da próxima página (meta.next_cursor). */
                 cursor?: string;
             };
@@ -904,6 +1157,28 @@ export interface operations {
             403: components["responses"]["AuthorizationException"];
         };
     };
+    "v1.listModerationOpportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `ModerationOpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModerationOpportunityResource"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+        };
+    };
     "v1.listMyMaterials": {
         parameters: {
             query?: {
@@ -948,6 +1223,50 @@ export interface operations {
             401: components["responses"]["AuthenticationException"];
         };
     };
+    "v1.listMyOpportunities": {
+        parameters: {
+            query?: {
+                /** @description Situação: all (padrão), pending, approved, rejected ou deleted. */
+                status?: string;
+                /** @description Cursor da próxima página (meta.next_cursor). */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated set of `MyOpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["MyOpportunityResource"][];
+                        links: {
+                            first: string | null;
+                            last: string | null;
+                            prev: string | null;
+                            next: string | null;
+                        };
+                        meta: {
+                            /** @description Base path for paginator generated URLs. */
+                            path: string | null;
+                            /** @description Number of items shown per page. */
+                            per_page: number;
+                            /** @description The "cursor" that points to the next set of items. */
+                            next_cursor: string | null;
+                            /** @description The "cursor" that points to the previous set of items. */
+                            prev_cursor: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+        };
+    };
     "v1.listNotifications": {
         parameters: {
             query?: never;
@@ -969,6 +1288,77 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "v1.listOpportunities": {
+        parameters: {
+            query?: {
+                q?: string | null;
+                type?: components["schemas"]["OpportunityType"] | null;
+                /** @description Cursor da próxima página (meta.next_cursor). */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated set of `OpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["OpportunityResource"][];
+                        links: {
+                            first: string | null;
+                            last: string | null;
+                            prev: string | null;
+                            next: string | null;
+                        };
+                        meta: {
+                            /** @description Base path for paginator generated URLs. */
+                            path: string | null;
+                            /** @description Number of items shown per page. */
+                            per_page: number;
+                            /** @description The "cursor" that points to the next set of items. */
+                            next_cursor: string | null;
+                            /** @description The "cursor" that points to the previous set of items. */
+                            prev_cursor: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.storeOpportunity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreOpportunityRequest"];
+            };
+        };
+        responses: {
+            /** @description `OpportunityResource` */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OpportunityResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
         };
     };
     "v1.login": {
@@ -1134,6 +1524,37 @@ export interface operations {
             422: components["responses"]["ValidationException"];
         };
     };
+    "v1.rejectOpportunity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The opportunity ID */
+                opportunity: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RejectMaterialRequest"];
+            };
+        };
+        responses: {
+            /** @description `ModerationOpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModerationOpportunityResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+        };
+    };
     "v1.showCommunityStats": {
         parameters: {
             query?: never;
@@ -1150,6 +1571,7 @@ export interface operations {
                 content: {
                     "application/json": {
                         materials: number;
+                        opportunities: number;
                         students: number;
                     };
                 };

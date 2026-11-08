@@ -37,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
 
         // id em formato errado na URL dá 404 antes de chegar ao banco (o PostgreSQL daria erro 500)
         Route::pattern('material', '[0-9]+');
+        Route::pattern('opportunity', '[0-9]+');
         Route::pattern('discipline', '[0-9]+');
         Route::pattern('student', '[0-9a-f]{16}');
         Route::pattern('notification', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}');

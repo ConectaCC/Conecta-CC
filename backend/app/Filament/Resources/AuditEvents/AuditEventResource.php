@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\AuditEvents;
 
 use App\Enums\AuditAction;
+use App\Enums\OpportunityType;
 use App\Enums\Role;
 use App\Filament\Resources\AuditEvents\Pages\ListAuditEvents;
 use App\Models\AuditEvent;
@@ -36,7 +37,7 @@ final class AuditEventResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 4;
 
     // ações em que quem fez é o autor do material; na decisão, quem fez é quem moderou
     private const AUTHOR_ACTIONS = [
@@ -49,7 +50,7 @@ final class AuditEventResource extends Resource
     /** @return Builder<AuditEvent> */
     public static function getEloquentQuery(): Builder
     {
-        return AuditEvent::query()->with(['actor', 'user', 'material']);
+        return AuditEvent::query()->with(['actor', 'user', 'material', 'opportunity']);
     }
 
     public static function table(Table $table): Table
@@ -131,6 +132,10 @@ final class AuditEventResource extends Resource
 
     private static function subject(AuditEvent $event): string
     {
+        if ($event->opportunity !== null) {
+            return $event->opportunity->code.' · '.($event->data['title'] ?? $event->opportunity->title);
+        }
+
         if ($event->material !== null) {
             return $event->material->code.' · '.($event->data['title'] ?? $event->material->title);
         }
@@ -142,6 +147,10 @@ final class AuditEventResource extends Resource
     {
         if ($event->action === AuditAction::RoleChanged) {
             return Role::from($event->data['from'])->label().' → '.Role::from($event->data['to'])->label();
+        }
+
+        if (isset($event->data['type'])) {
+            return OpportunityType::tryFrom($event->data['type'])?->label();
         }
 
         return ($event->data['revision'] ?? false) ? 'Alteração' : null;

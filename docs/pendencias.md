@@ -251,6 +251,8 @@ Sem esse aviso, quem teve a senha trocada por outra pessoa não fica sabendo pel
 
 > **Registrado em 08/11/2026:** `decisoes.md` 69.
 
+> **Atualização (08/11/2026):** resolvida em parte pela entrega de Oportunidades (`decisoes.md` 70): o botão virou "Compartilhar conteúdo", com um menu; o material segue indo para Estudos, e Estudos mantém o próprio botão; os campos, os tipos e a Moderação foram definidos. Continuam em aberto: escolher a disciplina de um material dentro da Comunidade, "Explorar por tipo" e ícones por tipo de conteúdo.
+
 **Já decidido:**
 
 - o mural separa os tipos por um filtro, e não por abas;

@@ -7,16 +7,17 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { timeAgo } from '@/lib/format';
 import { DecisionDialog, type DecisionKind } from './DecisionDialog';
-import { type ModerationMaterial, useModerationQueue } from './hooks';
+import { TYPE_LABELS } from '@/features/opportunities/labels';
+import { type QueueItem, useModerationQueue } from './hooks';
 import { ReviewSheet } from './ReviewSheet';
 
 type Notice = { title: string; detail?: string };
 
-const CANCELLED = 'material_cancelled';
+const CANCELLED = ['material_cancelled', 'opportunity_cancelled'];
 
 export function ModerationPage() {
   const queue = useModerationQueue();
-  const [selected, setSelected] = useState<ModerationMaterial | null>(null);
+  const [selected, setSelected] = useState<QueueItem | null>(null);
   const [decision, setDecision] = useState<DecisionKind | null>(null);
   const [conflict, setConflict] = useState<string | null>(null);
   const [notice, setNotice] = useState<Notice | null>(null);
@@ -32,9 +33,9 @@ export function ModerationPage() {
     (focusTarget.current === 'notice' ? noticeRef : headingRef).current?.focus();
   }
 
-  function analyze(material: ModerationMaterial) {
+  function analyze(queued: QueueItem) {
     focusTarget.current = null;
-    setSelected(material);
+    setSelected(queued);
   }
 
   function done(kind: DecisionKind) {
@@ -45,9 +46,11 @@ export function ModerationPage() {
         ? {
             title: 'Conteúdo aprovado com sucesso.',
             detail: `${
-              selected.revision_of
-                ? `A alteração passa a valer em Estudos › ${selected.discipline.name}.`
-                : `O material passa a aparecer em Estudos › ${selected.discipline.name}.`
+              selected.kind === 'opportunity'
+                ? 'A oportunidade passa a aparecer em Oportunidade e no mural da Comunidade.'
+                : selected.item.revision_of
+                  ? `A alteração passa a valer em Estudos › ${selected.item.discipline.name}.`
+                  : `O material passa a aparecer em Estudos › ${selected.item.discipline.name}.`
             } O autor será notificado.`,
           }
         : { title: 'Conteúdo rejeitado.', detail: 'O autor será notificado.' },
@@ -116,22 +119,25 @@ export function ModerationPage() {
             </h2>
             <p className="mt-1 text-[15px] text-muted-foreground">Mais antigos primeiro.</p>
             <ul className="mt-5 space-y-4">
-              {items.map((material) => (
-                <li key={material.id} className="rounded-2xl border border-blue-200/70 bg-white p-6">
+              {items.map((queued) => (
+                <li key={`${queued.kind}-${queued.item.id}`} className="rounded-2xl border border-blue-200/70 bg-white p-6">
                   <p className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                    <span>Tipo: Material</span>
+                    <span>Tipo: {queued.kind === 'opportunity' ? 'Oportunidade' : 'Material'}</span>
                     <span aria-hidden>·</span>
                     <span className="inline-flex items-center gap-2">
                       Status: <StatusTag status="PENDENTE" label="Pendente" />
                     </span>
-                    {material.revision_of && <StatusTag status="ALTERACAO" />}
-                    {material.is_own && <Chip>Seu envio</Chip>}
+                    {queued.kind === 'material' && queued.item.revision_of && <StatusTag status="ALTERACAO" />}
+                    {queued.item.is_own && <Chip>Seu envio</Chip>}
                   </p>
-                  <h3 className="mt-2 font-display text-lg font-bold [overflow-wrap:anywhere] text-foreground">{material.title}</h3>
+                  <h3 className="mt-2 font-display text-lg font-bold [overflow-wrap:anywhere] text-foreground">{queued.item.title}</h3>
                   <p className="mt-1 text-[15px] text-muted-foreground">
-                    Enviado por {material.author_name ?? 'Comunidade'} · {timeAgo(material.submitted_at)} · Disciplina: {material.discipline.name}
+                    Enviado por {queued.item.author_name ?? 'Comunidade'} · {timeAgo(queued.item.submitted_at)} ·{' '}
+                    {queued.kind === 'opportunity'
+                      ? `Tipo de oportunidade: ${TYPE_LABELS[queued.item.type] ?? queued.item.type}`
+                      : `Disciplina: ${queued.item.discipline.name}`}
                   </p>
-                  <Button type="button" onClick={() => analyze(material)} className="mt-4 h-11 px-5 text-[15px] font-semibold">
+                  <Button type="button" onClick={() => analyze(queued)} className="mt-4 h-11 px-5 text-[15px] font-semibold">
                     Analisar
                   </Button>
                 </li>
@@ -142,7 +148,7 @@ export function ModerationPage() {
       </div>
 
       <ReviewSheet
-        material={selected}
+        queued={selected}
         locked={decision !== null}
         onClose={() => setSelected(null)}
         onDecide={setDecision}
@@ -152,7 +158,7 @@ export function ModerationPage() {
       {selected && (
         <DecisionDialog
           kind={decision}
-          material={selected}
+          queued={selected}
           onCancel={() => setDecision(null)}
           onDone={done}
           onCloseAutoFocus={restoreFocus}
@@ -166,7 +172,7 @@ export function ModerationPage() {
       <Dialog open={conflict !== null} onOpenChange={(next) => !next && refreshAfterConflict()}>
         <DialogContent showCloseButton={false} onCloseAutoFocus={restoreFocus} className="w-[calc(100%-2rem)] max-w-md gap-0 p-6 sm:max-w-md">
           <DialogTitle className="font-display text-xl font-bold text-foreground">
-            {conflict === CANCELLED ? 'Este conteúdo foi cancelado pelo autor' : 'Este conteúdo já foi analisado'}
+            {conflict !== null && CANCELLED.includes(conflict) ? 'Este conteúdo foi cancelado pelo autor' : 'Este conteúdo já foi analisado'}
           </DialogTitle>
           <DialogDescription className="mt-2 text-[15px] text-muted-foreground">
             O status deste conteúdo foi atualizado por outra ação. Atualize a fila para continuar.

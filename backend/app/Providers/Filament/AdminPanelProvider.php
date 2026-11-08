@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Support\InitialsAvatarProvider;
+use App\Support\Campus;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -26,7 +27,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 class AdminPanelProvider extends PanelProvider
 {
     // o banco guarda em UTC; o painel mostra e filtra no horário do câmpus, como o app faz no navegador
-    public const TIMEZONE = 'America/Sao_Paulo';
+    public const TIMEZONE = Campus::TIMEZONE;
 
     public function boot(): void
     {

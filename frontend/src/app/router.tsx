@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { CommunityPage } from '@/features/community/CommunityPage';
+import { OpportunitiesPage } from '@/features/opportunities/OpportunitiesPage';
 import { GuestOnly, RequireAuth, RequireModeration, RootRedirect } from '@/features/auth/guards';
 import { LoginPage } from '@/features/auth/LoginPage';
 import { RegisterPage } from '@/features/auth/RegisterPage';
@@ -32,6 +33,7 @@ export const router = createBrowserRouter([
           { path: '/perfil/meus-conteudos', element: <MyContentsPage /> },
           { path: '/estudos', element: <StudiesPage /> },
           { path: '/estudos/:slug', element: <DisciplinePage /> },
+          { path: '/oportunidade', element: <OpportunitiesPage /> },
           { path: '/comunidade', element: <CommunityPage /> },
           { path: '/estudantes/:code', element: <StudentProfilePage /> },
           { path: '/configuracoes', element: <SettingsPage /> },

@@ -4,25 +4,27 @@ import { StatusTag } from '@/components/StatusTag';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { formatDateTime, hostOf, pathOf, timeAgo } from '@/lib/format';
-import type { ModerationMaterial } from './hooks';
+import { formatDay, MODALITY_LABELS, TYPE_LABELS } from '@/features/opportunities/labels';
+import type { ModerationMaterial, ModerationOpportunity, QueueItem } from './hooks';
 
 type Props = {
-  material: ModerationMaterial | null;
+  queued: QueueItem | null;
   locked: boolean;
   onClose: () => void;
   onDecide: (kind: 'approve' | 'reject') => void;
   onCloseAutoFocus?: (event: Event) => void;
 };
 
-export function ReviewSheet({ material, locked, onClose, onDecide, onCloseAutoFocus }: Props) {
+export function ReviewSheet({ queued, locked, onClose, onDecide, onCloseAutoFocus }: Props) {
   return (
-    <Sheet open={material !== null} onOpenChange={(next) => !next && !locked && onClose()}>
+    <Sheet open={queued !== null} onOpenChange={(next) => !next && !locked && onClose()}>
       <SheetContent
         showCloseButton={false}
         onCloseAutoFocus={onCloseAutoFocus}
         className="gap-0 overflow-y-auto p-6 data-[side=right]:w-full data-[side=right]:sm:max-w-lg"
       >
-        {material && <ReviewContent material={material} onClose={onClose} onDecide={onDecide} />}
+        {queued?.kind === 'material' && <ReviewContent material={queued.item} onClose={onClose} onDecide={onDecide} />}
+        {queued?.kind === 'opportunity' && <OpportunityReview opportunity={queued.item} onClose={onClose} onDecide={onDecide} />}
       </SheetContent>
     </Sheet>
   );
@@ -113,19 +115,7 @@ function ReviewContent({ material, onClose, onDecide }: { material: ModerationMa
         Se aprovado, aparecerá em Estudos › {material.discipline.name}
       </p>
 
-      <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => onDecide('reject')}
-          className="h-11 border-danger px-5 text-[15px] font-semibold text-danger hover:bg-danger-bg"
-        >
-          Rejeitar
-        </Button>
-        <Button type="button" onClick={() => onDecide('approve')} className="h-11 px-5 text-[15px] font-semibold">
-          Aprovar
-        </Button>
-      </div>
+      <DecisionButtons onDecide={onDecide} />
     </>
   );
 }
@@ -153,5 +143,98 @@ function VersionCard({ heading, version, highlight = false }: { heading: string;
         <span className="sr-only">(abre em nova guia, {host})</span>
       </a>
     </section>
+  );
+}
+
+function DecisionButtons({ onDecide }: { onDecide: Props['onDecide'] }) {
+  return (
+    <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+      <Button
+        type="button"
+        variant="outline"
+        onClick={() => onDecide('reject')}
+        className="h-11 border-danger px-5 text-[15px] font-semibold text-danger hover:bg-danger-bg"
+      >
+        Rejeitar
+      </Button>
+      <Button type="button" onClick={() => onDecide('approve')} className="h-11 px-5 text-[15px] font-semibold">
+        Aprovar
+      </Button>
+    </div>
+  );
+}
+
+// na oportunidade, quem modera sempre vê quem enviou: não há envio anônimo (decisoes.md §70)
+function OpportunityReview({ opportunity, onClose, onDecide }: { opportunity: ModerationOpportunity; onClose: () => void; onDecide: Props['onDecide'] }) {
+  const host = hostOf(opportunity.url);
+
+  return (
+    <>
+      <div className="flex items-start justify-between gap-3">
+        <SheetTitle className="font-display text-xl font-bold text-foreground">Analisar conteúdo</SheetTitle>
+        <Button type="button" variant="ghost" size="icon-sm" onClick={onClose} aria-label="Fechar">
+          <X className="size-5" aria-hidden />
+        </Button>
+      </div>
+      <SheetDescription className="sr-only">Dados enviados para análise da moderação.</SheetDescription>
+
+      <p className="mt-4 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+        <span>Tipo: Oportunidade</span>
+        <span aria-hidden>·</span>
+        <span className="inline-flex items-center gap-2">
+          Status: <StatusTag status="PENDENTE" label="Pendente" />
+        </span>
+        {opportunity.is_own && <Chip>Seu envio</Chip>}
+      </p>
+      <h3 className="mt-3 font-display text-lg font-bold [overflow-wrap:anywhere] text-foreground">{opportunity.title}</h3>
+
+      <dl className="mt-5 space-y-4 text-[15px]">
+        <div>
+          <dt className="font-semibold text-foreground">Quem enviou</dt>
+          <dd className="mt-1 text-foreground">{opportunity.author_name}</dd>
+          <dd className="mt-1 text-sm text-muted-foreground">Visível apenas para a moderação. A página pública não mostra quem enviou.</dd>
+        </div>
+        <div>
+          <dt className="font-semibold text-foreground">Enviada em</dt>
+          <dd className="mt-1 text-foreground">
+            {formatDateTime(opportunity.submitted_at)} ({timeAgo(opportunity.submitted_at)})
+          </dd>
+        </div>
+        <div>
+          <dt className="font-semibold text-foreground">Tipo e modalidade</dt>
+          <dd className="mt-1 text-foreground">
+            {TYPE_LABELS[opportunity.type] ?? opportunity.type} · {MODALITY_LABELS[opportunity.modality] ?? opportunity.modality}
+          </dd>
+        </div>
+        <div>
+          <dt className="font-semibold text-foreground">Inscrições até</dt>
+          <dd className="mt-1 text-foreground">
+            {opportunity.deadline ? formatDay(opportunity.deadline) : 'Sem data: fica visível por 15 dias após a aprovação'}
+          </dd>
+        </div>
+        <div>
+          <dt className="font-semibold text-foreground">Descrição</dt>
+          <dd className="mt-1 [overflow-wrap:anywhere] text-foreground">{opportunity.description}</dd>
+        </div>
+        <div>
+          <dt className="font-semibold text-foreground">Link enviado</dt>
+          <dd className="mt-1 break-all text-foreground">
+            <span className="font-semibold">{host}</span>
+            <span className="text-muted-foreground">{pathOf(opportunity.url)}</span>
+          </dd>
+          <dd className="mt-2">
+            <a href={opportunity.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold text-action hover:underline">
+              Abrir link enviado
+              <ExternalLink className="size-4" aria-hidden />
+              <span className="sr-only">(abre em nova guia, {host})</span>
+            </a>
+          </dd>
+        </div>
+      </dl>
+
+      <p className="mt-5 rounded-lg bg-ice px-4 py-3 text-[15px] text-foreground">Se aprovada, aparecerá em Oportunidade e no mural da Comunidade.</p>
+
+      <DecisionButtons onDecide={onDecide} />
+    </>
   );
 }

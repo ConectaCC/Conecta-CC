@@ -1858,3 +1858,75 @@ Também ficam para o design de Oportunidades:
 - "Explorar por tipo";
 - o número de oportunidades em "A comunidade em números";
 - o ícone de cada tipo no card.
+
+---
+
+# 70. Oportunidades — 08/11/2026
+
+Decisões da entrega de Oportunidades (spec `specs/2026-11-08-oportunidades-design.md`). Ela volta como funcionalidade adicional, fora do escopo obrigatório do MVP, como a Comunidade (§56.3), e já integrada ao mural (§68 e §69).
+
+## 70.1 O que é
+
+Oportunidade reúne indicações de estágios, empregos, eventos e projetos. Ela guarda só os metadados e o link, nunca uma cópia da página externa, e não faz raspagem (§53.1). O ConectaCC funciona como centralizador e ponte.
+
+## 70.2 Tipos e campos
+
+- **Tipos:** os cinco do RF-43 e da §22, sem criação livre: Estágio, Emprego, Evento, Projeto e Outro.
+- **Campos obrigatórios:**
+  - Tipo;
+  - Título, com até 200 caracteres;
+  - Descrição curta, com até 300 caracteres;
+  - Link;
+  - Modalidade: Remoto, Híbrido ou Presencial.
+
+  Isso substitui a "Descrição opcional" do RF-42.
+- **Link:** segue a validação do material e recusa um link já ativo em outra oportunidade.
+
+## 70.3 Prazo
+
+"Inscrições até" é opcional. Se ficar vazio, a oportunidade fica visível por **15 dias depois da aprovação**. A contagem começa na aprovação, porque só a partir daí a oportunidade aparece **(escolha do Claude)**.
+
+A oportunidade continua visível até o fim do último dia, no horário de Brasília. Depois disso, sai da página, do mural e dos números, sem ação de ninguém, e aparece como "Encerrada" em Meus conteúdos.
+
+## 70.4 Autoria
+
+O sistema registra quem enviou. MODERADOR e ADMINISTRADOR veem essa pessoa na análise e no `/admin`.
+
+**Nenhuma área pública mostra autoria:** nem o nome, nem "Publicado por Comunidade". No mural, a frase é "Comunidade adicionou uma nova oportunidade em [Tipo]: [Título]".
+
+Não há envio anônimo. O MODERADOR não analisa a própria oportunidade, como no material.
+
+## 70.5 Envio, Moderação e autor
+
+- **Envio:** pelo botão "+ Adicionar oportunidade" ou pelo menu "Compartilhar conteúdo" da Comunidade. Vale o mesmo limite por hora do material, e os dois tipos somam.
+- **Moderação:** a fila mistura os dois tipos, com a etiqueta do tipo e sem filtro. Aprovar e rejeitar com motivo seguem as regras do material.
+- **Autor:** acompanha em Meus conteúdos, com o filtro de tipo "Materiais" ou "Oportunidades". Pode cancelar enquanto a oportunidade está pendente e excluir depois de aprovada. Não há edição.
+- **Notificações:** a aprovação leva à oportunidade na página, e a rejeição leva ao item em Meus conteúdos.
+
+## 70.6 Página
+
+- **Navegação:** "Oportunidade" fica no singular (§6), entre Estudos e Comunidade.
+- **No topo:** o card fixo "Conheça as oportunidades de bolsas do IFSul", que leva a `https://www.ifsul.edu.br/estudante-pronatec` (link confirmado pelo time).
+- **Lista:** busca sem acentos no título e na descrição, filtro por tipo e cards em grade.
+
+## 70.7 Mural e "Compartilhar"
+
+- **Mural:** mistura materiais e oportunidades, com o filtro "Tipo" (§69.1).
+- **"A comunidade em números":** ganha "Oportunidades" e passa a ser uma lista, para caber na coluna lateral.
+- **Botão:** "Compartilhar conteúdo" abre um menu com "Material", que leva a Estudos, e "Oportunidade", que abre o modal **(escolha do Claude para o nome do botão, em aberto na §69.2)**.
+
+## 70.8 Auditoria e `/admin`
+
+- **Eventos:** "Oportunidade enviada", "Oportunidade cancelada", "Oportunidade excluída", "Oportunidade aprovada" e "Oportunidade rejeitada". O título e o tipo ficam no evento.
+- **`/admin` → Oportunidades:** só de leitura, com quem enviou, a situação (inclusive "Encerrada") e a decisão.
+
+## 70.9 Visual da página (08/11/2026)
+
+A página segue uma imagem de referência do time:
+
+- **Título:** "Oportunidades", no plural, com o item da navegação ainda no singular (§6).
+- **Cabeçalho:** traz o card das bolsas do IFSul, com o botão "Ver oportunidades".
+- **Estado vazio:** novo texto.
+
+Os tipos ficam num **filtro de seleção**, e não em botões no estilo de abas, mantendo os cinco tipos. O logo do IFSul só entra com o arquivo oficial; até lá, o card usa um ícone.
+

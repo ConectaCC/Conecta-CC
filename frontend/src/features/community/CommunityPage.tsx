@@ -1,46 +1,24 @@
 import { LayoutGrid, List, Loader2, Search, Users } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router';
+import { Link } from 'react-router';
 import { FormAlert } from '@/components/FormAlert';
 import { Skeleton } from '@/components/Skeleton';
 import { Button } from '@/components/ui/button';
+import { useUrlParams, useUrlSearch } from '@/lib/useUrlSearch';
 import { cn } from '@/lib/utils';
 import { CommunityAside } from './CommunityAside';
 import { FeedEntry } from './FeedEntry';
-import { useCommunityFeed, type FeedOrder } from './hooks';
+import { useCommunityFeed, type FeedOrder, type FeedType } from './hooks';
 
-const SEARCH_DELAY_MS = 300;
+const TYPES: Record<string, FeedType> = { materiais: 'material', oportunidades: 'opportunity' };
 
 export function CommunityPage() {
-  const [params, setParams] = useSearchParams();
-  const q = (params.get('busca') ?? '').trim();
+  const { params, setParam } = useUrlParams();
+  const { draft, setDraft, term: q, clear: clearSearch } = useUrlSearch('busca');
   const order: FeedOrder = params.get('ordem') === 'antigos' ? 'oldest' : 'recent';
   const grid = params.get('visualizacao') === 'grade';
-  const [draft, setDraft] = useState(params.get('busca') ?? '');
-  const feed = useCommunityFeed(q, order);
+  const type = TYPES[params.get('tipo') ?? ''] ?? null;
+  const feed = useCommunityFeed(q, order, type);
   const items = feed.data?.pages.flatMap((page) => page.data) ?? [];
-
-  function setParam(key: string, value: string | null) {
-    // parte do endereço atual, e não da última renderização: a busca com atraso não desfaz a ordem ou a visualização
-    const next = new URLSearchParams(window.location.search);
-    if (value) next.set(key, value);
-    else next.delete(key);
-    setParams(next, { replace: true });
-  }
-
-  // a busca vai para o endereço (e para a API) só quando a pessoa para de digitar e o texto mudou
-  useEffect(() => {
-    const term = draft.trim();
-    if (term === (new URLSearchParams(window.location.search).get('busca') ?? '')) return;
-    const timer = setTimeout(() => setParam('busca', term || null), SEARCH_DELAY_MS);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- setParam muda a cada render; o gatilho é só o texto
-  }, [draft]);
-
-  function clearSearch() {
-    setDraft('');
-    setParam('busca', null);
-  }
 
   return (
     <div>
@@ -72,6 +50,20 @@ export function CommunityPage() {
                 className="h-11 w-full rounded-lg border border-input bg-white pr-3 pl-11 text-base text-foreground placeholder:text-muted-foreground"
               />
             </div>
+            {/* filtro por tipo, e não abas (decisoes.md §69.1) */}
+            <label htmlFor="tipo-comunidade" className="sr-only">
+              Tipo
+            </label>
+            <select
+              id="tipo-comunidade"
+              value={params.get('tipo') && TYPES[params.get('tipo') as string] ? (params.get('tipo') as string) : ''}
+              onChange={(event) => setParam('tipo', event.target.value || null)}
+              className="h-11 rounded-lg border border-input bg-white px-3 text-[15px] text-foreground"
+            >
+              <option value="">Todos os tipos</option>
+              <option value="materiais">Materiais</option>
+              <option value="oportunidades">Oportunidades</option>
+            </select>
             <label htmlFor="ordem-comunidade" className="sr-only">
               Ordenar
             </label>

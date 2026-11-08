@@ -184,6 +184,8 @@ Transformar o protótipo em uma aplicação funcional.
 
 > **Atualização (08/11/2026):** a Comunidade voltou como mural de materiais (`decisoes.md` 68). A próxima entrega é Oportunidades, integrada ao mural, com um filtro por tipo (sem abas) e "Compartilhar" para material e oportunidade (`decisoes.md` 69).
 
+> **Atualização (08/11/2026):** Oportunidades foi entregue, integrada ao mural (`decisoes.md` 70).
+
 1. Fundação e autenticação
 2. Layout global
 3. Perfil

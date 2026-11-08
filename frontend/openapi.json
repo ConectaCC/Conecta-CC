@@ -51,6 +51,46 @@
                 }
             }
         },
+        "/moderation/opportunities/{opportunity}/approve": {
+            "post": {
+                "operationId": "v1.approveOpportunity",
+                "tags": [
+                    "ApproveOpportunity"
+                ],
+                "parameters": [
+                    {
+                        "name": "opportunity",
+                        "in": "path",
+                        "required": true,
+                        "description": "The opportunity ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`ModerationOpportunityResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ModerationOpportunityResource"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/materials/{material}/cancel": {
             "post": {
                 "operationId": "v1.cancelMaterial",
@@ -75,6 +115,46 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/MyMaterialResource"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/opportunities/{opportunity}/cancel": {
+            "post": {
+                "operationId": "v1.cancelOpportunity",
+                "tags": [
+                    "CancelOpportunity"
+                ],
+                "parameters": [
+                    {
+                        "name": "opportunity",
+                        "in": "path",
+                        "required": true,
+                        "description": "The opportunity ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`MyOpportunityResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MyOpportunityResource"
                                 }
                             }
                         }
@@ -222,6 +302,39 @@
                 }
             }
         },
+        "/opportunities/{opportunity}": {
+            "delete": {
+                "operationId": "v1.deleteOpportunity",
+                "tags": [
+                    "DeleteOpportunity"
+                ],
+                "parameters": [
+                    {
+                        "name": "opportunity",
+                        "in": "path",
+                        "required": true,
+                        "description": "The opportunity ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/community/feed": {
             "get": {
                 "operationId": "v1.listCommunityFeed",
@@ -251,6 +364,21 @@
                             "enum": [
                                 "recent",
                                 "oldest",
+                                null
+                            ]
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "enum": [
+                                "material",
+                                "opportunity",
                                 null
                             ]
                         }
@@ -605,6 +733,35 @@
                 }
             }
         },
+        "/moderation/opportunities": {
+            "get": {
+                "operationId": "v1.listModerationOpportunities",
+                "tags": [
+                    "ListModerationOpportunities"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of `ModerationOpportunityResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ModerationOpportunityResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/me/materials": {
             "get": {
                 "operationId": "v1.listMyMaterials",
@@ -731,6 +888,132 @@
                 }
             }
         },
+        "/me/opportunities": {
+            "get": {
+                "operationId": "v1.listMyOpportunities",
+                "tags": [
+                    "ListMyOpportunities"
+                ],
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Situa\u00e7\u00e3o: all (padr\u00e3o), pending, approved, rejected ou deleted.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "description": "Cursor da pr\u00f3xima p\u00e1gina (meta.next_cursor).",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated set of `MyOpportunityResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/MyOpportunityResource"
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object",
+                                            "properties": {
+                                                "first": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "last": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "prev": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "next": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "first",
+                                                "last",
+                                                "prev",
+                                                "next"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "path": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "description": "Base path for paginator generated URLs."
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "description": "Number of items shown per page.",
+                                                    "minimum": 0
+                                                },
+                                                "next_cursor": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "description": "The \"cursor\" that points to the next set of items."
+                                                },
+                                                "prev_cursor": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "description": "The \"cursor\" that points to the previous set of items."
+                                                }
+                                            },
+                                            "required": [
+                                                "path",
+                                                "per_page",
+                                                "next_cursor",
+                                                "prev_cursor"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data",
+                                        "links",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/notifications": {
             "get": {
                 "operationId": "v1.listNotifications",
@@ -766,6 +1049,186 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/opportunities": {
+            "get": {
+                "operationId": "v1.listOpportunities",
+                "tags": [
+                    "ListOpportunities"
+                ],
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "maxLength": 100
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/OpportunityType"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "description": "Cursor da pr\u00f3xima p\u00e1gina (meta.next_cursor).",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated set of `OpportunityResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/OpportunityResource"
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object",
+                                            "properties": {
+                                                "first": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "last": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "prev": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "next": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "first",
+                                                "last",
+                                                "prev",
+                                                "next"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "path": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "description": "Base path for paginator generated URLs."
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "description": "Number of items shown per page.",
+                                                    "minimum": 0
+                                                },
+                                                "next_cursor": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "description": "The \"cursor\" that points to the next set of items."
+                                                },
+                                                "prev_cursor": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "description": "The \"cursor\" that points to the previous set of items."
+                                                }
+                                            },
+                                            "required": [
+                                                "path",
+                                                "per_page",
+                                                "next_cursor",
+                                                "prev_cursor"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data",
+                                        "links",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "v1.storeOpportunity",
+                "tags": [
+                    "StoreOpportunity"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreOpportunityRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "`OpportunityResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OpportunityResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
                     }
                 }
             }
@@ -979,6 +1442,59 @@
                 }
             }
         },
+        "/moderation/opportunities/{opportunity}/reject": {
+            "post": {
+                "operationId": "v1.rejectOpportunity",
+                "tags": [
+                    "RejectOpportunity"
+                ],
+                "parameters": [
+                    {
+                        "name": "opportunity",
+                        "in": "path",
+                        "required": true,
+                        "description": "The opportunity ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RejectMaterialRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "`ModerationOpportunityResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ModerationOpportunityResource"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
         "/community/stats": {
             "get": {
                 "operationId": "v1.showCommunityStats",
@@ -996,12 +1512,16 @@
                                         "materials": {
                                             "type": "integer"
                                         },
+                                        "opportunities": {
+                                            "type": "integer"
+                                        },
                                         "students": {
                                             "type": "integer"
                                         }
                                     },
                                     "required": [
                                         "materials",
+                                        "opportunities",
                                         "students"
                                     ]
                                 }
@@ -1135,6 +1655,13 @@
             "CommunityFeedItemResource": {
                 "type": "object",
                 "properties": {
+                    "kind": {
+                        "type": "string",
+                        "enum": [
+                            "opportunity",
+                            "material"
+                        ]
+                    },
                     "id": {
                         "type": "integer"
                     },
@@ -1154,7 +1681,10 @@
                         ]
                     },
                     "discipline": {
-                        "type": "object",
+                        "type": [
+                            "object",
+                            "null"
+                        ],
                         "properties": {
                             "name": {
                                 "type": "string"
@@ -1168,12 +1698,17 @@
                             "slug"
                         ]
                     },
+                    "opportunity_type": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
                     "author_name": {
                         "type": [
                             "string",
                             "null"
-                        ],
-                        "description": "an\u00f4nimo: ningu\u00e9m recebe o autor no mural, nem o ADMINISTRADOR nem o pr\u00f3prio autor (decisoes.md \u00a755.2)"
+                        ]
                     },
                     "author_code": {
                         "type": [
@@ -1182,16 +1717,18 @@
                         ]
                     },
                     "is_mine": {
-                        "type": "string"
+                        "type": "boolean"
                     }
                 },
                 "required": [
+                    "kind",
                     "id",
                     "code",
                     "title",
                     "url",
                     "published_at",
                     "discipline",
+                    "opportunity_type",
                     "author_name",
                     "author_code",
                     "is_mine"
@@ -1404,6 +1941,62 @@
                 ],
                 "title": "ModerationMaterialResource"
             },
+            "ModerationOpportunityResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "modality": {
+                        "type": "string"
+                    },
+                    "deadline": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "author_name": {
+                        "type": "string",
+                        "description": "na an\u00e1lise, quem modera sempre sabe quem enviou: oportunidade n\u00e3o tem envio an\u00f4nimo (decisoes.md \u00a770)"
+                    },
+                    "is_own": {
+                        "type": "boolean"
+                    },
+                    "submitted_at": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "code",
+                    "type",
+                    "title",
+                    "description",
+                    "url",
+                    "modality",
+                    "deadline",
+                    "author_name",
+                    "is_own",
+                    "submitted_at"
+                ],
+                "title": "ModerationOpportunityResource"
+            },
             "MyMaterialResource": {
                 "type": "object",
                 "properties": {
@@ -1529,6 +2122,65 @@
                 ],
                 "title": "MyMaterialResource"
             },
+            "MyOpportunityResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "modality": {
+                        "type": "string"
+                    },
+                    "deadline": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "ENCERRADO: aprovada, mas o prazo passou e ela saiu da p\u00e1gina"
+                    },
+                    "rejection_reason": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "submitted_at": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "code",
+                    "type",
+                    "title",
+                    "description",
+                    "url",
+                    "modality",
+                    "deadline",
+                    "status",
+                    "rejection_reason",
+                    "submitted_at"
+                ],
+                "title": "MyOpportunityResource"
+            },
             "NotificationResource": {
                 "type": "object",
                 "properties": {
@@ -1549,7 +2201,7 @@
                     },
                     "link": {
                         "type": "string",
-                        "description": "aprovado leva \u00e0 disciplina; rejeitado leva ao item em Meus conte\u00fados (onde est\u00e1 o motivo)"
+                        "description": "aprovado leva ao conte\u00fado; rejeitado leva ao item em Meus conte\u00fados (onde est\u00e1 o motivo)"
                     },
                     "created_at": {
                         "type": "string"
@@ -1565,6 +2217,76 @@
                     "created_at"
                 ],
                 "title": "NotificationResource"
+            },
+            "OpportunityModality": {
+                "type": "string",
+                "enum": [
+                    "REMOTO",
+                    "HIBRIDO",
+                    "PRESENCIAL"
+                ],
+                "title": "OpportunityModality"
+            },
+            "OpportunityResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "modality": {
+                        "type": "string"
+                    },
+                    "deadline": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "published_at": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    }
+                },
+                "required": [
+                    "id",
+                    "code",
+                    "type",
+                    "title",
+                    "description",
+                    "url",
+                    "modality",
+                    "deadline",
+                    "published_at"
+                ],
+                "title": "OpportunityResource"
+            },
+            "OpportunityType": {
+                "type": "string",
+                "enum": [
+                    "ESTAGIO",
+                    "EMPREGO",
+                    "EVENTO",
+                    "PROJETO",
+                    "OUTRO"
+                ],
+                "title": "OpportunityType"
             },
             "ProfileResource": {
                 "type": "object",
@@ -1716,6 +2438,44 @@
                     "url"
                 ],
                 "title": "StoreMaterialRequest"
+            },
+            "StoreOpportunityRequest": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "$ref": "#/components/schemas/OpportunityType"
+                    },
+                    "title": {
+                        "type": "string",
+                        "maxLength": 200
+                    },
+                    "description": {
+                        "type": "string",
+                        "maxLength": 300
+                    },
+                    "url": {
+                        "type": "string",
+                        "maxLength": 2048
+                    },
+                    "modality": {
+                        "$ref": "#/components/schemas/OpportunityModality"
+                    },
+                    "deadline": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date"
+                    }
+                },
+                "required": [
+                    "type",
+                    "title",
+                    "description",
+                    "url",
+                    "modality"
+                ],
+                "title": "StoreOpportunityRequest"
             },
             "StudentProfileResource": {
                 "type": "object",

@@ -12,6 +12,7 @@ final class ListCommunityFeedRequest extends FormRequest
         return [
             'q' => ['nullable', 'string', 'max:100'],
             'order' => ['nullable', 'in:recent,oldest'],
+            'type' => ['nullable', 'in:material,opportunity'],
         ];
     }
 
@@ -21,6 +22,7 @@ final class ListCommunityFeedRequest extends FormRequest
         return [
             'q.max' => 'Use no máximo 100 caracteres na busca.',
             'order.in' => 'Escolha uma ordem válida.',
+            'type.in' => 'Escolha um tipo válido.',
         ];
     }
 }

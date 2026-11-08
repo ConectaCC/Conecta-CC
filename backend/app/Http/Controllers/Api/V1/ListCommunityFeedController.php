@@ -6,47 +6,78 @@ use App\Enums\MaterialStatus;
 use App\Http\Requests\ListCommunityFeedRequest;
 use App\Http\Resources\CommunityFeedItemResource;
 use App\Models\Material;
+use App\Models\Opportunity;
+use App\Support\UnaccentSearch;
 use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Support\Facades\DB;
 
-// a Comunidade só aponta para o material de Estudos: nenhuma cópia é guardada (decisoes.md §68)
+// a Comunidade só aponta para os conteúdos de Estudos e de Oportunidade: nenhuma cópia é guardada (decisoes.md §68)
 final class ListCommunityFeedController
 {
     #[QueryParameter('cursor', description: 'Cursor da próxima página (meta.next_cursor).', type: 'string')]
     public function __invoke(ListCommunityFeedRequest $request): AnonymousResourceCollection
     {
         $term = $request->validated('q');
+        $type = $request->validated('type');
         $direction = $request->validated('order') === 'oldest' ? 'asc' : 'desc';
 
-        $materials = Material::where('status', MaterialStatus::Aprovado)
+        $materials = Material::query()
+            ->selectRaw("'material' as kind, id, published_at")
+            ->where('status', MaterialStatus::Aprovado)
             ->whereNull('revises_id')
-            ->when($term !== null, fn (Builder $query) => $this->search($query, (string) $term))
-            ->with(['author', 'discipline'])
+            ->when($term !== null, fn (Builder $query) => $this->searchMaterials($query, (string) $term));
+
+        $opportunities = Opportunity::query()
+            ->selectRaw("'opportunity' as kind, id, published_at")
+            ->visible()
+            ->when($term !== null, fn (Builder $query) => $query->where(fn (Builder $query) => UnaccentSearch::where(
+                UnaccentSearch::where($query, 'opportunities.title', (string) $term),
+                'opportunities.description',
+                (string) $term,
+                'or',
+            )));
+
+        $union = match ($type) {
+            'material' => $materials->toBase(),
+            'opportunity' => $opportunities->toBase(),
+            default => $materials->toBase()->unionAll($opportunities->toBase()),
+        };
+
+        // kind entra na ordem para desempatar item de tabelas diferentes publicado no mesmo instante
+        /** @var CursorPaginator<int, object{kind: string, id: int}> $page */
+        $page = DB::query()->fromSub($union, 'feed')
             ->orderBy('published_at', $direction)
+            ->orderBy('kind', $direction)
             ->orderBy('id', $direction)
             ->cursorPaginate(20);
 
-        return CommunityFeedItemResource::collection($materials);
+        $rows = collect($page->items());
+        $loaded = [
+            'material' => Material::with(['author', 'discipline'])->findMany($rows->where('kind', 'material')->pluck('id'))->keyBy('id'),
+            'opportunity' => Opportunity::findMany($rows->where('kind', 'opportunity')->pluck('id'))->keyBy('id'),
+        ];
+
+        // a linha original fica no item: o cursor da próxima página é calculado a partir de kind, id e published_at
+        return CommunityFeedItemResource::collection($page->through(function (object $row) use ($loaded): object {
+            $row->model = $loaded[$row->kind][$row->id];
+
+            return $row;
+        }));
     }
 
-    /**
-     * shortcut: unaccent sem índice percorre a tabela inteira; criar um índice com expressão se o mural ficar lento
-     *
-     * @param  Builder<Material>  $query
-     */
-    private function search(Builder $query, string $term): void
+    /** @param  Builder<Material>  $query */
+    private function searchMaterials(Builder $query, string $term): void
     {
-        $pattern = '%'.addcslashes(mb_strtolower($term), '\\%_').'%';
-        $matches = fn (string $column) => ["unaccent(lower({$column})) LIKE unaccent(?)", [$pattern]];
-
-        $query->where(function (Builder $query) use ($matches): void {
-            $query->whereRaw(...$matches('materials.title'))
-                ->orWhereHas('discipline', fn (Builder $discipline) => $discipline->whereRaw(...$matches('disciplines.name')))
+        $query->where(function (Builder $query) use ($term): void {
+            UnaccentSearch::where($query, 'materials.title', $term)
+                ->orWhereHas('discipline', fn (Builder $discipline) => UnaccentSearch::where($discipline, 'disciplines.name', $term))
                 // o nome do autor só conta no material identificado: no anônimo, a busca revelaria quem enviou
                 ->orWhere(fn (Builder $identified) => $identified
                     ->where('anonymous', false)
-                    ->whereHas('author', fn (Builder $author) => $author->whereRaw(...$matches('users.display_name'))));
+                    ->whereHas('author', fn (Builder $author) => UnaccentSearch::where($author, 'users.display_name', $term)));
         });
     }
 }
