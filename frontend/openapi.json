@@ -1,5 +1,5 @@
 {
-    "openapi": "3.1.0",
+    "openapi": "3.1.2",
     "info": {
         "title": "ConectaCC",
         "version": "1.0.0",
@@ -1951,7 +1951,14 @@
                         "type": "string"
                     },
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "ESTAGIO",
+                            "EMPREGO",
+                            "EVENTO",
+                            "PROJETO",
+                            "OUTRO"
+                        ]
                     },
                     "title": {
                         "type": "string"
@@ -1963,7 +1970,12 @@
                         "type": "string"
                     },
                     "modality": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "REMOTO",
+                            "HIBRIDO",
+                            "PRESENCIAL"
+                        ]
                     },
                     "deadline": {
                         "type": [
@@ -2022,7 +2034,14 @@
                         "type": "boolean"
                     },
                     "status": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "EXCLUIDO",
+                            "PENDENTE",
+                            "APROVADO",
+                            "REJEITADO",
+                            "CANCELADO"
+                        ]
                     },
                     "rejection_reason": {
                         "type": [
@@ -2132,7 +2151,14 @@
                         "type": "string"
                     },
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "ESTAGIO",
+                            "EMPREGO",
+                            "EVENTO",
+                            "PROJETO",
+                            "OUTRO"
+                        ]
                     },
                     "title": {
                         "type": "string"
@@ -2144,7 +2170,12 @@
                         "type": "string"
                     },
                     "modality": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "REMOTO",
+                            "HIBRIDO",
+                            "PRESENCIAL"
+                        ]
                     },
                     "deadline": {
                         "type": [
@@ -2154,7 +2185,15 @@
                     },
                     "status": {
                         "type": "string",
-                        "description": "ENCERRADO: aprovada, mas o prazo passou e ela saiu da p\u00e1gina"
+                        "description": "ENCERRADO: aprovada, mas o prazo passou e ela saiu da p\u00e1gina",
+                        "enum": [
+                            "EXCLUIDO",
+                            "ENCERRADO",
+                            "PENDENTE",
+                            "APROVADO",
+                            "REJEITADO",
+                            "CANCELADO"
+                        ]
                     },
                     "rejection_reason": {
                         "type": [
@@ -2237,7 +2276,14 @@
                         "type": "string"
                     },
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "ESTAGIO",
+                            "EMPREGO",
+                            "EVENTO",
+                            "PROJETO",
+                            "OUTRO"
+                        ]
                     },
                     "title": {
                         "type": "string"
@@ -2249,7 +2295,12 @@
                         "type": "string"
                     },
                     "modality": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "REMOTO",
+                            "HIBRIDO",
+                            "PRESENCIAL"
+                        ]
                     },
                     "deadline": {
                         "type": [
