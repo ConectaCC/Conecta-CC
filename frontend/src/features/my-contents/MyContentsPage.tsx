@@ -8,6 +8,8 @@ import { ApiError } from '@/lib/api/errors';
 import { cn } from '@/lib/utils';
 import { ConfirmActionDialog } from './ConfirmActionDialog';
 import { ContentItem } from './ContentItem';
+import { MyOpportunities } from './MyOpportunities';
+import { StatusFilters } from './StatusFilters';
 import { FILTERS, type MyFilter, type MyMaterial, useCancelMaterial, useDeleteMaterial, useMyMaterials } from './hooks';
 
 type Action = { kind: 'cancel' | 'delete'; item: MyMaterial };
@@ -37,10 +39,54 @@ function isFilter(value: string | null): value is MyFilter {
   return FILTERS.some((filter) => filter.value === value);
 }
 
+const KINDS = [
+  { value: null, label: 'Materiais' },
+  { value: 'oportunidades', label: 'Oportunidades' },
+] as const;
+
 // ?item= vindo de uma notificação: a lista remonta quando o item muda, para abrir e rolar até o novo
 export function MyContentsPage() {
-  const [params] = useSearchParams();
-  return <MyContents key={params.get('item') ?? ''} />;
+  const [params, setParams] = useSearchParams();
+  const kind = params.get('tipo') === 'oportunidades' ? 'oportunidades' : null;
+
+  function selectKind(next: string | null) {
+    // trocar de tipo recomeça os filtros: a situação e o item são de cada lista
+    setParams(next ? { tipo: next } : {}, { replace: true });
+  }
+
+  return (
+    <div>
+      <nav aria-label="Trilha" className="text-[15px] text-muted-foreground">
+        <Link to="/perfil" className="font-semibold text-action hover:underline">
+          Perfil
+        </Link>
+        <span aria-hidden className="mx-2">
+          /
+        </span>
+        <span aria-current="page">Meus conteúdos</span>
+      </nav>
+      <header className="mt-4">
+        <h1 className="font-display text-4xl font-bold text-foreground">Meus conteúdos</h1>
+        <p className="mt-2 text-lg text-muted-foreground">Acompanhe o que você enviou e a análise da moderação.</p>
+      </header>
+
+      <div role="group" aria-label="Tipo de conteúdo" className="mt-6 inline-flex rounded-lg border border-blue-200 bg-white p-1">
+        {KINDS.map(({ value, label }) => (
+          <button
+            key={label}
+            type="button"
+            aria-pressed={kind === value}
+            onClick={() => selectKind(value)}
+            className={cn('h-10 rounded-md px-4 text-[15px] font-semibold', kind === value ? 'bg-[#e3eefb] text-action' : 'text-muted-foreground hover:text-foreground')}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {kind === 'oportunidades' ? <MyOpportunities key={params.get('item') ?? ''} /> : <MyContents key={params.get('item') ?? ''} />}
+    </div>
+  );
 }
 
 function MyContents() {
@@ -135,36 +181,7 @@ function MyContents() {
 
   return (
     <div>
-      <nav aria-label="Trilha" className="text-[15px] text-muted-foreground">
-        <Link to="/perfil" className="font-semibold text-action hover:underline">
-          Perfil
-        </Link>
-        <span aria-hidden className="mx-2">
-          /
-        </span>
-        <span aria-current="page">Meus conteúdos</span>
-      </nav>
-      <header className="mt-4">
-        <h1 className="font-display text-4xl font-bold text-foreground">Meus conteúdos</h1>
-        <p className="mt-2 text-lg text-muted-foreground">Acompanhe o que você enviou e a análise da moderação.</p>
-      </header>
-
-      <div role="group" aria-label="Filtrar por situação" className="mt-6 flex flex-wrap gap-2">
-        {FILTERS.map(({ value, label }) => (
-          <button
-            key={value}
-            type="button"
-            aria-pressed={filter === value}
-            onClick={() => selectFilter(value)}
-            className={cn(
-              'h-10 rounded-full border px-4 text-[15px] font-medium',
-              filter === value ? 'border-navy-900 bg-navy-900 text-white' : 'border-blue-200 bg-white text-foreground hover:bg-ice',
-            )}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      <StatusFilters value={filter} onChange={selectFilter} />
 
       <div className="mt-6 space-y-4">
         {notice && (

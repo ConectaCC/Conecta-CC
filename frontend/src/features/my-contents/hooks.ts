@@ -52,3 +52,44 @@ export function useDeleteMaterial() {
     onSuccess: (_, material) => refreshAfterAuthorAction(client, material.discipline.id),
   });
 }
+
+export type MyOpportunity = components['schemas']['MyOpportunityResource'];
+
+export function useMyOpportunities(filter: MyFilter) {
+  return useInfiniteQuery({
+    queryKey: ['my-opportunities', filter],
+    queryFn: ({ pageParam }) =>
+      call(api.GET('/me/opportunities', { params: { query: { status: filter, ...(pageParam ? { cursor: pageParam } : {}) } } })),
+    initialPageParam: null as string | null,
+    getNextPageParam: (last) => last.meta.next_cursor,
+  });
+}
+
+function refreshOpportunities(client: QueryClient) {
+  client.invalidateQueries({ queryKey: ['my-opportunities'] });
+  client.invalidateQueries({ queryKey: ['opportunities'] });
+  client.invalidateQueries({ queryKey: ['moderation', 'opportunities'] });
+  client.invalidateQueries({ queryKey: ['community'] });
+}
+
+export function useCancelOpportunity() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: async (opportunity: { id: number }) => {
+      await ensureCsrfCookie();
+      return call(api.POST('/opportunities/{opportunity}/cancel', { params: { path: { opportunity: opportunity.id } } }));
+    },
+    onSuccess: () => refreshOpportunities(client),
+  });
+}
+
+export function useDeleteOpportunity() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: async (opportunity: { id: number }) => {
+      await ensureCsrfCookie();
+      return call(api.DELETE('/opportunities/{opportunity}', { params: { path: { opportunity: opportunity.id } } }));
+    },
+    onSuccess: () => refreshOpportunities(client),
+  });
+}
