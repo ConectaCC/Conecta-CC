@@ -107,6 +107,7 @@ Todas as contas pertencem à conta Google do projeto (decisão 9).
 - **Cookies:** em produção, `SESSION_SECURE_COOKIE=true` (já no `render.yaml`). O cookie da sessão é `HttpOnly` e `SameSite=Lax`.
 - **`APP_DEBUG=false` em produção:** um erro mostra a página genérica, nunca o rastro da pilha.
 - **Segredos:** só nas variáveis do Render e nos secrets do GitHub. Nenhum `.env` entra na imagem (`.dockerignore`).
+- **Atualizações de versão principal que esperam o ecossistema (08/11/2026):** o ESLint 10 depende do `eslint-plugin-jsx-a11y` aceitar a versão nova, e o TypeScript 7 depende do `openapi-typescript` e do `typescript-eslint`. Os PRs do Dependabot foram fechados; quando ele abrir de novo com uma versão mais nova, conferir se o CI passa.
 
 ## Auditoria
 
