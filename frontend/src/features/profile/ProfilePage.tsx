@@ -1,4 +1,5 @@
-import { PencilLine } from 'lucide-react';
+import { PencilLine, User as UserIcon } from 'lucide-react';
+import { PageHeader } from '@/components/PageHeader';
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { FormAlert } from '@/components/FormAlert';
@@ -20,17 +21,13 @@ export function ProfilePage() {
 
   return (
     <div>
-      <header className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <h1 className="font-display text-4xl font-bold text-foreground">Perfil</h1>
-          <p className="mt-2 text-lg text-muted-foreground">Atualize as informações que ajudam a personalizar sua experiência no ConectaCC.</p>
-        </div>
+      <PageHeader icon={UserIcon} title="Perfil" description="Atualize as informações que ajudam a personalizar sua experiência no ConectaCC.">
         {editing ? (
-          <span className="self-start rounded-full bg-[#d6e4f7] px-3 py-1 text-sm font-semibold text-navy-900 sm:mt-3">Editando</span>
+          <span className="rounded-full bg-[#d6e4f7] px-3 py-1 text-sm font-semibold text-navy-900">Editando</span>
         ) : (
           ready && (
-            <div className="flex flex-wrap gap-3 self-start">
-              <Button asChild variant="outline" className="h-12 border-action px-5 text-base font-semibold text-action">
+            <div className="flex flex-wrap gap-3">
+              <Button asChild variant="outline" className="h-12 border-action bg-white px-5 text-base font-semibold text-action">
                 <Link to="/perfil/meus-conteudos">Meus conteúdos</Link>
               </Button>
               <Button asChild className="h-12 px-5 text-base font-semibold">
@@ -42,7 +39,7 @@ export function ProfilePage() {
             </div>
           )
         )}
-      </header>
+      </PageHeader>
 
       <div className="mt-8 space-y-6">
         {saved && !editing && (

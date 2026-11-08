@@ -1,4 +1,5 @@
 import { BookOpen, CalendarDays, ChevronDown, Search } from 'lucide-react';
+import { PageHeader } from '@/components/PageHeader';
 import { useId, useState } from 'react';
 import { Link } from 'react-router';
 import { Button } from '@/components/ui/button';
@@ -22,25 +23,9 @@ export function StudiesPage() {
 
   return (
     <div>
-      <header className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#e3eefb] via-[#edf4fc] to-[#f6f9fe] px-6 py-7 sm:px-8">
-        {/* onda decorativa, como na referência visual */}
-        <svg aria-hidden viewBox="0 0 1200 120" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 h-16 w-full text-white/60">
-          <path d="M0 70 C 200 20, 380 120, 600 70 S 1000 20, 1200 60 L 1200 120 L 0 120 Z" fill="currentColor" />
-        </svg>
-        <div className="relative grid items-center gap-6 xl:grid-cols-[minmax(0,1fr)_auto_auto]">
-          <div className="flex items-center gap-5">
-            <span aria-hidden className="hidden size-20 shrink-0 place-items-center rounded-2xl bg-[#d6e4f7] text-action sm:grid">
-              <BookOpen className="size-10" />
-            </span>
-            <div className="min-w-0">
-              <h1 className="font-display text-4xl font-bold text-foreground">Estudos</h1>
-              <p className="mt-2 text-lg text-muted-foreground">Acesse suas disciplinas e materiais compartilhados pela comunidade.</p>
-            </div>
-          </div>
-          <span aria-hidden className="hidden h-20 w-px bg-blue-200/70 xl:block" />
-          <AcademicResources />
-        </div>
-      </header>
+      <PageHeader icon={BookOpen} title="Estudos" description="Acesse suas disciplinas e materiais compartilhados pela comunidade.">
+        <AcademicResources />
+      </PageHeader>
 
       <div className="mt-8 space-y-10">
         {failed && <StudiesError onRetry={retry} />}

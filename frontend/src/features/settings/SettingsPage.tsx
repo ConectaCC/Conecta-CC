@@ -1,8 +1,9 @@
-import { Loader2 } from 'lucide-react';
+import { Loader2, Settings } from 'lucide-react';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import type { Location } from 'react-router';
 import { FormAlert } from '@/components/FormAlert';
+import { PageHeader } from '@/components/PageHeader';
 import { useUnsavedChangesGuard } from '@/components/layout/useUnsavedChangesGuard';
 import { Skeleton } from '@/components/Skeleton';
 import { TextField } from '@/components/TextField';
@@ -94,10 +95,7 @@ export function SettingsPage() {
 
   return (
     <div>
-      <header>
-        <h1 className="font-display text-4xl font-bold text-foreground">Configurações</h1>
-        <p className="mt-2 text-lg text-muted-foreground">Gerencie informações da sua conta e opções de segurança.</p>
-      </header>
+      <PageHeader icon={Settings} title="Configurações" description="Gerencie informações da sua conta e opções de segurança." />
 
       <div className="mt-8 space-y-6">
         <section aria-labelledby="configuracoes-conta" className={SECTION}>

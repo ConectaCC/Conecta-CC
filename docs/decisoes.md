@@ -1984,3 +1984,20 @@ O cabeçalho virou uma faixa com o ícone de livro, como Oportunidades (§70.9).
 - **Card de disciplina:** ícone de livro, nome, "Minha disciplina" quando for o caso e "Ver disciplina →" à direita. Em telas estreitas, o link desce para a linha de baixo. Os cards ficam em duas colunas a partir de 768 px, em "Minhas disciplinas" e nos semestres.
 - **Busca:** campo "Buscar disciplina…" na largura da página, com o total ("49 disciplinas") ao lado.
 - **Semestres:** cada um tem um ícone de calendário.
+
+---
+
+# 73. Cabeçalho padrão das páginas internas — 08/11/2026
+
+As páginas internas usam o mesmo cabeçalho (`PageHeader`): uma faixa azul com onda decorativa, um ícone, o título e o subtítulo. Quando a página tem recursos ou ações, eles ficam à direita.
+
+| Página | Ícone | À direita |
+|---|---|---|
+| Estudos | livro | Recursos acadêmicos |
+| Oportunidades | maleta | bolsas do IFSul |
+| Comunidade | pessoas | — |
+| Moderação | escudo | — |
+| Perfil | pessoa | "Meus conteúdos" e "Editar perfil", ou "Editando" |
+| Configurações | engrenagem | — |
+
+A Home mantém a saudação e o destaque próprios (§71).
