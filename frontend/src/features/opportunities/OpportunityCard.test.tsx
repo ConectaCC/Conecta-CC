@@ -40,7 +40,9 @@ it('sem prazo e sem data de publicação, não mostra as linhas', () => {
 });
 
 it('mostra tipo e modalidade como vieram quando não têm rótulo', () => {
-  render(<OpportunityCard item={opportunity({ type: 'NOVO', modality: 'OUTRA' })} />);
+  // valores que a API pode ganhar depois que uma aba antiga do site já foi aberta
+  const fromNewerApi = { type: 'NOVO', modality: 'OUTRA' } as unknown as Pick<Opportunity, 'type' | 'modality'>;
+  render(<OpportunityCard item={opportunity(fromNewerApi)} />);
 
   expect(screen.getByText('NOVO')).toBeInTheDocument();
   expect(screen.getByText('OUTRA')).toBeInTheDocument();

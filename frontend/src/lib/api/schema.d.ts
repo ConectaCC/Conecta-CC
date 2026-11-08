@@ -535,11 +535,13 @@ export interface components {
         ModerationOpportunityResource: {
             id: number;
             code: string;
-            type: string;
+            /** @enum {string} */
+            type: "ESTAGIO" | "EMPREGO" | "EVENTO" | "PROJETO" | "OUTRO";
             title: string;
             description: string;
             url: string;
-            modality: string;
+            /** @enum {string} */
+            modality: "REMOTO" | "HIBRIDO" | "PRESENCIAL";
             deadline: string | null;
             /** @description na análise, quem modera sempre sabe quem enviou: oportunidade não tem envio anônimo (decisoes.md §70) */
             author_name: string;
@@ -554,7 +556,8 @@ export interface components {
             description: string | null;
             url: string;
             anonymous: boolean;
-            status: string;
+            /** @enum {string} */
+            status: "EXCLUIDO" | "PENDENTE" | "APROVADO" | "REJEITADO" | "CANCELADO";
             rejection_reason: string | null;
             submitted_at: string;
             discipline: {
@@ -577,14 +580,19 @@ export interface components {
         MyOpportunityResource: {
             id: number;
             code: string;
-            type: string;
+            /** @enum {string} */
+            type: "ESTAGIO" | "EMPREGO" | "EVENTO" | "PROJETO" | "OUTRO";
             title: string;
             description: string;
             url: string;
-            modality: string;
+            /** @enum {string} */
+            modality: "REMOTO" | "HIBRIDO" | "PRESENCIAL";
             deadline: string | null;
-            /** @description ENCERRADO: aprovada, mas o prazo passou e ela saiu da página */
-            status: string;
+            /**
+             * @description ENCERRADO: aprovada, mas o prazo passou e ela saiu da página
+             * @enum {string}
+             */
+            status: "EXCLUIDO" | "ENCERRADO" | "PENDENTE" | "APROVADO" | "REJEITADO" | "CANCELADO";
             rejection_reason: string | null;
             submitted_at: string;
         };
@@ -608,11 +616,13 @@ export interface components {
         OpportunityResource: {
             id: number;
             code: string;
-            type: string;
+            /** @enum {string} */
+            type: "ESTAGIO" | "EMPREGO" | "EVENTO" | "PROJETO" | "OUTRO";
             title: string;
             description: string;
             url: string;
-            modality: string;
+            /** @enum {string} */
+            modality: "REMOTO" | "HIBRIDO" | "PRESENCIAL";
             deadline: string | null;
             published_at: string | null;
         };
