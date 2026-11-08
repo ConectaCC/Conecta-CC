@@ -11,13 +11,13 @@ const number = new Intl.NumberFormat('pt-BR');
 
 function Stat({ icon: Icon, value, label }: { icon: typeof FileText; value: number; label: string }) {
   return (
-    <div className="flex min-w-0 flex-col items-center gap-1 rounded-xl border border-blue-200/70 px-1 py-4 text-center">
-      <span aria-hidden className="grid size-10 place-items-center rounded-full bg-[#e3eefb] text-action">
+    <li className="flex items-center gap-3 rounded-xl border border-blue-200/70 px-3 py-2.5">
+      <span aria-hidden className="grid size-9 shrink-0 place-items-center rounded-full bg-[#e3eefb] text-action">
         <Icon className="size-5" />
       </span>
-      <span className="mt-1 font-display text-2xl font-bold text-foreground">{number.format(value)}</span>
-      <span className="max-w-full text-xs [overflow-wrap:anywhere] text-muted-foreground sm:text-sm">{label}</span>
-    </div>
+      <span className="flex-1 text-[15px] text-muted-foreground">{label}</span>
+      <span className="font-display text-xl font-bold text-foreground">{number.format(value)}</span>
+    </li>
   );
 }
 
@@ -67,19 +67,19 @@ export function CommunityAside() {
           <BarChart3 className="size-5 text-action" aria-hidden />A comunidade em números
         </h2>
         {stats.isPending && (
-          <div className="mt-4 grid grid-cols-3 gap-2" aria-busy="true">
-            <Skeleton className="h-32 rounded-xl" />
-            <Skeleton className="h-32 rounded-xl" />
-            <Skeleton className="h-32 rounded-xl" />
+          <div className="mt-4 space-y-2" aria-busy="true">
+            <Skeleton className="h-14 rounded-xl" />
+            <Skeleton className="h-14 rounded-xl" />
+            <Skeleton className="h-14 rounded-xl" />
           </div>
         )}
         {stats.isError && <p className="mt-3 text-[15px] text-muted-foreground">Não foi possível carregar os números agora.</p>}
         {stats.data && (
-          <div className="mt-4 grid grid-cols-3 gap-2">
+          <ul className="mt-4 space-y-2">
             <Stat icon={FileText} value={stats.data.materials} label="Materiais" />
             <Stat icon={Briefcase} value={stats.data.opportunities} label="Oportunidades" />
             <Stat icon={Users} value={stats.data.students} label="Estudantes" />
-          </div>
+          </ul>
         )}
       </section>
       <AddOpportunityDialog open={addingOpportunity} onOpenChange={setAddingOpportunity} backLabel="Voltar para a Comunidade" />

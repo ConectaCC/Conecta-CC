@@ -15,6 +15,7 @@ React 19 + TypeScript (Vite), React Router (`createBrowserRouter`), TanStack Que
 | `components/` | componentes compartilhados da casa: `TextField`, `FormAlert`, `Skeleton`, `Chip`, `StatusTag`, `TagInput`, `DisciplinePicker`, `Brand` |
 | `components/ui/` | componentes gerados pelo CLI do shadcn (`docker compose exec frontend npx --yes shadcn@latest add <nome> --yes`). Não reescrever à mão |
 | `components/layout/` | `AppLayout`, `Sidebar`, `Header`, `UserAvatar` e a guarda de alterações não salvas (`LeaveGuardProvider` e `useUnsavedChangesGuard`) |
+| `lib/useUrlSearch.ts`, `lib/useScrollToHashItem.ts` | busca com atraso e filtros no endereço; rolagem até `#<prefixo>-<id>` com destaque, usada por materiais e oportunidades |
 | `lib/api/` | `client.ts` (openapi-fetch com cookie e `X-XSRF-TOKEN`), `errors.ts` (`call`, `ApiError`, `NetworkError`) e `schema.d.ts` (**gerado**) |
 
 - As rotas ficam em português (`/estudos`, `/estudos/:slug`, `/perfil?editar=disciplinas`).
