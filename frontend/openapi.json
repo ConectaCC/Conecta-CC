@@ -230,6 +230,32 @@
                 ],
                 "parameters": [
                     {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "maxLength": 100
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "enum": [
+                                "recent",
+                                "oldest",
+                                null
+                            ]
+                        }
+                    },
+                    {
                         "name": "cursor",
                         "in": "query",
                         "description": "Cursor da pr\u00f3xima p\u00e1gina (meta.next_cursor).",
@@ -336,6 +362,9 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
                     }
                 }
             }
@@ -946,6 +975,41 @@
                     },
                     "422": {
                         "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/community/stats": {
+            "get": {
+                "operationId": "v1.showCommunityStats",
+                "tags": [
+                    "ShowCommunityStats"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "materials": {
+                                            "type": "integer"
+                                        },
+                                        "students": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "required": [
+                                        "materials",
+                                        "students"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
                     }
                 }
             }

@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\V1\ReadAllNotificationsController;
 use App\Http\Controllers\Api\V1\ReadNotificationController;
 use App\Http\Controllers\Api\V1\RegisterController;
 use App\Http\Controllers\Api\V1\RejectMaterialController;
+use App\Http\Controllers\Api\V1\ShowCommunityStatsController;
 use App\Http\Controllers\Api\V1\ShowProfileController;
 use App\Http\Controllers\Api\V1\ShowStudentProfileController;
 use App\Http\Controllers\Api\V1\StoreMaterialController;
@@ -36,6 +37,7 @@ Route::prefix('v1')->group(function () {
         Route::get('disciplines', ListDisciplinesController::class);
         Route::get('disciplines/{discipline}/materials', ListDisciplineMaterialsController::class);
         Route::get('community/feed', ListCommunityFeedController::class);
+        Route::get('community/stats', ShowCommunityStatsController::class);
         Route::post('disciplines/{discipline}/materials', StoreMaterialController::class);
         Route::get('profile', ShowProfileController::class);
         Route::get('me/materials', ListMyMaterialsController::class);

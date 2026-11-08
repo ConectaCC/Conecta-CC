@@ -99,3 +99,68 @@ it('pagina de 20 em 20 por cursor, sem repetir itens', function () {
 it('exige sessão', function () {
     $this->getJson(FEED)->assertUnauthorized();
 });
+
+it('busca por título, disciplina e autor, sem diferenciar acentos e maiúsculas', function (string $q) {
+    $discipline = Discipline::where('name', 'Cálculo Diferencial e Integral I')->sole();
+    $author = User::factory()->create(['display_name' => 'Joana Ribeiro']);
+    $found = Material::factory()->for($discipline)->for($author, 'author')->approved()->create(['title' => 'Exercícios de limites']);
+    $other = Material::factory()->for(Discipline::where('name', 'Algoritmos I')->sole())->approved()->create(['title' => 'Lista de recursão']);
+
+    $ids = $this->actingAs(User::factory()->create())->getJson(FEED.'?q='.urlencode($q))->assertOk()->json('data.*.id');
+
+    expect($ids)->toBe([$found->id]);
+})->with(['exercicios', 'LIMITES', 'calculo diferencial', 'joana']);
+
+it('não encontra material anônimo pelo nome do autor', function () {
+    $author = User::factory()->create(['display_name' => 'Autora Sigilosa']);
+    Material::factory()->for($author, 'author')->approved()->anonymous()->create(['title' => 'Resumo']);
+
+    $this->actingAs(User::factory()->create())->getJson(FEED.'?q=sigilosa')->assertOk()->assertJsonCount(0, 'data');
+    $this->actingAs(User::factory()->create())->getJson(FEED.'?q=resumo')->assertOk()->assertJsonCount(1, 'data');
+});
+
+it('trata % e _ da busca como texto', function () {
+    Material::factory()->approved()->create(['title' => 'Qualquer coisa']);
+    Material::factory()->approved()->create(['title' => 'Taxa de 100% de acerto']);
+
+    $this->actingAs(User::factory()->create())->getJson(FEED.'?q='.urlencode('100%'))->assertOk()->assertJsonCount(1, 'data');
+    $this->actingAs(User::factory()->create())->getJson(FEED.'?q='.urlencode('%'))->assertOk()->assertJsonCount(1, 'data');
+    $this->actingAs(User::factory()->create())->getJson(FEED.'?q=_')->assertOk()->assertJsonCount(0, 'data');
+});
+
+it('ordena dos mais antigos, inclusive na segunda página', function () {
+    foreach (range(1, 21) as $i) {
+        Material::factory()->approved()->create(['published_at' => now()->subMinutes($i)]);
+    }
+    $user = User::factory()->create();
+
+    $first = $this->actingAs($user)->getJson(FEED.'?order=oldest')->assertOk();
+    $dates = $first->json('data.*.published_at');
+    $second = $this->actingAs($user)->getJson(FEED.'?order=oldest&cursor='.$first->json('meta.next_cursor'))->assertOk()->assertJsonCount(1, 'data');
+
+    expect($dates)->toBe(collect($dates)->sort()->values()->all())
+        ->and($second->json('data.0.published_at') > end($dates))->toBeTrue();
+});
+
+it('valida a busca e a ordem', function (string $query, string $field) {
+    $this->actingAs(User::factory()->create())->getJson(FEED.'?'.$query)->assertUnprocessable()->assertJsonValidationErrors([$field]);
+})->with([
+    'busca longa' => ['q='.str_repeat('a', 101), 'q'],
+    'ordem inválida' => ['order=popular', 'order'],
+]);
+
+it('conta materiais publicados e estudantes', function () {
+    Material::factory()->count(2)->approved()->create();
+    Material::factory()->create();
+    Material::factory()->approved()->create()->delete();
+    $original = Material::factory()->approved()->create();
+    Material::factory()->approved()->create(['revises_id' => $original->id]);
+
+    $this->actingAs(User::factory()->create())->getJson('/api/v1/community/stats')
+        ->assertOk()
+        ->assertExactJson(['materials' => 3, 'students' => User::count()]);
+});
+
+it('exige sessão para os números', function () {
+    $this->getJson('/api/v1/community/stats')->assertUnauthorized();
+});

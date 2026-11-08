@@ -292,6 +292,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/community/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.showCommunityStats"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/profile": {
         parameters: {
             query?: never;
@@ -726,6 +742,8 @@ export interface operations {
     "v1.listCommunityFeed": {
         parameters: {
             query?: {
+                q?: string | null;
+                order?: "recent" | "oldest" | null;
                 /** @description Cursor da próxima página (meta.next_cursor). */
                 cursor?: string;
             };
@@ -763,6 +781,7 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
         };
     };
     "v1.listDisciplineMaterials": {
@@ -1113,6 +1132,29 @@ export interface operations {
             403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
             422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.showCommunityStats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        materials: number;
+                        students: number;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
         };
     };
     "v1.showProfile": {
