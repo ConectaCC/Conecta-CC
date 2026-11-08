@@ -67,6 +67,7 @@ Os limites de tentativas (5 por minuto no Login e no Cadastro) usam o cache do L
 | `DB_URL` | Render | connection string do Neon (com `sslmode=require`) |
 | `SANCTUM_STATEFUL_DOMAINS` | Render | host público, sem `https://` |
 | `ALLOWED_EMAIL_DOMAINS` | Render (já no `render.yaml`) | domínios aceitos no Cadastro, separados por vírgula |
+| `ALLOWED_EMAILS` | Render | período de teste fechado: só esses e-mails criam conta, separados por vírgula. Vazio abre o Cadastro a todo o domínio (`decisoes.md` §79) |
 | `TERMS_VERSION` | Render (já no `render.yaml`) | versão vigente dos Termos (arquivo em `backend/resources/terms/`) |
 | `SENTRY_LARAVEL_DSN` | Render | DSN do Sentry para o backend (vazio = desligado) |
 | `VITE_SENTRY_DSN` | Render | DSN do Sentry para o front, usado no build (vazio = desligado) |
@@ -84,6 +85,14 @@ Todas as contas pertencem à conta Google do projeto (decisão 9).
 5. **Sentry (opcional):** criar dois projetos (Laravel e React) e preencher os DSNs no Render.
 6. Fazer merge na `main`. O CI roda e, se passar, o workflow Deploy chama o Render. As migrations rodam na inicialização do container.
 7. **Primeiro ADMINISTRADOR:** a pessoa se cadastra pelo site; depois, no GitHub, Actions → "Promover usuário" → Run workflow → e-mail e papel `ADMINISTRADOR`.
+
+## Período de teste fechado
+
+- **Liberar alguém:** no Render, em Environment, acrescentar o e-mail institucional em `ALLOWED_EMAILS` (separado por vírgula) e salvar. O Render publica de novo sozinho; depois disso a pessoa consegue se cadastrar.
+- **Quem não está na lista** vê "O cadastro está restrito às pessoas convidadas para o período de teste." e não descobre se o e-mail já tem conta.
+- **Tirar alguém da lista** só impede novos cadastros com aquele e-mail: quem já tem conta continua entrando.
+- **Abrir o Cadastro** a todo o domínio institucional: apagar o valor de `ALLOWED_EMAILS`.
+- **Começo do teste (08/11/2026):** a lista tem só Marcelo e Viviane, que se cadastram e viram ADMINISTRADOR pelo workflow "Promover usuário".
 
 ## Configuração do repositório (admin)
 
