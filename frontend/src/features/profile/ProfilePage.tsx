@@ -55,8 +55,8 @@ export function ProfilePage() {
               <button
                 type="button"
                 onClick={() => {
-                  profile.refetch();
-                  disciplines.refetch();
+                  void profile.refetch();
+                  void disciplines.refetch();
                 }}
                 className="font-semibold underline underline-offset-2"
               >

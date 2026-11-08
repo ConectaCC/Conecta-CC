@@ -113,7 +113,7 @@ function MyContents() {
 
   useEffect(() => {
     if (!target || found || !materials.hasNextPage || materials.isFetchingNextPage || materials.isFetchNextPageError) return;
-    materials.fetchNextPage();
+    void materials.fetchNextPage();
   }, [target, found, materials]);
 
   useEffect(() => {

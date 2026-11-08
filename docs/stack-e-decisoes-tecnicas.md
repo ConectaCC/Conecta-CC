@@ -90,7 +90,7 @@ Cada tecnologia abaixo está justificada na decisão indicada entre parênteses.
 | Análise estática    | Pint, Larastan (nível 10), ESLint (com`jsx-a11y`) e `tsc` (11, 12) |
 | Teste de mutação    | Pest (`--mutate`), nas classes alteradas (12)           |
 | Segredos              | gitleaks no CI + secret scanning do GitHub (9)          |
-| Front e ponta a ponta | Vitest e Playwright (11)                                |
+| Front e ponta a ponta | Vitest, Testing Library, StrykerJS e Playwright (11, 12) |
 
 ## Decisões: arquitetura e stack
 
@@ -243,6 +243,10 @@ O que cada função do painel pode fazer está definido no documento de Implemen
 - **Teste de mutação do Pest** (`--mutate`) nas classes de `backend/app` alteradas em relação à base do PR, com nota mínima de 90%. Roda no CI e no `make mutate`, antes do PR.
 - **Cobertura de linhas de 100%** no back, no mesmo passo, para que código novo sem nenhum teste não passe.
 - **Mutante equivalente** (que não muda o comportamento) é marcado na própria linha com `// @pest-mutate-ignore: Mutador`, e o motivo vai na linha de cima.
+- **No front:** TypeScript com `strict` e `noUncheckedIndexedAccess`, ESLint com `strictTypeChecked`, testes com Vitest e Testing Library, e StrykerJS nas **linhas** de `frontend/src` alteradas, com nota mínima de 80% e sem mutar textos fixos.
+- **Ponta a ponta:** specs do Playwright no repositório (`make e2e`), só no ambiente local.
+
+> **Atualização (08/11/2026):** a parte do front entrou numa segunda entrega (`decisoes.md` 77).
 
 **Motivo.** Os testes provavam que o código fazia o que o teste conferia, mas não que conferiam o que importa. A rodada completa de 08/11/2026 começou em 75,8% e mostrou lacunas reais: link com espaço no caminho aceito, mensagens padrão sem tradução, prazo da oportunidade não gravado nos testes, respostas da API sem formato conferido.
 
@@ -257,6 +261,8 @@ O que cada função do painel pode fazer está definido no documento de Implemen
 - O Pest muta por classe, não por linha. Mudar uma linha numa classe grande testa a classe inteira.
 - O job `backend` do CI liga a cobertura (PCOV) e baixa o histórico completo do Git, para achar a base do PR.
 - O `preventLazyLoading` fica ligado fora de produção. Consulta N+1 vira erro nos testes e no ambiente local.
+- No front, o StrykerJS aceita intervalos de linha, então a mutação vai só no que mudou. Uma entrega que mexe em muitos arquivos de forma mecânica não precisa testar os arquivos inteiros.
+- Os testes de ponta a ponta não rodam no CI: precisariam do ambiente completo (Laravel, Postgres e SPA) no runner.
 
 ## Planos condicionados
 
@@ -274,6 +280,8 @@ Nada abaixo entra no MVP. Cada item tem um gatilho objetivo, e a maioria é troc
 | Domínio próprio               | GitHub Student Pack (1 ano) ou institucional | Antes de um piloto maior ou da divulgação ao curso        |
 | E-mail transacional             | Provedor com SPF/DKIM                        | Domínio próprio ou Gmail indo para spam                   |
 | Testes de front e ponta a ponta | Vitest; Playwright                           | Após a liberação, antes de um piloto maior               |
+
+> **Atualização (08/11/2026):** Vitest, Testing Library e Playwright foram adotados antes do previsto (decisão 12). Do item acima, sobra só rodar o Playwright no CI.
 
 **Caminho para o celular**, do mais barato ao mais caro; cada passo só se o anterior não bastar, e em nenhum deles o backend muda:
 

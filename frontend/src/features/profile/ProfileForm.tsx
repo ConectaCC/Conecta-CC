@@ -100,7 +100,7 @@ export function ProfileForm({ profile, disciplines, focusDisciplines, onSaved, o
     } catch (error) {
       if (error instanceof ApiError && error.status === 422) {
         // erros de itens (interests.0, discipline_ids.2) vão para o campo da lista
-        const byField = Object.fromEntries(Object.entries(error.fieldErrors).map(([key, messages]) => [key.split('.')[0], messages]));
+        const byField = Object.fromEntries(Object.entries(error.fieldErrors).map(([key, messages]): [string, string[]] => [key.split('.')[0] ?? key, messages]));
         applyFieldErrors(setError, byField, FIELDS);
         setProblem('invalid');
       } else {

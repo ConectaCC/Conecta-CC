@@ -26,9 +26,9 @@ export function useMyMaterials(filter: MyFilter) {
 
 // o que o autor muda aparece em Meus conteúdos, na disciplina e na fila de Moderação
 export function refreshAfterAuthorAction(client: QueryClient, disciplineId: number) {
-  client.invalidateQueries({ queryKey: ['my-materials'] });
-  client.invalidateQueries({ queryKey: ['materials', disciplineId] });
-  client.invalidateQueries({ queryKey: ['moderation', 'materials'] });
+  void client.invalidateQueries({ queryKey: ['my-materials'] });
+  void client.invalidateQueries({ queryKey: ['materials', disciplineId] });
+  void client.invalidateQueries({ queryKey: ['moderation', 'materials'] });
 }
 
 export function useCancelMaterial() {
@@ -66,10 +66,10 @@ export function useMyOpportunities(filter: MyFilter) {
 }
 
 function refreshOpportunities(client: QueryClient) {
-  client.invalidateQueries({ queryKey: ['my-opportunities'] });
-  client.invalidateQueries({ queryKey: ['opportunities'] });
-  client.invalidateQueries({ queryKey: ['moderation', 'opportunities'] });
-  client.invalidateQueries({ queryKey: ['community'] });
+  void client.invalidateQueries({ queryKey: ['my-opportunities'] });
+  void client.invalidateQueries({ queryKey: ['opportunities'] });
+  void client.invalidateQueries({ queryKey: ['moderation', 'opportunities'] });
+  void client.invalidateQueries({ queryKey: ['community'] });
 }
 
 export function useCancelOpportunity() {

@@ -45,7 +45,9 @@ Plataforma acadêmica para estudantes de Ciência da Computação do IFSul – C
 2. **Plano:** `docs/plans/AAAA-MM-DD-<tema>.md`, com tarefas pequenas, arquivos, interfaces e verificação.
 3. **Branch:** `feat/<tema>` a partir da `main`, com commits pequenos por tarefa.
 4. **Docs no fim:** atualizar `decisoes.md`, `pendencias.md`, `implementacao.md`, `status-mvp.md` e o README conforme a spec (ver `docs/AGENTS.md`).
-5. **Qualidade antes do PR:** `make lint` e `make mutate` verdes. O `make mutate` exige 100% de cobertura de linhas no back e nota de mutação de pelo menos 90% nas classes alteradas (`stack-e-decisoes-tecnicas.md` 12).
+5. **Qualidade antes do PR:** `make lint`, `make mutate` e `make mutate-front` verdes, e `make e2e` quando a entrega muda um fluxo de tela (`stack-e-decisoes-tecnicas.md` 12).
+   - **Back:** 100% de cobertura de linhas e nota de mutação de pelo menos 90% nas classes alteradas.
+   - **Front:** nota de mutação de pelo menos 80% nas linhas alteradas.
 6. **PR para a `main`:** o CI precisa estar verde (checks `backend`, `frontend`, `docker`, `gitleaks`). O merge é feito com **merge commit**, como nos PRs anteriores.
 
 Uma escolha que o time não fez e o agente fez fica marcada na spec como **(escolha do Claude)**, para ser revista.
@@ -69,6 +71,9 @@ Só é preciso ter Docker. O resto roda nos containers.
 | `make test` | testes da API (Pest, contra PostgreSQL real) |
 | `make lint` | Pint, Larastan (nível 10), ESLint e `tsc` |
 | `make mutate` | cobertura de linhas de 100% e teste de mutação nas classes do back alteradas em relação à `origin/main` (outra base: `make mutate BASE=...`) |
+| `make test-front` | testes do front (Vitest) |
+| `make mutate-front` | teste de mutação (StrykerJS) nas linhas do front alteradas em relação à `origin/main` |
+| `make e2e` | testes de ponta a ponta (Playwright), com o ambiente de pé; cria conteúdo de teste no banco de dev |
 | `make api-types` | regenera o OpenAPI e os tipos do front (obrigatório depois de mudar a API) |
 | `make migrate` | roda migrations pendentes |
 | `make fresh` | **apaga** o banco de dev e recria com seeders. Não rodar sem pedir |

@@ -1,8 +1,7 @@
 // mesma regra de User::initials() no backend, para a prévia ao vivo durante a edição
 export function initialsOf(displayName: string): string {
   const parts = displayName.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return '';
-  const first = parts[0][0];
-  const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
-  return (first + last).toUpperCase();
+  const [first = '', ...rest] = parts;
+  const last = rest.at(-1) ?? '';
+  return (first.slice(0, 1) + last.slice(0, 1)).toUpperCase();
 }

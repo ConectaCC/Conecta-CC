@@ -37,7 +37,7 @@ export function LoginPage() {
     setProblem(null);
     try {
       await login.mutateAsync(values);
-      navigate('/home', { replace: true });
+      void navigate('/home', { replace: true });
     } catch (error) {
       if (error instanceof ApiError && error.status === 422 && error.fieldErrors.credentials) {
         setProblem({ kind: 'credentials' });

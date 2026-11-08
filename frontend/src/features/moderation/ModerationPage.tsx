@@ -65,7 +65,7 @@ export function ModerationPage() {
     focusTarget.current = 'heading';
     setConflict(null);
     setSelected(null);
-    queue.refetch();
+    void queue.refetch();
   }
 
   return (

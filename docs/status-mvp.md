@@ -171,6 +171,8 @@ Atualmente estão definidos, entre outros:
 
 **Qualidade:** uma rodada de testes ponta a ponta de todos os módulos, cobrindo responsividade, acessibilidade, erros e concorrência (`implementacao.md` §19 a §21).
 
+> **Atualização (08/11/2026):** a base dessa rodada existe: `make e2e` cobre login e saída, material anônimo do envio à Auditoria, oportunidade sem autoria e as páginas principais em 390 e 1440 px (`decisoes.md` 77). A rodada completa de todos os módulos continua pendente.
+
 ---
 
 # Próximos marcos

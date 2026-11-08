@@ -48,6 +48,9 @@ O `MaterialSeeder` cria materiais de exemplo (aprovados, pendentes, rejeitado, c
 | `make test` | testes da API (Pest, contra PostgreSQL) |
 | `make lint` | Pint, Larastan (nível 10), ESLint e TypeScript |
 | `make mutate` | antes do PR: cobertura de linhas de 100% e teste de mutação nas classes do back alteradas em relação à `origin/main`, com nota mínima de 90%. Outra base: `make mutate BASE=main` |
+| `make test-front` | testes do front (Vitest e Testing Library) |
+| `make mutate-front` | antes do PR: StrykerJS nas linhas do front alteradas em relação à `origin/main`, com nota mínima de 80%. O relatório fica em `frontend/reports/mutation/index.html` |
+| `make e2e` | testes de ponta a ponta (Playwright) com o ambiente de pé. Roda num container na rede do host (Docker do Linux, ou Docker Desktop com a rede do host ligada). Cria materiais e oportunidades com "e2e" no título no banco de dev e limpa o cache antes, por causa do limite de envios |
 | `make api-types` | exporta o OpenAPI e regenera os tipos do front; rode sempre que mudar a API e commite `frontend/openapi.json` e `frontend/src/lib/api/schema.d.ts` |
 | `make shell` | terminal dentro do container do Laravel |
 

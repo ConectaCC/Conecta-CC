@@ -53,7 +53,7 @@ export function MyOpportunities() {
   // vindo de uma notificação (?item=OPO-…): carrega até achar e rola até o item
   useEffect(() => {
     if (!target || found || !list.hasNextPage || list.isFetchingNextPage || list.isFetchNextPageError) return;
-    list.fetchNextPage();
+    void list.fetchNextPage();
   }, [target, found, list]);
 
   useEffect(() => {

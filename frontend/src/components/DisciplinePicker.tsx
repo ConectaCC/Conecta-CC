@@ -45,7 +45,10 @@ export function DisciplinePicker({ id, options, value, onChange, error, describe
   const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();
-      if (!open) return setOpen(true);
+      if (!open) {
+        setOpen(true);
+        return;
+      }
       const step = event.key === 'ArrowDown' ? 1 : -1;
       setActive((current) => (results.length === 0 ? 0 : (current + step + results.length) % results.length));
     } else if (event.key === 'Enter') {

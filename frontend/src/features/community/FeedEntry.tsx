@@ -2,15 +2,10 @@ import { BookOpen, Briefcase, CalendarDays, FileText, Users } from 'lucide-react
 import { Link } from 'react-router';
 import { UserAvatar } from '@/components/layout/UserAvatar';
 import { TYPE_LABELS } from '@/features/opportunities/labels';
+import { initialsOf } from '@/features/profile/initials';
 import { timeAgo } from '@/lib/format';
 import { cn } from '@/lib/utils';
 import type { FeedItem } from './hooks';
-
-// mesma regra do backend (User::initials): primeiro e último nome
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/);
-  return ((parts[0]?.[0] ?? '') + (parts.length > 1 ? (parts.at(-1)?.[0] ?? '') : '')).toUpperCase();
-}
 
 const linkClass = 'font-semibold text-navy-900 underline-offset-2 hover:underline';
 

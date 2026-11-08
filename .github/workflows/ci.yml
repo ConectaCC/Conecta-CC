@@ -80,6 +80,8 @@ jobs:
         working-directory: frontend
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # o teste de mutação compara com a base do PR
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -88,6 +90,15 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
+      - run: npm test
+      - name: Teste de mutação nas linhas alteradas (nota mínima 80%)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          lines=$(../scripts/changed-front-lines.sh "origin/$BASE_REF")
+          if [ -z "$lines" ]; then echo "Nenhuma linha de frontend/src alterada."; exit 0; fi
+          npm run mutate -- --mutate "$lines"
       - name: Tipos da API gerados do OpenAPI versionado
         run: |
           npm run api-types
