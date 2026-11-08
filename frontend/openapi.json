@@ -369,6 +369,21 @@
                         }
                     },
                     {
+                        "name": "type",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "enum": [
+                                "material",
+                                "opportunity",
+                                null
+                            ]
+                        }
+                    },
+                    {
                         "name": "cursor",
                         "in": "query",
                         "description": "Cursor da pr\u00f3xima p\u00e1gina (meta.next_cursor).",
@@ -1497,12 +1512,16 @@
                                         "materials": {
                                             "type": "integer"
                                         },
+                                        "opportunities": {
+                                            "type": "integer"
+                                        },
                                         "students": {
                                             "type": "integer"
                                         }
                                     },
                                     "required": [
                                         "materials",
+                                        "opportunities",
                                         "students"
                                     ]
                                 }
@@ -1636,6 +1655,13 @@
             "CommunityFeedItemResource": {
                 "type": "object",
                 "properties": {
+                    "kind": {
+                        "type": "string",
+                        "enum": [
+                            "opportunity",
+                            "material"
+                        ]
+                    },
                     "id": {
                         "type": "integer"
                     },
@@ -1655,7 +1681,10 @@
                         ]
                     },
                     "discipline": {
-                        "type": "object",
+                        "type": [
+                            "object",
+                            "null"
+                        ],
                         "properties": {
                             "name": {
                                 "type": "string"
@@ -1669,12 +1698,17 @@
                             "slug"
                         ]
                     },
+                    "opportunity_type": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
                     "author_name": {
                         "type": [
                             "string",
                             "null"
-                        ],
-                        "description": "an\u00f4nimo: ningu\u00e9m recebe o autor no mural, nem o ADMINISTRADOR nem o pr\u00f3prio autor (decisoes.md \u00a755.2)"
+                        ]
                     },
                     "author_code": {
                         "type": [
@@ -1683,16 +1717,18 @@
                         ]
                     },
                     "is_mine": {
-                        "type": "string"
+                        "type": "boolean"
                     }
                 },
                 "required": [
+                    "kind",
                     "id",
                     "code",
                     "title",
                     "url",
                     "published_at",
                     "discipline",
+                    "opportunity_type",
                     "author_name",
                     "author_code",
                     "is_mine"

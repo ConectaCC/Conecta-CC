@@ -464,6 +464,8 @@ export interface components {
         };
         /** CommunityFeedItemResource */
         CommunityFeedItemResource: {
+            /** @enum {string} */
+            kind: "opportunity" | "material";
             id: number;
             code: string;
             title: string;
@@ -472,11 +474,11 @@ export interface components {
             discipline: {
                 name: string;
                 slug: string;
-            };
-            /** @description anônimo: ninguém recebe o autor no mural, nem o ADMINISTRADOR nem o próprio autor (decisoes.md §55.2) */
+            } | null;
+            opportunity_type: string | null;
             author_name: string | null;
             author_code: string | null;
-            is_mine: string;
+            is_mine: boolean;
         };
         /** DisciplineResource */
         DisciplineResource: {
@@ -994,6 +996,7 @@ export interface operations {
             query?: {
                 q?: string | null;
                 order?: "recent" | "oldest" | null;
+                type?: "material" | "opportunity" | null;
                 /** @description Cursor da próxima página (meta.next_cursor). */
                 cursor?: string;
             };
@@ -1568,6 +1571,7 @@ export interface operations {
                 content: {
                     "application/json": {
                         materials: number;
+                        opportunities: number;
                         students: number;
                     };
                 };

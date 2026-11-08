@@ -5,6 +5,7 @@ use App\Actions\ReviseMaterial;
 use App\Enums\Role;
 use App\Models\Discipline;
 use App\Models\Material;
+use App\Models\Opportunity;
 use App\Models\User;
 
 const FEED = '/api/v1/community/feed';
@@ -33,12 +34,14 @@ it('traz a disciplina, o autor e o link do material identificado', function () {
     $this->actingAs(User::factory()->create())->getJson(FEED)
         ->assertOk()
         ->assertJsonPath('data.0', [
+            'kind' => 'material',
             'id' => $material->id,
             'code' => $material->code,
             'title' => 'Resumo de Grafos',
             'url' => 'https://example.com/grafos',
             'published_at' => $material->published_at->toIso8601String(),
             'discipline' => ['name' => 'Algoritmos I', 'slug' => $discipline->slug],
+            'opportunity_type' => null,
             'author_name' => 'Marcos',
             'author_code' => $author->fresh()->public_code,
             'is_mine' => false,
@@ -158,9 +161,68 @@ it('conta materiais publicados e estudantes', function () {
 
     $this->actingAs(User::factory()->create())->getJson('/api/v1/community/stats')
         ->assertOk()
-        ->assertExactJson(['materials' => 3, 'students' => User::count()]);
+        ->assertExactJson(['materials' => 3, 'opportunities' => 0, 'students' => User::count()]);
 });
 
 it('exige sessão para os números', function () {
     $this->getJson('/api/v1/community/stats')->assertUnauthorized();
+});
+
+it('mistura materiais e oportunidades pela publicação, e a oportunidade não traz autoria', function () {
+    $author = User::factory()->create(['display_name' => 'Pessoa Que Indicou']);
+    $material = Material::factory()->approved()->create(['published_at' => now()->subHours(2)]);
+    $opportunity = Opportunity::factory()->for($author, 'author')->approved()->create(['type' => 'ESTAGIO', 'title' => 'Estágio em dados', 'published_at' => now()->subHour()]);
+
+    $response = $this->actingAs(User::factory()->create())->getJson(FEED)->assertOk()->assertJsonCount(2, 'data');
+
+    expect($response->json('data.0'))->toMatchArray([
+        'kind' => 'opportunity', 'id' => $opportunity->id, 'title' => 'Estágio em dados', 'opportunity_type' => 'ESTAGIO',
+        'discipline' => null, 'author_name' => null, 'author_code' => null, 'is_mine' => false,
+    ])
+        ->and($response->json('data.1.kind'))->toBe('material')
+        ->and($response->json('data.1.id'))->toBe($material->id)
+        ->and($response->getContent())->not->toContain('Pessoa Que Indicou');
+});
+
+it('não mostra no mural a oportunidade vencida, excluída ou pendente', function () {
+    Opportunity::factory()->approved()->create(['deadline' => now()->subDay()->toDateString()]);
+    Opportunity::factory()->approved()->create()->delete();
+    Opportunity::factory()->create();
+
+    $this->actingAs(User::factory()->create())->getJson(FEED)->assertOk()->assertJsonCount(0, 'data');
+});
+
+it('filtra o mural por tipo e busca nas oportunidades', function () {
+    $material = Material::factory()->approved()->create(['title' => 'Resumo de grafos']);
+    $opportunity = Opportunity::factory()->approved()->create(['title' => 'Hackathon', 'description' => 'Maratona de grafos.']);
+    $user = User::factory()->create();
+
+    expect($this->actingAs($user)->getJson(FEED.'?type=material')->json('data.*.id'))->toBe([$material->id])
+        ->and($this->actingAs($user)->getJson(FEED.'?type=opportunity')->json('data.*.id'))->toBe([$opportunity->id])
+        ->and($this->actingAs($user)->getJson(FEED.'?q=maratona')->json('data.*.kind'))->toBe(['opportunity'])
+        ->and($this->actingAs($user)->getJson(FEED.'?q=grafos')->json('data.*.kind'))->toEqualCanonicalizing(['material', 'opportunity']);
+    $this->actingAs($user)->getJson(FEED.'?type=evento')->assertJsonValidationErrors(['type']);
+});
+
+it('pagina os dois tipos juntos sem repetir nem pular, mesmo publicados no mesmo instante', function () {
+    $at = now()->subDay();
+    $materials = Material::factory()->count(12)->approved()->create(['published_at' => $at]);
+    $opportunities = Opportunity::factory()->count(12)->approved()->create(['published_at' => $at]);
+    $user = User::factory()->create();
+
+    $first = $this->actingAs($user)->getJson(FEED.'?order=oldest')->assertJsonCount(20, 'data');
+    $second = $this->actingAs($user)->getJson(FEED.'?order=oldest&cursor='.$first->json('meta.next_cursor'))->assertJsonCount(4, 'data');
+
+    $seen = collect([...$first->json('data'), ...$second->json('data')])->map(fn ($item) => $item['kind'].':'.$item['id']);
+    $expected = $materials->map(fn ($m) => 'material:'.$m->id)->merge($opportunities->map(fn ($o) => 'opportunity:'.$o->id));
+    expect($seen->unique()->count())->toBe(24)
+        ->and($seen->sort()->values()->all())->toBe($expected->sort()->values()->all());
+});
+
+it('conta as oportunidades visíveis nos números', function () {
+    Opportunity::factory()->count(2)->approved()->create();
+    Opportunity::factory()->approved()->create(['deadline' => now()->subDay()->toDateString()]);
+    Opportunity::factory()->create();
+
+    $this->actingAs(User::factory()->create())->getJson('/api/v1/community/stats')->assertJsonPath('opportunities', 2);
 });
