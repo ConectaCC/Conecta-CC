@@ -1,17 +1,38 @@
-# avisa por PR quando sai versão nova, inclusive de segurança, das dependências do back, do front e do CI
+# avisa por PR quando sai versão nova, inclusive de segurança, das dependências do back, do front, do CI e da imagem.
+# atualizações pequenas chegam num PR só por semana; versão principal chega sozinha, para ser conferida com calma.
+# os PRs de segurança não seguem os grupos nem o limite: chegam na hora, um por aviso.
 version: 2
 updates:
   - package-ecosystem: composer
     directory: /backend
     schedule: { interval: weekly }
     open-pull-requests-limit: 5
+    groups:
+      composer-pequenas:
+        update-types: [minor, patch]
+
   - package-ecosystem: npm
     directory: /frontend
     schedule: { interval: weekly }
     open-pull-requests-limit: 5
+    groups:
+      npm-pequenas:
+        update-types: [minor, patch]
+
   - package-ecosystem: github-actions
     directory: /
     schedule: { interval: weekly }
+    groups:
+      actions:
+        patterns: ['*']
+
   - package-ecosystem: docker
     directory: /
     schedule: { interval: weekly }
+    ignore:
+      # Node só em versão LTS (as pares), e junto com o ambiente de desenvolvimento
+      - dependency-name: node
+        update-types: [version-update:semver-major]
+      # a versão do PHP da imagem acompanha a do desenvolvimento e a do CI (8.4): troca por decisão, não por PR automático
+      - dependency-name: serversideup/php
+        update-types: [version-update:semver-major, version-update:semver-minor]
