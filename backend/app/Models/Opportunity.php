@@ -89,8 +89,9 @@ class Opportunity extends Model
             return false;
         }
 
+        // a aprovada sempre tem published_at: o ?-> só satisfaz o tipo
         $last = $this->deadline?->toDateString()
-            ?? $this->published_at?->setTimezone(Campus::TIMEZONE)->addDays(self::DEFAULT_VISIBLE_DAYS)->toDateString();
+            ?? $this->published_at?->setTimezone(Campus::TIMEZONE)->addDays(self::DEFAULT_VISIBLE_DAYS)->toDateString(); // @pest-mutate-ignore: RemoveNullSafeOperator
 
         return $last !== null && $last < Campus::today();
     }

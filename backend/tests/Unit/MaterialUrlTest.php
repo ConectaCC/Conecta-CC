@@ -15,6 +15,9 @@ it('normaliza o link do material', function (string $input, string $expected) {
     'punycode vira acento' => ['https://XN--MNCHEN-3YA.de/x', 'https://münchen.de/x'],
     'acento continua acento' => ['https://München.de/x', 'https://münchen.de/x'],
     'subdomínio sem protocolo' => ['drive.google.com/file/d/1', 'https://drive.google.com/file/d/1'],
+    'protocolo em maiúsculas' => ['HTTPS://Site.com/x', 'https://site.com/x'],
+    'porta 80 no https continua' => ['https://site.com:80/x', 'https://site.com:80/x'],
+    'porta 443 no http continua' => ['http://site.com:443/x', 'http://site.com:443/x'],
 ]);
 
 it('recusa link inválido', function (string $input) {
@@ -33,6 +36,10 @@ it('recusa link inválido', function (string $input) {
     'colchete no host' => ['https://site.com]/x'],
     'host só com ponto' => ['https://./'],
     'rótulo vazio' => ['https://site..com/'],
+    'espaço no caminho' => ['https://site.com/a b'],
+    'sem host' => ['https:///x'],
+    'rótulo com mais de 63 caracteres' => ['https://'.str_repeat('a', 64).'.com/'],
+    'sem ponto antes da busca' => ['site?x.com'],
 ]);
 
 it('aceita host com acento', function () {

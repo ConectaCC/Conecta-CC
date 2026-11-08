@@ -18,6 +18,6 @@ final class CancelMaterialController
             Conflict::abort('not_cancellable', 'Este envio não pode ser cancelado.');
         }
 
-        return new MyMaterialResource($material->refresh()->load(['discipline', 'revisions']));
+        return new MyMaterialResource($material->refresh());
     }
 }

@@ -4,6 +4,7 @@ use App\Actions\RegisterUser;
 use App\Enums\Role;
 use App\Models\TermsAcceptance;
 use App\Models\User;
+use Carbon\CarbonInterface;
 use Illuminate\Validation\ValidationException;
 
 function registerPayload(array $overrides = []): array
@@ -18,7 +19,7 @@ function registerPayload(array $overrides = []): array
 }
 
 it('cria a conta como ALUNO, com Nome de exibição inicial e aceite registrado', function () {
-    $this->postJson('/api/v1/register', registerPayload())->assertCreated();
+    $this->postJson('/api/v1/register', registerPayload())->assertCreated()->assertExactJson(['message' => 'Conta criada.']);
 
     $user = User::sole();
     expect($user->role)->toBe(Role::Aluno)
@@ -27,7 +28,7 @@ it('cria a conta como ALUNO, com Nome de exibição inicial e aceite registrado'
 
     $acceptance = $user->termsAcceptances()->sole();
     expect($acceptance->version)->toBe(config('conectacc.terms_version'))
-        ->and($acceptance->accepted_at)->not->toBeNull();
+        ->and($acceptance->accepted_at)->toBeInstanceOf(CarbonInterface::class);
 
     $this->assertGuest('web'); // o fluxo volta ao Login, sem login automático
 });
@@ -109,7 +110,7 @@ it('transforma a corrida de e-mail duplicado em erro de validação', function (
     User::factory()->create(['email' => 'ana.silva@academico.ifsul.edu.br']);
 
     expect(fn () => app(RegisterUser::class)->handle('Ana Silva', 'ana.silva@academico.ifsul.edu.br', 'segredo123', config('conectacc.terms_version')))
-        ->toThrow(ValidationException::class);
+        ->toThrow(fn (ValidationException $e) => expect($e->errors())->toBe(['email' => ['Não foi possível criar uma conta com este e-mail. Se você já possui cadastro, entre.']]));
 });
 
 it('limita o Cadastro a 5 tentativas por minuto por IP', function () {

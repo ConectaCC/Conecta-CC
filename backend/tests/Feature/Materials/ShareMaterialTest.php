@@ -133,7 +133,11 @@ it('limita a 10 envios por hora', function () {
 
     $this->actingAs($user)->postJson(shareUrl(), sharePayload(['url' => 'https://site.com/11']))
         ->assertTooManyRequests()
+        ->assertHeader('Retry-After')
         ->assertJsonPath('message', fn (string $message) => str_starts_with($message, 'Muitas tentativas. Tente novamente em'));
+
+    // a cota é de cada pessoa
+    $this->actingAs(User::factory()->create())->postJson(shareUrl(), sharePayload(['url' => 'https://site.com/12']))->assertCreated();
 });
 
 it('exige login para compartilhar', function () {

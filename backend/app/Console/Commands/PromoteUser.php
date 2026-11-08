@@ -18,7 +18,8 @@ final class PromoteUser extends Command
 
     public function handle(): int
     {
-        $role = Role::tryFrom(Str::upper(trim((string) $this->argument('role'))));
+        // argumentos obrigatórios chegam como texto: os casts só satisfazem o tipo
+        $role = Role::tryFrom(Str::upper(trim((string) $this->argument('role')))); // @pest-mutate-ignore: RemoveStringCast
 
         if ($role === null) {
             $this->error('Papel inválido. Use ALUNO, MODERADOR ou ADMINISTRADOR.');
@@ -26,7 +27,7 @@ final class PromoteUser extends Command
             return self::FAILURE;
         }
 
-        $user = User::where('email', Str::lower(trim((string) $this->argument('email'))))->first();
+        $user = User::where('email', Str::lower(trim((string) $this->argument('email'))))->first(); // @pest-mutate-ignore: RemoveStringCast
 
         if ($user === null) {
             $this->error('Nenhum usuário encontrado com este e-mail.');

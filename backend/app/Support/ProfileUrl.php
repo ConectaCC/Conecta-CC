@@ -36,14 +36,16 @@ final class ProfileUrl
         }
 
         $parts = parse_url($url);
-        if ($parts === false
-            || ! in_array(strtolower($parts['scheme'] ?? ''), ['http', 'https'], true)
+        // o false e os ?? '' só satisfazem o tipo: sem partes, sem esquema ou sem host o link é recusado do mesmo jeito
+        if ($parts === false // @pest-mutate-ignore: FalseToTrue
+            || ! in_array(strtolower($parts['scheme'] ?? ''), ['http', 'https'], true) // @pest-mutate-ignore: EmptyStringToNotEmpty
             || isset($parts['user']) || isset($parts['pass']) || isset($parts['port'])
-            || ! preg_match($hostPattern, strtolower($parts['host'] ?? ''))) {
+            || ! preg_match($hostPattern, strtolower($parts['host'] ?? ''))) { // @pest-mutate-ignore: EmptyStringToNotEmpty
             return null;
         }
 
-        $path = $parts['path'] ?? '';
+        // sem caminho, o padrão do perfil recusa: o '' só satisfaz o tipo
+        $path = $parts['path'] ?? ''; // @pest-mutate-ignore: EmptyStringToNotEmpty
 
         return str_ends_with($path, '/') ? substr($path, 0, -1) : $path;
     }

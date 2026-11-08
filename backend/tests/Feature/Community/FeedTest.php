@@ -208,6 +208,7 @@ it('filtra o mural por tipo e busca nas oportunidades', function () {
     expect($this->actingAs($user)->getJson(FEED.'?type=material')->json('data.*.id'))->toBe([$material->id])
         ->and($this->actingAs($user)->getJson(FEED.'?type=opportunity')->json('data.*.id'))->toBe([$opportunity->id])
         ->and($this->actingAs($user)->getJson(FEED.'?q=maratona')->json('data.*.kind'))->toBe(['opportunity'])
+        ->and($this->actingAs($user)->getJson(FEED.'?q=resumo')->json('data.*.kind'))->toBe(['material'])
         ->and($this->actingAs($user)->getJson(FEED.'?q=grafos')->json('data.*.kind'))->toEqualCanonicalizing(['material', 'opportunity']);
     $this->actingAs($user)->getJson(FEED.'?type=evento')->assertJsonValidationErrors(['type']);
 });

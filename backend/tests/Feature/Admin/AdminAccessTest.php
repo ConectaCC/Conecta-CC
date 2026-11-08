@@ -25,7 +25,8 @@ it('recusa ALUNO e MODERADOR com a página em português', function (Role $role)
 })->with([Role::Aluno, Role::Moderador]);
 
 it('abre o painel para o ADMINISTRADOR', function () {
-    $this->actingAs(panelUser(), 'web')->get('/admin')->assertRedirect('/admin/usuarios');
+    $this->actingAs(panelUser(attributes: ['display_name' => 'Ana Admin']), 'web')->get('/admin')->assertRedirect('/admin/usuarios');
+    $this->get('/admin/usuarios')->assertSee('<span class="conectacc-user-name">Ana Admin</span>', false);
     $this->get('/admin/usuarios')->assertOk()->assertSee('Usuários')->assertSee('Voltar ao ConectaCC');
 });
 

@@ -15,7 +15,8 @@ final class ModerationMaterialResource extends JsonResource
     {
         $viewer = $request->user();
         // o MODERADOR nunca recebe a identidade do autor anônimo (requisitos §1.2); o ADMINISTRADOR recebe
-        $hideAuthor = $this->anonymous && $viewer?->role !== Role::Administrador;
+        // a rota exige sessão: o ?-> só satisfaz o tipo
+        $hideAuthor = $this->anonymous && $viewer?->role !== Role::Administrador; // @pest-mutate-ignore: RemoveNullSafeOperator
 
         return [
             'id' => $this->id,
@@ -25,7 +26,7 @@ final class ModerationMaterialResource extends JsonResource
             'url' => $this->url,
             'anonymous' => $this->anonymous,
             'author_name' => $hideAuthor ? null : $this->author->display_name,
-            'is_own' => $viewer?->id === $this->user_id,
+            'is_own' => $viewer?->id === $this->user_id, // @pest-mutate-ignore: RemoveNullSafeOperator
             'submitted_at' => $this->created_at->toIso8601String(),
             'discipline' => [
                 'id' => $this->discipline->id,

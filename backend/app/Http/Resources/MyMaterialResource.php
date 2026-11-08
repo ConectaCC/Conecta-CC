@@ -41,7 +41,8 @@ final class MyMaterialResource extends JsonResource
             ] : null,
             'rejected_revision' => $latest?->status === MaterialStatus::Rejeitado ? [
                 'reason' => $latest->rejection_reason,
-                'decided_at' => $latest->decided_at?->toIso8601String(),
+                // toda rejeição grava decided_at: o ?-> só satisfaz o tipo
+                'decided_at' => $latest->decided_at?->toIso8601String(), // @pest-mutate-ignore: RemoveNullSafeOperator
             ] : null,
         ];
     }

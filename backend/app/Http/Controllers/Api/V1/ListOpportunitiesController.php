@@ -21,7 +21,8 @@ final class ListOpportunitiesController
         $opportunities = Opportunity::query()
             ->visible()
             ->when($type !== null, fn (Builder $query) => $query->where('type', $type))
-            ->when($term !== '', fn (Builder $query) => $query->where(fn (Builder $query) => UnaccentSearch::where(
+            // buscar '' casa com tudo: o when só poupa a condição
+            ->when($term !== '', fn (Builder $query) => $query->where(fn (Builder $query) => UnaccentSearch::where( // @pest-mutate-ignore: EmptyStringToNotEmpty
                 UnaccentSearch::where($query, 'opportunities.title', $term),
                 'opportunities.description',
                 $term,

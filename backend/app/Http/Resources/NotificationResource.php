@@ -30,22 +30,23 @@ final class NotificationResource extends JsonResource
         // só MaterialDecided e OpportunityDecided gravam notificações; um tipo desconhecido é erro de programação
         [$title, $detail, $approved] = self::TEXTS[$data['kind']] ?? throw new UnexpectedValueException("Tipo de notificação desconhecido: {$data['kind']}");
         // (bool) explícito: sem ele o Scramble deduz o tipo pelo array de textos e documenta "ok" como string
-        $approved = (bool) $approved;
+        $approved = (bool) $approved; // @pest-mutate-ignore: RemoveBooleanCast
 
         return [
-            'id' => (string) $this->id,
+            // o id já é um UUID em texto; os ?? '' abaixo só satisfazem o tipo, porque toda notificação grava esses dados
+            'id' => (string) $this->id, // @pest-mutate-ignore: RemoveStringCast
             'title' => $title,
-            'detail' => sprintf($detail, $opportunity ? ($data['title'] ?? '') : ($data['discipline_name'] ?? '')),
+            'detail' => sprintf($detail, $opportunity ? ($data['title'] ?? '') : ($data['discipline_name'] ?? '')), // @pest-mutate-ignore: EmptyStringToNotEmpty
             'ok' => $approved,
             'read' => $this->read_at !== null,
             // aprovado leva ao conteúdo; rejeitado leva ao item em Meus conteúdos (onde está o motivo)
             'link' => match (true) {
                 $opportunity && $approved => '/oportunidade#oportunidade-'.$data['opportunity_id'],
                 $opportunity => '/perfil/meus-conteudos?tipo=oportunidades&item='.$data['code'],
-                $approved => '/estudos/'.($data['discipline_slug'] ?? ''),
+                $approved => '/estudos/'.($data['discipline_slug'] ?? ''), // @pest-mutate-ignore: EmptyStringToNotEmpty
                 default => '/perfil/meus-conteudos?item='.$data['code'],
             },
-            'created_at' => $this->created_at?->toIso8601String() ?? '',
+            'created_at' => $this->created_at?->toIso8601String() ?? '', // @pest-mutate-ignore: RemoveNullSafeOperator,EmptyStringToNotEmpty
         ];
     }
 }

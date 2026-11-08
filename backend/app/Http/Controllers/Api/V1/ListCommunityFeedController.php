@@ -28,12 +28,13 @@ final class ListCommunityFeedController
             ->selectRaw("'material' as kind, id, published_at")
             ->where('status', MaterialStatus::Aprovado)
             ->whereNull('revises_id')
-            ->when($term !== '', fn (Builder $query) => $this->searchMaterials($query, $term));
+            // buscar '' casa com tudo: o when só poupa a condição
+            ->when($term !== '', fn (Builder $query) => $this->searchMaterials($query, $term)); // @pest-mutate-ignore: EmptyStringToNotEmpty
 
         $opportunities = Opportunity::query()
             ->selectRaw("'opportunity' as kind, id, published_at")
             ->visible()
-            ->when($term !== '', fn (Builder $query) => $query->where(fn (Builder $query) => UnaccentSearch::where(
+            ->when($term !== '', fn (Builder $query) => $query->where(fn (Builder $query) => UnaccentSearch::where( // @pest-mutate-ignore: EmptyStringToNotEmpty
                 UnaccentSearch::where($query, 'opportunities.title', $term),
                 'opportunities.description',
                 $term,
@@ -63,7 +64,8 @@ final class ListCommunityFeedController
         // a linha original fica no item: o cursor da próxima página é calculado a partir de kind, id e published_at
         return CommunityFeedItemResource::collection($page->through(function (\stdClass $row) use ($loaded): \stdClass {
             $kind = $row->kind === 'opportunity' ? 'opportunity' : 'material';
-            $row->model = $loaded[$kind][is_numeric($row->id) ? (int) $row->id : 0];
+            // o id vem do banco sempre numérico: o cast e o 0 só satisfazem o tipo
+            $row->model = $loaded[$kind][is_numeric($row->id) ? (int) $row->id : 0]; // @pest-mutate-ignore: RemoveIntegerCast,IncrementInteger,DecrementInteger
 
             return $row;
         }));

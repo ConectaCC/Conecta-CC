@@ -71,5 +71,16 @@ it('bloqueia a 6ª tentativa no mesmo minuto', function () {
 
     $this->postJson('/api/v1/login', ['email' => 'aluno@academico.ifsul.edu.br', 'password' => 'segredo123'])
         ->assertTooManyRequests()
-        ->assertJsonPath('message', fn (string $message) => str_starts_with($message, 'Muitas tentativas. Tente novamente em '));
+        ->assertJsonPath('message', fn (string $message) => preg_match('/^Muitas tentativas\. Tente novamente em [1-9]\d* segundos\.$/', $message) === 1);
+});
+
+it('conta as tentativas pelo e-mail, sem diferenciar maiúsculas, e não bloqueia outro e-mail', function () {
+    foreach (['aluno@academico.ifsul.edu.br', 'ALUNO@academico.ifsul.edu.br'] as $email) {
+        foreach (range(1, 3) as $ignored) {
+            $this->postJson('/api/v1/login', ['email' => $email, 'password' => 'senha-errada']);
+        }
+    }
+
+    $this->postJson('/api/v1/login', ['email' => 'Aluno@Academico.ifsul.edu.br', 'password' => 'segredo123'])->assertTooManyRequests();
+    $this->postJson('/api/v1/login', ['email' => 'outro@academico.ifsul.edu.br', 'password' => 'x'])->assertUnprocessable();
 });

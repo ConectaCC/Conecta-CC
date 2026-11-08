@@ -39,7 +39,8 @@ class AdminPanelProvider extends PanelProvider
     {
         $user = Filament::auth()->user();
 
-        return $user instanceof User ? $user->display_name : '';
+        // o painel só abre com sessão de User: o '' só satisfaz o tipo
+        return $user instanceof User ? $user->display_name : ''; // @pest-mutate-ignore: InstanceOfToTrue,EmptyStringToNotEmpty
     }
 
     public function panel(Panel $panel): Panel

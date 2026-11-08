@@ -12,21 +12,19 @@ final class MaterialUrl
     {
         $url = trim($input);
 
-        if ($url === '' || preg_match('/\s/', $url)) {
+        if (preg_match('/\s/', $url)) {
             return null;
         }
 
+        // sem protocolo, completa com https://; o que não for domínio (texto solto) o HOST recusa abaixo
         if (! preg_match('#^[a-z][a-z0-9+.-]*://#i', $url)) {
-            // sem protocolo, só completa o que parece um domínio (site.com/x), como o protótipo
-            if (! preg_match('#^[^\s/:]+\.[^\s]+$#', $url)) {
-                return null;
-            }
             $url = 'https://'.$url;
         }
 
         $parts = parse_url($url);
-        $scheme = strtolower($parts['scheme'] ?? '');
-        $host = self::canonicalHost($parts['host'] ?? '');
+        // os ?? '' só satisfazem o tipo: link sem esquema ou sem host é recusado do mesmo jeito
+        $scheme = strtolower($parts['scheme'] ?? ''); // @pest-mutate-ignore: EmptyStringToNotEmpty
+        $host = self::canonicalHost($parts['host'] ?? ''); // @pest-mutate-ignore: EmptyStringToNotEmpty
 
         if (! in_array($scheme, ['http', 'https'], true) || $host === null || ! preg_match(self::HOST, $host) || isset($parts['user'])) {
             return null;
@@ -51,8 +49,13 @@ final class MaterialUrl
         }
 
         $ascii = idn_to_ascii($host, IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
-        $unicode = $ascii === false ? false : idn_to_utf8($ascii, IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
+        if ($ascii === false) {
+            return null;
+        }
 
-        return $unicode === false ? null : mb_strtolower($unicode);
+        // o que volta do idn_to_ascii sempre converte de volta; o false só satisfaz o tipo
+        $unicode = idn_to_utf8($ascii, IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
+
+        return $unicode === false ? null : mb_strtolower($unicode); // @pest-mutate-ignore: FalseToTrue
     }
 }

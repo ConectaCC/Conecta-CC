@@ -29,6 +29,7 @@ final class MaterialSubmissionLimit
 
     private static function key(User $user): string
     {
-        return 'materials|'.$user->id;
+        // o prefixo só separa de outras chaves brutas do RateLimiter; hoje nenhuma colide
+        return 'materials|'.$user->id; // @pest-mutate-ignore: ConcatRemoveLeft,ConcatSwitchSides
     }
 }

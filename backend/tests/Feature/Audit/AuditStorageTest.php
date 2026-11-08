@@ -5,6 +5,7 @@ use App\Actions\RecordAuditEvent;
 use App\Enums\AuditAction;
 use App\Enums\Role;
 use App\Models\AuditEvent;
+use App\Models\Opportunity;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -79,4 +80,12 @@ it('não registra pelo workflow quando o papel é o mesmo', function () {
     $this->artisan('conectacc:promote', ['email' => 'ana@academico.ifsul.edu.br', 'role' => 'ALUNO'])->assertSuccessful();
 
     expect(AuditEvent::count())->toBe(0);
+});
+
+it('junta os dados extras aos da oportunidade', function () {
+    $opportunity = Opportunity::factory()->create(['title' => 'Vaga', 'type' => 'ESTAGIO']);
+
+    app(RecordAuditEvent::class)->handle(AuditAction::OpportunityRejected, $opportunity->author, data: ['note' => 'x'], opportunity: $opportunity);
+
+    expect(AuditEvent::sole()->data)->toEqual(['title' => 'Vaga', 'type' => 'ESTAGIO', 'note' => 'x']);
 });

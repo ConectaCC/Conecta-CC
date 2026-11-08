@@ -27,6 +27,14 @@ it('conta nova tem Perfil incompleto', function () {
         ->assertJsonPath('interests', []);
 });
 
+it('nome de exibição só com espaços deixa o Perfil incompleto e sem iniciais', function () {
+    $user = User::factory()->create(['display_name' => '   ']);
+    $user->disciplines()->attach(Discipline::where('name', 'Algoritmos I')->value('id'));
+
+    expect($user->isProfileComplete())->toBeFalse()
+        ->and($user->initials())->toBe('');
+});
+
 it('salva o Perfil e fica completo', function () {
     $user = User::factory()->create();
 
@@ -34,6 +42,8 @@ it('salva o Perfil e fica completo', function () {
         'display_name' => '  Ana   Maria  Silva ',
         'about' => "Linha 1\nLinha 2",
         'interests' => [' UX ', 'ux', '', 'Dados'],
+        'can_help_with' => ['Python'],
+        'needs_help_with' => ['Cálculo'],
         'github_url' => 'github.com/ana?tab=repositories',
         'linkedin_url' => 'br.linkedin.com/in/ana-silva/',
     ]))->assertOk()
@@ -41,6 +51,8 @@ it('salva o Perfil e fica completo', function () {
         ->assertJsonPath('initials', 'AS')
         ->assertJsonPath('about', "Linha 1\nLinha 2")
         ->assertJsonPath('interests', ['UX', 'Dados'])
+        ->assertJsonPath('can_help_with', ['Python'])
+        ->assertJsonPath('needs_help_with', ['Cálculo'])
         ->assertJsonPath('github_url', 'https://github.com/ana')
         ->assertJsonPath('linkedin_url', 'https://www.linkedin.com/in/ana-silva')
         ->assertJsonPath('disciplines.0.name', 'Algoritmos I')

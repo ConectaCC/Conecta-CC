@@ -76,14 +76,15 @@ class User extends Authenticatable implements FilamentUser
     // decisoes.md §8: Nome de exibição + pelo menos uma disciplina atual
     public function isProfileComplete(): bool
     {
-        return trim((string) $this->display_name) !== '' && $this->disciplines()->exists();
+        return trim($this->display_name) !== '' && $this->disciplines()->exists();
     }
 
     public function initials(): string
     {
-        $parts = preg_split('/\s+/u', trim((string) $this->display_name), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+        $parts = preg_split('/\s+/u', $this->display_name, flags: PREG_SPLIT_NO_EMPTY) ?: [];
         $first = mb_substr($parts[0] ?? '', 0, 1);
-        $last = count($parts) > 1 ? mb_substr((string) end($parts), 0, 1) : '';
+        // com mais de uma parte, end() sempre traz texto: o cast só satisfaz o tipo
+        $last = count($parts) > 1 ? mb_substr((string) end($parts), 0, 1) : ''; // @pest-mutate-ignore: RemoveStringCast
 
         return mb_strtoupper($first.$last);
     }

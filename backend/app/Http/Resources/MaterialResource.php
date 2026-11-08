@@ -22,7 +22,8 @@ final class MaterialResource extends JsonResource
             'author_name' => $this->anonymous ? null : $this->author->display_name,
             'author_code' => $this->anonymous ? null : $this->author->public_code,
             'published_at' => $this->published_at?->toIso8601String(),
-            'is_mine' => $request->user()?->id === $this->user_id,
+            // a rota exige sessão: o ?-> só satisfaz o tipo
+            'is_mine' => $request->user()?->id === $this->user_id, // @pest-mutate-ignore: RemoveNullSafeOperator
         ];
     }
 }

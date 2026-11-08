@@ -20,6 +20,22 @@ it('não duplica ao sincronizar de novo', function () {
     expect(Discipline::count())->toBe(49);
 });
 
+it('sincronizar de novo restaura semestre, carga horária e ementa, e atualiza a data', function () {
+    $algoritmos = Discipline::where('name', 'Algoritmos I')->sole();
+    $algoritmos->forceFill(['semester' => 8, 'workload_hours' => 1, 'syllabus_url' => null])->save();
+    $this->travel(1)->day();
+
+    DisciplineCatalog::sync(resource_path('catalog/matriz-2023.json'));
+
+    $synced = $algoritmos->fresh();
+    expect($synced->semester)->toBe(1)
+        ->and($synced->workload_hours)->toBe(75)
+        ->and($synced->syllabus_url)->toEndWith('PF_CC_1_Algoritmos_I.pdf')
+        ->and($synced->created_at)->not->toBeNull()
+        ->and($synced->updated_at->isToday())->toBeTrue()
+        ->and($synced->created_at->lt($synced->updated_at))->toBeTrue();
+});
+
 it('lista o catálogo ordenado por semestre e nome', function () {
     $this->actingAs(User::factory()->create())
         ->getJson('/api/v1/disciplines')

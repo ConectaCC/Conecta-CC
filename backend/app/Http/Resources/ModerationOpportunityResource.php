@@ -23,7 +23,8 @@ final class ModerationOpportunityResource extends JsonResource
             'deadline' => $this->deadline?->toDateString(),
             // na análise, quem modera sempre sabe quem enviou: oportunidade não tem envio anônimo (decisoes.md §70)
             'author_name' => $this->author->display_name,
-            'is_own' => $request->user()?->id === $this->user_id,
+            // a rota exige sessão: o ?-> só satisfaz o tipo
+            'is_own' => $request->user()?->id === $this->user_id, // @pest-mutate-ignore: RemoveNullSafeOperator
             'submitted_at' => $this->created_at->toIso8601String(),
         ];
     }

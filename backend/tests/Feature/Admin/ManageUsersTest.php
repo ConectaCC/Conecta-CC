@@ -85,7 +85,7 @@ it('esconde a ação na própria linha e ignora a chamada forjada', function () 
 
 it('recusa na regra a mudança do próprio papel', function () {
     expect(fn () => app(ChangeUserRole::class)->handle($this->admin, $this->admin, Role::Aluno))
-        ->toThrow(HttpException::class);
+        ->toThrow(fn (HttpException $e) => expect($e->getStatusCode())->toBe(403));
 
     expect($this->admin->fresh()->role)->toBe(Role::Administrador);
 });
@@ -95,7 +95,7 @@ it('recusa na regra quem não é ADMINISTRADOR', function (Role $role) {
     $target = User::factory()->create();
 
     expect(fn () => app(ChangeUserRole::class)->handle($actor, $target, Role::Administrador))
-        ->toThrow(HttpException::class);
+        ->toThrow(fn (HttpException $e) => expect($e->getStatusCode())->toBe(403));
 
     expect($target->fresh()->role)->toBe(Role::Aluno);
 })->with([Role::Aluno, Role::Moderador]);
