@@ -46,11 +46,11 @@ export function RegisterPage() {
     const values = getValues();
     try {
       await registerAccount.mutateAsync({ ...values, terms_version: termsVersion });
-      navigate('/login', { state: { registeredEmail: values.email.trim().toLowerCase() } });
+      void navigate('/login', { state: { registeredEmail: values.email.trim().toLowerCase() } });
     } catch (error) {
       if (error instanceof ApiError && error.status === 422) {
         // versão dos Termos mudou: buscar o texto novo antes de a pessoa aceitar de novo
-        if (error.fieldErrors.terms_version) queryClient.invalidateQueries({ queryKey: ['terms'] });
+        if (error.fieldErrors.terms_version) void queryClient.invalidateQueries({ queryKey: ['terms'] });
         focusAfterClose.current = FIELDS.find((field) => error.fieldErrors[field]) ?? null;
         const rest = applyFieldErrors(setError, error.fieldErrors, FIELDS);
         const other = Object.values(rest)[0]?.[0];

@@ -7,7 +7,10 @@ import { router } from '@/app/router';
 import { queryClient } from '@/lib/queryClient';
 import './index.css';
 
-createRoot(document.getElementById('root')!).render(
+const root = document.getElementById('root');
+if (!root) throw new Error('Elemento #root não encontrado no index.html.');
+
+createRoot(root).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />

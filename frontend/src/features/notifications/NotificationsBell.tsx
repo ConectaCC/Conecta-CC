@@ -20,7 +20,7 @@ export function NotificationsBell() {
 
   // além do polling, cada troca de página traz o contador atualizado
   useEffect(() => {
-    refetch();
+    void refetch();
   }, [pathname, refetch]);
 
   const items = notifications.data?.data ?? [];
@@ -30,7 +30,7 @@ export function NotificationsBell() {
   function openItem(item: AppNotification) {
     setOpen(false);
     if (!item.read) read.mutate(item.id);
-    navigate(item.link);
+    void navigate(item.link);
   }
 
   return (

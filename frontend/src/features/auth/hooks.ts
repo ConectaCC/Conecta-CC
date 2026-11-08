@@ -63,7 +63,7 @@ export function useTerms() {
   return useQuery({
     queryKey: ['terms'],
     // o Scramble não infere o corpo deste endpoint (JSON lido de arquivo), por isso o tipo é declarado aqui
-    queryFn: async () => (await call(api.GET('/terms/current'))) as unknown as Terms,
+    queryFn: async () => (await call(api.GET('/terms/current'))) as Terms,
     staleTime: Infinity,
   });
 }

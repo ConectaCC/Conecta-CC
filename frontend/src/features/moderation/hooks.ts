@@ -34,13 +34,13 @@ export function useModerationQueue() {
 
 function refresh(client: QueryClient, queued: QueueItem) {
   if (queued.kind === 'material') {
-    client.invalidateQueries({ queryKey: MATERIALS_KEY });
-    client.invalidateQueries({ queryKey: ['materials', queued.item.discipline.id] });
+    void client.invalidateQueries({ queryKey: MATERIALS_KEY });
+    void client.invalidateQueries({ queryKey: ['materials', queued.item.discipline.id] });
   } else {
-    client.invalidateQueries({ queryKey: OPPORTUNITIES_KEY });
-    client.invalidateQueries({ queryKey: ['opportunities'] });
+    void client.invalidateQueries({ queryKey: OPPORTUNITIES_KEY });
+    void client.invalidateQueries({ queryKey: ['opportunities'] });
   }
-  client.invalidateQueries({ queryKey: ['community'] });
+  void client.invalidateQueries({ queryKey: ['community'] });
 }
 
 export function useApprove() {

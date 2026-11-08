@@ -1,5 +1,5 @@
 import { Loader2, Settings } from 'lucide-react';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type SubmitEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import type { Location } from 'react-router';
 import { FormAlert } from '@/components/FormAlert';
@@ -87,7 +87,7 @@ export function SettingsPage() {
     }
   });
 
-  const submitOnce = (event: FormEvent<HTMLFormElement>) => {
+  const submitOnce = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     // um segundo envio falharia: a senha atual já teria mudado
     if (!isSubmitting) void onSubmit(event);

@@ -35,8 +35,8 @@ export function useAddOpportunity() {
       return call(api.POST('/opportunities', { body }));
     },
     onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['my-opportunities'] });
-      client.invalidateQueries({ queryKey: ['moderation'] });
+      void client.invalidateQueries({ queryKey: ['my-opportunities'] });
+      void client.invalidateQueries({ queryKey: ['moderation'] });
     },
   });
 }

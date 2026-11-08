@@ -37,8 +37,8 @@ export function useReviseMaterial() {
       return call(api.PUT('/materials/{material}', { params: { path: { material: id } }, body }));
     },
     onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['my-materials'] });
-      client.invalidateQueries({ queryKey: ['moderation', 'materials'] });
+      void client.invalidateQueries({ queryKey: ['my-materials'] });
+      void client.invalidateQueries({ queryKey: ['moderation', 'materials'] });
     },
   });
 }

@@ -10,8 +10,8 @@ export function useStudies() {
     ready: Boolean(profile.data && disciplines.data),
     failed: profile.isError || disciplines.isError,
     retry: () => {
-      if (profile.isError) profile.refetch();
-      if (disciplines.isError) disciplines.refetch();
+      if (profile.isError) void profile.refetch();
+      if (disciplines.isError) void disciplines.refetch();
     },
   };
 }

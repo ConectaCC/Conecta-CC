@@ -64,7 +64,7 @@ export function DecisionDialog({ kind, queued, onCancel, onDone, onConflict, onC
         reset();
         onConflict(error.code);
       } else if (error instanceof ApiError && error.status === 422 && error.fieldErrors.reason) {
-        setReasonError(error.fieldErrors.reason[0]);
+        setReasonError(error.fieldErrors.reason[0] ?? null);
       } else {
         setFailed(isReject ? 'Não foi possível rejeitar o conteúdo. Tente novamente.' : 'Não foi possível aprovar o conteúdo. Tente novamente.');
       }

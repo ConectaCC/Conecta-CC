@@ -39,7 +39,7 @@ export function Sidebar({ user, onClose }: { user?: User; onClose?: () => void }
   const signOut = async () => {
     if (!(await confirmLeave())) return; // alterações não salvas: perguntar antes de encerrar a sessão
     await logout.mutateAsync().catch(() => undefined); // mesmo sem resposta, a sessão local é descartada
-    navigate('/login', { replace: true });
+    void navigate('/login', { replace: true });
   };
 
   return (

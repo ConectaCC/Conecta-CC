@@ -4,8 +4,8 @@ import { NetworkError } from './errors';
 import type { paths } from './schema';
 
 function readCookie(name: string): string | null {
-  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
-  return match ? decodeURIComponent(match[1]) : null;
+  const value = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`))?.[1];
+  return value === undefined ? null : decodeURIComponent(value);
 }
 
 const session: Middleware = {

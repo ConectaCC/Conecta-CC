@@ -25,7 +25,7 @@ export function useUpdateProfile() {
     onSuccess: (profile) => {
       client.setQueryData(['profile'], profile);
       // header e card da Home dependem do /me (nome, iniciais, profile_complete)
-      client.invalidateQueries({ queryKey: ['me'] });
+      void client.invalidateQueries({ queryKey: ['me'] });
     },
   });
 }

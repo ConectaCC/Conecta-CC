@@ -25,7 +25,7 @@ export function useUnsavedChangesGuard(isDirty: boolean, isFreeExit?: (current: 
 
   useEffect(() => {
     if (blocker.state !== 'blocked') return;
-    askDiscard().then((discard) => (discard ? blocker.proceed() : blocker.reset()));
+    void askDiscard().then((discard) => (discard ? blocker.proceed() : blocker.reset()));
   }, [blocker, askDiscard]);
 
   useEffect(() => {
