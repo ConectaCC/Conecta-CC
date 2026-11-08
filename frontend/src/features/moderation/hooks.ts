@@ -4,36 +4,67 @@ import { call } from '@/lib/api/errors';
 import type { components } from '@/lib/api/schema';
 
 export type ModerationMaterial = components['schemas']['ModerationMaterialResource'];
+export type ModerationOpportunity = components['schemas']['ModerationOpportunityResource'];
+// a fila mistura os dois tipos; cada item diz o seu (decisoes.md §70)
+export type QueueItem = { kind: 'material'; item: ModerationMaterial } | { kind: 'opportunity'; item: ModerationOpportunity };
 
-const QUEUE_KEY = ['moderation', 'materials'];
+const MATERIALS_KEY = ['moderation', 'materials'];
+const OPPORTUNITIES_KEY = ['moderation', 'opportunities'];
 
 export function useModerationQueue() {
-  return useQuery({ queryKey: QUEUE_KEY, queryFn: () => call(api.GET('/moderation/materials')) });
+  const materials = useQuery({ queryKey: MATERIALS_KEY, queryFn: () => call(api.GET('/moderation/materials')) });
+  const opportunities = useQuery({ queryKey: OPPORTUNITIES_KEY, queryFn: () => call(api.GET('/moderation/opportunities')) });
+
+  const data: QueueItem[] | undefined =
+    materials.data && opportunities.data
+      ? [
+          ...materials.data.map((item) => ({ kind: 'material' as const, item })),
+          ...opportunities.data.map((item) => ({ kind: 'opportunity' as const, item })),
+          // mais antigos primeiro, como a fila de materiais já fazia
+        ].sort((a, b) => a.item.submitted_at.localeCompare(b.item.submitted_at))
+      : undefined;
+
+  return {
+    data,
+    isPending: materials.isPending || opportunities.isPending,
+    isError: materials.isError || opportunities.isError,
+    refetch: () => Promise.all([materials.refetch(), opportunities.refetch()]),
+  };
 }
 
-function refresh(client: QueryClient, material: ModerationMaterial) {
-  client.invalidateQueries({ queryKey: QUEUE_KEY });
-  client.invalidateQueries({ queryKey: ['materials', material.discipline.id] });
+function refresh(client: QueryClient, queued: QueueItem) {
+  if (queued.kind === 'material') {
+    client.invalidateQueries({ queryKey: MATERIALS_KEY });
+    client.invalidateQueries({ queryKey: ['materials', queued.item.discipline.id] });
+  } else {
+    client.invalidateQueries({ queryKey: OPPORTUNITIES_KEY });
+    client.invalidateQueries({ queryKey: ['opportunities'] });
+  }
+  client.invalidateQueries({ queryKey: ['community'] });
 }
 
-export function useApproveMaterial() {
+export function useApprove() {
   const client = useQueryClient();
   return useMutation({
-    mutationFn: async (material: ModerationMaterial) => {
+    mutationFn: async (queued: QueueItem) => {
       await ensureCsrfCookie();
-      return call(api.POST('/moderation/materials/{material}/approve', { params: { path: { material: material.id } } }));
+      return queued.kind === 'material'
+        ? call(api.POST('/moderation/materials/{material}/approve', { params: { path: { material: queued.item.id } } }))
+        : call(api.POST('/moderation/opportunities/{opportunity}/approve', { params: { path: { opportunity: queued.item.id } } }));
     },
-    onSuccess: (_, material) => refresh(client, material),
+    onSuccess: (_, queued) => refresh(client, queued),
   });
 }
 
-export function useRejectMaterial() {
+export function useReject() {
   const client = useQueryClient();
   return useMutation({
-    mutationFn: async ({ material, reason }: { material: ModerationMaterial; reason: string }) => {
+    mutationFn: async ({ queued, reason }: { queued: QueueItem; reason: string }) => {
       await ensureCsrfCookie();
-      return call(api.POST('/moderation/materials/{material}/reject', { params: { path: { material: material.id } }, body: { reason } }));
+      return queued.kind === 'material'
+        ? call(api.POST('/moderation/materials/{material}/reject', { params: { path: { material: queued.item.id } }, body: { reason } }))
+        : call(api.POST('/moderation/opportunities/{opportunity}/reject', { params: { path: { opportunity: queued.item.id } }, body: { reason } }));
     },
-    onSuccess: (_, { material }) => refresh(client, material),
+    onSuccess: (_, { queued }) => refresh(client, queued),
   });
 }
