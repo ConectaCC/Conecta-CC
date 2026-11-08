@@ -34,7 +34,7 @@ export function MaterialCard({ material, discipline, onDeleted }: Props) {
   }
 
   return (
-    <article className="rounded-2xl border border-blue-200/70 bg-white p-6">
+    <article id={`material-${material.id}`} className="scroll-mt-28 rounded-2xl border border-blue-200/70 bg-white p-6 transition-shadow duration-500">
       <div className="flex items-start justify-between gap-3">
         <h3 className="min-w-0 font-display text-lg font-bold leading-snug [overflow-wrap:anywhere] text-foreground">{material.title}</h3>
         {material.is_mine && (
