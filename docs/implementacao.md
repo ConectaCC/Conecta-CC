@@ -190,6 +190,8 @@ Implementar:
 - [ ] integração com notificações;
 - [x] loading e erro parcial.
 
+> **Atualização (08/11/2026):** a Home ganhou os atalhos para as quatro áreas no destaque, no lugar de "Acesso rápido", e a seção "Acessos institucionais" (`decisoes.md` 71).
+
 ---
 
 # 7. Perfil

@@ -67,6 +67,8 @@ Deve apenas facilitar sua descoberta e acesso.
 
 **Status:** ✅ Confirmado
 
+> **Atualização (08/11/2026):** usado na Home, em "Acessos institucionais" (`decisoes.md` 71).
+
 **URL:**
 
 https://inf.passofundo.ifsul.edu.br/src/home/index.html
@@ -121,6 +123,8 @@ O recurso deve abrir em ambiente externo.
 
 **Status:** ✅ URL identificada / 💡 utilização a decidir
 
+> **Atualização (08/11/2026):** confirmado pelo time e usado na Home, em "Acessos institucionais", com o link `https://suap.ifsul.edu.br/` (`decisoes.md` 71).
+
 **URL:**
 
 https://suap.ifsul.edu.br/accounts/login/?next=/
@@ -144,6 +148,8 @@ O ConectaCC não substitui o SUAP.
 ## 3.5 Moodle — Câmpus Passo Fundo
 
 **Status:** ✅ Confirmado
+
+> **Atualização (08/11/2026):** usado na Home, em "Acessos institucionais", com o link `https://moodle.passofundo.ifsul.edu.br/` (`decisoes.md` 71).
 
 **URL:**
 
@@ -249,6 +255,17 @@ Apesar de a URL utilizar o termo `bcc_organograma`, o conteúdo da página corre
 **Matriz de Pré-requisitos**
 
 e não a um organograma administrativo ou institucional.
+
+---
+
+## 3.8 IFSul (site institucional) e CORAC
+
+**Status:** ✅ Confirmado (08/11/2026)
+
+- **Site do IFSul:** `https://www.ifsul.edu.br/`.
+- **CORAC:** contato pelo telefone (54) 3311-2916. Não foi confirmado se o número atende por WhatsApp.
+
+Os dois são usados na Home, em "Acessos institucionais" (`decisoes.md` 71).
 
 ---
 
@@ -390,6 +407,8 @@ Confirmar:
 ## 5.2 Instagram institucional
 
 **Status:** 🟡 A confirmar
+
+> **Atualização (08/11/2026):** **confirmado** pelo time: `https://www.instagram.com/ifsulpassofundo/`, usado na Home, em "Acessos institucionais" (`decisoes.md` 71).
 
 Previsto em:
 

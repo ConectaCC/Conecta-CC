@@ -1930,3 +1930,38 @@ A página segue uma imagem de referência do time:
 
 Os tipos ficam num **filtro de seleção**, e não em botões no estilo de abas, mantendo os cinco tipos. O logo do IFSul só entra com o arquivo oficial; até lá, o card usa um ícone.
 
+
+---
+
+# 71. Home: visual e acessos institucionais — 08/11/2026
+
+Ajuste da Home a partir de uma imagem de referência do time.
+
+## 71.1 Destaque
+
+- **Saudação:** a mão do aceno passou a ser um ícone, e não um emoji.
+- **Atalhos:** o destaque "Conecte-se, aprenda e cresça junto com a comunidade." traz, à direita, os atalhos para Estudos, Perfil, Comunidade e Oportunidades, em volta de um círculo. Eles substituem a seção "Acesso rápido".
+- **Perfil incompleto:** quando aparece o card "Complete seu perfil", os atalhos ficam numa versão compacta, sem o círculo.
+
+## 71.2 Acessos institucionais
+
+A Home ganha a seção "Acessos institucionais" ("Conecte-se aos principais serviços do IFSul e do curso."), com links confirmados pelo time:
+
+| Acesso | Link |
+|---|---|
+| IFSul | `https://www.ifsul.edu.br/` |
+| Informática / Ciência da Computação | `https://inf.passofundo.ifsul.edu.br/src/home/index.html` |
+| SUAP | `https://suap.ifsul.edu.br/` |
+| Moodle | `https://moodle.passofundo.ifsul.edu.br/` |
+| Instagram do IFSul Passo Fundo | `https://www.instagram.com/ifsulpassofundo/` |
+| Fale com a CORAC | telefone (54) 3311-2916 |
+
+**Links:**
+
+- Os links externos abrem em nova aba.
+- O do Instagram ficou sem o parâmetro de rastreamento que veio com ele **(escolha do Claude)**.
+- O contato da CORAC é um link de telefone (`tel:`), e não de WhatsApp: não foi confirmado que o número atende por WhatsApp **(escolha do Claude)**.
+
+**Ícones:** são genéricos, sem os logos do IFSul, do SUAP, do Moodle, do Instagram ou do WhatsApp. Os logos só entram com os arquivos oficiais.
+
+Isso resolve em parte `pendencias.md` 1.1: a Home passa a reunir os principais acessos institucionais.
