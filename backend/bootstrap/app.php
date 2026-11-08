@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\StripNullBytes;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -17,7 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->statefulApi();
         $middleware->append(StripNullBytes::class);
-        $middleware->trustProxies(at: '*'); // Render termina o HTTPS no proxy
+        $middleware->append(SecurityHeaders::class);
+        // o Render termina o HTTPS no proxy; o host vem do próprio pedido, nunca do X-Forwarded-Host
+        $middleware->trustProxies(at: '*', headers: Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO);
+        $middleware->throttleApi('api');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         Integration::handles($exceptions);

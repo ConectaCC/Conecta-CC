@@ -79,6 +79,15 @@ final class UpdateProfileController
 - **Material anônimo:** `author_name` e `author_code` vão nulos na área pública, e o MODERADOR não recebe o nome. Teste com `assertDontSee`.
 - **URL do Perfil público:** usa `users.public_code`, aleatório, nunca o id interno. O código não substitui autorização.
 
+## Segurança
+
+- **Cabeçalhos:** `SecurityHeaders` (global) manda nosniff, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, COOP e, por HTTPS, o HSTS.
+- **CSP da SPA:** fica na rota da SPA (`routes/web.php`) e só aceita scripts do próprio site. Um recurso externo novo (script, fonte, imagem, chamada de API) precisa entrar na política, ou o navegador o bloqueia. Confira com o build de produção servido pelo Laravel.
+- **CORS fechado:** a SPA é da mesma origem. Não abra o CORS para outro site sem uma decisão.
+- **Proxy:** confiamos no `X-Forwarded-For`, `-Proto` e `-Port` do Render, nunca no `X-Forwarded-Host`.
+- **Limites:** além dos limites de Login, Cadastro, senha e envios, a API inteira tem um teto de 120 pedidos por minuto por pessoa (ou por IP, sem sessão).
+- **Dependências:** `composer audit` e `npm audit --omit=dev` sem avisos. O Dependabot abre PRs semanais.
+
 ## Banco de dados
 
 - Use PostgreSQL de propósito: `CHECK` constraints para regras (papel, semestre de 1 a 8), índices parciais e `unaccent` quando houver busca no banco.

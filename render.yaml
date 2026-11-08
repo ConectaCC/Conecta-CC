@@ -3,6 +3,8 @@ services:
     name: conectacc
     runtime: docker
     plan: free
+    # ao lado do Neon (AWS US East 1): cada página faz várias consultas ao banco
+    region: virginia
     dockerfilePath: ./Dockerfile
     healthCheckPath: /up
     autoDeploy: false # o deploy é disparado pelo deploy.yml depois do CI verde

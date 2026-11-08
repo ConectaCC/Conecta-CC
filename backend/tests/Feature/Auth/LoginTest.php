@@ -84,3 +84,15 @@ it('conta as tentativas pelo e-mail, sem diferenciar maiúsculas, e não bloquei
     $this->postJson('/api/v1/login', ['email' => 'Aluno@Academico.ifsul.edu.br', 'password' => 'segredo123'])->assertTooManyRequests();
     $this->postJson('/api/v1/login', ['email' => 'outro@academico.ifsul.edu.br', 'password' => 'x'])->assertUnprocessable();
 });
+
+it('limita as tentativas por e-mail mesmo vindo de vários endereços IP', function () {
+    foreach (range(1, 10) as $i) {
+        $this->withServerVariables(['REMOTE_ADDR' => "10.0.0.{$i}"])
+            ->postJson('/api/v1/login', ['email' => 'aluno@academico.ifsul.edu.br', 'password' => 'senha-errada'])
+            ->assertUnprocessable();
+    }
+
+    $this->withServerVariables(['REMOTE_ADDR' => '10.0.0.99'])
+        ->postJson('/api/v1/login', ['email' => 'aluno@academico.ifsul.edu.br', 'password' => 'segredo123'])
+        ->assertTooManyRequests();
+});

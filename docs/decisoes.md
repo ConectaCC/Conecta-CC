@@ -2282,3 +2282,51 @@ O Vitest e a Testing Library entram como dependências de desenvolvimento. Os te
 - Elas rodam num container com o navegador, na rede do host, para a sessão do Sanctum valer em `localhost:5173` **(escolha do Claude)**.
 - Os testes criam conteúdo de teste no banco de dev.
 
+# 78. Revisão de segurança (OWASP Top 10) — 08/11/2026
+
+Revisão de todo o repositório antes do deploy, guiada pelo OWASP Top 10. O detalhe técnico está em `stack-e-decisoes-tecnicas.md` 13.
+
+## 78.1 O que estava certo
+
+- **Controle de acesso (A01):**
+  - toda ação de material e de oportunidade passa por policy;
+  - o MODERADOR não decide sobre o próprio envio;
+  - a notificação de outra pessoa dá 404;
+  - o `/admin` é só do ADMINISTRADOR e não tem ação que altere dados, exceto a troca de papel.
+- **Injeção (A03):**
+  - as consultas com SQL próprio usam parâmetros;
+  - a coluna da busca é fixa no código;
+  - não há `innerHTML` nem `dangerouslySetInnerHTML` no front;
+  - links externos aceitam só `http` e `https` e abrem com `noopener`.
+- **Autenticação (A07):**
+  - senha com bcrypt;
+  - a sessão troca de id no login e é invalidada no logout;
+  - a troca de senha encerra as outras sessões;
+  - o CSRF é conferido pelo Sanctum.
+- **Segredos e registros (A02 e A09):**
+  - o gitleaks roda no CI;
+  - o Sentry identifica a pessoa só pelo ID;
+  - a auditoria não pode ser alterada.
+- **SSRF (A10):** o servidor nunca busca os links enviados.
+
+## 78.2 O que foi corrigido
+
+- **Cabeçalhos de segurança (A05):** nenhuma resposta tinha nosniff, proteção contra frame, HSTS nem CSP.
+- **Host vindo do proxy (A05):** o `X-Forwarded-Host` era aceito, e um pedido podia escolher o host dos endereços gerados.
+- **Força bruta distribuída (A07):** o limite do Login era por e-mail e IP; trocando de IP, as tentativas não tinham fim. Agora há também 10 por minuto por e-mail.
+- **Abuso da API (A04):** não havia teto geral. Agora são 120 pedidos por minuto por pessoa.
+- **CORS (A05):** aceitava qualquer origem, sem cookies. Agora fica fechado.
+- **Dependências (A06):**
+  - 7 avisos do Symfony, corrigidos com atualização de patch;
+  - os avisos do npm vinham do `shadcn`, que passou a ser só de desenvolvimento;
+  - o Dependabot passou a acompanhar as versões.
+- **Imagem (A05):** só o `backend/.env` ficava fora da imagem. Agora nenhum `.env` entra.
+
+## 78.3 Riscos aceitos no MVP
+
+- **Sem confirmação de e-mail:** qualquer pessoa pode criar uma conta com um e-mail institucional que não é dela (§51.4, `roadmap.md`). Recomendado antes de um piloto maior.
+- **O Cadastro revela se o e-mail já existe** (§51.4).
+- **Sem segundo fator no `/admin`:** o painel depende só da senha do ADMINISTRADOR.
+- **Sessão de 7 dias** (`SESSION_LIFETIME`), escolhida pela comodidade.
+- **As ações do GitHub usam versão por tag**, e não por hash. O Dependabot acompanha as versões.
+

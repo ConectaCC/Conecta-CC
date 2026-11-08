@@ -47,8 +47,17 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('access-moderation', fn (User $user): bool => $user->role->canModerate());
 
-        RateLimiter::for('login', fn (Request $request) => Limit::perMinute(5)
-            ->by(self::emailKey($request).'|'.$request->ip())
+        RateLimiter::for('login', fn (Request $request) => [
+            Limit::perMinute(5)->by(self::emailKey($request).'|'.$request->ip())
+                ->response(fn (Request $request, array $headers) => self::tooManyAttempts($headers)),
+            // mesmo trocando de IP, um e-mail não recebe mais de 10 tentativas por minuto
+            Limit::perMinute(10)->by('email|'.self::emailKey($request))
+                ->response(fn (Request $request, array $headers) => self::tooManyAttempts($headers)),
+        ]);
+
+        // teto geral da API, bem acima do uso normal da SPA: segura raspagem e abuso no plano gratuito
+        RateLimiter::for('api', fn (Request $request) => Limit::perMinute(120)
+            ->by(self::idKey($request->user()?->getAuthIdentifier()) ?: (string) $request->ip())
             ->response(fn (Request $request, array $headers) => self::tooManyAttempts($headers)));
 
         // decisão 8: o usuário é identificado no Sentry só pelo ID interno
