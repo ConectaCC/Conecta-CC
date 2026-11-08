@@ -369,6 +369,10 @@ A data original do envio permanece como informação interna.
 
 > **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
 
+> **Atualização (08/11/2026):** entregue o mural de materiais (`decisoes.md` 68): feed cronológico, autoria ou "Comunidade" no anônimo, links para o perfil, a disciplina e o material, e "Mostrar mais". Os demais itens abaixo continuam fora.
+
+> **Atualização (08/11/2026):** o mural também ganhou busca sem acentos (título, disciplina e autor identificado), ordem, visualização em lista ou grade, o card "Contribua com a comunidade" e "A comunidade em números" (`decisoes.md` 68.8). Na entrega de Oportunidades, a separação por tipo será um filtro, e não abas, e "Compartilhar" servirá para material e oportunidade (`decisoes.md` 69).
+
 Implementar:
 
 - [ ] feed cronológico;

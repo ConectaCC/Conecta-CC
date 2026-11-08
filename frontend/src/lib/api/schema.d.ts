@@ -84,6 +84,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/community/feed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listCommunityFeed"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/disciplines/{discipline}/materials": {
         parameters: {
             query?: never;
@@ -276,6 +292,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/community/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.showCommunityStats"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/profile": {
         parameters: {
             query?: never;
@@ -317,6 +349,22 @@ export interface components {
             current_password: string;
             password: string;
             password_confirmation: string;
+        };
+        /** CommunityFeedItemResource */
+        CommunityFeedItemResource: {
+            id: number;
+            code: string;
+            title: string;
+            url: string;
+            published_at: string | null;
+            discipline: {
+                name: string;
+                slug: string;
+            };
+            /** @description anônimo: ninguém recebe o autor no mural, nem o ADMINISTRADOR nem o próprio autor (decisoes.md §55.2) */
+            author_name: string | null;
+            author_code: string | null;
+            is_mine: string;
         };
         /** DisciplineResource */
         DisciplineResource: {
@@ -691,6 +739,51 @@ export interface operations {
             404: components["responses"]["ModelNotFoundException"];
         };
     };
+    "v1.listCommunityFeed": {
+        parameters: {
+            query?: {
+                q?: string | null;
+                order?: "recent" | "oldest" | null;
+                /** @description Cursor da próxima página (meta.next_cursor). */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated set of `CommunityFeedItemResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CommunityFeedItemResource"][];
+                        links: {
+                            first: string | null;
+                            last: string | null;
+                            prev: string | null;
+                            next: string | null;
+                        };
+                        meta: {
+                            /** @description Base path for paginator generated URLs. */
+                            path: string | null;
+                            /** @description Number of items shown per page. */
+                            per_page: number;
+                            /** @description The "cursor" that points to the next set of items. */
+                            next_cursor: string | null;
+                            /** @description The "cursor" that points to the previous set of items. */
+                            prev_cursor: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+        };
+    };
     "v1.listDisciplineMaterials": {
         parameters: {
             query?: {
@@ -1039,6 +1132,29 @@ export interface operations {
             403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
             422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.showCommunityStats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        materials: number;
+                        students: number;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
         };
     };
     "v1.showProfile": {

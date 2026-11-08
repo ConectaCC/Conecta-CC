@@ -1,0 +1,18 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
+
+// busca do mural sem diferenciar acentos ("calculo" encontra "Cálculo"); o Neon oferece a extensão
+return new class extends Migration
+{
+    public function up(): void
+    {
+        DB::statement('CREATE EXTENSION IF NOT EXISTS unaccent');
+    }
+
+    public function down(): void
+    {
+        DB::statement('DROP EXTENSION IF EXISTS unaccent');
+    }
+};

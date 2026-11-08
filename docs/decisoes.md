@@ -1756,3 +1756,105 @@ Esta seção substitui, para esses dois fluxos, a frase final da §63.4 ("As reg
 - o registro no histórico e na auditoria;
 - os resultados possíveis da análise;
 - uma eventual relação com sanções ou bloqueios.
+
+---
+
+# 68. Comunidade: mural de materiais — 08/11/2026
+
+Decisões da volta da Comunidade como mural (spec `specs/2026-11-08-comunidade-mural-design.md`). É a retomada prevista na §56.3: funcionalidade adicional, fora do escopo obrigatório do MVP.
+
+## 68.1 O que é
+
+A Comunidade volta como **camada de descoberta**: um mural cronológico do que foi compartilhado no curso.
+
+O mural não guarda cópia de nada. Estudos é dono do material, e a Comunidade só aponta para ele, consultando os materiais aprovados.
+
+Ficam fora desta versão: tópicos, respostas, comentários, curtidas, posts de texto livre, canais e busca de estudantes.
+
+## 68.2 O que aparece
+
+- **O que gera uma publicação:** a primeira aprovação de um material. Uma alteração aprovada não gera outra publicação, e o mural mostra o título atual.
+- **Exclusão:** material excluído sai do mural.
+- **Ordem:** mais recentes primeiro, pela data de publicação, com o tempo relativo. O mural carrega 20 por vez, com "Mostrar mais".
+
+## 68.3 Autoria
+
+- **Material identificado:** "Marcos compartilhou “Resumo de Grafos” em Estrutura de Dados II". O nome leva ao Perfil público, ou a `/perfil` quando é a própria pessoa.
+- **Material anônimo:** "Comunidade compartilhou…", sem link de perfil, para todo mundo, inclusive o próprio autor e o ADMINISTRADOR. A API não envia o autor (§55.2 e §57.2).
+
+## 68.4 Links
+
+- **Título:** abre a disciplina já rolada até o material, com um destaque rápido. Se o material estiver mais abaixo na lista, a página carrega os próximos itens até achá-lo.
+- **Disciplina:** abre a página da disciplina.
+
+## 68.5 Navegação
+
+"Comunidade" volta à sidebar, entre Estudos e Perfil, e `/comunidade` abre o mural. A Home não muda.
+
+## 68.6 Próxima entrega
+
+Oportunidades entra integrada ao mural, sempre com "Comunidade" como autoria pública. Os filtros "Tudo", "Materiais" e "Oportunidades" chegam junto com ela.
+
+## 68.7 Escolhas do Claude
+
+- **Paginação por cursor:** um material aprovado enquanto a pessoa lê não repete nem esconde itens em "Mostrar mais".
+- **Subtítulo:** "Veja o que a comunidade de Ciência da Computação tem compartilhado.".
+- **Estado vazio:** "Quando um material for aprovado em Estudos, ele aparece aqui.", com o link "Ir para Estudos".
+- **Avatar:** as iniciais no material identificado e um ícone neutro de pessoas no anônimo.
+
+## 68.8 Visual a partir da imagem de referência (08/11/2026)
+
+O time enviou uma imagem de referência para a página, e a spec ganhou a seção 9.
+
+**Entram:**
+
+- **Cabeçalho:** faixa com ícone, sem ilustração.
+- **Card:** disciplina, data, tag "Material" e ícone de documento.
+- **Busca:** no título, na disciplina e no autor, sem acentos.
+- **Ordem:** mais recentes ou mais antigos.
+- **Visualização:** em lista ou em grade.
+- **Card "Contribua com a comunidade":** o botão leva a Estudos.
+- **"A comunidade em números":** com materiais e estudantes.
+
+**Regra de privacidade:** a busca pelo nome do autor nunca encontra material anônimo.
+
+**Ficam fora:** salvar e o menu "⋯". **Entram com Oportunidades:** as abas por tipo, "Explorar por tipo" e o número de oportunidades.
+
+**Ícone do tipo:** por enquanto, todo material usa o ícone de documento.
+
+---
+
+# 69. Oportunidades no mural: filtro e "Compartilhar" — 08/11/2026
+
+Decisões antecipadas para a entrega de Oportunidades, que entra integrada ao mural da Comunidade (§68.6).
+
+## 69.1 Filtro, não abas
+
+O mural **não terá abas** por tipo. A separação entre materiais e oportunidades será feita por um **filtro**, no mesmo estilo da ordem que já existe ("Mais recentes" e "Mais antigos").
+
+As opções previstas são "Todos", "Materiais" e "Oportunidades". O filtro se combina com a busca e com a ordem, e entra no endereço da página como os demais.
+
+Isso substitui as "abas por tipo" da §68.8 e o "Os filtros 'Tudo', 'Materiais' e 'Oportunidades'" da §68.6, que passam a ser este filtro.
+
+## 69.2 "Compartilhar" para material e oportunidade
+
+O botão do card "Contribua com a comunidade" passa a servir para os dois tipos. A pessoa escolhe se vai compartilhar um **material** ou uma **oportunidade** (vaga, estágio, evento, hackathon e afins).
+
+Hoje o botão é "Compartilhar material" e leva a Estudos.
+
+O fluxo será planejado no design de Oportunidades. Ficam para essa rodada:
+
+- o nome do botão e onde a escolha do tipo aparece (menu, diálogo ou página);
+- como escolher a disciplina de um material a partir da Comunidade, já que hoje o envio fica dentro da disciplina;
+- se Estudos continua com o próprio "Compartilhar material" na página da disciplina;
+- os campos e as categorias da oportunidade;
+- a Moderação da oportunidade e as notificações;
+- a autoria: a oportunidade aparece sempre como "Comunidade" no mural (§68.6), e falta definir se o envio de material a partir da Comunidade mantém a opção "Compartilhar anonimamente".
+
+## 69.3 O que continua em aberto
+
+Também ficam para o design de Oportunidades:
+
+- "Explorar por tipo";
+- o número de oportunidades em "A comunidade em números";
+- o ícone de cada tipo no card.

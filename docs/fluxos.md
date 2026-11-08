@@ -518,6 +518,10 @@ Publicação enviada
 
 > **Fora do MVP (02/11/2026):** `decisoes.md` 56.
 
+> **Atualização (08/11/2026):** o feed voltou como mural dos materiais aprovados (`decisoes.md` 68). Fluxo: Sidebar → Comunidade → mural → nome do autor (Perfil público), título (disciplina rolada até o material) ou disciplina. No material anônimo, "Comunidade" aparece sem link.
+
+> **Atualização (08/11/2026):** no mural: Comunidade → buscar (título, disciplina ou autor) → mudar a ordem → ver em lista ou grade → resultado. Sem resultado → "Limpar busca". Card "Contribua com a comunidade" → "Compartilhar material" → Estudos. Com Oportunidades, o mural terá um filtro por tipo, e "Compartilhar" vai oferecer material ou oportunidade (`decisoes.md` 69).
+
 O feed segue ordem cronológica.
 
 Para conteúdos que passaram por Moderação, a ordenação pública considera a:
