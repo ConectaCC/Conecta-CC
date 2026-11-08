@@ -77,8 +77,8 @@ Os limites de tentativas (5 por minuto no Login e no Cadastro) usam o cache do L
 
 Todas as contas pertencem à conta Google do projeto (decisão 9).
 
-1. **Neon:** criar um projeto (Postgres 17) e copiar a connection string.
-2. **Render:** New → Blueprint → apontar para o repositório. O `render.yaml` cria o serviço; preencher as variáveis marcadas como `sync: false`.
+1. **Neon:** criar um projeto com Postgres 17 na região **AWS US East 1 (N. Virginia)**, só com o serviço Postgres (sem Better Auth/Neon Auth: o login é do Laravel). Em Connect, desligar **Connection pooling** e copiar a connection string direta, com `sslmode=require`. Não rodar o roteiro `neon init`/`neon deploy` que o Neon sugere: ele é para apps JavaScript e baixaria a senha de produção para um `.env` local.
+2. **Render:** New → Blueprint → apontar para o repositório. O `render.yaml` cria o serviço em **Virginia**, ao lado do Neon; preencher as variáveis marcadas como `sync: false`. O `APP_KEY` sai de `docker compose exec -u sail app php artisan key:generate --show`, rodado no seu terminal e guardado direto no cofre.
 3. **Render:** em Settings → Deploy Hook, copiar a URL e cadastrá-la no GitHub como secret `RENDER_DEPLOY_HOOK_URL`.
 4. **GitHub:** cadastrar o secret `DATABASE_URL` com a connection string do Neon.
 5. **Sentry (opcional):** criar dois projetos (Laravel e React) e preencher os DSNs no Render.
