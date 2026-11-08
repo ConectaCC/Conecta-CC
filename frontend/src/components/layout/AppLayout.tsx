@@ -34,7 +34,8 @@ export function AppLayout() {
 
         <Header user={user} loading={me.isPending} onOpenMenu={() => setMenuOpen(true)} />
 
-        <main className="px-4 py-8 sm:px-8 lg:px-11 lg:py-12">
+        {/* do branco do cabeçalho ao azul-claro da página, sem corte: só nos primeiros 140 px */}
+        <main className="bg-[linear-gradient(to_bottom,var(--color-white),var(--color-ice)_140px)] px-4 py-8 sm:px-8 lg:px-11 lg:py-12">
           {me.isError && (
             <div className="mb-8">
               <FormAlert
