@@ -27,7 +27,7 @@ jobs:
       - name: Mascarar o e-mail no log (repositório público)
         run: echo "::add-mask::$(jq -r '.inputs.email' "$GITHUB_EVENT_PATH")"
         working-directory: .
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
