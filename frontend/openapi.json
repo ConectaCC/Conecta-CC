@@ -287,9 +287,6 @@
                             }
                         }
                     },
-                    "403": {
-                        "$ref": "#/components/responses/AuthorizationException"
-                    },
                     "404": {
                         "$ref": "#/components/responses/ModelNotFoundException"
                     },
@@ -298,6 +295,9 @@
                     },
                     "422": {
                         "$ref": "#/components/responses/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
                     }
                 }
             }
@@ -2426,8 +2426,7 @@
                         "maxLength": 2000
                     },
                     "url": {
-                        "type": "string",
-                        "maxLength": 2048
+                        "type": "string"
                     },
                     "anonymous": {
                         "type": "boolean"
@@ -2454,8 +2453,7 @@
                         "maxLength": 300
                     },
                     "url": {
-                        "type": "string",
-                        "maxLength": 2048
+                        "type": "string"
                     },
                     "modality": {
                         "$ref": "#/components/schemas/OpportunityModality"
@@ -2602,10 +2600,7 @@
                 },
                 "required": [
                     "display_name",
-                    "discipline_ids",
-                    "interests",
-                    "can_help_with",
-                    "needs_help_with"
+                    "discipline_ids"
                 ],
                 "title": "UpdateProfileRequest"
             },
