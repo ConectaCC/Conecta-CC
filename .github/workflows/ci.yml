@@ -37,7 +37,7 @@ jobs:
       DB_USERNAME: sail
       DB_PASSWORD: password
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # o teste de mutação compara com a base do PR
       - uses: shivammathur/setup-php@v2
@@ -46,7 +46,7 @@ jobs:
           extensions: pdo_pgsql
           coverage: pcov
       - name: Cache do Composer
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/composer
           key: composer-${{ hashFiles('backend/composer.lock') }}
@@ -79,10 +79,10 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # o teste de mutação compara com a base do PR
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: npm
@@ -108,9 +108,12 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/build-push-action@v6
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        env:
+          # o repositório é público: o registro do build (logs e contexto) não fica como artefato para download
+          DOCKER_BUILD_RECORD_UPLOAD: false
         with:
           context: .
           push: false
@@ -120,7 +123,7 @@ jobs:
   gitleaks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Varredura de segredos

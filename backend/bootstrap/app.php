@@ -19,8 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->statefulApi();
         $middleware->append(StripNullBytes::class);
         $middleware->append(SecurityHeaders::class);
-        // o Render termina o HTTPS no proxy; o host vem do próprio pedido, nunca do X-Forwarded-Host
-        $middleware->trustProxies(at: '*', headers: Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO);
+        // o Render termina o HTTPS no proxy: só o protocolo e a porta vêm dele. O IP real o nginx da imagem já resolve
+        // (confia no Cloudflare e na rede do Render), e o host vem do próprio pedido, nunca do X-Forwarded-Host
+        $middleware->trustProxies(at: '*', headers: Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO);
         $middleware->throttleApi('api');
     })
     ->withExceptions(function (Exceptions $exceptions): void {

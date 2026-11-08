@@ -51,6 +51,20 @@ it('não responde a pedidos de outra origem (a SPA é da mesma origem)', functio
         ->assertHeaderMissing('Access-Control-Allow-Origin');
 });
 
+it('usa o IP que o nginx já resolveu, sem reler o X-Forwarded-For', function () {
+    // em produção o nginx da imagem já põe em REMOTE_ADDR o IP real, confiando no Cloudflare e no Render
+    $this->withServerVariables(['REMOTE_ADDR' => '200.1.2.3'])
+        ->withHeaders(['X-Forwarded-For' => '6.6.6.6, 173.245.48.1'])
+        ->get('/up');
+
+    expect(request()->ip())->toBe('200.1.2.3');
+});
+
+it('reconhece o HTTPS informado pelo proxy', function () {
+    $this->withHeaders(['X-Forwarded-Proto' => 'https'])->get('http://localhost/up')
+        ->assertHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+});
+
 it('não confia no host vindo do proxy para montar endereços', function () {
     $this->withHeaders(['X-Forwarded-Host' => 'evil.example'])->get('/up');
 
