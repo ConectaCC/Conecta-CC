@@ -41,6 +41,8 @@ Esse conteúdo fazia parte da concepção original do ConectaCC, mas não aparec
 
 > **Atualização (08/11/2026):** resolvida em parte: a Home ganhou "Acessos institucionais", com IFSul, Informática, SUAP, Moodle, Instagram do câmpus e o telefone da CORAC (`decisoes.md` 71). Continuam em aberto o Painel de Sistemas, professores, organograma e ementas fora de Estudos.
 
+> **Atualização (08/11/2026):** Estudos ganhou "Recursos acadêmicos", com a Biblioteca Virtual e o Calendário Acadêmico (`decisoes.md` 72). Oportunidades ganhou o site de extensão do câmpus, para projetos e estágios (`decisoes.md` 70.10).
+
 A decisão deverá considerar o princípio:
 
 > O ConectaCC deve conectar e contextualizar recursos existentes, e não reconstruir sistemas institucionais.

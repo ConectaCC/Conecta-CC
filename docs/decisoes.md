@@ -2014,3 +2014,23 @@ As páginas internas usam o mesmo cabeçalho (`PageHeader`): uma faixa azul com 
 | Configurações | engrenagem | — |
 
 A Home mantém a saudação e o destaque próprios (§71).
+
+## 73.1 Fundo e cabeçalho do layout
+
+Valem para todas as páginas internas, porque ficam no layout compartilhado (`AppLayout` e `Header`):
+
+- **Fundo:** a área principal passa do branco do cabeçalho para o azul-claro da página (`--color-ice`) por um degradê vertical discreto, nos primeiros 140 px. Não há cor nova, faixa nem sombra.
+- **Cabeçalho:** perdeu a borda inferior cinza. A passagem para a página é feita só pelo degradê.
+
+O detalhe está em `identidade-visual.md`.
+
+## 73.2 Resumo da revisão visual de 08/11/2026
+
+- **Home (§71):**
+  - saudação com ícone e atalhos para as quatro áreas em volta de um círculo;
+  - "Acessos institucionais", com IFSul, Informática, SUAP, Moodle, Instagram e CORAC pelo WhatsApp Web.
+- **Estudos (§72):** cabeçalho com "Recursos acadêmicos" (Biblioteca Virtual e Calendário Acadêmico), cards de disciplina com ícone e busca na largura da página.
+- **Oportunidades (§70.9 e §70.10):** cabeçalho com o card "Conheça as oportunidades do IFSul", com os links "Bolsas e programas" e "Projetos e estágios".
+- **Cabeçalho padrão (§73):** Estudos, Oportunidades, Comunidade, Moderação, Perfil e Configurações.
+- **Logos de terceiros:** em nenhuma tela. Os ícones são genéricos até haver os arquivos oficiais.
+

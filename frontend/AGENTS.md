@@ -12,7 +12,7 @@ React 19 + TypeScript (Vite), React Router (`createBrowserRouter`), TanStack Que
 |---|---|
 | `app/router.tsx` | todas as rotas, com os guards `RequireAuth`, `GuestOnly` e `RequireModeration` |
 | `features/<area>/` | uma pasta por área, com nome em inglês: `auth`, `home`, `profile`, `studies`, `materials`, `moderation`, `my-contents`, `notifications`, `students`, `settings`. Guarda as páginas, os componentes da área e um `hooks.ts` com as consultas |
-| `components/` | componentes compartilhados da casa: `TextField`, `FormAlert`, `Skeleton`, `Chip`, `StatusTag`, `TagInput`, `DisciplinePicker`, `Brand` |
+| `components/` | componentes compartilhados da casa: `TextField`, `FormAlert`, `Skeleton`, `Chip`, `StatusTag`, `TagInput`, `DisciplinePicker`, `Brand` e `PageHeader` (cabeçalho padrão das páginas internas, `decisoes.md` 73) |
 | `components/ui/` | componentes gerados pelo CLI do shadcn (`docker compose exec frontend npx --yes shadcn@latest add <nome> --yes`). Não reescrever à mão |
 | `components/layout/` | `AppLayout`, `Sidebar`, `Header`, `UserAvatar` e a guarda de alterações não salvas (`LeaveGuardProvider` e `useUnsavedChangesGuard`) |
 | `lib/useUrlSearch.ts`, `lib/useScrollToHashItem.ts` | busca com atraso e filtros no endereço; rolagem até `#<prefixo>-<id>` com destaque, usada por materiais e oportunidades |

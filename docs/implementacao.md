@@ -227,6 +227,8 @@ Implementado em 19/10/2026 (spec `specs/2026-10-19-perfil-design.md`). Catálogo
 
 # 8. Estudos
 
+> **Atualização (08/11/2026):** visual revisto (`decisoes.md` 72): cabeçalho padrão com "Recursos acadêmicos" (Biblioteca Virtual e Calendário Acadêmico), cards de disciplina com ícone e "Ver disciplina" e busca na largura da página com o total ao lado.
+
 Estudos é implementado em duas etapas (decidido em 31/10/2026). O envio de material só entra na `main` junto com a Moderação, para nunca existir envio que ninguém consegue aprovar.
 
 ## Etapa 1 — Estudos (leitura)
