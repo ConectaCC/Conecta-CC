@@ -2096,3 +2096,123 @@ Ficam para a rodada em que a funcionalidade for implementada:
 - persistência e detalhes técnicos de armazenamento.
 
 A regra principal já está decidida: **o usuário poderá favoritar oportunidades por meio de um bookmark nos cards e utilizar um filtro separado para visualizar somente as oportunidades salvas, sem transformar “Salvas” em um tipo de oportunidade.**
+
+# 75. Ícones dos acessos institucionais durante o período de teste
+
+A alteração dos ícones dos cards de **Acessos institucionais** será realizada de forma planejada durante o período de testes do ConectaCC.
+
+Esta decisão complementa as §§71.2 e 73.2.
+
+## 75.1 Versão inicial
+
+O ConectaCC será inicialmente disponibilizado com os ícones atuais dos cards de Acessos institucionais.
+
+A substituição dos ícones por marcas mais reconhecíveis **não é requisito para a publicação inicial**.
+
+Manter os ícones atuais na primeira versão é intencional, pois permitirá realizar posteriormente uma pequena atualização visual enquanto o sistema já estiver em uso pelos participantes do piloto.
+
+## 75.2 Atualização durante o piloto
+
+Depois que o ConectaCC já estiver em uso pelos participantes do piloto, será publicada uma nova versão modificando os ícones dos Acessos institucionais.
+
+A alteração será limitada aos ícones.
+
+Devem permanecer iguais:
+
+- estrutura dos cards;
+- textos;
+- links;
+- posição dos cards;
+- tamanhos;
+- cores de fundo;
+- comportamento;
+- demais elementos do layout.
+
+A troca dos ícones será utilizada como uma alteração de baixo impacto para acompanhar, na prática, o processo de atualização de uma versão do ConectaCC enquanto o sistema já estiver publicado e em uso.
+
+O objetivo principal dessa atualização é verificar se uma nova versão pode ser disponibilizada sem comprometer o funcionamento e a estabilidade do sistema.
+
+## 75.3 Ícones previstos para a atualização
+
+Quando a atualização for realizada, a direção prevista é:
+
+- **IFSul:** utilizar o logo oficial do IFSul, preservando suas cores institucionais;
+- **Informática / Ciência da Computação:** utilizar o logo oficial do IFSul, preservando suas cores institucionais;
+- **SUAP:** utilizar o logo oficial do SUAP;
+- **Moodle:** utilizar o logo oficial do Moodle;
+- **Instagram do IFSul Passo Fundo:** utilizar o símbolo oficial do Instagram;
+- **Fale com a CORAC:** utilizar o símbolo oficial do WhatsApp.
+
+Os ícones deverão continuar dentro dos pequenos blocos arredondados já utilizados nos cards, preservando o padrão visual da Home.
+
+## 75.4 Assets de marca
+
+Os logos, ícones e símbolos oficiais utilizados nos cards de **Acessos institucionais** deverão ser armazenados como assets locais do frontend.
+
+Isso inclui, quando aplicável:
+
+- IFSul;
+- SUAP;
+- Moodle;
+- Instagram;
+- WhatsApp.
+
+Os arquivos poderão ser armazenados, preferencialmente em formato SVG quando adequado, em uma pasta específica para assets de marca, por exemplo:
+
+`frontend/src/assets/brands/`
+
+Não deve ser instalada uma nova biblioteca React apenas para fornecer esses ícones.
+
+Os assets não devem depender de carregamento em runtime a partir de URLs externas.
+
+Devem ser utilizados arquivos oficiais ou adequados ao uso de cada marca, respeitando sua identidade visual e eventuais orientações de utilização.
+
+O uso desses assets não deve alterar a estrutura, os tamanhos, as cores de fundo ou o layout dos cards definidos para os Acessos institucionais.
+
+## 75.5 Validação da nova versão durante o piloto
+
+A alteração dos ícones será utilizada como uma atualização planejada durante o piloto do ConectaCC.
+
+O objetivo é acompanhar o comportamento do sistema durante a publicação de uma nova versão enquanto a aplicação já estiver em uso.
+
+Durante e após essa atualização deverão ser verificados, entre outros pontos:
+
+- publicação correta da nova versão;
+- disponibilidade do sistema durante e após a atualização;
+- carregamento correto dos novos assets de marca;
+- manutenção da estrutura e do layout dos cards;
+- funcionamento dos links dos Acessos institucionais;
+- funcionamento das demais áreas do sistema;
+- preservação dos dados existentes;
+- ausência de regressões provocadas pela atualização;
+- comportamento da interface em diferentes tamanhos de tela;
+- identificação de eventuais problemas surgidos após a publicação da nova versão.
+
+A troca dos ícones foi escolhida por representar uma alteração visual de baixo impacto funcional, permitindo testar uma atualização real do ConectaCC sem introduzir, nesse momento, uma nova funcionalidade complexa.
+
+Caso algum problema seja identificado após a atualização, ele deverá ser registrado e considerado no processo de correção e evolução do sistema.
+
+## 75.6 Relação com o piloto
+
+A atualização dos ícones deverá fazer parte do planejamento do piloto como uma pequena evolução do sistema realizada enquanto a aplicação já estiver em uso.
+
+O fluxo previsto é:
+
+1. publicar inicialmente o ConectaCC com os ícones atuais;
+2. iniciar o uso do sistema pelos participantes do piloto;
+3. realizar a atualização dos ícones definida nesta seção;
+4. publicar a nova versão;
+5. verificar o funcionamento e a estabilidade da aplicação após a atualização;
+6. registrar e corrigir eventuais problemas identificados.
+
+Essa atualização poderá contribuir para avaliar aspectos relacionados a:
+
+- processo de publicação de novas versões;
+- estabilidade da aplicação após uma atualização;
+- manutenção das funcionalidades existentes;
+- identificação de regressões;
+- carregamento de novos assets;
+- continuidade do uso após uma atualização;
+- capacidade da equipe de realizar correções após a publicação.
+
+A mudança dos ícones ocorre **depois que o ConectaCC já estiver em uso** e não deve bloquear a publicação inicial do sistema.
