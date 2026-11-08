@@ -32,8 +32,8 @@ final class NotificationResource extends JsonResource
         // (bool) explícito: sem ele o Scramble deduz o tipo pelo array de textos e documenta "ok" como string
         $approved = (bool) $approved; // @pest-mutate-ignore: RemoveBooleanCast
 
+        // o id já é um UUID em texto; os ?? '' abaixo só satisfazem o tipo, porque toda notificação grava esses dados
         return [
-            // o id já é um UUID em texto; os ?? '' abaixo só satisfazem o tipo, porque toda notificação grava esses dados
             'id' => (string) $this->id, // @pest-mutate-ignore: RemoveStringCast
             'title' => $title,
             'detail' => sprintf($detail, $opportunity ? ($data['title'] ?? '') : ($data['discipline_name'] ?? '')), // @pest-mutate-ignore: EmptyStringToNotEmpty
