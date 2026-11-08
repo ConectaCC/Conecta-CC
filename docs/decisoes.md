@@ -1965,3 +1965,22 @@ A Home ganha a seção "Acessos institucionais" ("Conecte-se aos principais serv
 **Ícones:** são genéricos, sem os logos do IFSul, do SUAP, do Moodle, do Instagram ou do WhatsApp. Os logos só entram com os arquivos oficiais.
 
 Isso resolve em parte `pendencias.md` 1.1: a Home passa a reunir os principais acessos institucionais.
+
+---
+
+# 72. Estudos: visual e recursos acadêmicos — 08/11/2026
+
+Ajuste de Estudos a partir de uma imagem de referência do time.
+
+## 72.1 Cabeçalho e recursos
+
+O cabeçalho virou uma faixa com o ícone de livro, como Oportunidades (§70.9). À direita fica "Recursos acadêmicos", com dois links confirmados pelo time, que abrem em nova aba:
+
+- **Biblioteca Virtual:** `https://plataforma.bvirtual.com.br/Account/Login?redirectUrl=%2F`;
+- **Calendário Acadêmico:** `https://inf.passofundo.ifsul.edu.br/src/Calendario/calendario.html`.
+
+## 72.2 Disciplinas
+
+- **Card de disciplina:** ícone de livro, nome, "Minha disciplina" quando for o caso e "Ver disciplina →" à direita. Em telas estreitas, o link desce para a linha de baixo. Os cards ficam em duas colunas a partir de 768 px, em "Minhas disciplinas" e nos semestres.
+- **Busca:** campo "Buscar disciplina…" na largura da página, com o total ("49 disciplinas") ao lado.
+- **Semestres:** cada um tem um ícone de calendário.

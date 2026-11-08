@@ -269,6 +269,17 @@ Os dois são usados na Home, em "Acessos institucionais" (`decisoes.md` 71).
 
 ---
 
+## 3.9 Biblioteca Virtual e Calendário Acadêmico
+
+**Status:** ✅ Confirmado (08/11/2026)
+
+- **Biblioteca Virtual:** `https://plataforma.bvirtual.com.br/Account/Login?redirectUrl=%2F`.
+- **Calendário Acadêmico:** `https://inf.passofundo.ifsul.edu.br/src/Calendario/calendario.html`.
+
+Os dois são usados em Estudos, em "Recursos acadêmicos" (`decisoes.md` 72).
+
+---
+
 # 4. Recursos institucionais a confirmar
 
 ## 4.1 Estágios
