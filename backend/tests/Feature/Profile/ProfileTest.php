@@ -85,9 +85,10 @@ it('aceita o corpo sem as listas de tags', function () {
 it('valida com as mensagens da spec', function (array $override, string $field, string $message) {
     $this->actingAs(User::factory()->create())->putJson('/api/v1/profile', profilePayload($override))
         ->assertUnprocessable()
-        ->assertJsonValidationErrors([$field => $message]);
+        ->assertJsonPath('errors', fn (array $errors) => $errors[$field] === [$message]); // o campo pode ter ponto, como discipline_ids.0
 })->with([
     'nome vazio' => [['display_name' => '   '], 'display_name', 'Informe seu nome de exibição.'],
+    'nome como lista' => [['display_name' => ['Ana']], 'display_name', 'Informe seu nome de exibição.'],
     'nome longo' => [['display_name' => str_repeat('a', 121)], 'display_name', 'Use no máximo 120 caracteres.'],
     'sem disciplina' => [['discipline_ids' => []], 'discipline_ids', 'Selecione pelo menos uma disciplina atual para completar seu perfil.'],
     'disciplina inexistente' => [['discipline_ids' => [999999]], 'discipline_ids.0', 'Selecione disciplinas da lista.'],
@@ -103,6 +104,13 @@ it('valida com as mensagens da spec', function (array $override, string $field, 
     'github como array' => [['github_url' => ['x']], 'github_url', 'Informe o endereço do seu perfil no GitHub, como https://github.com/usuario.'],
     'linkedin de empresa' => [['linkedin_url' => 'https://www.linkedin.com/company/ifsul'], 'linkedin_url', 'Informe o endereço do seu perfil no LinkedIn, como https://www.linkedin.com/in/usuario.'],
 ]);
+
+it('exige nome e disciplinas mesmo quando não vêm no corpo', function () {
+    $this->actingAs(User::factory()->create())->putJson('/api/v1/profile', [])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.display_name', ['Informe seu nome de exibição.'])
+        ->assertJsonPath('errors.discipline_ids', ['Selecione pelo menos uma disciplina atual para completar seu perfil.']);
+});
 
 it('não grava nada quando a validação falha', function () {
     $user = User::factory()->create(['display_name' => 'Ana Silva']);

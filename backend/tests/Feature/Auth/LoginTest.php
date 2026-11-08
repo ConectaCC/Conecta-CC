@@ -43,6 +43,26 @@ it('usa a mesma mensagem para e-mail inexistente e senha errada', function (stri
     'senha errada' => ['aluno@academico.ifsul.edu.br', 'senha-errada'],
 ]);
 
+it('valida os campos', function (array $payload, string $field, string $message) {
+    $this->postJson('/api/v1/login', [...['email' => 'aluno@academico.ifsul.edu.br', 'password' => 'segredo123'], ...$payload])
+        ->assertUnprocessable()
+        ->assertJsonPath("errors.{$field}", [$message]);
+
+    $this->assertGuest('web');
+})->with([
+    'e-mail vazio' => [['email' => ''], 'email', 'Informe um endereço de e-mail válido.'],
+    'e-mail incompleto' => [['email' => 'aluno@'], 'email', 'Informe um endereço de e-mail válido.'],
+    'senha vazia' => [['password' => ''], 'password', 'Informe sua senha.'],
+    'senha como lista' => [['password' => ['segredo123']], 'password', 'O valor enviado precisa ser um texto.'],
+]);
+
+it('exige e-mail e senha mesmo quando não vêm no corpo', function () {
+    $this->postJson('/api/v1/login', [])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.email', ['Informe um endereço de e-mail válido.'])
+        ->assertJsonPath('errors.password', ['Informe sua senha.']);
+});
+
 it('bloqueia a 6ª tentativa no mesmo minuto', function () {
     foreach (range(1, 5) as $ignored) {
         $this->postJson('/api/v1/login', ['email' => 'aluno@academico.ifsul.edu.br', 'password' => 'senha-errada'])

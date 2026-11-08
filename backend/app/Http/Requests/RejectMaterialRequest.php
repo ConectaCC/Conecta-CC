@@ -8,13 +8,6 @@ final class RejectMaterialRequest extends FormRequest
 {
     public const MAX_REASON = 500;
 
-    protected function prepareForValidation(): void
-    {
-        if (is_string($this->input('reason'))) {
-            $this->merge(['reason' => trim($this->input('reason'))]);
-        }
-    }
-
     /** @return array<string, mixed> */
     public function rules(): array
     {

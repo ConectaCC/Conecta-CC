@@ -12,7 +12,8 @@ final class LoginRequest extends FormRequest
         // só normaliza texto: outro tipo segue como veio e a regra 'string' recusa com 422
         $email = $this->input('email');
         if (is_string($email)) {
-            $this->merge(['email' => Str::lower(trim($email))]);
+            // espaços nas pontas já saem no middleware TrimStrings
+            $this->merge(['email' => Str::lower($email)]);
         }
     }
 

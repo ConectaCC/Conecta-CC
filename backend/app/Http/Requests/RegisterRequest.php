@@ -18,7 +18,8 @@ final class RegisterRequest extends FormRequest
         // só normaliza texto: outro tipo segue como veio e a regra 'string' recusa com 422
         $email = $this->input('email');
         if (is_string($email)) {
-            $this->merge(['email' => Str::lower(trim($email))]);
+            // espaços nas pontas já saem no middleware TrimStrings
+            $this->merge(['email' => Str::lower($email)]);
         }
     }
 
@@ -31,7 +32,7 @@ final class RegisterRequest extends FormRequest
             'password' => ['required', 'string', 'min:8'],
             'password_confirmation' => ['required', 'same:password'],
             // closure em vez de Rule::in: a versão vigente é configuração e não deve virar enum no OpenAPI
-            'terms_version' => ['required', 'string', function (string $attribute, mixed $value, Closure $fail): void {
+            'terms_version' => ['required', function (string $attribute, mixed $value, Closure $fail): void {
                 if ($value !== config('conectacc.terms_version')) {
                     $fail(self::TERMS_OUTDATED);
                 }

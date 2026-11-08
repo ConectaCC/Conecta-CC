@@ -26,26 +26,14 @@ final class StoreMaterialRequest extends FormRequest
     {
         $material = $this->route('material');
 
-        return ! $material instanceof Material || (bool) $this->user()?->can('manage', $material);
+        // a rota exige sessão: o ?-> só satisfaz o tipo
+        return ! $material instanceof Material || (bool) $this->user()?->can('manage', $material); // @pest-mutate-ignore: RemoveBooleanCast,RemoveNullSafeOperator
     }
 
     protected function prepareForValidation(): void
     {
         MaterialSubmissionLimit::ensureAvailable($this->user());
-
-        $merge = [];
-
-        foreach (['title', 'description', 'url'] as $field) {
-            if (is_string($this->input($field))) {
-                $merge[$field] = trim($this->input($field));
-            }
-        }
-
-        if (($merge['description'] ?? null) === '') {
-            $merge['description'] = null;
-        }
-
-        $this->merge($merge);
+        // espaços nas pontas e texto vazio já chegam tratados pelos middlewares TrimStrings e ConvertEmptyStringsToNull
     }
 
     /** @return array<string, mixed> */
@@ -54,8 +42,8 @@ final class StoreMaterialRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:'.self::MAX_TITLE],
             'description' => ['nullable', 'string', 'max:'.self::MAX_DESCRIPTION],
-            'url' => ['bail', 'required', 'string', 'max:'.self::MAX_URL, $this->urlRule()],
-            'anonymous' => ['sometimes', 'boolean'],
+            'url' => ['required', $this->urlRule()],
+            'anonymous' => ['boolean'],
         ];
     }
 
@@ -69,8 +57,6 @@ final class StoreMaterialRequest extends FormRequest
             'description.string' => 'Use no máximo 2.000 caracteres.',
             'description.max' => 'Use no máximo 2.000 caracteres.',
             'url.required' => 'Informe o link do material.',
-            'url.string' => 'Informe um link válido.',
-            'url.max' => 'Use no máximo 2.048 caracteres.',
         ];
     }
 
@@ -87,16 +73,16 @@ final class StoreMaterialRequest extends FormRequest
         return [
             'title' => $data['title'],
             'description' => $data['description'] ?? null,
-            'url' => (string) MaterialUrl::normalize($data['url']),
-            'anonymous' => (bool) ($data['anonymous'] ?? false),
+            // a validação já garantiu um link válido: o cast só satisfaz o tipo
+            'url' => (string) MaterialUrl::normalize($data['url']), // @pest-mutate-ignore: RemoveStringCast
+            'anonymous' => $this->boolean('anonymous'),
         ];
     }
 
     private function urlRule(): Closure
     {
         return function (string $attribute, mixed $value, Closure $fail): void {
-            // a regra 'string', antes desta com bail, já garante texto
-            $url = MaterialUrl::normalize(is_string($value) ? $value : '');
+            $url = is_string($value) ? MaterialUrl::normalize($value) : null;
 
             if ($url === null) {
                 $fail('Informe um link válido.');
@@ -113,13 +99,14 @@ final class StoreMaterialRequest extends FormRequest
 
             // na edição (PUT /materials/{material}) a disciplina é a do material, que não conta como repetido
             $editing = $this->route('material');
+            $editingId = $editing instanceof Material ? $editing->id : null;
             /** @var Discipline $discipline */
             $discipline = $editing instanceof Material ? $editing->discipline : $this->route('discipline');
 
             $taken = Material::where('discipline_id', $discipline->id)
                 ->where('url', $url)
                 ->whereNull('revises_id')
-                ->when($editing instanceof Material, fn ($query) => $query->whereKeyNot($editing instanceof Material ? $editing->id : null))
+                ->when($editingId !== null, fn ($query) => $query->whereKeyNot($editingId))
                 ->whereIn('status', [MaterialStatus::Pendente, MaterialStatus::Aprovado])
                 ->exists();
 
