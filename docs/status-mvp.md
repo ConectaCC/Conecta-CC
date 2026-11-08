@@ -67,6 +67,8 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 
 **Ainda falta para o MVP:** ver a seção "O que ainda não está implementado".
 
+> **Atualização (08/11/2026):** revisão visual da Home, de Estudos e de Oportunidades, com cabeçalho padrão nas páginas internas, acessos institucionais confirmados e degradê entre o cabeçalho e a página (`decisoes.md` 71 a 73).
+
 > **Atualização (08/11/2026):** a Comunidade voltou como mural de materiais, com busca, ordem, lista ou grade e números, como funcionalidade adicional prevista na §56.3 (`decisoes.md` 68). A próxima entrega é Oportunidades, já integrada ao mural, com um filtro por tipo (sem abas) e "Compartilhar" para material e oportunidade (`decisoes.md` 69).
 
 > **Atualização (08/11/2026):** Oportunidades foi entregue como funcionalidade adicional, integrada ao mural (`decisoes.md` 70).

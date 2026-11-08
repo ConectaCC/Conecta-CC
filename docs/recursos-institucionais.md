@@ -67,6 +67,8 @@ Deve apenas facilitar sua descoberta e acesso.
 
 **Status:** ✅ Confirmado
 
+> **Atualização (08/11/2026):** usado na Home, em "Acessos institucionais" (`decisoes.md` 71).
+
 **URL:**
 
 https://inf.passofundo.ifsul.edu.br/src/home/index.html
@@ -121,6 +123,8 @@ O recurso deve abrir em ambiente externo.
 
 **Status:** ✅ URL identificada / 💡 utilização a decidir
 
+> **Atualização (08/11/2026):** confirmado pelo time e usado na Home, em "Acessos institucionais", com o link `https://suap.ifsul.edu.br/` (`decisoes.md` 71).
+
 **URL:**
 
 https://suap.ifsul.edu.br/accounts/login/?next=/
@@ -144,6 +148,8 @@ O ConectaCC não substitui o SUAP.
 ## 3.5 Moodle — Câmpus Passo Fundo
 
 **Status:** ✅ Confirmado
+
+> **Atualização (08/11/2026):** usado na Home, em "Acessos institucionais", com o link `https://moodle.passofundo.ifsul.edu.br/` (`decisoes.md` 71).
 
 **URL:**
 
@@ -252,11 +258,35 @@ e não a um organograma administrativo ou institucional.
 
 ---
 
+## 3.8 IFSul (site institucional) e CORAC
+
+**Status:** ✅ Confirmado (08/11/2026)
+
+- **Site do IFSul:** `https://www.ifsul.edu.br/`.
+- **CORAC:** contato pelo WhatsApp (54) 3311-2916, com o link do WhatsApp Web `https://web.whatsapp.com/send?phone=555433112916` (confirmado pelo time em 08/11/2026).
+
+Os dois são usados na Home, em "Acessos institucionais" (`decisoes.md` 71).
+
+---
+
+## 3.9 Biblioteca Virtual e Calendário Acadêmico
+
+**Status:** ✅ Confirmado (08/11/2026)
+
+- **Biblioteca Virtual:** `https://plataforma.bvirtual.com.br/Account/Login?redirectUrl=%2F`.
+- **Calendário Acadêmico:** `https://inf.passofundo.ifsul.edu.br/src/Calendario/calendario.html`.
+
+Os dois são usados em Estudos, em "Recursos acadêmicos" (`decisoes.md` 72).
+
+---
+
 # 4. Recursos institucionais a confirmar
 
 ## 4.1 Estágios
 
 **Status:** 🟡 A confirmar
+
+> **Atualização (08/11/2026):** o time confirmou o site de extensão do câmpus, `https://extensao.passofundo.ifsul.edu.br/src/home/home.html`, usado em Oportunidades no link "Projetos e estágios" (`decisoes.md` 70.10).
 
 Sabemos que existe uma área institucional relacionada a estágios.
 
@@ -281,6 +311,8 @@ Confirmar a URL oficial antes de tornar o card clicável.
 ## 4.2 Projetos de Extensão
 
 **Status:** 🟡 A confirmar
+
+> **Atualização (08/11/2026):** o time confirmou o site de extensão do câmpus, `https://extensao.passofundo.ifsul.edu.br/src/home/home.html`, usado em Oportunidades no link "Projetos e estágios" (`decisoes.md` 70.10).
 
 Previsto em:
 
@@ -390,6 +422,8 @@ Confirmar:
 ## 5.2 Instagram institucional
 
 **Status:** 🟡 A confirmar
+
+> **Atualização (08/11/2026):** **confirmado** pelo time: `https://www.instagram.com/ifsulpassofundo/`, usado na Home, em "Acessos institucionais" (`decisoes.md` 71).
 
 Previsto em:
 

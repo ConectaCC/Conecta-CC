@@ -1930,3 +1930,107 @@ A página segue uma imagem de referência do time:
 
 Os tipos ficam num **filtro de seleção**, e não em botões no estilo de abas, mantendo os cinco tipos. O logo do IFSul só entra com o arquivo oficial; até lá, o card usa um ícone.
 
+
+
+## 70.10 Card das oportunidades do IFSul (08/11/2026)
+
+O card passou a cobrir mais do que bolsas:
+
+- **Título:** "Conheça as oportunidades do IFSul", com a marca "Fonte oficial · IFSul".
+- **Texto:** "Consulte oportunidades de bolsas, projetos de extensão, estágios e outras iniciativas para complementar sua formação acadêmica e profissional.".
+- **Links**, confirmados pelo time e abrindo em nova aba:
+  - "Bolsas e programas ↗" → `https://www.ifsul.edu.br/estudante-pronatec`;
+  - "Projetos e estágios ↗" → `https://extensao.passofundo.ifsul.edu.br/src/home/home.html`.
+
+---
+
+# 71. Home: visual e acessos institucionais — 08/11/2026
+
+Ajuste da Home a partir de uma imagem de referência do time.
+
+## 71.1 Destaque
+
+- **Saudação:** a mão do aceno passou a ser um ícone, e não um emoji.
+- **Atalhos:** o destaque "Conecte-se, aprenda e cresça junto com a comunidade." traz, à direita, os atalhos para Estudos, Perfil, Comunidade e Oportunidades, em volta de um círculo. Eles substituem a seção "Acesso rápido".
+- **Perfil incompleto:** quando aparece o card "Complete seu perfil", os atalhos ficam numa versão compacta, sem o círculo.
+
+## 71.2 Acessos institucionais
+
+A Home ganha a seção "Acessos institucionais" ("Conecte-se aos principais serviços do IFSul e do curso."), com links confirmados pelo time:
+
+| Acesso | Link |
+|---|---|
+| IFSul | `https://www.ifsul.edu.br/` |
+| Informática / Ciência da Computação | `https://inf.passofundo.ifsul.edu.br/src/home/index.html` |
+| SUAP | `https://suap.ifsul.edu.br/` |
+| Moodle | `https://moodle.passofundo.ifsul.edu.br/` |
+| Instagram do IFSul Passo Fundo | `https://www.instagram.com/ifsulpassofundo/` |
+| Fale com a CORAC | WhatsApp Web: `https://web.whatsapp.com/send?phone=555433112916` |
+
+**Links:**
+
+- Os links externos abrem em nova aba.
+- O do Instagram ficou sem o parâmetro de rastreamento que veio com ele **(escolha do Claude)**.
+- O contato da CORAC é um link de telefone (`tel:`), e não de WhatsApp: não foi confirmado que o número atende por WhatsApp **(escolha do Claude)**.
+
+**Ícones:** são genéricos, sem os logos do IFSul, do SUAP, do Moodle, do Instagram ou do WhatsApp. Os logos só entram com os arquivos oficiais.
+
+Isso resolve em parte `pendencias.md` 1.1: a Home passa a reunir os principais acessos institucionais.
+
+> **Atualização (08/11/2026):** o time confirmou que a CORAC atende pelo WhatsApp. O card passou a abrir o WhatsApp Web (`https://web.whatsapp.com/send?phone=555433112916`) em nova aba, no lugar do link de telefone. O link não usa `wa.me` nem `whatsapp://`, que tentam abrir o aplicativo instalado.
+
+---
+
+# 72. Estudos: visual e recursos acadêmicos — 08/11/2026
+
+Ajuste de Estudos a partir de uma imagem de referência do time.
+
+## 72.1 Cabeçalho e recursos
+
+O cabeçalho virou uma faixa com o ícone de livro, como Oportunidades (§70.9). À direita fica "Recursos acadêmicos", com dois links confirmados pelo time, que abrem em nova aba:
+
+- **Biblioteca Virtual:** `https://plataforma.bvirtual.com.br/Account/Login?redirectUrl=%2F`;
+- **Calendário Acadêmico:** `https://inf.passofundo.ifsul.edu.br/src/Calendario/calendario.html`.
+
+## 72.2 Disciplinas
+
+- **Card de disciplina:** ícone de livro, nome, "Minha disciplina" quando for o caso e "Ver disciplina →" à direita. Em telas estreitas, o link desce para a linha de baixo. Os cards ficam em duas colunas a partir de 768 px, em "Minhas disciplinas" e nos semestres.
+- **Busca:** campo "Buscar disciplina…" na largura da página, com o total ("49 disciplinas") ao lado.
+- **Semestres:** cada um tem um ícone de calendário.
+
+---
+
+# 73. Cabeçalho padrão das páginas internas — 08/11/2026
+
+As páginas internas usam o mesmo cabeçalho (`PageHeader`): uma faixa azul com onda decorativa, um ícone, o título e o subtítulo. Quando a página tem recursos ou ações, eles ficam à direita.
+
+| Página | Ícone | À direita |
+|---|---|---|
+| Estudos | livro | Recursos acadêmicos |
+| Oportunidades | maleta | bolsas do IFSul |
+| Comunidade | pessoas | — |
+| Moderação | escudo | — |
+| Perfil | pessoa | "Meus conteúdos" e "Editar perfil", ou "Editando" |
+| Configurações | engrenagem | — |
+
+A Home mantém a saudação e o destaque próprios (§71).
+
+## 73.1 Fundo e cabeçalho do layout
+
+Valem para todas as páginas internas, porque ficam no layout compartilhado (`AppLayout` e `Header`):
+
+- **Fundo:** a área principal passa do branco do cabeçalho para o azul-claro da página (`--color-ice`) por um degradê vertical discreto, nos primeiros 140 px. Não há cor nova, faixa nem sombra.
+- **Cabeçalho:** perdeu a borda inferior cinza. A passagem para a página é feita só pelo degradê.
+
+O detalhe está em `identidade-visual.md`.
+
+## 73.2 Resumo da revisão visual de 08/11/2026
+
+- **Home (§71):**
+  - saudação com ícone e atalhos para as quatro áreas em volta de um círculo;
+  - "Acessos institucionais", com IFSul, Informática, SUAP, Moodle, Instagram e CORAC pelo WhatsApp Web.
+- **Estudos (§72):** cabeçalho com "Recursos acadêmicos" (Biblioteca Virtual e Calendário Acadêmico), cards de disciplina com ícone e busca na largura da página.
+- **Oportunidades (§70.9 e §70.10):** cabeçalho com o card "Conheça as oportunidades do IFSul", com os links "Bolsas e programas" e "Projetos e estágios".
+- **Cabeçalho padrão (§73):** Estudos, Oportunidades, Comunidade, Moderação, Perfil e Configurações.
+- **Logos de terceiros:** em nenhuma tela. Os ícones são genéricos até haver os arquivos oficiais.
+

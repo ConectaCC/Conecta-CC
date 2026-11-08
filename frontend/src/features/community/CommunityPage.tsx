@@ -1,4 +1,5 @@
 import { LayoutGrid, List, Loader2, Search, Users } from 'lucide-react';
+import { PageHeader } from '@/components/PageHeader';
 import { Link } from 'react-router';
 import { FormAlert } from '@/components/FormAlert';
 import { Skeleton } from '@/components/Skeleton';
@@ -22,15 +23,7 @@ export function CommunityPage() {
 
   return (
     <div>
-      <header className="flex items-center gap-5 rounded-2xl border border-blue-200/70 bg-gradient-to-r from-[#dfeafb] via-[#eaf2fc] to-white px-6 py-7 sm:px-8">
-        <span aria-hidden className="hidden size-16 shrink-0 place-items-center rounded-2xl bg-white/70 text-action sm:grid">
-          <Users className="size-8" />
-        </span>
-        <div className="min-w-0">
-          <h1 className="font-display text-4xl font-bold text-foreground">Comunidade</h1>
-          <p className="mt-2 text-lg text-muted-foreground">Veja o que a comunidade de Ciência da Computação tem compartilhado.</p>
-        </div>
-      </header>
+      <PageHeader icon={Users} title="Comunidade" description="Veja o que a comunidade de Ciência da Computação tem compartilhado." />
 
       <div className="mt-8 grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
         <section aria-labelledby="mural" className="min-w-0">

@@ -1,16 +1,17 @@
-import { ChevronDown } from 'lucide-react';
+import { BookOpen, CalendarDays, ChevronDown, Search } from 'lucide-react';
+import { PageHeader } from '@/components/PageHeader';
 import { useId, useState } from 'react';
 import { Link } from 'react-router';
-import { TextField } from '@/components/TextField';
 import { Button } from '@/components/ui/button';
 import type { Discipline } from '@/features/profile/hooks';
+import { AcademicResources } from './AcademicResources';
 import { DisciplineCard } from './DisciplineCard';
 import { normalizeSearch } from './normalize';
 import { StudiesError, StudiesLoading } from './StudiesStatus';
 import { useStudies } from './useStudies';
 
 const SEMESTERS = [1, 2, 3, 4, 5, 6, 7, 8];
-const GRID = 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3';
+const GRID = 'grid gap-4 md:grid-cols-2';
 
 export function StudiesPage() {
   const { disciplines, mineIds, ready, failed, retry } = useStudies();
@@ -22,10 +23,9 @@ export function StudiesPage() {
 
   return (
     <div>
-      <header>
-        <h1 className="font-display text-4xl font-bold text-foreground">Estudos</h1>
-        <p className="mt-2 text-lg text-muted-foreground">Acesse suas disciplinas e materiais compartilhados pela comunidade.</p>
-      </header>
+      <PageHeader icon={BookOpen} title="Estudos" description="Acesse suas disciplinas e materiais compartilhados pela comunidade.">
+        <AcademicResources />
+      </PageHeader>
 
       <div className="mt-8 space-y-10">
         {failed && <StudiesError onRetry={retry} />}
@@ -67,12 +67,25 @@ export function StudiesPage() {
               <h2 id="todas-disciplinas" className="font-display text-2xl font-bold text-foreground">
                 Todas as disciplinas
               </h2>
-              <div className="mt-5 max-w-md">
-                <TextField label="Buscar disciplina" type="search" value={query} onChange={(event) => setQuery(event.target.value)} />
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <div className="relative min-w-0 flex-[1_1_16rem]">
+                  <label htmlFor="busca-disciplina" className="sr-only">
+                    Buscar disciplina
+                  </label>
+                  <Search className="pointer-events-none absolute top-1/2 left-3.5 size-5 -translate-y-1/2 text-muted-foreground" aria-hidden />
+                  <input
+                    id="busca-disciplina"
+                    type="search"
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    placeholder="Buscar disciplina…"
+                    className="h-12 w-full rounded-lg border border-input bg-white pr-3 pl-11 text-base text-foreground placeholder:text-muted-foreground"
+                  />
+                </div>
+                <p aria-live="polite" className="rounded-full bg-[#dbe7f8] px-4 py-2 text-[15px] font-semibold text-navy-900">
+                  {found.length === 1 ? '1 disciplina' : `${found.length} disciplinas`}
+                </p>
               </div>
-              <p aria-live="polite" className="mt-4 text-[15px] text-muted-foreground">
-                {found.length === 1 ? '1 disciplina' : `${found.length} disciplinas`}
-              </p>
 
               {found.length === 0 ? (
                 <p className="mt-4 text-base text-foreground">Nenhuma disciplina encontrada para “{query.trim()}”.</p>
@@ -118,7 +131,10 @@ function SemesterGroup({ semester, disciplines, mineIds, defaultOpen }: Semester
           onClick={() => setOpen((current) => !current)}
           className="flex min-h-14 w-full items-center justify-between gap-3 rounded-2xl px-6 py-4 text-left hover:bg-[#f5f9fe]"
         >
-          {semester}º semestre
+          <span className="flex items-center gap-4">
+            <CalendarDays className="size-5 shrink-0 text-action" aria-hidden />
+            {semester}º semestre
+          </span>
           <ChevronDown className={`size-5 shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
         </button>
       </h3>

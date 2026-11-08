@@ -676,3 +676,7 @@ A identidade visual deve apoiar a ideia central do projeto:
 > O ConectaCC conecta pessoas, conhecimentos, oportunidades e recursos sem competir com aquilo que já existe.
 
 A interface deve facilitar essa conexão de forma clara, confiável e acolhedora.
+
+---
+
+> **Atualização (08/11/2026):** nas páginas internas, o fundo passa do branco do cabeçalho para o azul-claro da página (`--color-ice`) por um degradê vertical bem discreto, nos primeiros 140 px da área principal. Depois disso, a página segue no mesmo azul-claro. O degradê fica no `AppLayout` e vale para todas as páginas que usam esse layout. Não há nova cor, faixa nem sombra. O cabeçalho não tem borda inferior: a passagem para a página é feita só pelo degradê.

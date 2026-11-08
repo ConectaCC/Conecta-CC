@@ -1,4 +1,6 @@
 import { useRef, useState } from 'react';
+import { PageHeader } from '@/components/PageHeader';
+import { ShieldCheck } from 'lucide-react';
 import { Chip } from '@/components/Chip';
 import { FormAlert } from '@/components/FormAlert';
 import { Skeleton } from '@/components/Skeleton';
@@ -68,12 +70,7 @@ export function ModerationPage() {
 
   return (
     <div>
-      <header>
-        <h1 ref={headingRef} tabIndex={-1} className="font-display text-4xl font-bold text-foreground outline-none">
-          Moderação
-        </h1>
-        <p className="mt-2 text-lg text-muted-foreground">Analise conteúdos enviados pela comunidade antes da publicação.</p>
-      </header>
+      <PageHeader icon={ShieldCheck} title="Moderação" description="Analise conteúdos enviados pela comunidade antes da publicação." headingRef={headingRef} />
 
       <div className="mt-8 space-y-6">
         {notice && (

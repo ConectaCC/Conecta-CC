@@ -1,4 +1,5 @@
 import { Briefcase, ExternalLink, GraduationCap, Loader2, Plus, Search } from 'lucide-react';
+import { PageHeader } from '@/components/PageHeader';
 import { useState } from 'react';
 import { FormAlert } from '@/components/FormAlert';
 import { Skeleton } from '@/components/Skeleton';
@@ -11,8 +12,11 @@ import { useOpportunities } from './hooks';
 import { TYPE_LABELS } from './labels';
 import { OpportunityCard } from './OpportunityCard';
 
-// link confirmado pelo time (decisoes.md §70); o card só redireciona, nada é copiado
-const IFSUL_SCHOLARSHIPS_URL = 'https://www.ifsul.edu.br/estudante-pronatec';
+// links confirmados pelo time (decisoes.md §70.10); o card só redireciona, nada é copiado
+const IFSUL_LINKS = [
+  { href: 'https://www.ifsul.edu.br/estudante-pronatec', label: 'Bolsas e programas', host: 'ifsul.edu.br' },
+  { href: 'https://extensao.passofundo.ifsul.edu.br/src/home/home.html', label: 'Projetos e estágios', host: 'extensao.passofundo.ifsul.edu.br' },
+];
 
 export function OpportunitiesPage() {
   const { params, setParam } = useUrlParams();
@@ -39,51 +43,48 @@ export function OpportunitiesPage() {
 
   return (
     <div>
-      <header className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#e3eefb] via-[#edf4fc] to-[#f6f9fe] px-6 py-8 sm:px-8 lg:py-10">
-        {/* onda decorativa, como na referência visual */}
-        <svg aria-hidden viewBox="0 0 1200 120" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 h-20 w-full text-white/60">
-          <path d="M0 70 C 200 20, 380 120, 600 70 S 1000 20, 1200 60 L 1200 120 L 0 120 Z" fill="currentColor" />
-        </svg>
-        <div className="relative grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,26rem)]">
-          <div className="flex items-start gap-5">
-            <span aria-hidden className="hidden size-20 shrink-0 place-items-center rounded-2xl bg-[#d6e4f7] text-action sm:grid">
-              <Briefcase className="size-10" />
+      <PageHeader
+        icon={Briefcase}
+        title="Oportunidades"
+        description="Encontre oportunidades para complementar sua formação acadêmica e profissional. Aqui você encontra recursos do IFSul e indicações de estudantes aprovadas pela moderação."
+      >
+        <section aria-labelledby="ifsul" className="rounded-2xl bg-white p-6 shadow-sm xl:w-[26rem]">
+          <div className="flex items-start gap-4">
+            <span aria-hidden className="grid size-12 shrink-0 place-items-center rounded-xl bg-navy-900 text-white">
+              <GraduationCap className="size-6" />
             </span>
             <div className="min-w-0">
-              <h1 className="font-display text-4xl font-bold text-foreground">Oportunidades</h1>
-              <p className="mt-3 text-lg text-muted-foreground">
-                Encontre oportunidades para complementar sua formação acadêmica e profissional. Aqui você encontra recursos do IFSul e indicações de
-                estudantes aprovadas pela moderação.
+              <h2 id="ifsul" className="font-display text-lg leading-snug font-bold text-foreground">
+                Conheça as oportunidades do IFSul
+              </h2>
+              <p className="mt-0.5 text-sm font-semibold text-navy-900">Fonte oficial · IFSul</p>
+              <p className="mt-2 text-[15px] text-muted-foreground">
+                Consulte oportunidades de <strong className="font-semibold text-foreground">bolsas, projetos de extensão, estágios e outras iniciativas</strong>{' '}
+                para complementar sua formação acadêmica e profissional.
               </p>
-            </div>
-          </div>
-          <span aria-hidden className="hidden h-full w-px bg-blue-200/70 lg:block" />
-          <section aria-labelledby="ifsul" className="rounded-2xl bg-white p-6 shadow-sm">
-            <div className="flex items-start gap-4">
-              <span aria-hidden className="grid size-12 shrink-0 place-items-center rounded-xl bg-navy-900 text-white">
-                <GraduationCap className="size-6" />
-              </span>
-              <div className="min-w-0">
-                <h2 id="ifsul" className="font-display text-lg leading-snug font-bold text-foreground">
-                  Conheça as oportunidades de bolsas do IFSul
-                </h2>
-                <p className="mt-0.5 text-sm font-semibold text-navy-900">Fonte oficial · IFSul</p>
-                <p className="mt-2 text-[15px] text-muted-foreground">Consulte bolsas, programas e oportunidades disponibilizadas oficialmente pelo IFSul.</p>
-                <a
-                  href={IFSUL_SCHOLARSHIPS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(buttonVariants(), 'mt-4 h-11 gap-2 px-5 text-[15px] font-semibold')}
-                >
-                  Ver oportunidades
-                  <ExternalLink className="size-5" aria-hidden />
-                  <span className="sr-only">(abre em nova aba, ifsul.edu.br)</span>
-                </a>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {IFSUL_LINKS.map(({ href, label, host }, index) => (
+                  <a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      buttonVariants({ variant: index === 0 ? 'default' : 'outline' }),
+                      'h-11 gap-2 px-4 text-[15px] font-semibold',
+                      index > 0 && 'border-action text-action',
+                    )}
+                  >
+                    {label}
+                    <ExternalLink className="size-5" aria-hidden />
+                    <span className="sr-only">(abre em nova aba, {host})</span>
+                  </a>
+                ))}
               </div>
             </div>
-          </section>
-        </div>
-      </header>
+          </div>
+        </section>
+      </PageHeader>
 
       <section aria-labelledby="indicadas" className="mt-10">
         <div className="flex flex-wrap items-end justify-between gap-4">
