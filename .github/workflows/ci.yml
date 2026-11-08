@@ -46,7 +46,7 @@ jobs:
           extensions: pdo_pgsql
           coverage: pcov
       - name: Cache do Composer
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/composer
           key: composer-${{ hashFiles('backend/composer.lock') }}
