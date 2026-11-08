@@ -482,6 +482,8 @@ A autorização deve existir no backend e no banco, não apenas na interface.
 
 **Evolução prevista, fora do checklist do MVP:** retirada administrativa de conteúdo publicado, pelo ADMINISTRADOR (`decisoes.md` 63).
 
+> **Atualização (08/11/2026):** também ficam fora do checklist, com a regra principal já decidida (`decisoes.md` 67): a reversão de rejeição pelo ADMINISTRADOR, direto de REJEITADO para APROVADO, e a denúncia ou solicitação de revisão de conteúdo publicado por usuários autenticados e pelo MODERADOR. Quando entrarem, cada uma traz o seu evento de auditoria (§66.7).
+
 ---
 
 # 15. Concorrência na Moderação
@@ -710,3 +712,15 @@ O painel não aprova, rejeita, retira nem reverte conteúdo.
 - [x] tabelas sem rolagem lateral de 320 a 1920 px, empilhadas no celular;
 - [x] layout igual ao do app (`backend/public/css/conectacc-admin.css`);
 - [x] avatar desenhado localmente, sem serviço externo.
+- [x] datas no horário de Brasília.
+
+## Auditoria
+
+Entregue em 07/11/2026 (`decisoes.md` 66).
+
+- [x] tabela `audit_events`, protegida contra alteração e exclusão por trigger;
+- [x] um evento por ação que muda dados, gravado na mesma transação;
+- [x] versão anterior guardada na aprovação de uma alteração;
+- [x] tela Auditoria, só de leitura, com filtros por ação, pessoa e período;
+- [x] autor real do envio anônimo, com a marca, só para ADMINISTRADOR;
+- [x] nenhum IP, e-mail, senha, hash, token ou motivo de rejeição nos eventos.

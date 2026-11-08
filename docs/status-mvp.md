@@ -43,6 +43,7 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 | Notificações | ✅ | ✅ | ✅ (material) | ⏳ |
 | Moderação ADMIN | ✅ | ✅ | ✅ (só material) | ⏳ |
 | Painel `/admin` | ✅ | — | ✅ | ⏳ |
+| Auditoria | ✅ | — | ✅ | ⏳ |
 | Responsividade | ✅ | ✅ | ⏳ | ⏳ |
 | Acessibilidade | ✅ | Considerada no protótipo | ⏳ | ⏳ |
 | Testes com estudantes | Planejado | — | — | ⏳ |
@@ -139,11 +140,14 @@ Atualmente estão definidos, entre outros:
 
 - ~~**Configurações:** e-mail só para leitura e troca de senha, incluindo a política das outras sessões depois da troca.~~ Entregue em 04/11/2026 (`decisoes.md` 61).
 - ~~**Painel `/admin` (Filament):** papéis, consulta de moderações e atendimento de exclusão de conta. Ele é necessário porque o Render não tem terminal.~~ Entregue em 05/11/2026, com papéis e consulta de moderações (`decisoes.md` 65).
+- ~~**Auditoria:**~~ entregue em 07/11/2026 (`decisoes.md` 66).
 - **Recuperação de senha:** opcional (`decisoes.md` 52.9).
 
 > **Atualização (05/11/2026):** o atendimento de exclusão de conta sai do escopo do painel no MVP. A política está em `decisoes.md` 64.
 
 > **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado, a solicitação de revisão ou remoção pelo MODERADOR, a revisão de decisões de Moderação e a reversão de rejeições são pós-MVP e não são funcionalidades faltantes. O MVP pode ser considerado concluído sem esses fluxos (`decisoes.md` 63).
+
+> **Atualização (08/11/2026):** a regra principal da reversão de rejeição (REJEITADO → APROVADO direto, só pelo ADMINISTRADOR) e da denúncia de conteúdo por usuários autenticados foi decidida (`decisoes.md` 67). Os dois fluxos continuam pós-MVP e não são funcionalidades faltantes.
 
 **Operação:**
 

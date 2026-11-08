@@ -2,8 +2,10 @@
 
 namespace App\Actions;
 
+use App\Enums\AuditAction;
 use App\Enums\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 final class ChangeUserRole
@@ -19,8 +21,16 @@ final class ChangeUserRole
             return;
         }
 
-        $target->role = $role;
-        $target->save();
+        DB::transaction(function () use ($actor, $target, $from, $role): void {
+            $target->role = $role;
+            $target->save();
+
+            app(RecordAuditEvent::class)->handle(AuditAction::RoleChanged, $actor, $target, data: [
+                'from' => $from->value,
+                'to' => $role->value,
+                'via' => 'painel',
+            ]);
+        });
 
         // sem e-mail nem nome (decisão 8)
         Log::info('Papel alterado', [

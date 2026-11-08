@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Enums\AuditAction;
 use App\Enums\Role;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
@@ -21,6 +22,7 @@ final class RegisterUser
 
                 // RF-04: o aceite só existe se a conta existir (mesma transação)
                 $user->termsAcceptances()->create(['version' => $termsVersion, 'accepted_at' => now()]);
+                app(RecordAuditEvent::class)->handle(AuditAction::UserRegistered, $user, $user);
 
                 return $user;
             });

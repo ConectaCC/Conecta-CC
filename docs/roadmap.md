@@ -516,6 +516,9 @@ As seguintes funcionalidades já foram discutidas, mas permanecem fora do MVP.
 - histórico de decisões;
 - auditoria;
 - remoção de conteúdo aprovado;
+
+> **Atualização (07/11/2026):** a auditoria de ações que mudam dados foi entregue no MVP (`decisoes.md` 66). Continuam futuras a auditoria de consultas e de login e a exportação.
+
 - gestão administrativa;
 - contador de pendências.
 

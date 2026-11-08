@@ -2,12 +2,14 @@
 
 namespace App\Actions;
 
+use App\Enums\AuditAction;
 use App\Enums\MaterialStatus;
 use App\Http\Requests\StoreMaterialRequest;
 use App\Models\Discipline;
 use App\Models\Material;
 use App\Models\User;
 use Illuminate\Database\UniqueConstraintViolationException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 final class CreateMaterial
@@ -23,7 +25,10 @@ final class CreateMaterial
         $material->status = MaterialStatus::Pendente;
 
         try {
-            $material->save();
+            DB::transaction(function () use ($material, $author): void {
+                $material->save();
+                app(RecordAuditEvent::class)->handle(AuditAction::MaterialSubmitted, $author, material: $material);
+            });
         } catch (UniqueConstraintViolationException) {
             // dois envios do mesmo link ao mesmo tempo: o índice parcial barra o segundo
             throw ValidationException::withMessages(['url' => StoreMaterialRequest::DUPLICATE_URL]);

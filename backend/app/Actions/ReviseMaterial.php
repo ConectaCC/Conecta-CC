@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Enums\AuditAction;
 use App\Enums\MaterialStatus;
 use App\Models\Material;
 use App\Support\Conflict;
@@ -44,6 +45,7 @@ final class ReviseMaterial
                 $revision->revises_id = $locked->id;
                 $revision->status = MaterialStatus::Pendente;
                 $revision->save();
+                app(RecordAuditEvent::class)->handle(AuditAction::RevisionSubmitted, $locked->author, material: $revision);
 
                 return $revision;
             });

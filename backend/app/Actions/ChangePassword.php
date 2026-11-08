@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Enums\AuditAction;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -16,6 +17,8 @@ final class ChangePassword
                 ->where('user_id', $user->id)
                 ->where('id', '!=', $currentSessionId)
                 ->delete();
+
+            app(RecordAuditEvent::class)->handle(AuditAction::PasswordChanged, $user, $user);
         });
     }
 }

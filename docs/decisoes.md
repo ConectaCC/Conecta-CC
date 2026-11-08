@@ -1127,6 +1127,8 @@ Cadastro, Login, autenticação e sessão continuam obrigatórios. O fluxo Esque
 
 Salvar, Compartilhar, Copiar link, Denunciar, notificações por disciplina, módulo ou tipo, Ocultar, “Ver menos conteúdos como este”, Tenho interesse / Não tenho interesse. Nenhuma pertence ao MVP, e as regras delas não estão definidas.
 
+> **Atualização (08/11/2026):** a regra principal de Denunciar foi decidida na §67.2. Ela continua pós-MVP.
+
 ## 52.11 Pendências que continuam
 
 - Cancelamento: fluxo, se é imediato, quem processa, representação e filtro.
@@ -1520,6 +1522,8 @@ Também ficam como evolução futura / pós-MVP:
 
 O MVP e o `/admin` podem ser considerados concluídos sem esses fluxos. As regras deles serão definidas quando entrarem no escopo.
 
+> **Atualização (08/11/2026):** a regra principal da reversão de rejeição e da solicitação de revisão (agora também por usuários autenticados, como denúncia) foi decidida na §67. Os dois fluxos continuam pós-MVP, e só os detalhes de UX e de implementação ficam para depois.
+
 ---
 
 # 64. Exclusão de conta: política do piloto — 05/11/2026
@@ -1638,3 +1642,117 @@ As tabelas não têm rolagem lateral. Para isso, as colunas foram agrupadas:
 ## 65.7 Avatar sem serviço externo
 
 O avatar padrão do Filament é buscado em `ui-avatars.com`, o que enviaria as iniciais da pessoa para fora. O painel desenha o avatar localmente, com as mesmas iniciais do app.
+
+---
+
+# 66. Auditoria — 07/11/2026
+
+Decisões da auditoria do `/admin` (spec `specs/2026-11-07-auditoria-design.md`).
+
+## 66.1 O que significa "revisar os logs"
+
+O ADMINISTRADOR revisa as ações na tela **Auditoria** do `/admin`. Ela é o registro oficial do que foi feito no sistema e por quem. A linha `Papel alterado` continua no log técnico do Render, só para operação.
+
+## 66.2 O que é registrado
+
+Toda ação que muda dados gera um evento, na mesma transação da ação:
+
+- cadastro;
+- troca de senha;
+- papel alterado, pelo painel ou pelo workflow;
+- material enviado;
+- alteração enviada;
+- envio cancelado;
+- material excluído;
+- aprovado;
+- rejeitado.
+
+Login, logout e consultas não são registrados. Isso inclui o ADMINISTRADOR ver o autor de um material anônimo.
+
+## 66.3 O que o evento guarda
+
+O evento guarda:
+
+- quem fez;
+- a ação;
+- a conta ou o material afetado;
+- a data;
+- um resumo da mudança, com o título que o material tinha naquele momento;
+- se o envio era anônimo e se era uma alteração;
+- na aprovação de uma alteração, a versão publicada antes.
+
+**Nunca guarda:** IP, e-mail, senha, hash, token, sessão ou o texto do motivo da rejeição.
+
+## 66.4 Quem vê
+
+Só o ADMINISTRADOR, na tela Auditoria, com filtros por ação, pessoa e período. O MODERADOR não vê.
+
+O envio anônimo mostra quem enviou, com a marca "Enviado anonimamente", como em Moderações (§55.2). A marca aparece só abaixo do autor, e não de quem moderou.
+
+## 66.5 Imutabilidade e retenção
+
+- **Imutabilidade:** uma trigger do PostgreSQL recusa alterar, apagar ou esvaziar eventos, inclusive pelo painel ou por um comando manual. Remover um evento exige uma migration deliberada.
+- **Retenção:** os eventos ficam guardados durante o piloto. Quando a exclusão de conta for implementada (§64), o evento continua existindo e a pessoa aparece como "Conta excluída". A regra final de retenção entra na revisão dos Termos e da LGPD.
+- **Histórico anterior:** não foi reconstruído, e a auditoria conta a partir do deploy.
+
+## 66.6 Workflow
+
+A troca de papel pelo workflow "Promover usuário" aparece como "Workflow do GitHub".
+
+## 66.7 Regra para entregas futuras
+
+Toda ação administrativa sensível nova (reversão de rejeição, retirada de conteúdo, exclusão de conta) só entra junto com o evento de auditoria dela.
+
+## 66.8 Horário do painel
+
+O banco guarda as datas em UTC. O painel mostra as datas e filtra o período no horário de Brasília (`America/Sao_Paulo`), como o app já faz no navegador.
+
+Isso corrige as datas de Usuários e Moderações, que apareciam três horas adiantadas desde a §65.
+
+---
+
+# 67. Reversão de rejeição e denúncia de conteúdo — 08/11/2026
+
+Duas evoluções **pós-MVP**, já com a regra de negócio decidida. Elas não entram no checklist obrigatório do MVP.
+
+Esta seção substitui, para esses dois fluxos, a frase final da §63.4 ("As regras deles serão definidas quando entrarem no escopo") e, para a denúncia, a §52.10 ("as regras delas não estão definidas"). A revisão geral de decisões de Moderação pelo ADMINISTRADOR continua como está na §63.4.
+
+## 67.1 Reversão de rejeição pelo ADMINISTRADOR
+
+**Regra decidida:** o ADMINISTRADOR poderá reverter uma rejeição diretamente, de **REJEITADO** para **APROVADO**. O conteúdo não precisa voltar para PENDENTE antes da nova aprovação.
+
+- É uma funcionalidade pós-MVP.
+- Só o ADMINISTRADOR pode reverter. O MODERADOR não pode.
+- A rejeição anterior não pode ser apagada nem sobrescrita silenciosamente.
+- O histórico precisa preservar que o conteúdo já havia sido rejeitado.
+- A reversão precisa ser registrada na auditoria (§66.7).
+
+**Fica para quando for implementada:**
+
+- a UX do fluxo;
+- se a justificativa será obrigatória;
+- as notificações;
+- as informações exibidas ao autor.
+
+## 67.2 Denúncia e solicitação de revisão de conteúdo publicado
+
+**Regra decidida:**
+
+- Usuários autenticados poderão **denunciar conteúdo** ou pedir que ele seja revisado.
+- O MODERADOR também poderá solicitar revisão ou remoção. Isso amplia a §63.4, que citava só o MODERADOR.
+- Uma denúncia ou solicitação **não remove o conteúdo automaticamente**.
+- A decisão de retirar um conteúdo publicado pertence ao ADMINISTRADOR.
+- A retirada administrativa continua pós-MVP (§63).
+
+**Fica para quando for implementada:**
+
+- as categorias ou os motivos da denúncia;
+- se a justificativa será obrigatória ou opcional;
+- quem recebe a solicitação;
+- o comportamento para denúncias repetidas;
+- a possibilidade de cancelar uma denúncia;
+- as notificações;
+- o tratamento de conteúdo anônimo;
+- o registro no histórico e na auditoria;
+- os resultados possíveis da análise;
+- uma eventual relação com sanções ou bloqueios.

@@ -2,9 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\RecordAuditEvent;
+use App\Enums\AuditAction;
 use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 final class PromoteUser extends Command
@@ -31,8 +34,21 @@ final class PromoteUser extends Command
             return self::FAILURE;
         }
 
-        $user->role = $role;
-        $user->save();
+        $from = $user->role;
+
+        if ($from !== $role) {
+            DB::transaction(function () use ($user, $from, $role): void {
+                $user->role = $role;
+                $user->save();
+
+                // sem usuário do sistema por trás: a tela mostra "Workflow do GitHub"
+                app(RecordAuditEvent::class)->handle(AuditAction::RoleChanged, null, $user, data: [
+                    'from' => $from->value,
+                    'to' => $role->value,
+                    'via' => 'workflow',
+                ]);
+            });
+        }
 
         // sem o e-mail na saída: o workflow promote-user roda num repositório público
         $this->info("Papel atualizado para {$role->value}.");

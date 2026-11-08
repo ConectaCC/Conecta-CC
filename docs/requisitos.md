@@ -73,7 +73,7 @@ O MODERADOR é um usuário com permissões adicionais para auxiliar na Moderaç�
 - analisar Material, Publicação e Oportunidade (no MVP, só Material — `decisoes.md` 56);
 - aprovar solicitações permitidas;
 - rejeitar solicitações permitidas, informando o motivo (obrigatório);
-- solicitar revisão/remoção de conteúdo já publicado — **Pós-MVP / evolução futura** (`decisoes.md` 63.4).
+- solicitar revisão/remoção de conteúdo já publicado — **Pós-MVP / evolução futura** (`decisoes.md` 63.4 e 67.2). A solicitação não remove o conteúdo automaticamente.
 
 Regras:
 
@@ -98,7 +98,7 @@ O ADMINISTRADOR possui as funcionalidades comuns do usuário e também pode:
 - acessar `/admin`, que é exclusivo de ADMINISTRADORES;
 - moderar, inclusive o próprio conteúdo;
 - revisar decisões de Moderação — **Pós-MVP / evolução futura** (`decisoes.md` 63.4);
-- reverter rejeições — **Pós-MVP / evolução futura** (`decisoes.md` 63.4);
+- reverter rejeições, diretamente de REJEITADO para APROVADO — **Pós-MVP / evolução futura** (`decisoes.md` 67.1);
 - retirar conteúdo previamente aprovado/publicado — **Pós-MVP / evolução futura** (`decisoes.md` 63);
 - nomear MODERADORES e remover o papel de MODERADOR;
 - gerenciar papéis e permissões;
@@ -112,6 +112,15 @@ A UX completa do painel administrativo e o fluxo detalhado das ações de MODERA
 > **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado, a revisão de decisões de Moderação e a reversão de rejeições não são necessárias para concluir o `/admin` do MVP (`decisoes.md` 63).
 
 > **Atualização (05/11/2026):** o `/admin` do MVP cobre a consulta de usuários, a alteração de papéis e a consulta de moderações (`decisoes.md` 65). "Gerenciar permissões" significa definir o papel da pessoa.
+
+> **Atualização (07/11/2026):** o `/admin` também tem a tela Auditoria, com um evento imutável para cada ação que muda dados (`decisoes.md` 66). Revisão, reversão e retirada continuam pós-MVP, e cada uma deve entrar junto com o seu evento de auditoria.
+
+> **Atualização (08/11/2026):** duas regras pós-MVP foram decididas (`decisoes.md` 67):
+
+- **Reversão de rejeição:** só o ADMINISTRADOR reverte, direto de REJEITADO para APROVADO, sem voltar a PENDENTE. A rejeição anterior fica preservada no histórico, e a reversão é registrada na auditoria.
+- **Denúncia ou solicitação de revisão:** usuários autenticados e o MODERADOR poderão denunciar ou pedir a revisão de conteúdo publicado. A denúncia não remove o conteúdo automaticamente, e a retirada é decisão do ADMINISTRADOR.
+
+Só os detalhes de UX e de implementação ficam para quando esses fluxos entrarem no escopo.
 
 ---
 

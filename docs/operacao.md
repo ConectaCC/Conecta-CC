@@ -86,6 +86,10 @@ Todas as contas pertencem à conta Google do projeto (decisão 9).
 1. Settings → Code security → **Secret scanning: Enable** e **Push protection: Enable**.
 2. Settings → Branches → regra para `main`: exigir pull request e os checks `backend`, `frontend`, `docker` e `gitleaks`.
 
+## Auditoria
+
+O `/admin` → **Auditoria** mostra cada ação que mudou dados, com quem fez e quando, no horário de Brasília. Os eventos não podem ser alterados nem apagados: a trigger `audit_events_immutable` recusa `UPDATE`, `DELETE` e `TRUNCATE`. Remover um evento, por exemplo por um pedido ligado à LGPD, exige uma migration deliberada. O `make fresh` continua funcionando no ambiente local, porque apaga a tabela inteira.
+
 ## Mudar o papel de alguém em produção
 
 **Pelo painel (caminho normal):** um ADMINISTRADOR entra em `/admin`, abre **Usuários** e usa **Alterar papel**. Ninguém muda o próprio papel. Cada mudança gera a linha de log `Papel alterado`, só com IDs internos e os papéis.

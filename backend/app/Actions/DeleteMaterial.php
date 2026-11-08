@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Enums\AuditAction;
 use App\Enums\MaterialStatus;
 use App\Models\Material;
 use App\Support\Conflict;
@@ -21,6 +22,7 @@ final class DeleteMaterial
 
             $locked->revisions()->where('status', MaterialStatus::Pendente)->update(['status' => MaterialStatus::Cancelado]);
             $locked->delete();
+            app(RecordAuditEvent::class)->handle(AuditAction::MaterialDeleted, $locked->author, material: $locked);
         });
     }
 }

@@ -6,6 +6,7 @@ use App\Actions\ChangeUserRole;
 use App\Enums\Role;
 use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Models\User;
+use App\Providers\Filament\AdminPanelProvider;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
@@ -46,7 +47,7 @@ final class UserResource extends Resource
                     ->searchable(['name', 'display_name']),
                 TextColumn::make('email')->label('E-mail')->wrap()->searchable(),
                 TextColumn::make('role')->label('Papel')->formatStateUsing(fn (Role $state): string => $state->label()),
-                TextColumn::make('created_at')->label('Cadastro')->date('d/m/Y')->sortable()->visibleFrom('xl'),
+                TextColumn::make('created_at')->label('Cadastro')->date('d/m/Y', AdminPanelProvider::TIMEZONE)->sortable()->visibleFrom('xl'),
             ])
             ->filters([
                 SelectFilter::make('role')->label('Papel')->options(Role::labels()),
