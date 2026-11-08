@@ -1919,3 +1919,14 @@ Não há envio anônimo. O MODERADOR não analisa a própria oportunidade, como 
 
 - **Eventos:** "Oportunidade enviada", "Oportunidade cancelada", "Oportunidade excluída", "Oportunidade aprovada" e "Oportunidade rejeitada". O título e o tipo ficam no evento.
 - **`/admin` → Oportunidades:** só de leitura, com quem enviou, a situação (inclusive "Encerrada") e a decisão.
+
+## 70.9 Visual da página (08/11/2026)
+
+A página segue uma imagem de referência do time:
+
+- **Título:** "Oportunidades", no plural, com o item da navegação ainda no singular (§6).
+- **Cabeçalho:** traz o card das bolsas do IFSul, com o botão "Ver oportunidades".
+- **Estado vazio:** novo texto.
+
+Os tipos ficam num **filtro de seleção**, e não em botões no estilo de abas, mantendo os cinco tipos. O logo do IFSul só entra com o arquivo oficial; até lá, o card usa um ícone.
+

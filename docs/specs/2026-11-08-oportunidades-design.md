@@ -186,4 +186,11 @@ Mudou a API: rodar `make api-types`.
 - **Botão da Comunidade:** "Compartilhar conteúdo", com um menu ("Material" e "Oportunidade") **(escolha do Claude)**.
 - **"A comunidade em números":** virou uma lista, porque "Oportunidades" não cabia em três blocos lado a lado na coluna lateral.
 - **Situação da oportunidade nas tags:** no feminino, por exemplo "Aprovada", "Rejeitada" e "Encerrada".
+- **Visual da página, a partir de uma imagem de referência do time:**
+  - o título passou a ser "Oportunidades", no plural, como a §6 permite no conteúdo da página (o item da navegação continua "Oportunidade");
+  - o card das bolsas do IFSul fica dentro do cabeçalho, ao lado do texto, com o botão "Ver oportunidades";
+  - o cabeçalho ganhou uma onda decorativa;
+  - o estado vazio passou a ser "Nenhuma oportunidade compartilhada por enquanto" e "Quando novas oportunidades forem aprovadas, elas aparecerão aqui.", sem botão, porque "+ Adicionar oportunidade" já fica logo acima.
+- **Tipos:** a imagem mostrava botões no estilo de abas ("Todas", "Vagas e Estágios", "Hackathons e Eventos"). A pedido do time, os tipos ficam num filtro de seleção ao lado da busca, com os cinco tipos (§69.1 e §70.2).
+- **Logo do IFSul:** o card usa um ícone, e não o logo da imagem. O logo só entra com o arquivo oficial **(escolha do Claude)**.
 
