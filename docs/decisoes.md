@@ -1954,7 +1954,7 @@ A Home ganha a seção "Acessos institucionais" ("Conecte-se aos principais serv
 | SUAP | `https://suap.ifsul.edu.br/` |
 | Moodle | `https://moodle.passofundo.ifsul.edu.br/` |
 | Instagram do IFSul Passo Fundo | `https://www.instagram.com/ifsulpassofundo/` |
-| Fale com a CORAC | telefone (54) 3311-2916 |
+| Fale com a CORAC | WhatsApp Web: `https://web.whatsapp.com/send?phone=555433112916` |
 
 **Links:**
 
@@ -1965,6 +1965,8 @@ A Home ganha a seção "Acessos institucionais" ("Conecte-se aos principais serv
 **Ícones:** são genéricos, sem os logos do IFSul, do SUAP, do Moodle, do Instagram ou do WhatsApp. Os logos só entram com os arquivos oficiais.
 
 Isso resolve em parte `pendencias.md` 1.1: a Home passa a reunir os principais acessos institucionais.
+
+> **Atualização (08/11/2026):** o time confirmou que a CORAC atende pelo WhatsApp. O card passou a abrir o WhatsApp Web (`https://web.whatsapp.com/send?phone=555433112916`) em nova aba, no lugar do link de telefone. O link não usa `wa.me` nem `whatsapp://`, que tentam abrir o aplicativo instalado.
 
 ---
 

@@ -263,7 +263,7 @@ e não a um organograma administrativo ou institucional.
 **Status:** ✅ Confirmado (08/11/2026)
 
 - **Site do IFSul:** `https://www.ifsul.edu.br/`.
-- **CORAC:** contato pelo telefone (54) 3311-2916. Não foi confirmado se o número atende por WhatsApp.
+- **CORAC:** contato pelo WhatsApp (54) 3311-2916, com o link do WhatsApp Web `https://web.whatsapp.com/send?phone=555433112916` (confirmado pelo time em 08/11/2026).
 
 Os dois são usados na Home, em "Acessos institucionais" (`decisoes.md` 71).
 
