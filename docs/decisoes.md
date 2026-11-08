@@ -1771,6 +1771,12 @@ O mural não guarda cópia de nada. Estudos é dono do material, e a Comunidade 
 
 Ficam fora desta versão: tópicos, respostas, comentários, curtidas, posts de texto livre, canais e busca de estudantes.
 
+A proposta futura de **Publicação** é permitir que estudantes divulguem no mural links para publicações próprias realizadas em plataformas externas, inicialmente com foco em conteúdos publicados no LinkedIn.
+
+O ConectaCC funcionará apenas como meio de descoberta e direcionamento para a publicação original. As interações, como curtidas e comentários, ocorrerão na plataforma externa e não serão reproduzidas dentro do ConectaCC.
+
+Essa funcionalidade não faz parte da versão atual.
+
 ## 68.2 O que aparece
 
 - **O que gera uma publicação:** a primeira aprovação de um material. Uma alteração aprovada não gera outra publicação, e o mural mostra o título atual.
@@ -2034,12 +2040,194 @@ O detalhe está em `identidade-visual.md`.
 - **Cabeçalho padrão (§73):** Estudos, Oportunidades, Comunidade, Moderação, Perfil e Configurações.
 - **Logos de terceiros:** em nenhuma tela. Os ícones são genéricos até haver os arquivos oficiais.
 
+# 74. Favoritar oportunidades — evolução futura
 
-# 74. Qualidade dos testes e análise estática (back) — 08/11/2026
+A funcionalidade de favoritos em Oportunidades fica definida como uma evolução pós-MVP e não deve ser implementada na versão atual.
+
+No futuro, usuários autenticados poderão salvar oportunidades para consultá-las posteriormente.
+
+## 74.1 Comportamento previsto
+
+- Cada card de oportunidade poderá apresentar um ícone de **bookmark/favorito**.
+- Ao selecionar o ícone, a oportunidade será salva nos favoritos daquele usuário.
+- Ao selecionar novamente, a oportunidade será removida dos favoritos.
+- Os favoritos são individuais e não ficam visíveis para outros usuários.
+- Salvar uma oportunidade não altera sua situação, prazo, autoria, publicação ou posição na listagem geral.
+- A funcionalidade não interfere na Moderação da oportunidade.
+
+## 74.2 Consulta das oportunidades salvas
+
+A página **Oportunidades** deverá permitir que o usuário visualize somente as oportunidades que salvou.
+
+A opção de visualizar oportunidades salvas será independente do filtro de tipo.
+
+O filtro de tipo continua utilizando as categorias:
+
+- Todos os tipos;
+- Estágio;
+- Emprego;
+- Evento;
+- Projeto;
+- Outro.
+
+**Salvas** não deve ser tratada como um tipo de oportunidade.
+
+A direção visual preferida para essa funcionalidade é manter os controles de busca e filtragem na mesma área, por exemplo:
+
+**Buscar oportunidades…** | **Todos os tipos ▾** | **☆ Somente salvas**
+
+O controle **Somente salvas** funcionará como um filtro independente, podendo ser ativado ou desativado pelo usuário.
+
+Isso permitirá combinar filtros. Exemplos:
+
+- **Todos os tipos + Somente salvas** → mostra todas as oportunidades favoritadas pelo usuário;
+- **Estágio + Somente salvas** → mostra apenas os estágios favoritados;
+- **Evento + Somente salvas** → mostra apenas os eventos favoritados.
+
+Quando **Somente salvas** não estiver ativo, a página continua exibindo normalmente as oportunidades de acordo com a busca e o tipo selecionado.
+
+A aparência definitiva desse controle poderá ser refinada na implementação, mas ele deverá permanecer separado do filtro de tipo.
+
+## 74.3 O que fica para a futura implementação
+
+Ficam para a rodada em que a funcionalidade for implementada:
+
+- posição exata do ícone de bookmark dentro do card;
+- aparência dos estados **salva** e **não salva**;
+- aparência definitiva do controle **Somente salvas**;
+- comportamento de oportunidades encerradas que estavam salvas;
+- comportamento de oportunidades excluídas ou retiradas que estavam salvas;
+- estado vazio quando o usuário ainda não possuir oportunidades salvas;
+- paginação;
+- persistência e detalhes técnicos de armazenamento.
+
+A regra principal já está decidida: **o usuário poderá favoritar oportunidades por meio de um bookmark nos cards e utilizar um filtro separado para visualizar somente as oportunidades salvas, sem transformar “Salvas” em um tipo de oportunidade.**
+
+# 75. Ícones dos acessos institucionais durante o período de teste
+
+A alteração dos ícones dos cards de **Acessos institucionais** será realizada de forma planejada durante o período de testes do ConectaCC.
+
+Esta decisão complementa as §§71.2 e 73.2.
+
+## 75.1 Versão inicial
+
+O ConectaCC será inicialmente disponibilizado com os ícones atuais dos cards de Acessos institucionais.
+
+A substituição dos ícones por marcas mais reconhecíveis **não é requisito para a publicação inicial**.
+
+Manter os ícones atuais na primeira versão é intencional, pois permitirá realizar posteriormente uma pequena atualização visual enquanto o sistema já estiver em uso pelos participantes do piloto.
+
+## 75.2 Atualização durante o piloto
+
+Depois que o ConectaCC já estiver em uso pelos participantes do piloto, será publicada uma nova versão modificando os ícones dos Acessos institucionais.
+
+A alteração será limitada aos ícones.
+
+Devem permanecer iguais:
+
+- estrutura dos cards;
+- textos;
+- links;
+- posição dos cards;
+- tamanhos;
+- cores de fundo;
+- comportamento;
+- demais elementos do layout.
+
+A troca dos ícones será utilizada como uma alteração de baixo impacto para acompanhar, na prática, o processo de atualização de uma versão do ConectaCC enquanto o sistema já estiver publicado e em uso.
+
+O objetivo principal dessa atualização é verificar se uma nova versão pode ser disponibilizada sem comprometer o funcionamento e a estabilidade do sistema.
+
+## 75.3 Ícones previstos para a atualização
+
+Quando a atualização for realizada, a direção prevista é:
+
+- **IFSul:** utilizar o logo oficial do IFSul, preservando suas cores institucionais;
+- **Informática / Ciência da Computação:** utilizar o logo oficial do IFSul, preservando suas cores institucionais;
+- **SUAP:** utilizar o logo oficial do SUAP;
+- **Moodle:** utilizar o logo oficial do Moodle;
+- **Instagram do IFSul Passo Fundo:** utilizar o símbolo oficial do Instagram;
+- **Fale com a CORAC:** utilizar o símbolo oficial do WhatsApp.
+
+Os ícones deverão continuar dentro dos pequenos blocos arredondados já utilizados nos cards, preservando o padrão visual da Home.
+
+## 75.4 Assets de marca
+
+Os logos, ícones e símbolos oficiais utilizados nos cards de **Acessos institucionais** deverão ser armazenados como assets locais do frontend.
+
+Isso inclui, quando aplicável:
+
+- IFSul;
+- SUAP;
+- Moodle;
+- Instagram;
+- WhatsApp.
+
+Os arquivos poderão ser armazenados, preferencialmente em formato SVG quando adequado, em uma pasta específica para assets de marca, por exemplo:
+
+`frontend/src/assets/brands/`
+
+Não deve ser instalada uma nova biblioteca React apenas para fornecer esses ícones.
+
+Os assets não devem depender de carregamento em runtime a partir de URLs externas.
+
+Devem ser utilizados arquivos oficiais ou adequados ao uso de cada marca, respeitando sua identidade visual e eventuais orientações de utilização.
+
+O uso desses assets não deve alterar a estrutura, os tamanhos, as cores de fundo ou o layout dos cards definidos para os Acessos institucionais.
+
+## 75.5 Validação da nova versão durante o piloto
+
+A alteração dos ícones será utilizada como uma atualização planejada durante o piloto do ConectaCC.
+
+O objetivo é acompanhar o comportamento do sistema durante a publicação de uma nova versão enquanto a aplicação já estiver em uso.
+
+Durante e após essa atualização deverão ser verificados, entre outros pontos:
+
+- publicação correta da nova versão;
+- disponibilidade do sistema durante e após a atualização;
+- carregamento correto dos novos assets de marca;
+- manutenção da estrutura e do layout dos cards;
+- funcionamento dos links dos Acessos institucionais;
+- funcionamento das demais áreas do sistema;
+- preservação dos dados existentes;
+- ausência de regressões provocadas pela atualização;
+- comportamento da interface em diferentes tamanhos de tela;
+- identificação de eventuais problemas surgidos após a publicação da nova versão.
+
+A troca dos ícones foi escolhida por representar uma alteração visual de baixo impacto funcional, permitindo testar uma atualização real do ConectaCC sem introduzir, nesse momento, uma nova funcionalidade complexa.
+
+Caso algum problema seja identificado após a atualização, ele deverá ser registrado e considerado no processo de correção e evolução do sistema.
+
+## 75.6 Relação com o piloto
+
+A atualização dos ícones deverá fazer parte do planejamento do piloto como uma pequena evolução do sistema realizada enquanto a aplicação já estiver em uso.
+
+O fluxo previsto é:
+
+1. publicar inicialmente o ConectaCC com os ícones atuais;
+2. iniciar o uso do sistema pelos participantes do piloto;
+3. realizar a atualização dos ícones definida nesta seção;
+4. publicar a nova versão;
+5. verificar o funcionamento e a estabilidade da aplicação após a atualização;
+6. registrar e corrigir eventuais problemas identificados.
+
+Essa atualização poderá contribuir para avaliar aspectos relacionados a:
+
+- processo de publicação de novas versões;
+- estabilidade da aplicação após uma atualização;
+- manutenção das funcionalidades existentes;
+- identificação de regressões;
+- carregamento de novos assets;
+- continuidade do uso após uma atualização;
+- capacidade da equipe de realizar correções após a publicação.
+
+A mudança dos ícones ocorre **depois que o ConectaCC já estiver em uso** e não deve bloquear a publicação inicial do sistema.
+
+# 76. Qualidade dos testes e análise estática (back) — 08/11/2026
 
 Decisões tomadas na definição da qualidade dos testes (spec `specs/2026-11-08-qualidade-testes-design.md`). O detalhe técnico está em `stack-e-decisoes-tecnicas.md` 12.
 
-## 74.1 Rodada completa de mutação
+## 76.1 Rodada completa de mutação
 
 O teste de mutação rodou em todas as classes de `backend/app`. Cada mutante sobrevivente teve um destino:
 
@@ -2047,16 +2235,16 @@ O teste de mutação rodou em todas as classes de `backend/app`. Cada mutante so
 - **Lacuna real:** ganhou teste. Exemplos: link com espaço no caminho era aceito, valor que não é texto devolvia a chave crua `validation.string`, e o formato das respostas que a SPA consome não era conferido.
 - **Mutante equivalente:** ficou marcado na linha, com o motivo.
 
-## 74.2 Análise estática
+## 76.2 Análise estática
 
 O Larastan subiu do nível 6 para o 10, com todos os erros corrigidos e sem lista de exceções.
 
-## 74.3 Fluxo das próximas entregas
+## 76.3 Fluxo das próximas entregas
 
 - Antes do PR, `make mutate` precisa estar verde. O CI roda o mesmo passo.
 - A mutação roda só nas classes de `backend/app` alteradas em relação à base do PR, com nota mínima de **90%**.
 - A cobertura de linhas do back fica em **100%**, para que código novo sem teste não passe **(escolha do Claude)**.
 
-## 74.4 Front
+## 76.4 Front
 
 O front (TypeScript estrito, testes com Vitest e Testing Library, mutação com StrykerJS e nota mínima de 80%, ponta a ponta com Playwright) vem numa entrega separada, depois desta.
