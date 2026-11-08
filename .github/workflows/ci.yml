@@ -68,6 +68,8 @@ jobs:
         env:
           APP_URL: http://localhost
         run: |
+          # os testes em paralelo usam bancos próprios: o Scramble precisa do esquema para tipar os campos
+          php artisan migrate --force
           php artisan scramble:export --path=storage/app/openapi.json
           diff -u ../frontend/openapi.json storage/app/openapi.json
 
