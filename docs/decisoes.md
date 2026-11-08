@@ -1801,3 +1801,23 @@ Oportunidades entra integrada ao mural, sempre com "Comunidade" como autoria pú
 - **Subtítulo:** "Veja o que a comunidade de Ciência da Computação tem compartilhado.".
 - **Estado vazio:** "Quando um material for aprovado em Estudos, ele aparece aqui.", com o link "Ir para Estudos".
 - **Avatar:** as iniciais no material identificado e um ícone neutro de pessoas no anônimo.
+
+## 68.8 Visual a partir da imagem de referência (08/11/2026)
+
+O time enviou uma imagem de referência para a página, e a spec ganhou a seção 9.
+
+**Entram:**
+
+- **Cabeçalho:** faixa com ícone, sem ilustração.
+- **Card:** disciplina, data, tag "Material" e ícone de documento.
+- **Busca:** no título, na disciplina e no autor, sem acentos.
+- **Ordem:** mais recentes ou mais antigos.
+- **Visualização:** em lista ou em grade.
+- **Card "Contribua com a comunidade":** o botão leva a Estudos.
+- **"A comunidade em números":** com materiais e estudantes.
+
+**Regra de privacidade:** a busca pelo nome do autor nunca encontra material anônimo.
+
+**Ficam fora:** salvar e o menu "⋯". **Entram com Oportunidades:** as abas por tipo, "Explorar por tipo" e o número de oportunidades.
+
+**Ícone do tipo:** por enquanto, todo material usa o ícone de documento.

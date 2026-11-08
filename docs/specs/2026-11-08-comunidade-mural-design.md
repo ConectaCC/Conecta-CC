@@ -124,3 +124,36 @@ Se o material não estiver mais na lista (excluído entre o mural e o clique), a
 - O nome do Resource do mural, ou se o `MaterialResource` ganha a disciplina.
 - Como o card trata títulos e nomes longos no celular.
 - O ícone do avatar anônimo.
+
+## 9. Revisão do visual (08/11/2026)
+
+> **Correção (08/11/2026):** o time enviou uma imagem de referência para a página. Esta seção muda o que estava acima nos pontos indicados.
+
+**Entra:**
+
+- **Cabeçalho:** em faixa azul-clara com gradiente e o ícone de pessoas, sem ilustração.
+- **Card:**
+  - frase "**Nome** compartilhou **“Título”**";
+  - linha com a disciplina (ícone de livro) e o tempo relativo (ícone de calendário);
+  - tag "Material";
+  - ícone de documento à direita, o mesmo para todo material, porque o sistema não sabe o tipo do conteúdo do link.
+- **Busca** "Buscar na comunidade…", sem diferenciar acentos e maiúsculas:
+  - procura no título, no nome da disciplina e no nome de exibição do autor;
+  - o nome do autor só conta no material identificado, porque no anônimo a busca revelaria quem enviou;
+  - até 100 caracteres;
+  - a busca dispara 300 ms depois de a pessoa parar de digitar.
+- **Ordem:** "Mais recentes" ou "Mais antigos".
+- **Visualização:** em lista ou em grade, com duas colunas a partir de 768 px.
+- **Endereço:** a busca, a ordem e a visualização ficam na URL (`?busca=`, `?ordem=antigos`, `?visualizacao=grade`) **(escolha do Claude)**.
+- **Subtítulo da seção:** "Atualizações mais recentes da comunidade." ou, na ordem inversa, "Atualizações mais antigas primeiro.".
+- **Sem resultado:** "Nenhum resultado para “…”", "Tente outro título, disciplina ou nome." e "Limpar busca".
+- **Coluna lateral**, ao lado da lista a partir de 1280 px e abaixo dela em telas menores:
+  - "Contribua com a comunidade", com o botão "Compartilhar material", que leva a Estudos, porque o material é enviado dentro da disciplina;
+  - "A comunidade em números", com materiais publicados e estudantes. O número de oportunidades entra com Oportunidades.
+
+**Backend:** o mural ganha os parâmetros `q` (até 100 caracteres) e `order` (`recent` ou `oldest`). Entra a rota `GET /api/v1/community/stats` (`materials` e `students`) e a extensão `unaccent` do PostgreSQL.
+
+**Não entra:**
+
+- **Salvar e o menu "⋯":** Salvar é futuro (§52.10), e denunciar é pós-MVP (§67.2).
+- **Abas por tipo e "Explorar por tipo":** entram com Oportunidades.
