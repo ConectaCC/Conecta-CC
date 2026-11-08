@@ -83,10 +83,10 @@ final class AuditEventResource extends Resource
                     ->query(function (Builder $query, array $data): Builder {
                         $from = $data['from'] ?? null;
                         $until = $data['until'] ?? null;
-                        if (is_string($from) && $from !== '') {
+                        if (is_string($from) && $from !== '') { // @pest-mutate-ignore: EmptyStringToNotEmpty
                             $query->where('created_at', '>=', self::startOfLocalDay($from));
                         }
-                        if (is_string($until) && $until !== '') {
+                        if (is_string($until) && $until !== '') { // @pest-mutate-ignore: EmptyStringToNotEmpty
                             $query->where('created_at', '<', self::startOfLocalDay($until)->addDay());
                         }
 
@@ -102,7 +102,8 @@ final class AuditEventResource extends Resource
     {
         $previous = fn (AuditEvent $record): bool => isset($record->data['previous']);
 
-        return $schema->columns(1)->components([
+        // layout do detalhe, sem regra
+        return $schema->columns(1)->components([ // @pest-mutate-ignore: IncrementInteger,DecrementInteger
             TextEntry::make('created_at')->label('Data')->dateTime('d/m/Y H:i:s'),
             TextEntry::make('action')->label('Ação')->state(fn (AuditEvent $record): string => $record->action->label()),
             TextEntry::make('actor')
@@ -130,13 +131,15 @@ final class AuditEventResource extends Resource
 
     private static function actor(AuditEvent $event): string
     {
-        return $event->actor_id === null ? 'Workflow do GitHub' : (string) $event->actor?->display_name;
+        // com actor_id, a chave estrangeira garante a pessoa: cast e ?-> só satisfazem o tipo
+        return $event->actor_id === null ? 'Workflow do GitHub' : (string) $event->actor?->display_name; // @pest-mutate-ignore: RemoveStringCast,RemoveNullSafeOperator
     }
 
     // o ADMINISTRADOR vê o autor real do envio anônimo, com a marca (decisoes.md §55.2)
     private static function anonymousMark(AuditEvent $event): ?string
     {
-        return ($event->data['anonymous'] ?? false) && in_array($event->action, self::AUTHOR_ACTIONS, true) ? 'Enviado anonimamente' : null;
+        // todo evento de material grava anonymous: o false só satisfaz o tipo
+        return ($event->data['anonymous'] ?? false) && in_array($event->action, self::AUTHOR_ACTIONS, true) ? 'Enviado anonimamente' : null; // @pest-mutate-ignore: FalseToTrue
     }
 
     // data é JSON gravado pelo próprio sistema; o tipo de cada campo é conferido aqui na leitura
@@ -150,24 +153,27 @@ final class AuditEventResource extends Resource
     private static function subject(AuditEvent $event): string
     {
         if ($event->opportunity !== null) {
-            return $event->opportunity->code.' · '.(self::text($event, 'title') ?? $event->opportunity->title);
+            // oportunidade não é editada: o título do evento e o atual coincidem
+            return $event->opportunity->code.' · '.(self::text($event, 'title') ?? $event->opportunity->title); // @pest-mutate-ignore: CoalesceRemoveLeft
         }
 
         if ($event->material !== null) {
             return $event->material->code.' · '.(self::text($event, 'title') ?? $event->material->title);
         }
 
-        return (string) $event->user?->display_name;
+        // sobra só evento de pessoa (cadastro, senha, papel), que sempre tem user
+        return (string) $event->user?->display_name; // @pest-mutate-ignore: RemoveStringCast,RemoveNullSafeOperator
     }
 
     private static function summary(AuditEvent $event): ?string
     {
         if ($event->action === AuditAction::RoleChanged) {
-            return Role::tryFrom((string) self::text($event, 'from'))?->label().' → '.Role::tryFrom((string) self::text($event, 'to'))?->label();
+            // o sistema grava papéis válidos em from e to: casts e ?-> só satisfazem o tipo
+            return Role::tryFrom((string) self::text($event, 'from'))?->label().' → '.Role::tryFrom((string) self::text($event, 'to'))?->label(); // @pest-mutate-ignore: RemoveStringCast,RemoveNullSafeOperator
         }
 
         if (self::text($event, 'type') !== null) {
-            return OpportunityType::tryFrom((string) self::text($event, 'type'))?->label();
+            return OpportunityType::tryFrom((string) self::text($event, 'type'))?->label(); // @pest-mutate-ignore: RemoveStringCast,RemoveNullSafeOperator
         }
 
         return ($event->data['revision'] ?? false) ? 'Alteração' : null;

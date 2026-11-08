@@ -114,6 +114,21 @@ it('busca por título e por autor', function (string $search) {
         ->assertCanNotSeeTableRecords([$other]);
 })->with(['Resumo', 'Zuleika']);
 
+it('mostra no detalhe o código, a disciplina, o autor e a marca de anônimo', function () {
+    $author = User::factory()->create(['display_name' => 'Autora Sigilosa']);
+    $anonymous = historyMaterial(attributes: ['user_id' => $author->id, 'anonymous' => true, 'title' => 'Resumo anônimo'])->refresh();
+    $identified = historyMaterial();
+
+    Livewire::test(ListMaterials::class)
+        ->assertTableColumnExists('created_at')
+        ->mountAction(TestAction::make('view')->table($anonymous))
+        ->assertMountedActionModalSee([$anonymous->code, 'Resumo anônimo', $anonymous->discipline->name, 'Autora Sigilosa', 'Enviado anonimamente', 'Pendente']);
+
+    Livewire::test(ListMaterials::class)
+        ->mountAction(TestAction::make('view')->table($identified))
+        ->assertMountedActionModalDontSee('Enviado anonimamente');
+});
+
 it('mostra no detalhe a descrição, o link, o motivo e os dados originais', function () {
     $original = historyMaterial(MaterialStatus::Aprovado, ['title' => 'Título original', 'url' => 'https://example.com/original']);
     $revision = historyMaterial(MaterialStatus::Rejeitado, [

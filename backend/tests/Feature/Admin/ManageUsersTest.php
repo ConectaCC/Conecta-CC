@@ -18,14 +18,26 @@ beforeEach(function () {
 });
 
 it('lista e busca por nome, nome de exibição e e-mail', function (string $search) {
-    $found = User::factory()->create(['name' => 'Beatriz Souza', 'display_name' => 'Bia', 'email' => 'beatriz@academico.ifsul.edu.br']);
+    // cada termo casa só com um campo: nome, nome de exibição ou e-mail
+    $found = User::factory()->create(['name' => 'Beatriz Souza', 'display_name' => 'Bia', 'email' => 'bsouza@academico.ifsul.edu.br']);
     $other = User::factory()->create(['name' => 'Carlos Lima', 'display_name' => 'Cadu', 'email' => 'carlos@academico.ifsul.edu.br']);
 
     Livewire::test(ListUsers::class)
         ->searchTable($search)
         ->assertCanSeeTableRecords([$found])
         ->assertCanNotSeeTableRecords([$other]);
-})->with(['Beatriz', 'BIA', 'beatriz@']);
+})->with(['Beatriz', 'BIA', 'bsouza@']);
+
+it('mostra o papel e a data de cadastro, e abre a troca com o papel atual', function () {
+    $user = User::factory()->create(['role' => Role::Moderador]);
+
+    Livewire::test(ListUsers::class)
+        ->assertTableColumnExists('email')
+        ->assertTableColumnExists('created_at')
+        ->assertTableColumnFormattedStateSet('role', 'Moderador', $user)
+        ->mountAction(TestAction::make('changeRole')->table($user))
+        ->assertSchemaStateSet(['role' => 'MODERADOR']);
+});
 
 it('filtra por papel', function () {
     $moderator = User::factory()->create(['role' => Role::Moderador]);

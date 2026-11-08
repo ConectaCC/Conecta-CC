@@ -62,3 +62,45 @@ it('a auditoria mostra a oportunidade e o tipo', function () {
         ->assertTableColumnStateSet('summary', 'Evento', $approved);
     expect($opportunity->fresh()->status)->toBe(MaterialStatus::Aprovado);
 });
+
+it('mostra na lista o código e o tipo, a data de envio e quem decidiu', function () {
+    $this->travelTo('2026-11-08 12:00:00');
+    $moderator = User::factory()->create(['role' => Role::Moderador, 'display_name' => 'Marcos Moderador']);
+    $opportunity = Opportunity::factory()->approved()->create(['type' => 'ESTAGIO', 'decided_by' => $moderator->id, 'decided_at' => now()])->refresh();
+
+    Livewire::test(ListOpportunities::class)
+        ->assertSee($opportunity->code.' · Estágio')
+        ->assertTableColumnExists('created_at')
+        ->assertTableColumnStateSet('decider.display_name', 'Marcos Moderador', $opportunity);
+});
+
+it('filtra pelo tipo', function () {
+    $internship = Opportunity::factory()->create(['type' => 'ESTAGIO']);
+    $event = Opportunity::factory()->create(['type' => 'EVENTO']);
+
+    Livewire::test(ListOpportunities::class)
+        ->filterTable('type', 'EVENTO')
+        ->assertCanSeeTableRecords([$event])
+        ->assertCanNotSeeTableRecords([$internship]);
+});
+
+it('mostra no detalhe todos os dados da oportunidade', function () {
+    $this->travelTo('2026-11-08 12:00:00');
+    $author = User::factory()->create(['display_name' => 'Pessoa Que Indicou']);
+    $moderator = User::factory()->create(['role' => Role::Moderador, 'display_name' => 'Marcos Moderador']);
+    $rejected = Opportunity::factory()->for($author, 'author')->rejected('Link quebrado.')->create([
+        'type' => 'ESTAGIO', 'modality' => 'REMOTO', 'deadline' => '2026-12-01', 'title' => 'Vaga em web',
+        'description' => 'Vaga para o 3º semestre.', 'url' => 'https://empresa.com/vaga', 'decided_by' => $moderator->id, 'decided_at' => now(),
+    ])->refresh();
+
+    Livewire::test(ListOpportunities::class)
+        ->mountAction(TestAction::make('view')->table($rejected))
+        ->assertMountedActionModalSee([
+            $rejected->code, 'Vaga em web', 'Estágio', 'Remoto', '01/12/2026', 'Vaga para o 3º semestre.', 'https://empresa.com/vaga',
+            'Pessoa Que Indicou', 'Rejeitada', 'Motivo da rejeição', 'Link quebrado.', 'Enviada em', 'Marcos Moderador', 'Decidida em',
+        ]);
+
+    Livewire::test(ListOpportunities::class)
+        ->mountAction(TestAction::make('view')->table(Opportunity::factory()->create()))
+        ->assertMountedActionModalDontSee('Motivo da rejeição');
+});
