@@ -11,6 +11,8 @@ final class RegisterRequest extends FormRequest
 {
     public const EMAIL_TAKEN = 'Não foi possível criar uma conta com este e-mail. Se você já possui cadastro, entre.';
 
+    public const NOT_INVITED = 'O cadastro está restrito às pessoas convidadas para o período de teste.';
+
     private const TERMS_OUTDATED = 'Os Termos de participação foram atualizados. Leia e aceite novamente.';
 
     protected function prepareForValidation(): void
@@ -26,9 +28,15 @@ final class RegisterRequest extends FormRequest
     /** @return array<string, mixed> */
     public function rules(): array
     {
+        // no e-mail, a lista de convidados vem antes do unique: quem não foi convidado não descobre se o e-mail já tem conta
         return [
             'name' => ['required', 'string', 'max:120'],
-            'email' => ['bail', 'required', 'email', new InstitutionalEmail, 'unique:users,email'],
+            'email' => ['bail', 'required', 'email', new InstitutionalEmail, function (string $attribute, mixed $value, Closure $fail): void {
+                $invited = config()->array('conectacc.allowed_emails');
+                if ($invited !== [] && ! in_array($value, $invited, true)) {
+                    $fail(self::NOT_INVITED);
+                }
+            }, 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
             'password_confirmation' => ['required', 'same:password'],
             // closure em vez de Rule::in: a versão vigente é configuração e não deve virar enum no OpenAPI
