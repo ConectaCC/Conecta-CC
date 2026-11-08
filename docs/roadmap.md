@@ -510,7 +510,7 @@ As seguintes funcionalidades já foram discutidas, mas permanecem fora do MVP.
 
 ## Oportunidades
 
-- favoritos;
+- favoritos de oportunidades, com bookmark nos cards e controle separado para visualizar somente as oportunidades salvas (`decisoes.md` §74);
 - alertas;
 - filtros adicionais;
 - acompanhamento de oportunidades.
