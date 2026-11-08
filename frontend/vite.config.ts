@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { fileURLToPath, URL } from 'node:url';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
@@ -23,4 +24,10 @@ export default defineConfig(({ command }) => ({
     },
   },
   build: { outDir: '../backend/public/spa', emptyOutDir: true },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    // datas e horas dos testes no fuso do câmpus
+    env: { TZ: 'America/Sao_Paulo' },
+  },
 }));
