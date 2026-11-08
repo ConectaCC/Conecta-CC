@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\ApproveMaterialController;
+use App\Http\Controllers\Api\V1\ApproveOpportunityController;
 use App\Http\Controllers\Api\V1\CancelMaterialController;
 use App\Http\Controllers\Api\V1\CancelOpportunityController;
 use App\Http\Controllers\Api\V1\ChangePasswordController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Api\V1\ListCommunityFeedController;
 use App\Http\Controllers\Api\V1\ListDisciplineMaterialsController;
 use App\Http\Controllers\Api\V1\ListDisciplinesController;
 use App\Http\Controllers\Api\V1\ListModerationMaterialsController;
+use App\Http\Controllers\Api\V1\ListModerationOpportunitiesController;
 use App\Http\Controllers\Api\V1\ListMyMaterialsController;
 use App\Http\Controllers\Api\V1\ListMyOpportunitiesController;
 use App\Http\Controllers\Api\V1\ListNotificationsController;
@@ -22,6 +24,7 @@ use App\Http\Controllers\Api\V1\ReadAllNotificationsController;
 use App\Http\Controllers\Api\V1\ReadNotificationController;
 use App\Http\Controllers\Api\V1\RegisterController;
 use App\Http\Controllers\Api\V1\RejectMaterialController;
+use App\Http\Controllers\Api\V1\RejectOpportunityController;
 use App\Http\Controllers\Api\V1\ShowCommunityStatsController;
 use App\Http\Controllers\Api\V1\ShowProfileController;
 use App\Http\Controllers\Api\V1\ShowStudentProfileController;
@@ -65,6 +68,9 @@ Route::prefix('v1')->group(function () {
             Route::get('materials', ListModerationMaterialsController::class);
             Route::post('materials/{material}/approve', ApproveMaterialController::class);
             Route::post('materials/{material}/reject', RejectMaterialController::class);
+            Route::get('opportunities', ListModerationOpportunitiesController::class);
+            Route::post('opportunities/{opportunity}/approve', ApproveOpportunityController::class);
+            Route::post('opportunities/{opportunity}/reject', RejectOpportunityController::class);
         });
     });
 });

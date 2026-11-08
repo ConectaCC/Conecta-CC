@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/moderation/opportunities/{opportunity}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.approveOpportunity"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/materials/{material}/cancel": {
         parameters: {
             query?: never;
@@ -172,6 +188,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["v1.listModerationMaterials"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/moderation/opportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listModerationOpportunities"];
         put?: never;
         post?: never;
         delete?: never;
@@ -356,6 +388,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/moderation/opportunities/{opportunity}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.rejectOpportunity"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/community/stats": {
         parameters: {
             query?: never;
@@ -481,6 +529,21 @@ export interface components {
                 url: string;
             } | null;
         };
+        /** ModerationOpportunityResource */
+        ModerationOpportunityResource: {
+            id: number;
+            code: string;
+            type: string;
+            title: string;
+            description: string;
+            url: string;
+            modality: string;
+            deadline: string | null;
+            /** @description na análise, quem modera sempre sabe quem enviou: oportunidade não tem envio anônimo (decisoes.md §70) */
+            author_name: string;
+            is_own: boolean;
+            submitted_at: string;
+        };
         /** MyMaterialResource */
         MyMaterialResource: {
             id: number;
@@ -530,7 +593,7 @@ export interface components {
             detail: string;
             ok: boolean;
             read: boolean;
-            /** @description aprovado leva à disciplina; rejeitado leva ao item em Meus conteúdos (onde está o motivo) */
+            /** @description aprovado leva ao conteúdo; rejeitado leva ao item em Meus conteúdos (onde está o motivo) */
             link: string;
             created_at: string;
         };
@@ -719,6 +782,32 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ModerationMaterialResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+        };
+    };
+    "v1.approveOpportunity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The opportunity ID */
+                opportunity: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `ModerationOpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModerationOpportunityResource"];
                 };
             };
             401: components["responses"]["AuthenticationException"];
@@ -1065,6 +1154,28 @@ export interface operations {
             403: components["responses"]["AuthorizationException"];
         };
     };
+    "v1.listModerationOpportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `ModerationOpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModerationOpportunityResource"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+        };
+    };
     "v1.listMyMaterials": {
         parameters: {
             query?: {
@@ -1402,6 +1513,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ModerationMaterialResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.rejectOpportunity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The opportunity ID */
+                opportunity: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RejectMaterialRequest"];
+            };
+        };
+        responses: {
+            /** @description `ModerationOpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModerationOpportunityResource"];
                 };
             };
             401: components["responses"]["AuthenticationException"];

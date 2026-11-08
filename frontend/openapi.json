@@ -51,6 +51,46 @@
                 }
             }
         },
+        "/moderation/opportunities/{opportunity}/approve": {
+            "post": {
+                "operationId": "v1.approveOpportunity",
+                "tags": [
+                    "ApproveOpportunity"
+                ],
+                "parameters": [
+                    {
+                        "name": "opportunity",
+                        "in": "path",
+                        "required": true,
+                        "description": "The opportunity ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`ModerationOpportunityResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ModerationOpportunityResource"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/materials/{material}/cancel": {
             "post": {
                 "operationId": "v1.cancelMaterial",
@@ -664,6 +704,35 @@
                                     "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/ModerationMaterialResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/moderation/opportunities": {
+            "get": {
+                "operationId": "v1.listModerationOpportunities",
+                "tags": [
+                    "ListModerationOpportunities"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of `ModerationOpportunityResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ModerationOpportunityResource"
                                     }
                                 }
                             }
@@ -1358,6 +1427,59 @@
                 }
             }
         },
+        "/moderation/opportunities/{opportunity}/reject": {
+            "post": {
+                "operationId": "v1.rejectOpportunity",
+                "tags": [
+                    "RejectOpportunity"
+                ],
+                "parameters": [
+                    {
+                        "name": "opportunity",
+                        "in": "path",
+                        "required": true,
+                        "description": "The opportunity ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RejectMaterialRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "`ModerationOpportunityResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ModerationOpportunityResource"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
         "/community/stats": {
             "get": {
                 "operationId": "v1.showCommunityStats",
@@ -1783,6 +1905,62 @@
                 ],
                 "title": "ModerationMaterialResource"
             },
+            "ModerationOpportunityResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "modality": {
+                        "type": "string"
+                    },
+                    "deadline": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "author_name": {
+                        "type": "string",
+                        "description": "na an\u00e1lise, quem modera sempre sabe quem enviou: oportunidade n\u00e3o tem envio an\u00f4nimo (decisoes.md \u00a770)"
+                    },
+                    "is_own": {
+                        "type": "boolean"
+                    },
+                    "submitted_at": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "code",
+                    "type",
+                    "title",
+                    "description",
+                    "url",
+                    "modality",
+                    "deadline",
+                    "author_name",
+                    "is_own",
+                    "submitted_at"
+                ],
+                "title": "ModerationOpportunityResource"
+            },
             "MyMaterialResource": {
                 "type": "object",
                 "properties": {
@@ -1987,7 +2165,7 @@
                     },
                     "link": {
                         "type": "string",
-                        "description": "aprovado leva \u00e0 disciplina; rejeitado leva ao item em Meus conte\u00fados (onde est\u00e1 o motivo)"
+                        "description": "aprovado leva ao conte\u00fado; rejeitado leva ao item em Meus conte\u00fados (onde est\u00e1 o motivo)"
                     },
                     "created_at": {
                         "type": "string"
