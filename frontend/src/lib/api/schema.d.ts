@@ -36,6 +36,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/opportunities/{opportunity}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.cancelOpportunity"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/me/password": {
         parameters: {
             query?: never;
@@ -79,6 +95,22 @@ export interface paths {
         put: operations["v1.updateMaterial"];
         post?: never;
         delete: operations["v1.deleteMaterial"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/opportunities/{opportunity}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["v1.deleteOpportunity"];
         options?: never;
         head?: never;
         patch?: never;
@@ -156,6 +188,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["v1.listMyMaterials"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/me/opportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.listMyOpportunities"];
         put?: never;
         post?: never;
         delete?: never;
@@ -460,6 +508,21 @@ export interface components {
                 decided_at: string | null;
             } | null;
         };
+        /** MyOpportunityResource */
+        MyOpportunityResource: {
+            id: number;
+            code: string;
+            type: string;
+            title: string;
+            description: string;
+            url: string;
+            modality: string;
+            deadline: string | null;
+            /** @description ENCERRADO: aprovada, mas o prazo passou e ela saiu da página */
+            status: string;
+            rejection_reason: string | null;
+            submitted_at: string;
+        };
         /** NotificationResource */
         NotificationResource: {
             id: string;
@@ -689,6 +752,32 @@ export interface operations {
             404: components["responses"]["ModelNotFoundException"];
         };
     };
+    "v1.cancelOpportunity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The opportunity ID */
+                opportunity: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `MyOpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyOpportunityResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+        };
+    };
     "v1.changePassword": {
         parameters: {
             query?: never;
@@ -770,6 +859,30 @@ export interface operations {
             path: {
                 /** @description The material ID */
                 material: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+        };
+    };
+    "v1.deleteOpportunity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The opportunity ID */
+                opportunity: number;
             };
             cookie?: never;
         };
@@ -974,6 +1087,50 @@ export interface operations {
                 content: {
                     "application/json": {
                         data: components["schemas"]["MyMaterialResource"][];
+                        links: {
+                            first: string | null;
+                            last: string | null;
+                            prev: string | null;
+                            next: string | null;
+                        };
+                        meta: {
+                            /** @description Base path for paginator generated URLs. */
+                            path: string | null;
+                            /** @description Number of items shown per page. */
+                            per_page: number;
+                            /** @description The "cursor" that points to the next set of items. */
+                            next_cursor: string | null;
+                            /** @description The "cursor" that points to the previous set of items. */
+                            prev_cursor: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "v1.listMyOpportunities": {
+        parameters: {
+            query?: {
+                /** @description Situação: all (padrão), pending, approved, rejected ou deleted. */
+                status?: string;
+                /** @description Cursor da próxima página (meta.next_cursor). */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated set of `MyOpportunityResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["MyOpportunityResource"][];
                         links: {
                             first: string | null;
                             last: string | null;

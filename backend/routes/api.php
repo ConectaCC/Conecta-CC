@@ -2,14 +2,17 @@
 
 use App\Http\Controllers\Api\V1\ApproveMaterialController;
 use App\Http\Controllers\Api\V1\CancelMaterialController;
+use App\Http\Controllers\Api\V1\CancelOpportunityController;
 use App\Http\Controllers\Api\V1\ChangePasswordController;
 use App\Http\Controllers\Api\V1\CurrentTermsController;
 use App\Http\Controllers\Api\V1\DeleteMaterialController;
+use App\Http\Controllers\Api\V1\DeleteOpportunityController;
 use App\Http\Controllers\Api\V1\ListCommunityFeedController;
 use App\Http\Controllers\Api\V1\ListDisciplineMaterialsController;
 use App\Http\Controllers\Api\V1\ListDisciplinesController;
 use App\Http\Controllers\Api\V1\ListModerationMaterialsController;
 use App\Http\Controllers\Api\V1\ListMyMaterialsController;
+use App\Http\Controllers\Api\V1\ListMyOpportunitiesController;
 use App\Http\Controllers\Api\V1\ListNotificationsController;
 use App\Http\Controllers\Api\V1\ListOpportunitiesController;
 use App\Http\Controllers\Api\V1\LoginController;
@@ -42,6 +45,9 @@ Route::prefix('v1')->group(function () {
         Route::get('community/stats', ShowCommunityStatsController::class);
         Route::get('opportunities', ListOpportunitiesController::class);
         Route::post('opportunities', StoreOpportunityController::class);
+        Route::post('opportunities/{opportunity}/cancel', CancelOpportunityController::class);
+        Route::delete('opportunities/{opportunity}', DeleteOpportunityController::class);
+        Route::get('me/opportunities', ListMyOpportunitiesController::class);
         Route::post('disciplines/{discipline}/materials', StoreMaterialController::class);
         Route::get('profile', ShowProfileController::class);
         Route::get('me/materials', ListMyMaterialsController::class);
