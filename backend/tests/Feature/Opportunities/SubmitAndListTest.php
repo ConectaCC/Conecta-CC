@@ -1,10 +1,12 @@
 <?php
 
+use App\Actions\CreateOpportunity;
 use App\Enums\AuditAction;
 use App\Enums\MaterialStatus;
 use App\Models\AuditEvent;
 use App\Models\Opportunity;
 use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
 const OPPORTUNITIES = '/api/v1/opportunities';
 
@@ -44,7 +46,7 @@ it('envia a oportunidade como pendente, em nome de quem enviou, e registra na au
 it('valida cada campo com a mensagem certa', function (array $overrides, string $field, string $message) {
     $this->actingAs(User::factory()->create())->postJson(OPPORTUNITIES, opportunityPayload($overrides))
         ->assertUnprocessable()
-        ->assertJsonValidationErrors([$field => $message]);
+        ->assertJsonPath("errors.{$field}", [$message]);
 
     expect(Opportunity::count())->toBe(0);
 })->with([
@@ -60,7 +62,62 @@ it('valida cada campo com a mensagem certa', function (array $overrides, string 
     'modalidade inválida' => [['modality' => 'ONLINE'], 'modality', 'Escolha a modalidade.'],
     'prazo passado' => [['deadline' => '2020-01-01'], 'deadline', 'Escolha uma data a partir de hoje.'],
     'prazo inválido' => [['deadline' => 'amanhã'], 'deadline', 'Informe uma data válida.'],
+    'título como lista' => [['title' => ['a']], 'title', 'Informe um título para a oportunidade.'],
+    'descrição como lista' => [['description' => ['a']], 'description', 'Descreva a oportunidade em poucas palavras.'],
+    'link como lista' => [['url' => ['https://empresa.com']], 'url', 'Informe um link válido.'],
+    'link longo sem protocolo' => [['url' => 'empresa.com/'.str_repeat('a', 2037)], 'url', 'Use no máximo 2.048 caracteres.'],
 ]);
+
+it('exige os campos mesmo quando não vêm no corpo', function () {
+    $this->actingAs(User::factory()->create())->postJson(OPPORTUNITIES, ['deadline' => null])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.type', ['Escolha o tipo da oportunidade.'])
+        ->assertJsonPath('errors.title', ['Informe um título para a oportunidade.'])
+        ->assertJsonPath('errors.description', ['Descreva a oportunidade em poucas palavras.'])
+        ->assertJsonPath('errors.url', ['Informe o link da oportunidade.'])
+        ->assertJsonPath('errors.modality', ['Escolha a modalidade.']);
+});
+
+it('grava o prazo informado e trata o prazo vazio como sem prazo', function () {
+    $this->travelTo('2026-11-08 12:00:00');
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->postJson(OPPORTUNITIES, opportunityPayload(['deadline' => '2026-12-01']))->assertCreated();
+    $this->actingAs($user)->postJson(OPPORTUNITIES, opportunityPayload(['url' => 'https://empresa.com/outra', 'deadline' => '']))->assertCreated();
+
+    expect(Opportunity::orderBy('id')->pluck('deadline')->map(fn ($date) => $date?->toDateString())->all())->toBe(['2026-12-01', null]);
+});
+
+it('aceita o link com exatamente 2.048 caracteres depois de completar o https://', function () {
+    $this->actingAs(User::factory()->create())
+        ->postJson(OPPORTUNITIES, opportunityPayload(['url' => 'empresa.com/'.str_repeat('a', 2028)]))
+        ->assertCreated();
+
+    expect(mb_strlen(Opportunity::sole()->url))->toBe(2048);
+});
+
+it('mostra o link repetido junto com os outros erros', function (bool $approved) {
+    $factory = Opportunity::factory();
+    ($approved ? $factory->approved() : $factory)->create(['url' => 'https://empresa.com/vagas/estagio']);
+
+    $this->actingAs(User::factory()->create())->postJson(OPPORTUNITIES, opportunityPayload(['title' => '']))
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors(['title', 'url' => 'Essa oportunidade já foi compartilhada.']);
+})->with(['pendente' => false, 'aprovada' => true]);
+
+it('valida a busca e o tipo da lista', function (string $query, string $field, string $message) {
+    $this->actingAs(User::factory()->create())->getJson(OPPORTUNITIES.'?'.$query)
+        ->assertUnprocessable()
+        ->assertJsonPath("errors.{$field}", [$message]);
+})->with([
+    'busca longa' => ['q='.str_repeat('a', 101), 'q', 'Use no máximo 100 caracteres na busca.'],
+    'busca como lista' => ['q[]=a', 'q', 'O valor enviado precisa ser um texto.'],
+    'tipo inválido' => ['type=BOLSA', 'type', 'Escolha um tipo válido.'],
+]);
+
+it('trata busca e tipo vazios da lista como ausentes', function () {
+    $this->actingAs(User::factory()->create())->getJson(OPPORTUNITIES.'?q=&type=')->assertOk();
+});
 
 it('aceita o prazo de hoje no horário de Brasília', function () {
     $this->travelTo('2026-11-09 01:00:00'); // UTC: ainda é dia 08 em Brasília
@@ -152,4 +209,12 @@ it('ordena pela publicação e pagina de 20 em 20 sem repetir', function () {
 it('exige sessão', function () {
     $this->getJson(OPPORTUNITIES)->assertUnauthorized();
     $this->postJson(OPPORTUNITIES, opportunityPayload())->assertUnauthorized();
+});
+
+it('transforma a corrida de link repetido em erro de validação', function () {
+    // simula o segundo de dois envios simultâneos: a validação passou, mas o link já foi gravado
+    Opportunity::factory()->create(['url' => 'https://empresa.com/corrida']);
+
+    expect(fn () => app(CreateOpportunity::class)->handle(User::factory()->create(), [...opportunityPayload(), 'url' => 'https://empresa.com/corrida']))
+        ->toThrow(fn (ValidationException $e) => expect($e->errors())->toBe(['url' => ['Essa oportunidade já foi compartilhada.']]));
 });

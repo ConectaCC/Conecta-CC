@@ -51,7 +51,8 @@ it('aprova, publica, notifica quem enviou e registra na auditoria', function () 
     $fresh = $opportunity->fresh();
     expect($fresh->status)->toBe(MaterialStatus::Aprovado)
         ->and($fresh->published_at)->not->toBeNull()
-        ->and($fresh->decided_by)->toBe($moderator->id);
+        ->and($fresh->decided_by)->toBe($moderator->id)
+        ->and($fresh->decided_at)->not->toBeNull();
     $this->actingAs($opportunity->author)->getJson('/api/v1/notifications')
         ->assertJsonPath('data.0.title', 'Sua oportunidade foi aprovada')
         ->assertJsonPath('data.0.detail', 'A oportunidade “Estágio em dados” foi aprovada.')
@@ -68,8 +69,11 @@ it('rejeita com motivo, notifica com o link de Meus conteúdos e registra na aud
         ->assertJsonValidationErrors(['reason' => 'Informe o motivo da rejeição.']);
     $this->actingAs($moderator)->postJson("/api/v1/moderation/opportunities/{$opportunity->id}/reject", ['reason' => 'Vaga encerrada.'])->assertOk();
 
-    expect($opportunity->fresh()->status)->toBe(MaterialStatus::Rejeitado)
-        ->and($opportunity->fresh()->rejection_reason)->toBe('Vaga encerrada.');
+    expect($opportunity->fresh())
+        ->status->toBe(MaterialStatus::Rejeitado)
+        ->rejection_reason->toBe('Vaga encerrada.')
+        ->decided_by->toBe($moderator->id)
+        ->decided_at->not->toBeNull();
     $this->actingAs($opportunity->author)->getJson('/api/v1/notifications')
         ->assertJsonPath('data.0.title', 'Sua oportunidade não foi aprovada')
         ->assertJsonPath('data.0.link', "/perfil/meus-conteudos?tipo=oportunidades&item={$opportunity->code}");
@@ -81,6 +85,7 @@ it('o MODERADOR não decide sobre a própria oportunidade', function () {
     $own = Opportunity::factory()->for($moderator, 'author')->create();
 
     $this->actingAs($moderator)->postJson("/api/v1/moderation/opportunities/{$own->id}/approve")->assertForbidden();
+    $this->actingAs($moderator)->postJson("/api/v1/moderation/opportunities/{$own->id}/reject", ['reason' => 'Não.'])->assertForbidden();
     expect($own->fresh()->status)->toBe(MaterialStatus::Pendente);
 });
 

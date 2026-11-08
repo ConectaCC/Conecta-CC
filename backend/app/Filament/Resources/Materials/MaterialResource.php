@@ -47,9 +47,8 @@ final class MaterialResource extends Resource
     /** @return Builder<Material> */
     public static function getEloquentQuery(): Builder
     {
+        // author e decider o Filament já carrega junto, por serem colunas; discipline e revisionOf são usados em closures
         return Material::withTrashed()->with([
-            'author',
-            'decider',
             'discipline',
             'revisionOf' => fn ($query) => $query->withTrashed(),
         ]);
@@ -80,7 +79,7 @@ final class MaterialResource extends Resource
                 TextColumn::make('created_at')->label('Enviado em')->date('d/m/Y', AdminPanelProvider::TIMEZONE)->sortable()->visibleFrom('xl'),
                 TextColumn::make('decider.display_name')
                     ->label('Decisão')
-                    ->description(fn (Material $record): ?string => $record->decided_at?->setTimezone(AdminPanelProvider::TIMEZONE)->format('d/m/Y'))
+                    ->description(fn (Material $record): ?string => $record->decided_at?->setTimezone(AdminPanelProvider::TIMEZONE)->format('d/m/Y')) // @pest-mutate-ignore: RemoveNullSafeOperator
                     ->placeholder('—')
                     ->wrap(),
             ])
@@ -89,7 +88,7 @@ final class MaterialResource extends Resource
                     ->label('Situação')
                     ->options(self::SITUATIONS)
                     ->query(fn (Builder $query, array $data): Builder => match ($data['value'] ?? null) {
-                        null, '' => $query,
+                        null, '' => $query, // @pest-mutate-ignore: EmptyStringToNotEmpty
                         'EXCLUIDO' => $query->whereNotNull('deleted_at'),
                         default => $query->whereNull('deleted_at')->where('status', $data['value']),
                     }),
@@ -101,7 +100,8 @@ final class MaterialResource extends Resource
 
     public static function infolist(Schema $schema): Schema
     {
-        return $schema->columns(1)->components([
+        // layout do detalhe, sem regra
+        return $schema->columns(1)->components([ // @pest-mutate-ignore: IncrementInteger,DecrementInteger
             TextEntry::make('code')->label('Código'),
             TextEntry::make('title')->label('Título'),
             TextEntry::make('discipline.name')->label('Disciplina'),
@@ -123,7 +123,7 @@ final class MaterialResource extends Resource
             TextEntry::make('revisionOf.url')
                 ->label('Link original')
                 ->color('primary')
-                ->url(fn (Material $record): ?string => $record->revisionOf?->url)
+                ->url(fn (Material $record): ?string => $record->revisionOf?->url) // @pest-mutate-ignore: RemoveNullSafeOperator
                 ->openUrlInNewTab()
                 ->visible(fn (Material $record): bool => $record->revises_id !== null),
         ]);

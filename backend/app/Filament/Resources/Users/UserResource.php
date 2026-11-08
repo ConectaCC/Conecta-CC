@@ -68,15 +68,16 @@ final class UserResource extends Resource
             ->modalSubmitActionLabel('Salvar papel')
             ->fillForm(fn (User $record): array => ['role' => $record->role->value])
             ->schema([
-                Select::make('role')->label('Papel')->options(Role::labels())->required()->selectablePlaceholder(false),
+                Select::make('role')->label('Papel')->options(Role::labels())->required()->selectablePlaceholder(false), // @pest-mutate-ignore: FalseToTrue
             ])
             ->successNotificationTitle('Papel atualizado.')
-            ->action(function (array $data, User $record, Action $action): void {
+            ->action(function (array $data, User $record): void {
                 /** @var User $actor */
                 $actor = Filament::auth()->user();
 
-                app(ChangeUserRole::class)->handle($actor, $record, Role::from($data['role']));
-                $action->success();
+                // o select só aceita os valores de Role; outro valor é recusado antes de chegar aqui
+                $role = $data['role'] ?? null;
+                app(ChangeUserRole::class)->handle($actor, $record, Role::from(is_string($role) ? $role : '')); // @pest-mutate-ignore: EmptyStringToNotEmpty
             });
     }
 

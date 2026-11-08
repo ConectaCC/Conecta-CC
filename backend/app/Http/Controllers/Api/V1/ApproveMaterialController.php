@@ -21,6 +21,6 @@ final class ApproveMaterialController
             $material->abortDecisionConflict();
         }
 
-        return new ModerationMaterialResource($material->refresh()->load(['author', 'discipline', 'revisionOf']));
+        return new ModerationMaterialResource($material->refresh());
     }
 }

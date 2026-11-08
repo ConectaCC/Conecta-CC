@@ -6,7 +6,7 @@ use App\Models\User;
 it('promove um usuário existente sem imprimir o e-mail', function () {
     $user = User::factory()->create(['email' => 'ana@academico.ifsul.edu.br']);
 
-    $this->artisan('conectacc:promote', ['email' => ' ANA@academico.ifsul.edu.br', 'role' => 'administrador'])
+    $this->artisan('conectacc:promote', ['email' => ' ANA@academico.ifsul.edu.br', 'role' => ' administrador '])
         ->expectsOutput('Papel atualizado para ADMINISTRADOR.')
         ->doesntExpectOutputToContain('ana@academico.ifsul.edu.br')
         ->assertSuccessful();

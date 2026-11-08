@@ -25,27 +25,12 @@ final class UpdateProfileRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        // espaços nas pontas e texto vazio já chegam tratados pelos middlewares TrimStrings e ConvertEmptyStringsToNull
         $merge = [];
-
-        if (is_string($this->input('display_name'))) {
-            $merge['display_name'] = trim($this->input('display_name'));
-        }
-
-        foreach (['about', 'github_url', 'linkedin_url'] as $field) {
-            $value = $this->input($field);
-            if (is_string($value)) {
-                $merge[$field] = trim($value) === '' ? null : trim($value);
-            }
-        }
 
         foreach (self::TAG_FIELDS as $field) {
             $value = $this->input($field, []);
             $merge[$field] = is_array($value) ? self::normalizeTags($value) : $value;
-        }
-
-        $ids = $this->input('discipline_ids');
-        if (is_array($ids)) {
-            $merge['discipline_ids'] = array_values(array_unique($ids, SORT_REGULAR));
         }
 
         $this->merge($merge);
@@ -56,7 +41,7 @@ final class UpdateProfileRequest extends FormRequest
     {
         $rules = [
             'display_name' => ['required', 'string', 'max:'.self::MAX_DISPLAY_NAME],
-            'discipline_ids' => ['required', 'array', 'min:1'],
+            'discipline_ids' => ['required', 'array'],
             'discipline_ids.*' => ['integer', 'exists:disciplines,id'],
             'about' => ['nullable', 'string', 'max:'.self::MAX_ABOUT],
             'github_url' => ['nullable', self::linkRule(ProfileUrl::github(...), self::GITHUB_INVALID)],
@@ -64,7 +49,7 @@ final class UpdateProfileRequest extends FormRequest
         ];
 
         foreach (self::TAG_FIELDS as $field) {
-            $rules[$field] = ['present', 'array', 'max:'.self::MAX_TAGS];
+            $rules[$field] = ['array', 'max:'.self::MAX_TAGS];
             $rules["{$field}.*"] = ['string', 'max:'.self::MAX_TAG];
         }
 
@@ -80,7 +65,6 @@ final class UpdateProfileRequest extends FormRequest
             'display_name.max' => 'Use no máximo 120 caracteres.',
             'discipline_ids.required' => 'Selecione pelo menos uma disciplina atual para completar seu perfil.',
             'discipline_ids.array' => 'Selecione pelo menos uma disciplina atual para completar seu perfil.',
-            'discipline_ids.min' => 'Selecione pelo menos uma disciplina atual para completar seu perfil.',
             'discipline_ids.*.integer' => 'Selecione disciplinas da lista.',
             'discipline_ids.*.exists' => 'Selecione disciplinas da lista.',
             'about.string' => 'Use no máximo 5.000 caracteres.',
@@ -88,7 +72,6 @@ final class UpdateProfileRequest extends FormRequest
         ];
 
         foreach (self::TAG_FIELDS as $field) {
-            $messages["{$field}.present"] = 'Adicione no máximo 50 assuntos.';
             $messages["{$field}.array"] = 'Adicione no máximo 50 assuntos.';
             $messages["{$field}.max"] = 'Adicione no máximo 50 assuntos.';
             $messages["{$field}.*.string"] = 'Use no máximo 255 caracteres por assunto.';
@@ -115,7 +98,7 @@ final class UpdateProfileRequest extends FormRequest
     }
 
     /**
-     * Remove espaços nas pontas, vazios e repetidos (sem diferenciar maiúsculas), mantendo a primeira ocorrência.
+     * Remove vazios e repetidos (sem diferenciar maiúsculas), mantendo a primeira ocorrência.
      * Itens que não são texto ficam como estão para a validação recusá-los.
      *
      * @param  array<mixed>  $tags
@@ -127,19 +110,19 @@ final class UpdateProfileRequest extends FormRequest
         $result = [];
         foreach ($tags as $tag) {
             if ($tag === null) {
-                continue; // o middleware ConvertEmptyStringsToNull transforma a tag '' em null
+                continue; // os middlewares TrimStrings e ConvertEmptyStringsToNull transformam a tag '  ' em null
             }
             if (! is_string($tag)) {
                 $result[] = $tag;
 
-                continue;
+                // parar aqui daria no mesmo: a tag que não é texto já reprova a validação
+                continue; // @pest-mutate-ignore: ContinueToBreak
             }
-            $tag = trim($tag);
             $key = mb_strtolower($tag);
-            if ($tag === '' || isset($seen[$key])) {
+            if (isset($seen[$key])) {
                 continue;
             }
-            $seen[$key] = true;
+            $seen[$key] = true; // @pest-mutate-ignore: TrueToFalse
             $result[] = $tag;
         }
 

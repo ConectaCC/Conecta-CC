@@ -145,12 +145,20 @@ it('ordena dos mais antigos, inclusive na segunda página', function () {
         ->and($second->json('data.0.published_at') > end($dates))->toBeTrue();
 });
 
-it('valida a busca e a ordem', function (string $query, string $field) {
-    $this->actingAs(User::factory()->create())->getJson(FEED.'?'.$query)->assertUnprocessable()->assertJsonValidationErrors([$field]);
+it('valida a busca, a ordem e o tipo', function (string $query, string $field, string $message) {
+    $this->actingAs(User::factory()->create())->getJson(FEED.'?'.$query)
+        ->assertUnprocessable()
+        ->assertJsonPath("errors.{$field}", [$message]);
 })->with([
-    'busca longa' => ['q='.str_repeat('a', 101), 'q'],
-    'ordem inválida' => ['order=popular', 'order'],
+    'busca longa' => ['q='.str_repeat('a', 101), 'q', 'Use no máximo 100 caracteres na busca.'],
+    'busca como lista' => ['q[]=a', 'q', 'O valor enviado precisa ser um texto.'],
+    'ordem inválida' => ['order=popular', 'order', 'Escolha uma ordem válida.'],
+    'tipo inválido' => ['type=post', 'type', 'Escolha um tipo válido.'],
 ]);
+
+it('trata busca, ordem e tipo vazios como ausentes', function () {
+    $this->actingAs(User::factory()->create())->getJson(FEED.'?q=&order=&type=')->assertOk();
+});
 
 it('conta materiais publicados e estudantes', function () {
     Material::factory()->count(2)->approved()->create();
@@ -200,6 +208,7 @@ it('filtra o mural por tipo e busca nas oportunidades', function () {
     expect($this->actingAs($user)->getJson(FEED.'?type=material')->json('data.*.id'))->toBe([$material->id])
         ->and($this->actingAs($user)->getJson(FEED.'?type=opportunity')->json('data.*.id'))->toBe([$opportunity->id])
         ->and($this->actingAs($user)->getJson(FEED.'?q=maratona')->json('data.*.kind'))->toBe(['opportunity'])
+        ->and($this->actingAs($user)->getJson(FEED.'?q=resumo')->json('data.*.kind'))->toBe(['material'])
         ->and($this->actingAs($user)->getJson(FEED.'?q=grafos')->json('data.*.kind'))->toEqualCanonicalizing(['material', 'opportunity']);
     $this->actingAs($user)->getJson(FEED.'?type=evento')->assertJsonValidationErrors(['type']);
 });

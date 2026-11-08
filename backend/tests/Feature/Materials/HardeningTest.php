@@ -68,7 +68,7 @@ it('transforma a corrida de link repetido em erro de validação', function () {
     Material::factory()->for(hardeningDiscipline())->create(['url' => 'https://site.com/corrida']);
 
     expect(fn () => app(CreateMaterial::class)->handle($user, hardeningDiscipline(), ['title' => 'Corrida', 'description' => null, 'url' => 'https://site.com/corrida', 'anonymous' => false]))
-        ->toThrow(ValidationException::class);
+        ->toThrow(fn (ValidationException $e) => expect($e->errors())->toBe(['url' => ['Esse link já foi compartilhado nesta disciplina.']]));
 });
 
 it('conta no limite só os envios que deram certo', function () {

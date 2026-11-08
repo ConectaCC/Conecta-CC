@@ -4,6 +4,7 @@ use App\Enums\MaterialStatus;
 use App\Models\Discipline;
 use App\Models\Material;
 use App\Models\User;
+use Illuminate\Support\Arr;
 
 function shareUrl(?Discipline $discipline = null): string
 {
@@ -46,7 +47,7 @@ it('valida os campos com as mensagens da spec', function (array $payload, string
     $this->actingAs(User::factory()->create())
         ->postJson(shareUrl(), sharePayload($payload))
         ->assertUnprocessable()
-        ->assertJsonPath("errors.{$field}.0", $message);
+        ->assertJsonPath("errors.{$field}", [$message]);
 })->with([
     'título vazio' => [['title' => '  '], 'title', 'Informe um título para o material.'],
     'link vazio' => [['url' => ''], 'url', 'Informe o link do material.'],
@@ -58,7 +59,43 @@ it('valida os campos com as mensagens da spec', function (array $payload, string
     'link longo' => [['url' => 'https://site.com/'.str_repeat('a', 2040)], 'url', 'Use no máximo 2.048 caracteres.'],
     'link longo sem protocolo' => [['url' => 'site.com/'.str_repeat('a', 2039)], 'url', 'Use no máximo 2.048 caracteres.'],
     'host inválido' => [['url' => 'https://si|te.com/x'], 'url', 'Informe um link válido.'],
+    'título como lista' => [['title' => ['a']], 'title', 'Informe um título para o material.'],
+    'link como número' => [['url' => 123], 'url', 'Informe um link válido.'],
+    'link como lista' => [['url' => ['https://site.com']], 'url', 'Informe um link válido.'],
+    'anônimo como texto' => [['anonymous' => 'talvez'], 'anonymous', 'O valor enviado precisa ser verdadeiro ou falso.'],
+    'descrição como lista' => [['description' => ['x']], 'description', 'Use no máximo 2.000 caracteres.'],
 ]);
+
+it('aceita o link com exatamente 2.048 caracteres depois de completar o https://', function () {
+    $this->actingAs(User::factory()->create())
+        ->postJson(shareUrl(), sharePayload(['url' => 'site.com/'.str_repeat('a', 2031)]))
+        ->assertCreated();
+
+    expect(mb_strlen(Material::sole()->url))->toBe(2048);
+});
+
+it('exige título e link mesmo quando não vêm no corpo', function () {
+    $this->actingAs(User::factory()->create())->postJson(shareUrl(), [])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.title', ['Informe um título para o material.'])
+        ->assertJsonPath('errors.url', ['Informe o link do material.']);
+});
+
+it('sem o campo anônimo, o envio é identificado', function () {
+    $this->actingAs(User::factory()->create())->postJson(shareUrl(), Arr::except(sharePayload(), 'anonymous'))->assertCreated();
+
+    expect(Material::sole()->anonymous)->toBeFalse();
+});
+
+it('mostra o link repetido junto com os outros erros', function (MaterialStatus $status) {
+    Material::factory()->for(Discipline::where('name', 'Algoritmos I')->sole())
+        ->create(['url' => 'https://site.com/x', 'status' => $status->value, 'published_at' => now()]);
+
+    $this->actingAs(User::factory()->create())
+        ->postJson(shareUrl(), sharePayload(['title' => '', 'url' => 'https://site.com/x']))
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors(['title', 'url' => 'Esse link já foi compartilhado nesta disciplina.']);
+})->with([MaterialStatus::Pendente, MaterialStatus::Aprovado]);
 
 it('recusa o mesmo link escrito de outro jeito na mesma disciplina', function (MaterialStatus $status, string $typed) {
     Material::factory()->for(Discipline::where('name', 'Algoritmos I')->sole())
@@ -87,16 +124,6 @@ it('aceita o link de novo quando o anterior não está ativo ou é de outra disc
     }
 });
 
-it('devolve 422 para payload malformado', function (array $payload) {
-    $this->actingAs(User::factory()->create())->postJson(shareUrl(), sharePayload($payload))->assertUnprocessable();
-})->with([
-    'título como array' => [['title' => ['a']]],
-    'link como número' => [['url' => 123]],
-    'link como array' => [['url' => ['https://site.com']]],
-    'anônimo como texto' => [['anonymous' => 'talvez']],
-    'descrição como array' => [['description' => ['x']]],
-]);
-
 it('limita a 10 envios por hora', function () {
     $user = User::factory()->create();
 
@@ -106,7 +133,11 @@ it('limita a 10 envios por hora', function () {
 
     $this->actingAs($user)->postJson(shareUrl(), sharePayload(['url' => 'https://site.com/11']))
         ->assertTooManyRequests()
+        ->assertHeader('Retry-After')
         ->assertJsonPath('message', fn (string $message) => str_starts_with($message, 'Muitas tentativas. Tente novamente em'));
+
+    // a cota é de cada pessoa
+    $this->actingAs(User::factory()->create())->postJson(shareUrl(), sharePayload(['url' => 'https://site.com/12']))->assertCreated();
 });
 
 it('exige login para compartilhar', function () {

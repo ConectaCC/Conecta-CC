@@ -26,9 +26,6 @@ final class ReviseMaterial
                 if ($locked === null || $locked->status !== MaterialStatus::Aprovado) {
                     Conflict::abort('not_editable', 'Este material não pode ser editado.');
                 }
-                if ($locked->revisions()->where('status', MaterialStatus::Pendente)->exists()) {
-                    Conflict::abort('revision_pending', 'Já existe uma alteração deste material em análise.');
-                }
                 if ($data['title'] === $locked->title && $data['description'] === $locked->description && $data['url'] === $locked->url) {
                     Conflict::abort('no_changes', 'Nenhuma alteração foi feita no material.');
                 }
@@ -50,6 +47,7 @@ final class ReviseMaterial
                 return $revision;
             });
         } catch (UniqueConstraintViolationException) {
+            // o índice único de alteração pendente por material é quem garante uma só, mesmo em envios simultâneos
             Conflict::abort('revision_pending', 'Já existe uma alteração deste material em análise.');
         }
     }

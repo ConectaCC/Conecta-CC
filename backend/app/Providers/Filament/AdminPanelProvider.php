@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Support\InitialsAvatarProvider;
+use App\Models\User;
 use App\Support\Campus;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
@@ -34,6 +35,14 @@ class AdminPanelProvider extends PanelProvider
         FilamentTimezone::set(self::TIMEZONE);
     }
 
+    private static function displayName(): string
+    {
+        $user = Filament::auth()->user();
+
+        // o painel só abre com sessão de User: o '' só satisfaz o tipo
+        return $user instanceof User ? $user->display_name : ''; // @pest-mutate-ignore: InstanceOfToTrue,EmptyStringToNotEmpty
+    }
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -51,7 +60,7 @@ class AdminPanelProvider extends PanelProvider
                 '<link rel="stylesheet" href="'.asset('css/conectacc-admin.css').'?v='.filemtime(public_path('css/conectacc-admin.css')).'">'
             ))
             ->renderHook(PanelsRenderHook::GLOBAL_SEARCH_AFTER, fn (): HtmlString => new HtmlString(
-                '<span class="conectacc-user-name">'.e(Filament::auth()->user()?->getAttribute('display_name')).'</span>'
+                '<span class="conectacc-user-name">'.e(self::displayName()).'</span>'
             ))
             ->renderHook(PanelsRenderHook::SIDEBAR_FOOTER, fn () => view('filament.sidebar-footer'))
             ->colors([

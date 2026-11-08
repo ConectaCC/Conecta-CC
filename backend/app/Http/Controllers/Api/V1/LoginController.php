@@ -10,9 +10,8 @@ final class LoginController
 {
     public function __invoke(LoginRequest $request, AuthenticateUser $authenticate): UserResource
     {
-        $user = $authenticate->handle($request->validated('email'), $request->validated('password'));
-
-        $request->session()->regenerate(); // evita fixação de sessão
+        // o login do guard já troca o id da sessão e o token CSRF (evita fixação de sessão)
+        $user = $authenticate->handle($request->string('email')->value(), $request->string('password')->value());
 
         return new UserResource($user);
     }

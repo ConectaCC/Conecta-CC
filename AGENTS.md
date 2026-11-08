@@ -45,7 +45,8 @@ Plataforma acadêmica para estudantes de Ciência da Computação do IFSul – C
 2. **Plano:** `docs/plans/AAAA-MM-DD-<tema>.md`, com tarefas pequenas, arquivos, interfaces e verificação.
 3. **Branch:** `feat/<tema>` a partir da `main`, com commits pequenos por tarefa.
 4. **Docs no fim:** atualizar `decisoes.md`, `pendencias.md`, `implementacao.md`, `status-mvp.md` e o README conforme a spec (ver `docs/AGENTS.md`).
-5. **PR para a `main`:** o CI precisa estar verde (checks `backend`, `frontend`, `docker`, `gitleaks`). O merge é feito com **merge commit**, como nos PRs anteriores.
+5. **Qualidade antes do PR:** `make lint` e `make mutate` verdes. O `make mutate` exige 100% de cobertura de linhas no back e nota de mutação de pelo menos 90% nas classes alteradas (`stack-e-decisoes-tecnicas.md` 12).
+6. **PR para a `main`:** o CI precisa estar verde (checks `backend`, `frontend`, `docker`, `gitleaks`). O merge é feito com **merge commit**, como nos PRs anteriores.
 
 Uma escolha que o time não fez e o agente fez fica marcada na spec como **(escolha do Claude)**, para ser revista.
 
@@ -66,7 +67,8 @@ Só é preciso ter Docker. O resto roda nos containers.
 | `make setup` | primeira vez: dependências, `.env`, chave, banco com seeders |
 | `make up` / `make down` | sobe e derruba o ambiente |
 | `make test` | testes da API (Pest, contra PostgreSQL real) |
-| `make lint` | Pint, Larastan, ESLint e `tsc` |
+| `make lint` | Pint, Larastan (nível 10), ESLint e `tsc` |
+| `make mutate` | cobertura de linhas de 100% e teste de mutação nas classes do back alteradas em relação à `origin/main` (outra base: `make mutate BASE=...`) |
 | `make api-types` | regenera o OpenAPI e os tipos do front (obrigatório depois de mudar a API) |
 | `make migrate` | roda migrations pendentes |
 | `make fresh` | **apaga** o banco de dev e recria com seeders. Não rodar sem pedir |

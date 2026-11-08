@@ -87,7 +87,8 @@ Cada tecnologia abaixo está justificada na decisão indicada entre parênteses.
 | Componente            | Escolha                                                 |
 | --------------------- | ------------------------------------------------------- |
 | Testes de API         | Pest (11)                                               |
-| Análise estática    | Pint, Larastan (nível 6), ESLint (com`jsx-a11y`) e `tsc` (11) |
+| Análise estática    | Pint, Larastan (nível 10), ESLint (com`jsx-a11y`) e `tsc` (11, 12) |
+| Teste de mutação    | Pest (`--mutate`), nas classes alteradas (12)           |
 | Segredos              | gitleaks no CI + secret scanning do GitHub (9)          |
 | Front e ponta a ponta | Vitest e Playwright (11)                                |
 
@@ -233,6 +234,29 @@ O que cada função do painel pode fazer está definido no documento de Implemen
 **Motivo.** Pest e Larastan são o padrão do ecossistema Laravel; testar contra o mesmo banco de produção é necessário porque parte das regras vive no banco.
 
 **Consequência.** Quais testes são obrigatórios antes da liberação está definido no documento de Implementação.
+
+### 12. Teste de mutação e análise estática pesada
+
+**Decisão.**
+
+- **Larastan no nível 10** (o máximo), sem lista de exceções.
+- **Teste de mutação do Pest** (`--mutate`) nas classes de `backend/app` alteradas em relação à base do PR, com nota mínima de 90%. Roda no CI e no `make mutate`, antes do PR.
+- **Cobertura de linhas de 100%** no back, no mesmo passo, para que código novo sem nenhum teste não passe.
+- **Mutante equivalente** (que não muda o comportamento) é marcado na própria linha com `// @pest-mutate-ignore: Mutador`, e o motivo vai na linha de cima.
+
+**Motivo.** Os testes provavam que o código fazia o que o teste conferia, mas não que conferiam o que importa. A rodada completa de 08/11/2026 começou em 75,8% e mostrou lacunas reais: link com espaço no caminho aceito, mensagens padrão sem tradução, prazo da oportunidade não gravado nos testes, respostas da API sem formato conferido.
+
+**Alternativas descartadas.**
+
+- **Infection:** o padrão do PHP, mas com outra configuração. O Pest já faz mutação.
+- **Mutação de tudo a cada PR:** a rodada completa leva cerca de 15 minutos. Só as classes alteradas cabem no CI.
+- **Nível 6 do Larastan:** deixava passar `mixed` vindo de `config()`, `env()` e da entrada.
+
+**Consequência.**
+
+- O Pest muta por classe, não por linha. Mudar uma linha numa classe grande testa a classe inteira.
+- O job `backend` do CI liga a cobertura (PCOV) e baixa o histórico completo do Git, para achar a base do PR.
+- O `preventLazyLoading` fica ligado fora de produção. Consulta N+1 vira erro nos testes e no ambiente local.
 
 ## Planos condicionados
 

@@ -12,7 +12,8 @@ final class LogoutController
     {
         Auth::guard('web')->logout();
         $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        // invalidate() já descarta o token; este só antecipa o novo para a resposta
+        $request->session()->regenerateToken(); // @pest-mutate-ignore: RemoveMethodCall
 
         return response()->noContent();
     }

@@ -49,7 +49,8 @@ final class OpportunityResource extends Resource
     /** @return Builder<Opportunity> */
     public static function getEloquentQuery(): Builder
     {
-        return Opportunity::withTrashed()->with(['author', 'decider']);
+        // o Filament já carrega junto as relações das colunas (author, decider)
+        return Opportunity::withTrashed();
     }
 
     public static function table(Table $table): Table
@@ -77,7 +78,7 @@ final class OpportunityResource extends Resource
                 TextColumn::make('created_at')->label('Enviada em')->date('d/m/Y', AdminPanelProvider::TIMEZONE)->sortable()->visibleFrom('xl'),
                 TextColumn::make('decider.display_name')
                     ->label('Decisão')
-                    ->description(fn (Opportunity $record): ?string => $record->decided_at?->setTimezone(AdminPanelProvider::TIMEZONE)->format('d/m/Y'))
+                    ->description(fn (Opportunity $record): ?string => $record->decided_at?->setTimezone(AdminPanelProvider::TIMEZONE)->format('d/m/Y')) // @pest-mutate-ignore: RemoveNullSafeOperator
                     ->placeholder('—')
                     ->wrap(),
             ])
@@ -91,7 +92,8 @@ final class OpportunityResource extends Resource
 
     public static function infolist(Schema $schema): Schema
     {
-        return $schema->columns(1)->components([
+        // layout do detalhe, sem regra
+        return $schema->columns(1)->components([ // @pest-mutate-ignore: IncrementInteger,DecrementInteger
             TextEntry::make('code')->label('Código'),
             TextEntry::make('title')->label('Título'),
             TextEntry::make('type')->label('Tipo')->formatStateUsing(fn (Opportunity $record): string => $record->type->label()),

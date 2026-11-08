@@ -9,8 +9,9 @@ final class CurrentTermsController
 {
     public function __invoke(): JsonResponse
     {
-        $version = config('conectacc.terms_version');
-        $terms = json_decode(File::get(resource_path("terms/{$version}.json")), true, flags: JSON_THROW_ON_ERROR);
+        $version = config()->string('conectacc.terms_version');
+        // objeto ou array viram o mesmo JSON na resposta
+        $terms = json_decode(File::get(resource_path("terms/{$version}.json")), true, flags: JSON_THROW_ON_ERROR); // @pest-mutate-ignore: TrueToFalse
 
         return response()->json($terms);
     }

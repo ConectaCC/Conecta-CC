@@ -61,6 +61,8 @@ it('mostra quem enviou o material anônimo, e a marca só abaixo do autor', func
         ->assertTableColumnStateSet('actor', 'Marcos Moderador', $approved);
 
     expect(substr_count($page->html(), 'Enviado anonimamente'))->toBe(1);
+    $page->assertTableColumnHasDescription('actor', 'Enviado anonimamente', $submitted)
+        ->assertTableColumnDoesNotHaveDescription('actor', 'Enviado anonimamente', $approved);
 });
 
 it('filtra por ação, por quem fez e por período', function () {
@@ -116,7 +118,7 @@ it('mostra o título que o material tinha na hora do evento', function () {
 });
 
 it('mostra no detalhe a versão publicada antes da alteração', function () {
-    $original = Material::factory()->approved()->create(['title' => 'Título antigo', 'url' => 'https://example.com/antigo']);
+    $original = Material::factory()->approved()->create(['title' => 'Título antigo', 'description' => 'Descrição antiga', 'url' => 'https://example.com/antigo']);
     $revision = app(ReviseMaterial::class)->handle($original, ['title' => 'Título novo', 'description' => null, 'url' => 'https://example.com/novo', 'anonymous' => false]);
     app(ApproveMaterial::class)->handle($revision, $this->admin);
     $approval = AuditEvent::where('action', AuditAction::MaterialApproved)->sole();
@@ -124,7 +126,29 @@ it('mostra no detalhe a versão publicada antes da alteração', function () {
     Livewire::test(ListAuditEvents::class)
         ->assertTableColumnStateSet('summary', 'Alteração', $approval)
         ->mountAction(TestAction::make('view')->table($approval))
-        ->assertMountedActionModalSee(['Versão anterior', 'Título antigo', 'https://example.com/antigo']);
+        ->assertMountedActionModalSee(['Versão anterior', 'Título antigo', 'Descrição antiga', 'https://example.com/antigo']);
+});
+
+it('mostra no detalhe a data, a ação, quem fez, sobre quem e o resumo', function () {
+    $this->travelTo('2026-11-08 12:00:00');
+    $other = User::factory()->create(['display_name' => 'Pessoa Promovida']);
+    app(ChangeUserRole::class)->handle($this->admin, $other, Role::Moderador);
+
+    Livewire::test(ListAuditEvents::class)
+        ->mountAction(TestAction::make('view')->table(AuditEvent::sole()))
+        ->assertMountedActionModalSee(['08/11/2026 09:00:00', 'Papel alterado', 'Alice Admin', 'Pessoa Promovida', 'Aluno → Moderador']);
+});
+
+it('não mostra resumo no evento de pessoa sem dados extras', function () {
+    app(RecordAuditEvent::class)->handle(AuditAction::PasswordChanged, $this->admin, $this->admin);
+
+    Livewire::test(ListAuditEvents::class)->assertTableColumnStateSet('summary', null, AuditEvent::sole());
+});
+
+it('oferece o período com os campos De e Até', function () {
+    Livewire::test(ListAuditEvents::class)
+        ->assertSchemaComponentExists('period.from', 'tableFiltersForm')
+        ->assertSchemaComponentExists('period.until', 'tableFiltersForm');
 });
 
 it('não oferece nenhuma ação que altere eventos', function () {

@@ -38,11 +38,13 @@ jobs:
       DB_PASSWORD: password
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # o teste de mutação compara com a base do PR
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           extensions: pdo_pgsql
-          coverage: none
+          coverage: pcov
       - name: Cache do Composer
         uses: actions/cache@v4
         with:
@@ -52,11 +54,22 @@ jobs:
       - run: cp .env.example .env && php artisan key:generate
       - run: vendor/bin/pint --test
       - run: vendor/bin/phpstan analyse --no-progress --memory-limit=1G
-      - run: vendor/bin/pest
+      - name: Testes, com cobertura de linhas de 100%
+        run: vendor/bin/pest --parallel --coverage --min=100
+      - name: Teste de mutação nas classes alteradas (nota mínima 90%)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          classes=$(../scripts/changed-php-classes.sh "origin/$BASE_REF")
+          if [ -z "$classes" ]; then echo "Nenhuma classe de backend/app alterada."; exit 0; fi
+          vendor/bin/pest --mutate --class="$classes" --covered-only --parallel --min=90
       - name: OpenAPI versionado está atualizado
         env:
           APP_URL: http://localhost
         run: |
+          # os testes em paralelo usam bancos próprios: o Scramble precisa do esquema para tipar os campos
+          php artisan migrate --force
           php artisan scramble:export --path=storage/app/openapi.json
           diff -u ../frontend/openapi.json storage/app/openapi.json
 

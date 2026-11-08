@@ -76,6 +76,13 @@ it('aceita o mesmo link do próprio material e recusa o de outro', function () {
         ->assertJsonPath('errors.url.0', 'Esse link já foi compartilhado nesta disciplina.');
 });
 
+it('aceita a alteração de um campo só', function () {
+    $material = Material::factory()->approved()->create(['title' => 'Antigo', 'description' => 'Igual.', 'url' => 'https://site.com/igual']);
+
+    $this->actingAs($material->author)->putJson("/api/v1/materials/{$material->id}", ['title' => 'Novo', 'description' => 'Igual.', 'url' => 'https://site.com/igual'])
+        ->assertCreated();
+});
+
 it('não deixa duas alterações pendentes', function () {
     $material = Material::factory()->approved()->create();
     $this->actingAs($material->author)->putJson("/api/v1/materials/{$material->id}", editPayload())->assertCreated();
@@ -175,4 +182,15 @@ it('não deixa agir sobre uma alteração diretamente', function () {
     $revision = Material::factory()->for($material->author, 'author')->for($material->discipline)->create(['revises_id' => $material->id]);
 
     $this->actingAs($material->author)->postJson("/api/v1/materials/{$revision->id}/cancel")->assertForbidden();
+});
+
+it('a edição conta na mesma cota de 10 envios por hora', function () {
+    $material = Material::factory()->approved()->create();
+    $this->actingAs($material->author)->putJson("/api/v1/materials/{$material->id}", editPayload())->assertCreated();
+
+    $share = fn (int $i) => $this->actingAs($material->author)->postJson("/api/v1/disciplines/{$material->discipline_id}/materials", ['title' => "Lista {$i}", 'url' => "https://site.com/cota-{$i}"]);
+    foreach (range(1, 9) as $i) {
+        $share($i)->assertCreated();
+    }
+    $share(10)->assertTooManyRequests();
 });

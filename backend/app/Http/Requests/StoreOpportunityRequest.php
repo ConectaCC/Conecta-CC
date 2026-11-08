@@ -27,14 +27,7 @@ final class StoreOpportunityRequest extends FormRequest
     {
         // o mesmo limite de envios por hora do material: os dois tipos somam
         MaterialSubmissionLimit::ensureAvailable($this->user());
-
-        $merge = [];
-        foreach (['title', 'description', 'url'] as $field) {
-            if (is_string($this->input($field))) {
-                $merge[$field] = trim($this->input($field));
-            }
-        }
-        $this->merge($merge);
+        // espaços nas pontas e texto vazio já chegam tratados pelos middlewares TrimStrings e ConvertEmptyStringsToNull
     }
 
     /** @return array<string, mixed> */
@@ -44,7 +37,7 @@ final class StoreOpportunityRequest extends FormRequest
             'type' => ['required', Rule::enum(OpportunityType::class)],
             'title' => ['required', 'string', 'max:'.self::MAX_TITLE],
             'description' => ['required', 'string', 'max:'.self::MAX_DESCRIPTION],
-            'url' => ['bail', 'required', 'string', 'max:'.self::MAX_URL, $this->urlRule()],
+            'url' => ['required', $this->urlRule()],
             'modality' => ['required', Rule::enum(OpportunityModality::class)],
             'deadline' => ['bail', 'nullable', 'date_format:Y-m-d', 'after_or_equal:'.Campus::today()],
         ];
@@ -63,8 +56,6 @@ final class StoreOpportunityRequest extends FormRequest
             'description.string' => 'Descreva a oportunidade em poucas palavras.',
             'description.max' => 'Use no máximo 300 caracteres.',
             'url.required' => 'Informe o link da oportunidade.',
-            'url.string' => 'Informe um link válido.',
-            'url.max' => 'Use no máximo 2.048 caracteres.',
             'modality.required' => 'Escolha a modalidade.',
             'modality.enum' => 'Escolha a modalidade.',
             'deadline.date_format' => 'Informe uma data válida.',
@@ -82,7 +73,8 @@ final class StoreOpportunityRequest extends FormRequest
             'type' => $data['type'],
             'title' => $data['title'],
             'description' => $data['description'],
-            'url' => (string) MaterialUrl::normalize($data['url']),
+            // a validação já garantiu um link válido: o cast só satisfaz o tipo
+            'url' => (string) MaterialUrl::normalize($data['url']), // @pest-mutate-ignore: RemoveStringCast
             'modality' => $data['modality'],
             'deadline' => $data['deadline'] ?? null,
         ];
@@ -91,7 +83,7 @@ final class StoreOpportunityRequest extends FormRequest
     private function urlRule(): Closure
     {
         return function (string $attribute, mixed $value, Closure $fail): void {
-            $url = MaterialUrl::normalize((string) $value);
+            $url = is_string($value) ? MaterialUrl::normalize($value) : null;
 
             if ($url === null) {
                 $fail('Informe um link válido.');

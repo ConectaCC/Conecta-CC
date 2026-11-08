@@ -52,19 +52,21 @@ it('preserva espaços nas pontas da senha', function () {
         ->and(Hash::check('segredo novo', $hash))->toBeFalse();
 });
 
-it('valida cada campo e mantém a senha', function (array $overrides, string $field, string $message) {
+it('valida cada campo e mantém a senha', function (array $overrides, string $field, string|array $message) {
     $user = passwordOwner();
 
     changePassword($this, $user, $overrides)
         ->assertUnprocessable()
-        ->assertJsonValidationErrors([$field => $message]);
+        ->assertJsonPath("errors.{$field}", (array) $message);
 
     expect(Hash::check(OLD_PASSWORD, $user->fresh()->password))->toBeTrue();
 })->with([
     'senha atual vazia' => [['current_password' => ''], 'current_password', 'Informe sua senha atual.'],
     'senha atual incorreta' => [['current_password' => 'outra-senha'], 'current_password', 'A senha atual informada está incorreta.'],
+    'senha atual como lista' => [['current_password' => [OLD_PASSWORD]], 'current_password', 'O valor enviado precisa ser um texto.'],
     'nova senha vazia' => [['password' => ''], 'password', 'Informe sua nova senha.'],
     'nova senha curta' => [['password' => '1234567', 'password_confirmation' => '1234567'], 'password', 'Use pelo menos 8 caracteres.'],
+    'nova senha como lista' => [['password' => ['senha-nova-1']], 'password', ['O valor enviado precisa ser um texto.', 'Use pelo menos 8 caracteres.']],
     'confirmação vazia' => [['password_confirmation' => ''], 'password_confirmation', 'Confirme sua nova senha.'],
     'confirmação diferente' => [['password_confirmation' => 'outra-senha-9'], 'password_confirmation', 'As senhas informadas não coincidem.'],
 ]);

@@ -106,14 +106,17 @@ it('exige motivo para rejeitar', function (array $payload, string $message) {
 
 it('rejeita com motivo', function () {
     $material = Material::factory()->create();
+    $moderator = User::factory()->moderator()->create();
 
-    $this->actingAs(User::factory()->moderator()->create())
+    $this->actingAs($moderator)
         ->postJson(rejectUrl($material), ['reason' => '  O link pede login.  '])
         ->assertOk();
 
     expect($material->refresh())
         ->status->toBe(MaterialStatus::Rejeitado)
         ->rejection_reason->toBe('O link pede login.')
+        ->decided_by->toBe($moderator->id)
+        ->decided_at->not->toBeNull()
         ->published_at->toBeNull();
 });
 
