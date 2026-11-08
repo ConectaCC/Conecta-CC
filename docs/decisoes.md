@@ -1821,3 +1821,40 @@ O time enviou uma imagem de referência para a página, e a spec ganhou a seçã
 **Ficam fora:** salvar e o menu "⋯". **Entram com Oportunidades:** as abas por tipo, "Explorar por tipo" e o número de oportunidades.
 
 **Ícone do tipo:** por enquanto, todo material usa o ícone de documento.
+
+---
+
+# 69. Oportunidades no mural: filtro e "Compartilhar" — 08/11/2026
+
+Decisões antecipadas para a entrega de Oportunidades, que entra integrada ao mural da Comunidade (§68.6).
+
+## 69.1 Filtro, não abas
+
+O mural **não terá abas** por tipo. A separação entre materiais e oportunidades será feita por um **filtro**, no mesmo estilo da ordem que já existe ("Mais recentes" e "Mais antigos").
+
+As opções previstas são "Todos", "Materiais" e "Oportunidades". O filtro se combina com a busca e com a ordem, e entra no endereço da página como os demais.
+
+Isso substitui as "abas por tipo" da §68.8 e o "Os filtros 'Tudo', 'Materiais' e 'Oportunidades'" da §68.6, que passam a ser este filtro.
+
+## 69.2 "Compartilhar" para material e oportunidade
+
+O botão do card "Contribua com a comunidade" passa a servir para os dois tipos. A pessoa escolhe se vai compartilhar um **material** ou uma **oportunidade** (vaga, estágio, evento, hackathon e afins).
+
+Hoje o botão é "Compartilhar material" e leva a Estudos.
+
+O fluxo será planejado no design de Oportunidades. Ficam para essa rodada:
+
+- o nome do botão e onde a escolha do tipo aparece (menu, diálogo ou página);
+- como escolher a disciplina de um material a partir da Comunidade, já que hoje o envio fica dentro da disciplina;
+- se Estudos continua com o próprio "Compartilhar material" na página da disciplina;
+- os campos e as categorias da oportunidade;
+- a Moderação da oportunidade e as notificações;
+- a autoria: a oportunidade aparece sempre como "Comunidade" no mural (§68.6), e falta definir se o envio de material a partir da Comunidade mantém a opção "Compartilhar anonimamente".
+
+## 69.3 O que continua em aberto
+
+Também ficam para o design de Oportunidades:
+
+- "Explorar por tipo";
+- o número de oportunidades em "A comunidade em números";
+- o ícone de cada tipo no card.

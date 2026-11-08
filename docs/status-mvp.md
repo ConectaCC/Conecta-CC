@@ -67,7 +67,7 @@ A intenção é diferenciar claramente o que já foi definido e prototipado do q
 
 **Ainda falta para o MVP:** ver a seção "O que ainda não está implementado".
 
-> **Atualização (08/11/2026):** a Comunidade voltou como mural de materiais, como funcionalidade adicional prevista na §56.3 (`decisoes.md` 68). A próxima entrega é Oportunidades, já integrada ao mural.
+> **Atualização (08/11/2026):** a Comunidade voltou como mural de materiais, com busca, ordem, lista ou grade e números, como funcionalidade adicional prevista na §56.3 (`decisoes.md` 68). A próxima entrega é Oportunidades, já integrada ao mural, com um filtro por tipo (sem abas) e "Compartilhar" para material e oportunidade (`decisoes.md` 69).
 
 O protótipo das dez áreas continua sendo a referência visual. Ele inclui Oportunidade e Comunidade, que agora estão fora do MVP.
 

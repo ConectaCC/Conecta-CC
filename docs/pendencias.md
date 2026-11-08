@@ -247,6 +247,26 @@ Sem esse aviso, quem teve a senha trocada por outra pessoa não fica sabendo pel
 
 ---
 
+# 1.8 Oportunidades no mural e "Compartilhar" (próxima entrega)
+
+> **Registrado em 08/11/2026:** `decisoes.md` 69.
+
+**Já decidido:**
+
+- o mural separa os tipos por um filtro, e não por abas;
+- "Compartilhar", na Comunidade, serve para material e oportunidade.
+
+Falta definir no design de Oportunidades:
+
+- o nome do botão e onde a escolha do tipo aparece;
+- como escolher a disciplina de um material a partir da Comunidade;
+- se o envio de material a partir da Comunidade mantém "Compartilhar anonimamente";
+- se Estudos mantém o próprio "Compartilhar material";
+- os campos, as categorias e a Moderação da oportunidade;
+- "Explorar por tipo", o número de oportunidades e o ícone de cada tipo.
+
+---
+
 # 2. Pendências técnicas de implementação
 
 Estas decisões serão tratadas principalmente durante a definição da arquitetura e implementação.
