@@ -77,7 +77,7 @@ export function MyContentsPage() {
             type="button"
             aria-pressed={kind === value}
             onClick={() => selectKind(value)}
-            className={cn('h-10 rounded-md px-4 text-[15px] font-semibold', kind === value ? 'bg-[#e3eefb] text-action' : 'text-muted-foreground hover:text-foreground')}
+            className={cn('h-11 rounded-md px-4 text-[15px] font-semibold', kind === value ? 'bg-[#e3eefb] text-action' : 'text-muted-foreground hover:text-foreground')}
           >
             {label}
           </button>

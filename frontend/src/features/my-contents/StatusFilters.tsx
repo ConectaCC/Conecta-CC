@@ -11,7 +11,7 @@ export function StatusFilters({ value, onChange }: { value: MyFilter; onChange: 
           aria-pressed={value === filter.value}
           onClick={() => onChange(filter.value)}
           className={cn(
-            'h-10 rounded-full border px-4 text-[15px] font-medium',
+            'h-11 rounded-full border px-4 text-[15px] font-medium',
             value === filter.value ? 'border-navy-900 bg-navy-900 text-white' : 'border-blue-200 bg-white text-foreground hover:bg-ice',
           )}
         >

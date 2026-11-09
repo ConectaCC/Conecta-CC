@@ -17,7 +17,7 @@ type Props = {
   onEdit?: () => void;
 };
 
-const ACTION = 'h-10 border-action px-4 text-[15px] font-semibold text-action';
+const ACTION = 'h-11 border-action px-4 text-[15px] font-semibold text-action';
 
 export function ContentItem({ item, expanded, onToggle, onCancel, onDelete, onEdit }: Props) {
   const panelId = useId();

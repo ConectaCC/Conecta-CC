@@ -59,7 +59,7 @@ export function NotificationsBell() {
               type="button"
               // o botão some quando não há mais não lidas: o foco vai para o título do painel
               onClick={() => readAll.mutate(undefined, { onSuccess: () => titleRef.current?.focus() })}
-              className="text-sm font-semibold text-action hover:underline">
+              className="relative text-sm font-semibold text-action after:absolute after:-inset-x-2 after:-inset-y-3 hover:underline">
               Marcar todas como lidas
             </button>
           )}
