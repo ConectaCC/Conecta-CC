@@ -1,4 +1,4 @@
-# Requisitos do MVP — ConectaCC
+# Requisitos do MVP - ConectaCC
 
 Este documento registra os principais requisitos funcionais e regras de negócio do MVP do ConectaCC.
 
@@ -11,8 +11,11 @@ O objetivo é servir como referência para:
 
 Os requisitos descritos aqui representam decisões de produto e não definem, por si só, a tecnologia que deverá ser utilizada.
 
+O documento descreve os requisitos da versão atual do MVP.
 
-> **Escopo atual (02/11/2026):** Oportunidade, Comunidade (feed, publicações e canais) e a busca de estudantes saíram do MVP e ficam para a próxima versão (`decisoes.md` 56). Os requisitos e fluxos dessas áreas continuam neste documento como referência.
+Oportunidade e Comunidade fazem parte do escopo atual.
+
+Funcionalidades como busca de estudantes, publicações como tipo próprio de conteúdo, canais da comunidade e outras evoluções futuras permanecem fora do MVP.
 
 ---
 
@@ -20,19 +23,17 @@ Os requisitos descritos aqui representam decisões de produto e não definem, po
 
 O MVP possui três papéis:
 
-- ALUNO
-- MODERADOR
-- ADMINISTRADOR
+- ALUNO;
+- MODERADOR;
+- ADMINISTRADOR.
 
 Representação conceitual do nível de acesso:
 
-ADMINISTRADOR
-↓
-MODERADOR
-↓
-ALUNO
+ALUNO  
+→ MODERADOR  
+→ ADMINISTRADOR
 
-Isso **não significa herança técnica automática**. A implementação usa permissões específicas (Policies e Gates).
+Essa representação não significa herança técnica automática. As permissões são controladas pelas regras de autorização da aplicação.
 
 ## 1.1 ALUNO
 
@@ -40,20 +41,19 @@ O usuário ALUNO pode:
 
 - criar conta;
 - realizar Login;
-- recuperar senha, se a recuperação for implementada no MVP;
 - acessar Home;
 - editar o próprio Perfil;
 - selecionar disciplinas atuais;
 - acessar Estudos;
+- compartilhar materiais;
 - acessar Oportunidade;
+- indicar oportunidades;
 - acessar Comunidade;
 - consultar Perfis públicos;
+- consultar e gerenciar os próprios conteúdos;
 - acessar Configurações;
 - alterar a própria senha;
-- receber notificações;
-- enviar conteúdos para análise, identificados ou anônimos;
-- consultar e gerenciar os próprios conteúdos em Perfil → Meus conteúdos;
-- editar e excluir conteúdos de sua própria autoria, conforme as regras definidas.
+- receber notificações.
 
 O usuário ALUNO não pode:
 
@@ -61,66 +61,62 @@ O usuário ALUNO não pode:
 - consultar conteúdos pendentes de outros usuários;
 - aprovar conteúdos;
 - rejeitar conteúdos;
+- acessar o painel `/admin`;
 - visualizar informações administrativas;
-- alterar papéis;
-- gerenciar permissões.
+- alterar papéis de usuários.
 
 ## 1.2 MODERADOR
 
-O MODERADOR é um usuário com permissões adicionais para auxiliar na Moderação. Possui as funcionalidades comuns do usuário e também pode:
+O MODERADOR possui as funcionalidades comuns do usuário e também pode:
 
-- acessar as funções de Moderação que forem permitidas;
-- analisar Material, Publicação e Oportunidade (no MVP, só Material — `decisoes.md` 56);
-- aprovar solicitações permitidas;
-- rejeitar solicitações permitidas, informando o motivo (obrigatório);
-- solicitar revisão/remoção de conteúdo já publicado — **Pós-MVP / evolução futura** (`decisoes.md` 63.4 e 67.2). A solicitação não remove o conteúdo automaticamente.
+- acessar a Moderação;
+- analisar Materiais;
+- analisar Oportunidades;
+- aprovar conteúdos pendentes;
+- rejeitar conteúdos pendentes;
+- informar o motivo obrigatório da rejeição.
 
-Regras:
+### Regras
 
-- somente ADMINISTRADOR pode nomear MODERADOR;
-- a Moderação do MODERADOR fica dentro da aplicação comum, **fora do `/admin`**;
-- o MODERADOR **não acessa `/admin`**;
-- o MODERADOR não pode criar ou remover MODERADORES, criar ADMINISTRADORES, alterar papéis nem gerenciar permissões;
-- o MODERADOR não acessa informações administrativas que não sejam necessárias.
-
-### Conflito de interesse
-
-O MODERADOR **não pode moderar o próprio conteúdo**, inclusive quando enviado anonimamente.
-
-O conteúdo do próprio MODERADOR **não aparece na fila dele**; ele é analisado por outro MODERADOR ou por um ADMINISTRADOR.
-
-O MODERADOR **nunca vê a identidade real** do autor de conteúdo anônimo. Ele vê a autoria como “Comunidade”.
+- somente ADMINISTRADOR pode atribuir o papel MODERADOR;
+- a Moderação fica dentro da aplicação comum;
+- o MODERADOR não acessa `/admin`;
+- o MODERADOR não altera papéis;
+- o MODERADOR não gerencia permissões administrativas;
+- o MODERADOR não pode moderar o próprio conteúdo;
+- o próprio conteúdo não aparece entre as pendências que ele pode analisar;
+- o MODERADOR não visualiza a identidade real do autor de material enviado anonimamente.
 
 ## 1.3 ADMINISTRADOR
 
 O ADMINISTRADOR possui as funcionalidades comuns do usuário e também pode:
 
-- acessar `/admin`, que é exclusivo de ADMINISTRADORES;
-- moderar, inclusive o próprio conteúdo;
-- revisar decisões de Moderação — **Pós-MVP / evolução futura** (`decisoes.md` 63.4);
-- reverter rejeições, diretamente de REJEITADO para APROVADO — **Pós-MVP / evolução futura** (`decisoes.md` 67.1);
-- retirar conteúdo previamente aprovado/publicado — **Pós-MVP / evolução futura** (`decisoes.md` 63);
-- nomear MODERADORES e remover o papel de MODERADOR;
-- gerenciar papéis e permissões;
-- consultar as informações administrativas necessárias;
-- identificar o autor real de conteúdo anônimo **somente nas áreas administrativas autorizadas**.
+- acessar a Moderação;
+- moderar o próprio conteúdo;
+- acessar o painel `/admin`;
+- consultar usuários;
+- alterar o papel de outras contas;
+- consultar registros administrativos de Materiais e Oportunidades;
+- acessar a Auditoria;
+- identificar o autor real de material anônimo nas áreas administrativas autorizadas.
 
-Nas áreas públicas, o ADMINISTRADOR vê a autoria de conteúdo anônimo como “Comunidade”, igual aos demais usuários. Isso não significa acesso irrestrito a todos os dados.
+O ADMINISTRADOR não pode alterar o próprio papel.
 
-A UX completa do painel administrativo e o fluxo detalhado das ações de MODERADOR e ADMINISTRADOR (revisão, reversão, retirada, auditoria) serão definidos em rodada específica.
+Nas áreas públicas, materiais anônimos continuam aparecendo como:
 
-> **Atualização (04/11/2026):** a retirada administrativa de conteúdo aprovado, a revisão de decisões de Moderação e a reversão de rejeições não são necessárias para concluir o `/admin` do MVP (`decisoes.md` 63).
+**Compartilhado pela comunidade**
 
-> **Atualização (05/11/2026):** o `/admin` do MVP cobre a consulta de usuários, a alteração de papéis e a consulta de moderações (`decisoes.md` 65). "Gerenciar permissões" significa definir o papel da pessoa.
+A identificação do autor real fica restrita às áreas administrativas autorizadas.
 
-> **Atualização (07/11/2026):** o `/admin` também tem a tela Auditoria, com um evento imutável para cada ação que muda dados (`decisoes.md` 66). Revisão, reversão e retirada continuam pós-MVP, e cada uma deve entrar junto com o seu evento de auditoria.
+## Evoluções futuras
 
-> **Atualização (08/11/2026):** duas regras pós-MVP foram decididas (`decisoes.md` 67):
+Não fazem parte do MVP atual:
 
-- **Reversão de rejeição:** só o ADMINISTRADOR reverte, direto de REJEITADO para APROVADO, sem voltar a PENDENTE. A rejeição anterior fica preservada no histórico, e a reversão é registrada na auditoria.
-- **Denúncia ou solicitação de revisão:** usuários autenticados e o MODERADOR poderão denunciar ou pedir a revisão de conteúdo publicado. A denúncia não remove o conteúdo automaticamente, e a retirada é decisão do ADMINISTRADOR.
+- retirada administrativa de conteúdo publicado;
+- reversão administrativa de rejeição;
+- denúncia ou solicitação de revisão de conteúdo publicado.
 
-Só os detalhes de UX e de implementação ficam para quando esses fluxos entrarem no escopo.
+As regras já definidas para essas funcionalidades devem ser aplicadas quando entrarem no escopo.
 
 ---
 
@@ -171,18 +167,18 @@ O aceite só deve ser registrado quando a conta for efetivamente criada.
 
 ## RF-05 — E-mail institucional
 
-No MVP e no piloto, o cadastro deve utilizar:
+No MVP e no piloto, o cadastro deve utilizar e-mail do domínio:
 
-**e-mail institucional do IFSul.**
+**`academico.ifsul.edu.br`**
 
-A implementação deverá validar:
+O sistema deve validar:
 
-- formato válido de e-mail;
-- domínio institucional aceito pelo IFSul.
+- formato válido do e-mail;
+- domínio institucional permitido.
 
-A confirmação técnica do domínio ou dos domínios exatos utilizados pelo IFSul poderá ser realizada durante a implementação.
+O domínio aceito pode ser configurado através de `ALLOWED_EMAIL_DOMAINS`.
 
-A possibilidade de aceitar e-mails institucionais de outras instituições fica fora do MVP atual e poderá ser avaliada somente em uma eventual expansão futura do ConectaCC.
+A possibilidade de aceitar outras instituições fica fora do MVP atual.
 
 ## RF-05.1 — Confirmação de propriedade do e-mail
 
@@ -190,11 +186,27 @@ No MVP e no piloto:
 
 **não haverá confirmação de cadastro por link ou código enviado ao e-mail.**
 
-O sistema não precisa exigir que o usuário confirme a propriedade do endereço antes de utilizar a conta.
+O usuário não precisa confirmar a propriedade do endereço antes de utilizar a conta.
 
-Essa funcionalidade poderá ser avaliada em uma evolução futura do ConectaCC.
+Essa funcionalidade poderá ser avaliada futuramente.
 
-Essa regra não altera a recuperação de senha, que continuará utilizando envio de e-mail.
+## RF-05.2 — Cadastro fechado do piloto
+
+Durante o período de teste, o cadastro pode ser restringido a uma lista de pessoas convidadas.
+
+Quando `ALLOWED_EMAILS` possuir registros:
+
+- o e-mail deve pertencer ao domínio institucional permitido;
+- o e-mail também deve estar presente na lista de convidados;
+- somente pessoas convidadas podem criar novas contas.
+
+Quando a lista estiver vazia:
+
+- o cadastro fica disponível para qualquer endereço pertencente ao domínio institucional permitido.
+
+Uma pessoa não convidada deve receber uma mensagem genérica informando que o cadastro está restrito ao período de teste.
+
+A validação da lista de convidados deve ocorrer antes da verificação que poderia revelar se o e-mail já possui conta.
 ---
 
 # 3. Login
@@ -222,32 +234,18 @@ Usuário autenticado que acessar a tela de Login poderá ser redirecionado para 
 
 # 4. Recuperação de senha
 
-## RF-09 — Solicitar recuperação
+A recuperação de senha não faz parte do MVP atual.
 
-O usuário deve poder solicitar recuperação utilizando o E-mail institucional.
+Caso seja implementada futuramente, deverá existir um fluxo seguro de recuperação utilizando o e-mail institucional, sem revelar se determinado endereço possui ou não uma conta.
 
-## RF-10 — Resposta genérica
+Também deverão ser definidos:
 
-Depois da solicitação, o sistema não deve confirmar se existe uma conta associada ao e-mail.
+- validade do link;
+- segurança do token;
+- provedor de e-mail;
+- encerramento das demais sessões após a redefinição.
 
-Exemplo:
-
-**Se existir uma conta associada ao e-mail informado, enviaremos as instruções para redefinir sua senha.**
-
-## RF-11 — Link de recuperação
-
-A definição de nova senha deve ocorrer através de link recebido por e-mail.
-
-A tela de nova senha não faz parte da navegação comum da aplicação.
-
-## RF-12 — Nova senha
-
-A nova senha deve possuir:
-
-- mínimo de 8 caracteres;
-- confirmação igual.
-
-A política técnica do link de recuperação ainda deverá ser definida.
+A implementação futura deve manter a mesma política mínima de senha utilizada pelo cadastro.
 
 ---
 
@@ -261,14 +259,29 @@ Depois do Login, o usuário deve acessar a Home.
 
 A Home deve apresentar saudação utilizando o Nome de exibição.
 
-## RF-15 — Atalhos
+## RF-15 — Atalhos principais
 
 A Home deve oferecer acesso às principais áreas:
 
 - Estudos;
+- Oportunidade;
+- Comunidade;
 - Perfil.
 
-(Oportunidade e Comunidade saíram do MVP — `decisoes.md` 56.)
+## RF-15.1 — Acessos institucionais
+
+A Home deve disponibilizar acessos institucionais confirmados e relevantes para o estudante.
+
+A versão atual possui acesso a:
+
+- IFSul;
+- Informática / Ciência da Computação;
+- SUAP;
+- Moodle;
+- Instagram do IFSul Passo Fundo;
+- CORAC.
+
+Links externos devem direcionar para as fontes correspondentes sem reproduzir o conteúdo institucional dentro do ConectaCC.
 
 ## RF-16 — Perfil incompleto
 
@@ -285,7 +298,7 @@ Enquanto estiver incompleto, a Home deve apresentar:
 
 Depois que o Perfil estiver completo:
 
-- o card “Complete seu perfil” deve desaparecer;
+- o card "Complete seu perfil" deve desaparecer;
 - não deve ser substituído por gamificação ou percentual de completude.
 
 ---
@@ -386,37 +399,18 @@ A seção deve apresentar as disciplinas atuais selecionadas no Perfil.
 
 ## RF-31 — Todas as disciplinas
 
-O sistema deve possuir catálogo das disciplinas confirmadas do curso.
-
-A referência acadêmica inicial do MVP será a:
+O sistema deve possuir o catálogo das disciplinas obrigatórias confirmadas da:
 
 **Matriz 2023 do Bacharelado em Ciência da Computação do IFSul – Câmpus Passo Fundo.**
 
-Fontes institucionais:
+O catálogo atual contém 49 disciplinas obrigatórias e utiliza informações institucionais de:
 
-Grade Curricular:
-
-https://inf.passofundo.ifsul.edu.br/src/bcc_grade/index.html
-
-Matriz / Organograma de pré-requisitos:
-
-https://inf.passofundo.ifsul.edu.br/src/bcc_organograma/index.html
-
-A Matriz 2023 organiza o curso do:
-
-**1º ao 8º semestre.**
-
-Ela será utilizada como referência inicial para:
-
-- disciplinas;
-- semestres;
+- nome;
+- semestre;
 - carga horária;
-- ementas;
-- pré-requisitos.
+- ementa oficial.
 
-A necessidade de contemplar estudantes vinculados à Matriz 2017 será verificada posteriormente e não bloqueia as atividades atuais.
-
-> **Atualização (19/10/2026):** o catálogo foi carregado com as 49 disciplinas obrigatórias da Matriz 2023 (nome, semestre, carga horária e link oficial da ementa). As eletivas ficam fora por enquanto. Ver `decisoes.md` 53.
+A necessidade de contemplar estudantes vinculados à Matriz 2017 poderá ser avaliada futuramente.
 
 ## RF-32 — Busca de disciplina
 
@@ -424,51 +418,62 @@ O usuário deve conseguir pesquisar disciplinas pelo nome.
 
 ## RF-33 — Página da disciplina
 
-Uma disciplina pode possuir:
+Cada disciplina pode apresentar:
 
-- informações básicas;
+- informações acadêmicas;
+- carga horária;
 - link para ementa oficial;
-- materiais aprovados.
+- materiais aprovados;
+- opção para compartilhar material.
 
-O link oficial só deve aparecer como link funcional quando a URL estiver confirmada.
+O link da ementa somente deve ser disponibilizado quando houver URL institucional confirmada.
 
-## RF-34 — Disciplina sem materiais
+## RF-34 — Área de materiais
 
-> **Atualização (04/11/2026):** todas as disciplinas têm área de materiais (`decisoes.md` 54.2). Este estado não aparece no MVP.
+Todas as disciplinas cadastradas da Matriz 2023 devem possuir área de materiais.
 
-Se uma disciplina ainda não possuir área de materiais:
+Uma disciplina sem materiais aprovados deve continuar acessível e apresentar o estado vazio correspondente.
 
-- deve continuar acessível;
-- não deve oferecer envio de material;
-- pode apresentar informação oficial quando disponível.
+## RF-34.1 — Recursos acadêmicos
 
+Estudos deve disponibilizar acessos aos recursos acadêmicos confirmados:
+
+- Biblioteca Virtual;
+- Calendário Acadêmico.
+
+Esses recursos devem abrir suas respectivas fontes externas.
 ---
 
 # 9. Materiais
 
 ## RF-35 — Compartilhar material
 
-> **Atualização (04/11/2026):** vale para todas as disciplinas. O formulário tem também a opção "Compartilhar anonimamente", e os limites são título 200, descrição 2.000 e link 2.048 (`decisoes.md` 55.2 e 55.3). São 10 envios ou edições por hora, contando só os que deram certo.
-
-Em disciplinas habilitadas, o usuário deve poder compartilhar material.
+O usuário deve poder compartilhar material em qualquer disciplina cadastrada.
 
 Campos:
 
 - Título;
 - Descrição opcional;
-- Link.
+- Link;
+- opção "Compartilhar anonimamente".
+
+Limites:
+
+- Título: 200 caracteres;
+- Descrição: 2.000 caracteres;
+- Link: 2.048 caracteres.
 
 ## RF-36 — Material por link
 
 No MVP, materiais são enviados exclusivamente por link.
 
-Não existe upload de arquivo.
+Não existe upload direto de arquivos.
 
 ## RF-37 — Disciplina do material
 
 O material deve permanecer relacionado à disciplina a partir da qual foi enviado.
 
-O usuário não deve alterar essa disciplina no formulário.
+O usuário não altera a disciplina no formulário de envio.
 
 ## RF-38 — Moderação
 
@@ -480,76 +485,118 @@ Só pode aparecer publicamente depois de:
 
 **APROVADO**
 
+A análise pode ser realizada por MODERADOR ou ADMINISTRADOR, respeitando as regras de conflito de interesse.
+
 ## RF-39 — Autoria pública
 
-> **Atualização (02/11/2026):** substituído. O material mostra o nome de exibição do autor, e o autor pode escolher "Compartilhar anonimamente". Ver `decisoes.md` 55.2.
+Por padrão, um material aprovado deve apresentar o **Nome de exibição** do autor.
 
-No MVP atual, materiais devem aparecer publicamente como:
+O nome pode direcionar ao Perfil público.
 
-**Compartilhado pela comunidade**
+Quando o usuário selecionar:
 
-O ADMIN continua identificando o autor para:
+**Compartilhar anonimamente**
 
-- Moderação;
-- notificação;
-- controle interno do envio.
-
-A decisão sobre apresentar ou não a autoria publicamente não será tomada neste semestre.
-
-Ela será retomada no próximo semestre, após os primeiros testes com estudantes.
-
-Até essa avaliação, permanece o comportamento atual:
+o material deve aparecer publicamente como:
 
 **Compartilhado pela comunidade**
+
+Nesse caso:
+
+- o sistema continua registrando internamente o autor;
+- o MODERADOR não visualiza a identidade real;
+- o ADMINISTRADOR pode consultar a identidade apenas nas áreas administrativas autorizadas.
 
 ## RF-39.1 — Data pública do material
 
-A data apresentada publicamente para um material deve corresponder à:
+A data apresentada publicamente deve corresponder à:
 
 **data de aprovação/publicação.**
 
-A data original de envio pode permanecer registrada internamente.
+A data original do envio permanece registrada internamente.
 
-Exemplo:
+## RF-39.2 — Link duplicado
 
-Material enviado na segunda-feira  
-→ permanece PENDENTE  
-→ ADMIN aprova na quarta-feira  
-→ publicamente aparece como publicado na quarta-feira.
+O sistema não deve aceitar um novo material com o mesmo link já existente como PENDENTE ou APROVADO na mesma disciplina.
+
+## RF-39.3 — Cancelamento
+
+O autor pode cancelar um material enquanto ele estiver PENDENTE.
+
+Depois do cancelamento:
+
+- ele deixa a fila de Moderação;
+- não pode ser publicado;
+- continua disponível para consulta do autor em Meus conteúdos.
+
+## RF-39.4 — Edição de material aprovado
+
+O autor pode solicitar alteração de material APROVADO.
+
+A edição deve gerar uma nova solicitação de Moderação.
+
+Enquanto a alteração estiver PENDENTE:
+
+- a versão anteriormente aprovada continua pública.
+
+Depois da aprovação:
+
+- a nova versão substitui a versão pública anterior.
+
+Depois da rejeição:
+
+- a versão pública anterior permanece disponível;
+- o autor recebe notificação sobre a rejeição da alteração.
+
+## RF-39.5 — Exclusão de material aprovado
+
+O autor pode excluir material aprovado.
+
+Depois da exclusão:
+
+- ele deixa de aparecer publicamente em Estudos e na Comunidade;
+- o registro continua disponível em Meus conteúdos e para os controles internos necessários.
 
 ---
 
 # 10. Oportunidade
 
-> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
-
-> **Atualização (08/11/2026):** Oportunidade voltou como funcionalidade adicional (`decisoes.md` 70). Os tipos continuam os cinco; a descrição curta passou a ser obrigatória, e entraram a modalidade e o prazo "Inscrições até" (15 dias depois da aprovação quando fica vazio). A autoria nunca aparece na área pública.
-
-> No RF-42, a "Descrição opcional" foi substituída pela descrição curta obrigatória (`decisoes.md` 70.2).
-
 ## RF-40 — Fontes
 
-A área deve separar:
+A área Oportunidade deve separar:
 
-- Oportunidades do IFSul;
-- Oportunidades indicadas pela comunidade.
+- recursos institucionais do IFSul;
+- oportunidades indicadas pela comunidade.
 
 ## RF-41 — Recursos institucionais
 
-Recursos institucionais só devem possuir links clicáveis depois da confirmação da URL.
+Somente links institucionais confirmados devem ser disponibilizados.
+
+A versão atual possui acesso a:
+
+- Bolsas e programas;
+- Projetos e estágios.
 
 ## RF-42 — Indicar oportunidade
 
-O usuário pode enviar oportunidade com:
+O usuário pode indicar uma oportunidade informando:
 
-- Título;
 - Tipo;
-- Descrição opcional;
-- Link.
+- Título;
+- Descrição curta;
+- Link;
+- Modalidade;
+- Inscrições até, opcional.
+
+Limites:
+
+- Título: 200 caracteres;
+- Descrição: 300 caracteres;
+- Link: 2.048 caracteres.
 
 ## RF-43 — Tipos
 
-Tipos iniciais:
+Tipos disponíveis:
 
 - Estágio;
 - Emprego;
@@ -557,85 +604,165 @@ Tipos iniciais:
 - Projeto;
 - Outro.
 
+## RF-43.1 — Modalidade
+
+A modalidade é obrigatória.
+
+Valores:
+
+- Remoto;
+- Híbrido;
+- Presencial.
+
 ## RF-44 — Moderação
 
-Oportunidade enviada deve ficar PENDENTE até análise do ADMIN.
+Oportunidade enviada deve iniciar como:
+
+**PENDENTE**
+
+A análise pode ser realizada por MODERADOR ou ADMINISTRADOR.
+
+A oportunidade só pode aparecer publicamente depois de aprovada.
 
 ## RF-45 — Data pública
 
-Depois da aprovação, a referência pública da oportunidade deve considerar:
+Depois da aprovação, a referência pública deve utilizar:
 
 **data de aprovação/publicação.**
 
-A data original de envio permanece como informação interna.
+A data original do envio permanece registrada internamente.
 
-Essa regra segue o mesmo padrão utilizado para os demais conteúdos colaborativos.
+## RF-45.1 — Prazo
+
+O campo **Inscrições até** é opcional.
+
+Quando houver uma data informada, ela deve ser igual ou posterior ao dia do envio.
+
+Quando o prazo não for informado, a oportunidade permanece visível por 15 dias após a aprovação.
+
+## RF-45.2 — Autoria pública
+
+A identidade da pessoa que indicou uma oportunidade não deve ser exibida publicamente.
+
+A oportunidade deve aparecer como contribuição da comunidade.
+
+## RF-45.3 — Link duplicado
+
+O sistema não deve aceitar nova oportunidade utilizando o mesmo link de outra oportunidade PENDENTE ou APROVADA.
+
+## RF-45.4 — Edição
+
+A edição de oportunidade aprovada não faz parte do MVP atual.
 
 ---
 
 # 11. Comunidade
 
-> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
-
-> **Atualização (08/11/2026):** a Comunidade voltou como mural de descoberta dos materiais aprovados, sem publicações próprias (`decisoes.md` 68). Continuam fora: publicações, comentários, canais e busca de estudantes.
-
 ## RF-46 — Estrutura
 
-A Comunidade deve possuir:
+A Comunidade funciona como mural de descoberta de conteúdos aprovados.
 
-- O que está rolando;
-- Encontre estudantes;
-- Conecte-se com a comunidade.
+O mural reúne:
 
-## RF-47 — Feed
+- Materiais;
+- Oportunidades.
 
-O feed deve utilizar ordem cronológica.
+Publicações como tipo próprio de conteúdo não fazem parte do MVP atual.
 
-Não deve possuir no MVP:
+## RF-47 — Ordenação
 
-- curtidas;
-- comentários;
-- seguidores;
-- ranking;
-- algoritmo de recomendação.
+O usuário deve conseguir ordenar o mural por:
 
-## RF-48 — Publicação
+- Mais recentes;
+- Mais antigos.
 
-O usuário deve poder compartilhar:
+## RF-48 — Busca
 
-- Título;
-- Descrição;
-- Link.
+O usuário deve conseguir pesquisar conteúdos no mural.
 
-A publicação deve passar por Moderação.
+A busca deve considerar informações relevantes dos conteúdos, como:
 
-## RF-48.1 — Data pública da publicação
+- título;
+- disciplina do material;
+- nome do autor identificado, quando aplicável.
 
-A data apresentada publicamente para uma publicação deve corresponder à:
+## RF-48.1 — Filtro por tipo
 
-**data de aprovação/publicação.**
+O mural deve possuir filtro por tipo:
 
-A data original de envio pode permanecer registrada internamente.
+- Todos os tipos;
+- Materiais;
+- Oportunidades.
 
-## RF-49 — Material no feed
+O filtro deve ser utilizado no lugar de abas separadas.
 
-> **Atualização (04/11/2026):** fora do MVP (`decisoes.md` 56).
+## RF-48.2 — Visualização
 
-Novo material aprovado pode aparecer no feed.
+O usuário deve poder alternar entre:
 
-Ao acessar:
+- lista;
+- grade.
 
-→ abrir a disciplina correspondente em Estudos.
+No mobile, a aplicação pode utilizar somente a visualização adequada ao espaço disponível.
+
+## RF-49 — Material no mural
+
+Material aprovado pode aparecer no mural.
+
+Quando identificado:
+
+- pode apresentar o Nome de exibição do autor;
+- pode permitir acesso ao Perfil público.
+
+Quando anônimo:
+
+- deve aparecer como compartilhado pela comunidade;
+- não deve revelar o autor.
+
+## RF-49.1 — Oportunidade no mural
+
+Oportunidade aprovada pode aparecer no mural.
+
+A identidade de quem realizou a indicação não deve ser exibida publicamente.
+
+## RF-49.2 — Mostrar mais
+
+Quando existirem mais conteúdos do que os apresentados inicialmente, deve existir opção:
+
+**Mostrar mais**
+
+## RF-49.3 — Compartilhar conteúdo
+
+A Comunidade deve oferecer uma opção para contribuir com:
+
+- Material;
+- Oportunidade.
+
+Ao escolher Material:
+
+→ o usuário deve ser direcionado para Estudos, onde seleciona a disciplina.
+
+Ao escolher Oportunidade:
+
+→ deve ser aberto o formulário de envio da oportunidade.
+
+## RF-49.4 — Comunidade em números
+
+A Comunidade pode apresentar indicadores gerais relacionados a:
+
+- Materiais;
+- Oportunidades;
+- Estudantes.
+
+Esses números são informativos e não representam ranking ou gamificação.
 
 ---
 
 # 12. Busca de estudantes
 
-> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
+A busca direta de estudantes não faz parte do MVP atual.
 
-## RF-50 — Campos pesquisáveis
-
-A busca pode considerar:
+Poderá ser avaliada futuramente considerando informações como:
 
 - Nome de exibição;
 - Interesses;
@@ -643,31 +770,11 @@ A busca pode considerar:
 - Procura ajuda com;
 - Disciplinas atuais.
 
-## RF-51 — Próprio usuário
-
-O usuário autenticado não deve aparecer nos próprios resultados da Comunidade.
-
-## RF-52 — Ordem
-
-Sem critério de busca que altere a listagem, estudantes devem ser apresentados em ordem alfabética.
-
-## RF-53 — Disciplina atual
-
-Quando um estudante for localizado por disciplina atual:
-
-deve aparecer como:
-
-**Cursa atualmente**
-
-Isso não significa que ele marcou:
-
-**Pode ajudar com**
+Antes da implementação deverão ser definidas também as regras de privacidade, visibilidade e participação na descoberta social.
 
 ---
 
 # 13. Perfil público
-
-> **Atualização (04/11/2026):** implementado sem o Semestre e sem lista de materiais. O acesso é pelo nome do autor no material, numa URL com código aleatório (`decisoes.md` 57).
 
 ## RF-54 — Acesso
 
@@ -730,53 +837,86 @@ A nova senha deve possuir:
 
 ## RF-61 — Exclusão da conta
 
-Exclusão automática de conta não faz parte da interface do MVP atual.
+A autoexclusão de conta pela interface não faz parte do MVP atual.
 
-A política deverá ser definida antes do piloto.
+A política de Produto prevê que a solicitação seja realizada por canal de contato definido para o projeto.
 
-> **Atualização (05/11/2026):** a política foi definida em `decisoes.md` 64: a pessoa solicita por e-mail ou canal de contato, e o ADMINISTRADOR executa. Os dados pessoais são removidos ou desvinculados, as solicitações pendentes são canceladas, e os materiais aprovados continuam publicados como "Compartilhado pela comunidade". A implementação, inclusive a ação no `/admin`, fica fora do MVP.
+Quando uma conta for excluída:
+
+- dados pessoais devem ser removidos ou desvinculados conforme a política definida;
+- solicitações pendentes devem ser canceladas;
+- materiais aprovados que precisarem permanecer disponíveis devem passar a aparecer como **Compartilhado pela comunidade**.
+
+O procedimento operacional e sua adequação às orientações institucionais e à LGPD devem estar definidos antes do piloto.
 
 ---
 
 # 15. Notificações
 
-## RF-62 — Origem
+## RF-62 — Eventos
 
-O MVP deve gerar notificações para resultados da Moderação.
-
-Tipos:
+O MVP deve gerar notificações para:
 
 - Material aprovado;
 - Material rejeitado;
-- Publicação aprovada;
-- Publicação rejeitada;
+- Alteração de material aprovada;
+- Alteração de material rejeitada;
 - Oportunidade aprovada;
 - Oportunidade rejeitada.
 
-## RF-63 — Motivo
+## RF-63 — Motivo da rejeição
 
-Quando houver motivo de rejeição, ele pode aparecer na notificação.
+O motivo da rejeição não precisa ser exibido diretamente na notificação.
+
+Ele deve permanecer disponível ao autor nos detalhes do envio em Meus conteúdos.
 
 ## RF-64 — Badge
 
-O sino deve indicar quantidade de notificações não lidas.
+O sino deve indicar a quantidade de notificações não lidas.
 
 Visualmente:
 
 - 1 a 9;
-- 9+ acima desse limite.
+- `9+` acima desse limite;
+- nenhum número quando não existirem notificações não lidas.
 
 ## RF-65 — Leitura
 
-> **Atualização (04/11/2026):** clicar numa notificação marca como lida e leva ao conteúdo: uma aprovação abre a disciplina, e uma rejeição abre o item em Meus conteúdos (`decisoes.md` 55.5).
-
 Deve existir suporte para:
 
-- marcar como lida;
+- marcar uma notificação como lida;
 - marcar todas como lidas.
 
-O comportamento de navegação ao clicar em cada notificação ainda será definido.
-Essa decisão deverá ser tomada antes da implementação definitiva de Notificações e não bloqueia a definição da arquitetura geral.
+Abrir apenas o menu de notificações não deve marcar automaticamente os itens como lidos.
+
+## RF-65.1 — Clique
+
+Ao clicar em uma notificação:
+
+- ela deve ser marcada como lida;
+- o contador deve ser atualizado;
+- o usuário deve ser direcionado ao destino correspondente.
+
+Destinos atuais:
+
+Material aprovado  
+→ disciplina correspondente em Estudos.
+
+Material rejeitado  
+→ item correspondente em Meus conteúdos.
+
+Alteração de material aprovada ou rejeitada  
+→ item correspondente em Meus conteúdos.
+
+Oportunidade aprovada  
+→ oportunidade correspondente.
+
+Oportunidade rejeitada  
+→ item correspondente em Meus conteúdos.
+
+## RF-65.2 — Ordem
+
+As notificações devem ser apresentadas da mais recente para a mais antiga.
 
 ---
 
@@ -784,96 +924,113 @@ Essa decisão deverá ser tomada antes da implementação definitiva de Notifica
 
 ## RF-66 — Acesso
 
-> **Atualização (02/11/2026):** MODERADOR e ADMINISTRADOR acessam a Moderação (§1.2). O MODERADOR não vê o próprio envio na fila.
+A Moderação pode ser acessada por:
 
-Somente ADMIN pode acessar Moderação.
+- MODERADOR;
+- ADMINISTRADOR.
+
+ALUNO não deve possuir acesso à área nem às operações protegidas de Moderação.
 
 ## RF-67 — Fila única
 
-A Moderação deve possuir uma fila única para:
+A Moderação deve utilizar uma fila única para:
 
 - MATERIAL;
-- PUBLICAÇÃO;
 - OPORTUNIDADE.
+
+Publicação não faz parte da fila atual.
 
 ## RF-68 — Status
 
-A fila principal mostra conteúdos:
+A fila principal deve apresentar conteúdos:
 
 **PENDENTES**
 
 ## RF-69 — Ordem
 
-Pendências devem ser ordenadas:
+As pendências devem ser apresentadas:
 
 **mais antigas primeiro**
 
 ## RF-70 — Filtro
 
-Filtros:
+A versão atual não exige filtro por tipo.
 
-- Todos;
-- Material;
-- Publicação;
-- Oportunidade.
+Materiais e Oportunidades permanecem na mesma fila.
 
 ## RF-71 — Análise
 
-O ADMIN pode consultar:
+A pessoa responsável pela Moderação deve conseguir consultar as informações necessárias para a decisão, incluindo:
 
-- tipo;
+- tipo do conteúdo;
 - título;
 - descrição;
-- autor;
+- autor, quando permitido;
 - data do envio;
 - link;
-- informações específicas do conteúdo.
+- disciplina, quando for Material;
+- tipo e modalidade, quando for Oportunidade;
+- demais informações específicas do conteúdo.
+
+A autoria de material anônimo deve respeitar as permissões de cada papel.
 
 ## RF-72 — Aprovar
 
-ADMIN pode aprovar conteúdo PENDENTE.
+MODERADOR ou ADMINISTRADOR podem aprovar conteúdo PENDENTE quando possuírem permissão para analisá-lo.
 
-Depois:
+Depois da aprovação:
 
 - status → APROVADO;
 - conteúdo sai da fila;
-- conteúdo aparece na área correspondente;
+- conteúdo aparece nas áreas correspondentes;
 - autor recebe notificação.
+
+Material aprovado:
+
+→ Estudos  
+→ Comunidade.
+
+Oportunidade aprovada:
+
+→ Oportunidade  
+→ Comunidade.
 
 ## RF-73 — Rejeitar
 
-> **Atualização (02/11/2026):** o motivo é obrigatório para MODERADOR e ADMINISTRADOR, com até 500 caracteres. Ver `decisoes.md` 55.4.
+MODERADOR ou ADMINISTRADOR podem rejeitar conteúdo PENDENTE quando possuírem permissão para analisá-lo.
 
-ADMIN pode rejeitar conteúdo PENDENTE.
+O motivo da rejeição é:
 
-Motivo:
+- obrigatório;
+- limitado a 500 caracteres.
 
-- opcional.
-
-Depois:
+Depois da rejeição:
 
 - status → REJEITADO;
 - conteúdo sai da fila;
-- não é publicado;
-- autor recebe notificação.
+- conteúdo não é publicado;
+- autor recebe notificação;
+- motivo fica disponível em Meus conteúdos.
 
 ## RF-74 — Próprio conteúdo
 
-> **Atualização (04/11/2026):** substituído. O ADMINISTRADOR pode moderar o próprio conteúdo. O MODERADOR não pode, e o próprio envio não aparece na fila dele (`decisoes.md` 51.2).
+O MODERADOR não pode moderar o próprio conteúdo.
 
-ADMIN não pode Aprovar ou Rejeitar conteúdo de sua própria autoria.
+O próprio envio não deve aparecer entre as pendências que ele pode analisar.
 
-Outro ADMIN deverá realizar a análise.
+O ADMINISTRADOR pode moderar o próprio conteúdo.
 
 ## RF-75 — Concorrência
 
-> **Atualização (04/11/2026):** se o autor cancelou o envio durante a análise, a mensagem é "Este conteúdo foi cancelado pelo autor." (`decisoes.md` 55.6).
-
 Uma segunda decisão não pode sobrescrever a primeira.
 
-Se conteúdo já tiver sido processado:
+Se o conteúdo já tiver sido analisado, o sistema deve informar:
 
 **Este conteúdo já foi analisado.**
+
+Se o autor tiver cancelado o conteúdo durante a análise, o sistema deve informar:
+
+**Este conteúdo foi cancelado pelo autor.**
 
 ---
 
@@ -967,6 +1124,11 @@ Loading, erro e sucesso devem possuir feedback compreensível também para tecno
 
 Não fazem parte da primeira versão:
 
+- recuperação de senha;
+- confirmação de propriedade do e-mail institucional por link ou código;
+- busca de estudantes;
+- canais da comunidade;
+- publicação externa como tipo próprio de conteúdo;
 - chat;
 - mensagens diretas;
 - comentários;
@@ -975,16 +1137,177 @@ Não fazem parte da primeira versão:
 - seguidores;
 - matching;
 - pedido de ajuda;
-- IA;
-- recomendações;
+- Inteligência Artificial;
+- recomendações personalizadas;
 - ranking;
 - gamificação;
-- upload de materiais;
-- upload de fotos;
-- confirmação de propriedade do e-mail institucional por link ou código;
-- candidatura interna;
+- upload direto de materiais;
+- upload de foto de Perfil;
+- candidatura a oportunidades dentro do sistema;
+- edição de oportunidade aprovada;
+- envio anônimo de oportunidade;
+- feed algorítmico;
+- rede social completa;
+- autoexclusão de conta pela interface;
 - CRUD administrativo completo;
-- histórico administrativo completo;
-- remoção de conteúdo aprovado.
+- retirada administrativa de conteúdo aprovado;
+- reversão administrativa de rejeição;
+- denúncia ou solicitação de revisão de conteúdo;
+- auditoria de consultas e Login;
+- exportação de eventos de auditoria.
 
-Esses itens poderão ser avaliados posteriormente.
+Esses itens poderão ser avaliados posteriormente, principalmente a partir dos resultados do piloto.
+---
+
+# 22. Meus conteúdos
+
+## RF-83 — Acesso
+
+O usuário autenticado deve conseguir consultar os conteúdos enviados por ele em:
+
+**Perfil → Meus conteúdos**
+
+## RF-84 — Tipos
+
+A área deve separar:
+
+- Materiais;
+- Oportunidades.
+
+## RF-85 — Situação
+
+O usuário deve conseguir acompanhar a situação dos próprios envios.
+
+A visualização deve diferenciar os estados aplicáveis a cada tipo de conteúdo.
+
+## RF-86 — Material rejeitado
+
+Quando um Material for rejeitado:
+
+- o motivo deve ficar disponível ao autor;
+- o conteúdo não deve aparecer publicamente.
+
+## RF-87 — Material pendente
+
+O autor pode cancelar um Material PENDENTE.
+
+## RF-88 — Material aprovado
+
+O autor pode:
+
+- solicitar edição de Material APROVADO;
+- excluir Material APROVADO.
+
+A edição deve seguir novamente o fluxo de Moderação.
+
+## RF-89 — Oportunidade pendente
+
+O autor pode cancelar uma Oportunidade PENDENTE.
+
+## RF-90 — Oportunidade aprovada
+
+O autor pode excluir uma Oportunidade APROVADA.
+
+A edição de Oportunidade não faz parte do MVP atual.
+
+## RF-91 — Paginação
+
+Quando houver mais conteúdos do que os apresentados inicialmente, deve existir:
+
+**Mostrar mais**
+---
+# 23. Painel administrativo
+
+## RF-92 — Acesso
+
+O painel `/admin` é exclusivo do ADMINISTRADOR.
+
+MODERADOR e ALUNO não devem possuir acesso.
+
+## RF-93 — Usuários
+
+O ADMINISTRADOR deve poder:
+
+- consultar usuários;
+- buscar por nome, Nome de exibição ou e-mail;
+- filtrar por papel;
+- alterar o papel de outras contas.
+
+O ADMINISTRADOR não pode alterar o próprio papel.
+
+O painel não deve criar, editar ou excluir contas comuns diretamente.
+
+## RF-94 — Registros de Moderação
+
+O painel deve permitir consultar registros administrativos relacionados aos conteúdos moderados.
+
+A consulta pode apresentar informações como:
+
+- conteúdo;
+- situação;
+- autor;
+- indicação de envio anônimo;
+- responsável pela decisão;
+- data da decisão;
+- motivo da rejeição;
+- informações de alterações de Material.
+
+A aprovação e rejeição continuam sendo realizadas na área de Moderação da aplicação comum.
+
+## RF-95 — Oportunidades
+
+O painel deve permitir consultar as Oportunidades cadastradas e suas informações administrativas.
+
+A consulta administrativa não substitui o fluxo de Moderação.
+
+## RF-96 — Voltar ao ConectaCC
+
+O painel deve oferecer uma forma de retornar à aplicação comum do ConectaCC.
+---
+# 24. Auditoria
+
+## RF-97 — Acesso
+
+A Auditoria é exclusiva do ADMINISTRADOR.
+
+## RF-98 — Registro
+
+Ações que alteram dados relevantes devem gerar evento de Auditoria.
+
+O evento deve registrar informações suficientes para identificar:
+
+- ação realizada;
+- entidade afetada;
+- responsável pela ação;
+- data e hora.
+
+## RF-99 — Imutabilidade
+
+Eventos de Auditoria não devem ser alterados ou excluídos pelas operações normais da aplicação.
+
+## RF-100 — Consulta
+
+O ADMINISTRADOR deve conseguir consultar os eventos através do painel administrativo.
+
+A consulta deve permitir filtros apropriados, incluindo:
+
+- ação;
+- pessoa;
+- período.
+
+## RF-101 — Conteúdo anônimo
+
+Quando necessário para fins administrativos, a Auditoria pode registrar o autor real de material anônimo.
+
+Essa informação deve permanecer restrita ao ADMINISTRADOR.
+
+## RF-102 — Dados sensíveis
+
+Eventos de Auditoria não devem registrar:
+
+- senha;
+- hash de senha;
+- token;
+- IP quando não houver necessidade definida;
+- motivo da rejeição;
+- outros segredos ou dados sensíveis desnecessários.
