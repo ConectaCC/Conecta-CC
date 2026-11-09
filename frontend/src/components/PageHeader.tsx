@@ -23,7 +23,7 @@ export function PageHeader({ icon: Icon, title, description, children, headingRe
             <Icon className="size-10" />
           </span>
           <div className="min-w-0">
-            <h1 ref={headingRef} tabIndex={headingRef ? -1 : undefined} className="font-display text-4xl font-bold text-foreground outline-none">
+            <h1 ref={headingRef} tabIndex={headingRef ? -1 : undefined} className="font-display text-3xl font-bold text-foreground outline-none sm:text-4xl">
               {title}
             </h1>
             <p className="mt-2 text-lg text-muted-foreground">{description}</p>

@@ -50,7 +50,7 @@ export function OpportunitiesPage() {
       >
         <section aria-labelledby="ifsul" className="rounded-2xl bg-white p-6 shadow-sm xl:w-[26rem]">
           <div className="flex items-start gap-4">
-            <span aria-hidden className="grid size-12 shrink-0 place-items-center rounded-xl bg-navy-900 text-white">
+            <span aria-hidden className="hidden size-12 shrink-0 place-items-center rounded-xl bg-navy-900 text-white sm:grid">
               <GraduationCap className="size-6" />
             </span>
             <div className="min-w-0">
@@ -71,7 +71,7 @@ export function OpportunitiesPage() {
                     rel="noopener noreferrer"
                     className={cn(
                       buttonVariants({ variant: index === 0 ? 'default' : 'outline' }),
-                      'h-11 gap-2 px-4 text-[15px] font-semibold',
+                      'h-11 w-full gap-2 px-4 text-[15px] font-semibold sm:w-auto',
                       index > 0 && 'border-action text-action',
                     )}
                   >
