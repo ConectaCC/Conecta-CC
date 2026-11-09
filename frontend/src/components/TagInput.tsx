@@ -74,7 +74,7 @@ export function TagInput({ label, hint, placeholder, value, onChange, error, inp
           placeholder={placeholder}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
-          className="h-9 min-w-40 flex-1 bg-transparent px-2 text-base outline-none placeholder:text-muted-foreground"
+          className="h-9 w-0 min-w-40 flex-1 bg-transparent px-2 text-base outline-none placeholder:text-muted-foreground"
         />
       </div>
       {error && (

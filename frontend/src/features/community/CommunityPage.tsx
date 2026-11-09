@@ -25,7 +25,7 @@ export function CommunityPage() {
     <div>
       <PageHeader icon={Users} title="Comunidade" description="Veja o que a comunidade de Ciência da Computação tem compartilhado." />
 
-      <div className="mt-8 grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="mt-8 grid grid-cols-[minmax(0,1fr)] gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
         <section aria-labelledby="mural" className="min-w-0">
           <div className="flex flex-wrap items-center gap-3">
             <div className="relative min-w-0 flex-[1_1_16rem]">
