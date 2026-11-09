@@ -1,41 +1,52 @@
-# Plano de Implementação — ConectaCC
+# Plano de Implementação - ConectaCC
 
-Este documento organiza as principais etapas necessárias para transformar o MVP prototipado do ConectaCC em uma aplicação funcional.
+Este documento organiza as principais etapas de implementação do ConectaCC e registra o andamento das funcionalidades do MVP.
 
-O protótipo já define o comportamento esperado das principais telas e fluxos.
+O protótipo definiu a base inicial das principais telas e fluxos.
 
-A implementação técnica será realizada posteriormente, após a definição da arquitetura.
-
+A arquitetura técnica já foi definida e o ConectaCC possui uma versão funcional em preparação para o período de testes.
 ---
 
 # 1. Situação atual
 
-> **Atualização (04/11/2026):** a arquitetura foi definida e a implementação está em andamento. O estado atual está em `status-mvp.md`.
+O ConectaCC já possui uma versão funcional do MVP.
 
-Atualmente o ConectaCC possui:
+Atualmente estão implementados, entre outros:
 
-- escopo do MVP definido;
-- identidade visual definida;
-- fluxos principais definidos;
-- dez áreas principais prototipadas;
-- comportamento ALUNO e ADMIN definido;
-- estados de erro, loading e vazio previstos;
-- princípios de responsividade e acessibilidade considerados;
-- auditoria geral do protótipo realizada.
-- documentação principal do MVP concluída;
-- produto, UX e escopo do MVP fechados para o checkpoint com a professora.
+- autenticação e controle de acesso;
+- Home;
+- Estudos;
+- materiais;
+- Oportunidade;
+- Comunidade;
+- Perfil;
+- Perfil público;
+- Meus conteúdos;
+- Moderação;
+- Notificações;
+- Configurações;
+- painel administrativo;
+- auditoria.
 
-As funcionalidades prototipadas ainda não devem ser consideradas implementadas.
+O sistema utiliza os papéis:
 
-Antes do início da arquitetura e da implementação, o projeto será analisado para confirmação da arquitetura idealizada. Caso sejam solicitadas alterações relevantes de produto, elas deverão ser avaliadas e incorporadas antes da criação da estrutura técnica definitiva.
+- ALUNO;
+- MODERADOR;
+- ADMINISTRADOR.
+
+O estado detalhado e atualizado da implementação deve ser acompanhado em:
+
+`status-mvp.md`
+
+As próximas etapas concentram-se na revisão do MVP, testes, correções, preparação do ambiente e realização do piloto com estudantes.
 
 ---
 
-# 2. Antes de escrever código
+# 2. Arquitetura técnica
 
-A equipe precisa definir a arquitetura técnica antes de iniciar o desenvolvimento funcional.
+A arquitetura técnica do ConectaCC já foi definida.
 
-Principais decisões:
+As decisões relacionadas a:
 
 - stack;
 - arquitetura geral;
@@ -43,25 +54,21 @@ Principais decisões:
 - backend;
 - banco de dados;
 - autenticação;
-- recuperação de senha;
-- provedor de e-mail;
-- autorização ALUNO/ADMIN;
+- autorização;
 - hospedagem;
 - deploy;
 - estratégia de testes;
-- organização definitiva do código.
+- organização do código;
 
-A etapa técnica deverá responder principalmente:
+estão registradas na documentação técnica do projeto.
 
-> **Como vamos construir o produto que já foi definido?**
+Ver:
 
-Requisitos de produto não devem ser alterados silenciosamente por decisões técnicas.
+`stack-e-decisoes-tecnicas.md`
 
-Caso exista conflito entre uma decisão de arquitetura e os requisitos documentados, o conflito deverá ser apresentado à equipe antes da alteração do produto.
+Requisitos de Produto não devem ser alterados silenciosamente por decisões técnicas.
 
-Essa etapa será conduzida principalmente por Marcelo Henrique Germiniani Panho, com apoio da equipe.
-
----
+Quando uma necessidade técnica afetar comportamento, escopo, experiência do usuário, permissões ou regras de negócio, ela deve ser discutida com a equipe antes da alteração do Produto.
 
 # 3. Fundação do projeto
 
@@ -72,7 +79,7 @@ Essa etapa será conduzida principalmente por Marcelo Henrique Germiniani Panho,
 - [x] Configurar banco de dados.
 - [x] Configurar autenticação.
 - [x] Configurar papéis ALUNO, MODERADOR e ADMINISTRADOR.
-- [ ] Implementar autorização no backend (por enquanto, só a Gate de Moderação).
+- [x] Implementar autorização no backend para áreas e ações protegidas.
 - [x] Configurar variáveis de ambiente.
 - [x] Definir estratégia de branches e commits.
 - [x] Definir ambiente de hospedagem.
@@ -84,29 +91,41 @@ Detalhes da fundação: `docs/specs/2026-10-12-fundacao-design.md` e `docs/opera
 
 # 4. Autenticação
 
-Implementar:
+Implementado:
 
 - [x] Login.
 - [x] Cadastro.
 - [x] validação do formato do e-mail.
 - [x] validação do domínio institucional do IFSul.
+- [x] restrição do cadastro aos convidados durante o período de teste.
 - [x] Termos de participação versionados.
-- [x] registro do aceite dos Termos somente após criação da conta.
+- [x] registro do aceite dos Termos após a criação da conta.
 - [x] Logout.
-- [ ] Recuperação de senha (opcional — decisoes.md 52.9).
-- [ ] envio de link de recuperação por e-mail (opcional — decisoes.md 52.9).
-- [ ] validação do link de recuperação (opcional — decisoes.md 52.9).
 - [x] proteção de rotas autenticadas.
+- [x] alteração de senha em Configurações.
+- [x] encerramento das demais sessões após alteração de senha.
 
 ## E-mail institucional
 
-No MVP e no piloto:
+No MVP e no piloto, o cadastro utiliza:
 
-**somente e-mail institucional do IFSul poderá ser utilizado no cadastro.**
+**`academico.ifsul.edu.br`**
 
-Durante a implementação deverá ser confirmado tecnicamente qual domínio ou quais domínios do IFSul serão aceitos.
+O domínio é configurável por `ALLOWED_EMAIL_DOMAINS`.
 
-A possibilidade de aceitar e-mails de outras instituições pertence somente a uma eventual expansão futura do ConectaCC.
+A possibilidade de aceitar e-mails institucionais de outras instituições fica para uma eventual expansão futura.
+
+## Cadastro durante o período de teste
+
+Durante o piloto fechado, o cadastro também pode ser limitado por uma lista de e-mails convidados.
+
+Quando `ALLOWED_EMAILS` possui registros:
+
+- somente os e-mails presentes nessa lista podem criar uma nova conta;
+- o e-mail também precisa pertencer ao domínio institucional permitido;
+- usuários já cadastrados continuam podendo realizar Login normalmente.
+
+Quando a lista estiver vazia, permanece apenas a restrição de domínio institucional.
 
 ## Confirmação de propriedade do e-mail
 
@@ -114,95 +133,89 @@ No MVP e no piloto:
 
 **não haverá confirmação de cadastro por link ou código enviado ao e-mail.**
 
-Essa funcionalidade não deve ser implementada nesta versão.
+Essa funcionalidade poderá ser avaliada futuramente.
 
-Ela poderá ser avaliada em uma evolução futura.
+## Recuperação de senha
 
-Essa decisão não altera a recuperação de senha, que continuará utilizando envio de e-mail.
+A recuperação de senha não faz parte da versão atual.
 
-## Decisões técnicas de autenticação ainda necessárias
+Caso seja implementada futuramente, deverá utilizar um fluxo seguro com envio de link por e-mail e redefinição de senha.
 
-- [x] definir limite ou bloqueio após várias tentativas de Login;
-- [x] definir política de sessões;
-- [ ] definir comportamento das outras sessões após alteração de senha;
-- [ ] definir comportamento das outras sessões após recuperação de senha;
-- [ ] definir formato, segurança e validade do link de recuperação;
-- [ ] definir provedor responsável pelo envio dos e-mails.
+## Regras adotadas
 
-## Regras adotadas (12/10/2026)
-
-- **Tentativas:** 5 por minuto por combinação e-mail + IP no Login e 5 por minuto por IP no Cadastro. Ao estourar, a resposta é "Muitas tentativas. Tente novamente em X segundos.". Não há bloqueio de conta, para evitar que alguém tranque a conta de um colega de propósito.
-- **Sessão:** guardada no PostgreSQL, válida por 7 dias sem uso e renovada a cada acesso; não expira ao fechar o navegador. Não há "Lembrar de mim".
-- **Papéis:** enum `Role` (`ALUNO`, `MODERADOR`, `ADMINISTRADOR`) com `CHECK` no banco; a Gate `access-moderation` libera MODERADOR e ADMINISTRADOR. Toda conta criada pelo Cadastro nasce ALUNO.
-- **Aceite dos Termos:** gravado na mesma transação que cria a conta (versão + data/hora + usuário). O texto vigente vem do backend (`backend/resources/terms/<versão>.json`).
-- **Domínio aceito:** `academico.ifsul.edu.br`, configurável por `ALLOWED_EMAIL_DOMAINS`. A comparação é exata: subdomínios e sufixos são recusados.
-- **Mudança de papel:** pelo comando `conectacc:promote`, executado em produção pelo workflow "Promover usuário" do GitHub Actions (o Render gratuito não tem Shell).
-
-> **Atualização (05/11/2026):** a mudança de papel agora é feita no painel `/admin` (§24). O workflow fica como saída de emergência e para criar o primeiro ADMINISTRADOR.
-
+- **Tentativas:** 5 por minuto por combinação e-mail + IP no Login e 5 por minuto por IP no Cadastro. Não existe bloqueio permanente da conta por tentativas.
+- **Sessão:** armazenada no PostgreSQL, válida por 7 dias sem uso e renovada a cada acesso. Não existe "Lembrar de mim".
+- **Alteração de senha:** encerra as demais sessões da conta e mantém ativa a sessão atual.
+- **Papéis:** `ALUNO`, `MODERADOR` e `ADMINISTRADOR`. Toda conta criada pelo Cadastro nasce como ALUNO.
+- **Aceite dos Termos:** versão, data/hora e usuário são registrados na criação da conta.
+- **Mudança de papel:** realizada normalmente pelo painel `/admin`. O workflow de promoção permanece como alternativa de emergência e para criação do primeiro ADMINISTRADOR.
 ---
 
 # 5. Layout global
 
-Implementar os componentes compartilhados das telas autenticadas:
+Componentes compartilhados das telas autenticadas:
 
 - [x] Sidebar.
 - [x] Header.
 - [x] Avatar com iniciais.
 - [x] Nome de exibição.
-- [ ] Sino de notificações (por enquanto, só o ícone).
-- [ ] Badge de notificações.
+- [x] Sino de notificações.
+- [x] Badge de notificações.
 - [x] Menu mobile em formato de drawer.
 - [x] Estados de loading.
 - [x] Estados de erro.
-- [ ] Componentes compartilhados.
-
-A navegação deve diferenciar corretamente:
+- [x] componentes compartilhados.
 
 ## ALUNO
 
 - Home
 - Estudos
+- Oportunidade
+- Comunidade
 - Perfil
 - Configurações
 - Sair
 
-(Oportunidade e Comunidade saíram do MVP — `decisoes.md` 56. Moderação aparece também para MODERADOR.)
+## MODERADOR
 
-## ADMIN
-
-Possui os mesmos itens e adicionalmente:
+Possui as funcionalidades comuns do usuário e também:
 
 - Moderação
 
+## ADMINISTRADOR
+
+Possui as funcionalidades comuns do usuário e também:
+
+- Moderação
+- Painel administrativo
 ---
 
 # 6. Home
 
-Implementar:
+Implementado:
 
-- [x] saudação;
+- [x] saudação ao usuário;
 - [x] apresentação do ConectaCC;
-- [x] atalhos principais;
 - [x] consulta do estado do Perfil;
-- [x] card "Complete seu perfil";
-- [x] desaparecimento do card quando o Perfil estiver completo;
-- [ ] integração com notificações;
+- [x] card "Complete seu perfil" enquanto o Perfil estiver incompleto;
+- [x] desaparecimento do card após completar o Perfil;
+- [x] atalhos para Estudos, Oportunidade, Comunidade e Perfil;
+- [x] seção "Acessos institucionais";
+- [x] adaptação do destaque conforme o Perfil esteja completo ou incompleto;
 - [x] loading e erro parcial.
 
-> **Atualização (08/11/2026):** a Home ganhou os atalhos para as quatro áreas no destaque, no lugar de "Acesso rápido", e a seção "Acessos institucionais" (`decisoes.md` 71).
+A Home utiliza os atalhos principais do ConectaCC e concentra também os acessos institucionais definidos para o MVP.
 
 ---
 
 # 7. Perfil
 
-Implementar:
+Implementado:
 
 - [x] visualização do Perfil;
 - [x] edição;
 - [x] Nome de exibição;
 - [x] curso;
-- [ ] semestre (fora desta entrega — decisoes.md 53.3);
 - [x] disciplinas atuais;
 - [x] Sobre mim;
 - [x] Interesses;
@@ -212,65 +225,59 @@ Implementar:
 - [x] LinkedIn;
 - [x] avatar por iniciais;
 - [x] validações;
-- [x] confirmação de alterações não salvas.
+- [x] confirmação de alterações não salvas;
+- [x] Perfil público para usuários autenticados.
 
 O Perfil é considerado completo quando possui:
 
 - Nome de exibição;
 - pelo menos uma disciplina atual.
 
-Também deverá ser implementada a visibilidade adequada das informações para outros estudantes autenticados (entregue no Perfil público, `decisoes.md` 57).
+O campo Semestre não faz parte da versão atual.
 
-Implementado em 19/10/2026 (spec `specs/2026-10-19-perfil-design.md`). Catálogo com as 49 disciplinas obrigatórias da Matriz 2023 (decisoes.md 53.2).
+O catálogo utiliza as 49 disciplinas obrigatórias da Matriz 2023.
 
 ---
 
 # 8. Estudos
 
-> **Atualização (08/11/2026):** visual revisto (`decisoes.md` 72): cabeçalho padrão com "Recursos acadêmicos" (Biblioteca Virtual e Calendário Acadêmico), cards de disciplina com ícone e "Ver disciplina" e busca na largura da página com o total ao lado.
+Implementado:
 
-Estudos é implementado em duas etapas (decidido em 31/10/2026). O envio de material só entra na `main` junto com a Moderação, para nunca existir envio que ninguém consegue aprovar.
+- [x] Minhas disciplinas;
+- [x] Todas as disciplinas;
+- [x] busca de disciplinas;
+- [x] identificação de "Minha disciplina";
+- [x] página da disciplina;
+- [x] acesso à ementa oficial quando houver URL confirmada;
+- [x] área de materiais em todas as disciplinas;
+- [x] estado sem materiais;
+- [x] formulário Compartilhar material;
+- [x] envio de material por link;
+- [x] materiais aprovados na página da disciplina;
+- [x] integração dos materiais com Moderação;
+- [x] Perfil → Meus conteúdos;
+- [x] cancelamento de envio pendente;
+- [x] edição moderada de material aprovado;
+- [x] exclusão de material aprovado;
+- [x] notificações relacionadas aos materiais;
+- [x] recursos acadêmicos;
+- [x] layout atualizado dos cards de disciplinas.
 
-## Etapa 1 — Estudos (leitura)
+A Moderação utiliza uma fila única para Materiais e Oportunidades.
 
-- [x] Minhas disciplinas.
-- [x] Todas as disciplinas.
-- [x] busca de disciplinas.
-- [x] identificação de "Minha disciplina".
-- [x] página da disciplina.
-- [x] acesso à ementa oficial quando houver URL confirmada.
-- [x] estado sem materiais.
+## Referência acadêmica
 
-Todas as disciplinas têm área de materiais (decisão de 31/10/2026), então o estado "disciplina ainda sem área de materiais" (RF-34) não entra agora.
-
-## Etapa 2 — Materiais + Moderação de material
-
-Dividida em 2a (materiais e Moderação, entregue), 2b (Meus conteúdos, Editar, Excluir e Cancelar, entregue) e 2c (Notificações). Ver `decisoes.md` 55.1 e 55.6.
-
-
-- [x] formulário Compartilhar material.
-- [x] envio de material por link.
-- [x] fila de Moderação só com MATERIAL (ver §14; PUBLICAÇÃO e OPORTUNIDADE entram com seus módulos).
-- [x] materiais aprovados na página da disciplina.
-- [x] Perfil → Meus conteúdos (filtros, "Mostrar mais", motivo da rejeição).
-- [x] cancelar envio pendente.
-- [x] editar material aprovado (alteração moderada, versão publicada mantida até a aprovação).
-- [x] excluir material aprovado (soft delete).
-- [x] notificações de material e alteração (etapa 2c).
-
-## Referência acadêmica inicial
-
-A implementação utilizará inicialmente como referência:
+A referência utilizada é a:
 
 **Matriz 2023 do Bacharelado em Ciência da Computação do IFSul – Câmpus Passo Fundo.**
 
-Fontes institucionais identificadas:
+Fontes institucionais:
 
-Grade Curricular:
+### Grade Curricular
 
 https://inf.passofundo.ifsul.edu.br/src/bcc_grade/index.html
 
-Matriz / Organograma de pré-requisitos:
+### Matriz / Organograma de pré-requisitos
 
 https://inf.passofundo.ifsul.edu.br/src/bcc_organograma/index.html
 
@@ -280,81 +287,101 @@ A Matriz 2023 organiza o curso do:
 
 A necessidade de contemplar estudantes vinculados à Matriz 2017 será verificada posteriormente.
 
-Esse levantamento não bloqueia a definição da arquitetura.
-
 No MVP não existe upload direto de arquivos.
 
 ---
 
 # 9. Materiais
 
-> **Atualização (04/11/2026):** a autoria mudou: o material mostra o nome do autor, com a opção de compartilhar anonimamente (`decisoes.md` 55.2). MODERADOR e ADMINISTRADOR analisam, e o motivo da rejeição é obrigatório (55.4).
+Os materiais são compartilhados por **link** e passam por Moderação antes de ficarem disponíveis para outros estudantes.
 
-Campos principais:
+## Campos principais
 
 - Título;
 - Descrição opcional;
 - Link;
 - Disciplina;
 - Autor;
+- opção de compartilhar anonimamente;
 - Status.
 
-Estados:
+## Estados de Moderação
 
 - PENDENTE;
 - APROVADO;
 - REJEITADO.
 
-Fluxo:
+## Fluxo
 
-Material enviado
-→ PENDENTE
-→ ADMIN analisa
-→ APROVADO ou REJEITADO
-→ notificação ao autor.
+Material enviado  
+→ PENDENTE  
+→ MODERADOR ou ADMINISTRADOR analisa  
+→ APROVADO ou REJEITADO  
+→ autor recebe notificação.
 
-Para outros estudantes, o material pode aparecer como:
+Quando aprovado:
+
+→ o material aparece na disciplina correspondente em Estudos  
+→ também pode aparecer no mural da Comunidade.
+
+Quando rejeitado:
+
+→ o material não é publicado  
+→ o autor pode consultar o motivo da rejeição em Meus conteúdos.
+
+## Autoria
+
+Por padrão, o material aprovado mostra o **Nome de exibição** do autor.
+
+O nome do autor identificado pode direcionar ao Perfil público.
+
+No envio, o estudante pode escolher:
+
+**Compartilhar anonimamente**
+
+Nesse caso, o material aparece publicamente como:
 
 **Compartilhado pela comunidade**
 
-O ADMIN continua identificando o autor.
+O sistema continua registrando internamente quem realizou o envio.
 
-No MVP atual, a autoria pública permanecerá como:
+O MODERADOR não visualiza a identidade real do autor de um material anônimo.
 
-**Compartilhado pela comunidade**
-
-~~A decisão sobre apresentar a autoria aos demais estudantes será retomada apenas no próximo semestre.~~ Decidida em 02/11/2026 (`decisoes.md` 55.2).
+O ADMINISTRADOR pode identificar o autor somente nas áreas administrativas autorizadas.
 
 ## Data pública
 
-Quando aprovado, o material deverá utilizar publicamente:
+Quando aprovado, o material utiliza publicamente:
 
 **a data de aprovação/publicação.**
 
-A data original do envio poderá permanecer armazenada internamente.
+A data original do envio permanece registrada internamente.
 ---
 
 # 10. Oportunidade
 
-> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
+Implementado:
 
-> **Atualização (08/11/2026):** entregue (`decisoes.md` 70): página com o card das bolsas do IFSul, busca, filtro por tipo, envio moderado com prazo, Meus conteúdos (cancelar e excluir), notificações, auditoria, `/admin` → Oportunidades e integração com o mural. Não entram edição nem envio anônimo.
+- [x] acesso às oportunidades oficiais do IFSul;
+- [x] oportunidades indicadas pela comunidade;
+- [x] busca;
+- [x] filtro por tipo;
+- [x] cards;
+- [x] formulário Adicionar oportunidade;
+- [x] validações;
+- [x] integração com Moderação;
+- [x] loading;
+- [x] erro;
+- [x] estado vazio;
+- [x] Meus conteúdos;
+- [x] cancelamento de envio pendente;
+- [x] exclusão;
+- [x] notificações;
+- [x] auditoria;
+- [x] painel administrativo;
+- [x] integração com o mural da Comunidade.
 
-Implementar:
-
-- [ ] oportunidades institucionais;
-- [ ] oportunidades da comunidade;
-- [ ] busca;
-- [ ] filtro por tipo;
-- [ ] cards;
-- [ ] formulário Indicar oportunidade;
-- [ ] validações;
-- [ ] integração com Moderação;
-- [ ] loading;
-- [ ] erro parcial;
-- [ ] estado vazio.
-
-Tipos iniciais:
+## Tipos
 
 - Estágio;
 - Emprego;
@@ -362,51 +389,52 @@ Tipos iniciais:
 - Projeto;
 - Outro.
 
-As oportunidades comunitárias só aparecem depois da aprovação.
+## Modalidades
 
-Quando aprovadas, sua data pública deverá ser:
+- Remoto;
+- Híbrido;
+- Presencial.
 
-**a data de aprovação/publicação.**
+As oportunidades indicadas pela comunidade só aparecem publicamente depois da aprovação.
 
-A data original do envio permanece como informação interna.
+O campo **Inscrições até** é opcional.
+
+Quando não houver prazo informado, a oportunidade permanece visível por 15 dias após a aprovação.
+
+Não fazem parte da versão atual:
+
+- edição de oportunidade aprovada;
+- envio anônimo.
 ---
 
 # 11. Comunidade
 
-> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
+A Comunidade faz parte da versão atual do ConectaCC.
 
-> **Atualização (08/11/2026):** entregue o mural de materiais (`decisoes.md` 68): feed cronológico, autoria ou "Comunidade" no anônimo, links para o perfil, a disciplina e o material, e "Mostrar mais". Os demais itens abaixo continuam fora.
+Implementado:
 
-> **Atualização (08/11/2026):** o mural também ganhou busca sem acentos (título, disciplina e autor identificado), ordem, visualização em lista ou grade, o card "Contribua com a comunidade" e "A comunidade em números" (`decisoes.md` 68.8). Na entrega de Oportunidades, a separação por tipo será um filtro, e não abas, e "Compartilhar" servirá para material e oportunidade (`decisoes.md` 69).
+- [x] mural com materiais e oportunidades aprovados;
+- [x] ordenação dos conteúdos;
+- [x] busca;
+- [x] filtro por tipo;
+- [x] visualização em lista e grade;
+- [x] botão "Mostrar mais";
+- [x] autoria identificada ou anônima para materiais;
+- [x] acesso ao Perfil público do autor identificado;
+- [x] acesso ao conteúdo correspondente;
+- [x] opção "Compartilhar conteúdo";
+- [x] compartilhamento de Material;
+- [x] compartilhamento de Oportunidade;
+- [x] card "Contribua com a comunidade";
+- [x] seção "A comunidade em números".
 
-Implementar:
+Continuam para evoluções futuras:
 
-- [ ] feed cronológico;
-- [ ] novos materiais no feed;
-- [ ] publicações externas;
-- [ ] Compartilhar com a comunidade;
-- [ ] integração com Moderação;
-- [ ] busca de estudantes;
-- [ ] filtros;
-- [ ] ordem alfabética;
-- [ ] exclusão do próprio usuário dos resultados;
-- [ ] busca por disciplinas atuais;
-- [ ] botão "Mostrar mais";
-- [ ] canais da comunidade.
-
-Para publicações enviadas pela comunidade e aprovadas pela Moderação:
-
-**a data pública será a data de aprovação/publicação.**
-
-A data original do envio poderá permanecer registrada internamente.
-
-A busca deve considerar:
-
-- Nome de exibição;
-- Interesses;
-- Pode ajudar com;
-- Procura ajuda com;
-- Disciplinas atuais.
+- busca de estudantes;
+- filtros de estudantes;
+- busca de estudantes por disciplinas atuais;
+- canais da comunidade;
+- publicação externa como tipo próprio de conteúdo.
 
 ---
 
@@ -417,7 +445,6 @@ Implementar:
 - [x] avatar;
 - [x] Nome de exibição;
 - [x] Curso;
-- ~~Semestre~~ (fora do MVP — `decisoes.md` 57);
 - [x] Sobre;
 - [x] Interesses;
 - [x] Pode ajudar com;
@@ -455,45 +482,45 @@ Implementar:
 
 Exclusão de conta não pertence à interface atual do MVP.
 
-Sua política deverá ser definida antes do piloto.
+As regras relacionadas à exclusão de conta e aos dados associados estão definidas em `decisoes.md` 64.
 
-> **Atualização (05/11/2026):** a política foi definida em `decisoes.md` 64. A implementação continua fora do MVP.
+A autoexclusão pela interface continua fora da versão atual.
 
 ---
 
 # 14. Moderação
 
-Implementar fila única para:
+A aplicação utiliza uma fila única para:
 
 - MATERIAL;
-- PUBLICAÇÃO;
 - OPORTUNIDADE.
-
-> **Atualização (02/11/2026):** no MVP, a fila tem só MATERIAL (`decisoes.md` 56).
 
 Funcionalidades:
 
 - [x] listar conteúdos PENDENTES;
 - [x] ordenar mais antigos primeiro;
-- [ ] filtrar por tipo (volta quando houver um segundo tipo);
 - [x] visualizar detalhes;
-- [x] identificar autor;
-- [x] abrir link enviado;
+- [x] apresentar a autoria conforme as regras de anonimato;
+- [x] abrir o link enviado;
 - [x] Aprovar;
 - [x] Rejeitar;
-- [x] informar motivo (obrigatório — decisoes.md 55.4);
-- [ ] gerar notificação;
+- [x] exigir motivo na rejeição;
+- [x] gerar notificação;
 - [x] retirar conteúdo processado da fila;
 - [x] tratar conteúdo já processado;
-- [x] impedir MODERADOR de moderar o próprio conteúdo (ADMIN pode — decisoes.md 51.2);
-- [x] proteger a área para MODERADOR e ADMIN.
+- [x] impedir MODERADOR de moderar o próprio conteúdo;
+- [x] permitir ADMINISTRADOR moderar o próprio conteúdo;
+- [x] proteger a área para MODERADOR e ADMINISTRADOR.
 
-A autorização deve existir no backend e no banco, não apenas na interface.
+A fila atual não possui filtro por tipo.
 
-**Evolução prevista, fora do checklist do MVP:** retirada administrativa de conteúdo publicado, pelo ADMINISTRADOR (`decisoes.md` 63).
+A autorização deve existir também no backend, e não apenas na interface.
 
-> **Atualização (08/11/2026):** também ficam fora do checklist, com a regra principal já decidida (`decisoes.md` 67): a reversão de rejeição pelo ADMINISTRADOR, direto de REJEITADO para APROVADO, e a denúncia ou solicitação de revisão de conteúdo publicado por usuários autenticados e pelo MODERADOR. Quando entrarem, cada uma traz o seu evento de auditoria (§66.7).
+Continuam como evoluções futuras:
 
+- retirada administrativa de conteúdo publicado;
+- reversão administrativa de rejeição;
+- denúncia ou solicitação de revisão.
 ---
 
 # 15. Concorrência na Moderação
@@ -513,41 +540,63 @@ ADMIN B tenta rejeitar o mesmo conteúdo
 
 # 16. Notificações
 
-Implementar notificações para:
+As notificações informam o usuário sobre o resultado da análise dos conteúdos enviados.
+
+## Eventos atuais
 
 - [x] Material aprovado.
 - [x] Material rejeitado.
-- ~~Publicação aprovada~~ (fora do MVP).
-- ~~Publicação rejeitada~~ (fora do MVP).
-- ~~Oportunidade aprovada~~ (fora do MVP).
-- ~~Oportunidade rejeitada~~ (fora do MVP).
+- [x] Alteração de material aprovada.
+- [x] Alteração de material rejeitada.
+- [x] Oportunidade aprovada.
+- [x] Oportunidade rejeitada.
 
-Também implementar:
+Publicações como tipo próprio de conteúdo continuam fora da versão atual.
 
-- [x] badge numérico;
-- [x] limite visual 9+;
-- [x] não lidas;
+## Funcionalidades
+
+- [x] badge numérico de não lidas;
+- [x] limite visual `9+`;
+- [x] indicação de notificações não lidas;
 - [x] marcar como lida;
 - [x] marcar todas como lidas;
 - [x] estado vazio;
-- [ ] motivo da rejeição quando houver.
+- [x] direcionamento ao conteúdo correspondente;
+- [x] atualização periódica das notificações.
 
-> **Atualização (02/11/2026):** o clique marca como lida e leva ao conteúdo (`decisoes.md` 55.5). O motivo da rejeição fica em Meus conteúdos, para onde a notificação de rejeição leva.
+Ao clicar em uma notificação:
 
-~~Ainda deverá ser definido o comportamento ao clicar em uma notificação.~~ Resolvido (`decisoes.md` 55.5).
+→ ela é marcada como lida  
+→ o usuário é direcionado ao destino correspondente.
 
-Ela não bloqueia:
+Exemplos:
 
-- o checkpoint com a professora;
-- a definição da arquitetura geral;
-- a implementação dos módulos anteriores.
+Material aprovado  
+→ disciplina correspondente em Estudos.
+
+Material rejeitado  
+→ item correspondente em Meus conteúdos.
+
+Oportunidade aprovada  
+→ oportunidade correspondente.
+
+Oportunidade rejeitada  
+→ item correspondente em Meus conteúdos.
+
+## Motivo da rejeição
+
+O motivo da rejeição não precisa aparecer diretamente na notificação.
+
+O autor pode consultá-lo em:
+
+**Meus conteúdos → detalhes do envio rejeitado.**
 ---
 
 # 17. URLs e segurança
 
-A implementação deverá validar links também no servidor.
+A aplicação valida links também no servidor.
 
-Regras previstas:
+Regras adotadas:
 
 - somente HTTP e HTTPS;
 - normalização segura quando aplicável;
@@ -561,21 +610,30 @@ Não confiar apenas na validação do frontend.
 
 # 18. Limites de dados
 
-Antes ou durante a implementação deverão ser definidos limites para:
+## Perfil
 
-- Nome de exibição;
-- Sobre mim;
-- quantidade de tags;
-- tamanho das tags;
-- título de material;
-- descrição de material;
-- título de oportunidade;
-- descrição de oportunidade;
-- título de publicação;
-- descrição de publicação;
-- motivo da rejeição.
+Os limites atuais do Perfil ainda são considerados técnicos/provisórios:
 
-Os valores de Perfil são provisórios (`pendencias.md` 2.7). Os de material estão definidos: título 200, descrição 2.000, link 2.048 e motivo da rejeição 500 (`decisoes.md` 55.3 e 55.4). Oportunidade e publicação saíram do MVP.
+- Nome de exibição: 120 caracteres;
+- Sobre mim: 5.000 caracteres;
+- cada tag: 255 caracteres;
+- até 50 tags por campo.
+
+## Material
+
+- Título: 200 caracteres;
+- Descrição: 2.000 caracteres;
+- Link: 2.048 caracteres;
+- Motivo da rejeição: 500 caracteres.
+
+## Oportunidade
+
+- Título: 200 caracteres;
+- Descrição: 300 caracteres;
+- Link: 2.048 caracteres;
+- prazo de inscrição: opcional.
+
+Publicação como tipo próprio de conteúdo continua fora da versão atual e seus limites ainda não precisam ser definidos.
 
 ---
 
@@ -613,78 +671,95 @@ Implementar e testar:
 
 # 21. Testes técnicos
 
-Antes do piloto, realizar testes de:
+Antes do piloto, realizar a validação completa de:
 
 - [ ] Cadastro;
 - [ ] Login;
-- [ ] recuperação de senha;
 - [ ] autorização;
 - [ ] Perfil;
 - [ ] Estudos;
 - [ ] materiais;
-- ~~Oportunidade~~ (fora do MVP);
-- ~~Comunidade~~ (fora do MVP);
+- [ ] Oportunidade;
+- [ ] Comunidade;
 - [ ] Perfil público;
 - [ ] Configurações;
 - [ ] Moderação;
-- [ ] notificações;
+- [ ] Notificações;
+- [ ] painel administrativo;
+- [ ] auditoria;
 - [ ] erros;
 - [ ] concorrência;
 - [ ] responsividade;
 - [ ] acessibilidade.
 
+A recuperação de senha deverá entrar nessa validação apenas caso seja implementada futuramente.
+
 ---
 
-# 22. Ordem sugerida de implementação
+# 22. Estado das etapas de implementação
 
-Uma ordem possível é:
+Principais etapas concluídas:
 
 1. arquitetura e fundação;
 2. autenticação;
 3. layout global;
 4. Perfil;
 5. Home;
-6. Estudos — etapa 1 (leitura) (entregue);
-7. Estudos parte 2: 2a Materiais + núcleo de Moderação (só MATERIAL), 2b Meus conteúdos e 2c Notificações (entregues);
-8. ~~Oportunidade~~ e ~~Comunidade~~: fora do MVP (`decisoes.md` 56);
-9. Perfil público (entregue em 04/11/2026);
-10. painel `/admin` (Filament) para o ADMINISTRADOR (entregue em 05/11/2026);
-11. notificações;
-12. Configurações (entregue em 04/11/2026);
-13. estados de erro e loading;
-14. responsividade;
-15. acessibilidade;
-16. testes;
-17. deploy;
-18. preparação do piloto.
+6. Estudos;
+7. Materiais;
+8. Meus conteúdos;
+9. Moderação;
+10. Notificações;
+11. Perfil público;
+12. Configurações;
+13. painel administrativo;
+14. auditoria;
+15. Oportunidade;
+16. Comunidade.
 
-A ordem poderá ser ajustada após a definição da arquitetura.
+## Próximas etapas
+
+Antes do piloto:
+
+- revisar estados de erro e loading;
+- realizar validação de responsividade;
+- realizar validação de acessibilidade;
+- executar os testes finais;
+- corrigir problemas identificados;
+- revisar os Termos de participação;
+- preparar o ambiente do piloto;
+- confirmar os participantes convidados;
+- realizar a publicação da versão de teste.
 
 ---
 
-# 23. Depois da implementação
+# 23. Preparação e execução do piloto
 
-Com uma versão funcional será possível:
+Com a versão funcional do MVP, as próximas etapas são:
 
 1. realizar testes internos;
-2. corrigir problemas;
-3. preparar o piloto;
-4. selecionar disciplinas e participantes;
-5. revisar os Termos;
-6. realizar testes com estudantes;
-7. coletar feedback;
-8. analisar os resultados;
-
-## Possíveis evoluções posteriores
-
-Não fazem parte da implementação atual, mas poderão ser avaliadas futuramente:
-
-- confirmação de propriedade do e-mail institucional por link ou código;
-- suporte a outras instituições e outros domínios de e-mail;
-- revisão da autoria pública dos materiais após testes com estudantes.
+2. corrigir problemas encontrados;
+3. revisar os Termos de participação;
+4. preparar o ambiente do piloto;
+5. confirmar os participantes convidados;
+6. publicar a versão de teste;
+7. realizar testes com estudantes;
+8. coletar feedback;
+9. analisar os resultados;
 10. priorizar melhorias;
 11. planejar a próxima versão do ConectaCC.
 
+## Possíveis evoluções posteriores
+
+Podem ser avaliadas futuramente:
+
+- recuperação de senha;
+- confirmação de propriedade do e-mail institucional por link ou código;
+- suporte a outras instituições e outros domínios de e-mail;
+- busca de estudantes;
+- canais da comunidade;
+- novas formas de publicação e interação;
+- demais funcionalidades registradas no roadmap.
 ---
 
 # 24. Painel `/admin`
@@ -712,6 +787,16 @@ O painel não cria, edita nem exclui contas.
 - [x] detalhe com descrição, link, motivo da rejeição e dados originais da alteração.
 
 O painel não aprova, rejeita, retira nem reverte conteúdo.
+
+## Oportunidades
+
+- [x] lista de oportunidades cadastradas;
+- [x] consulta das informações da oportunidade;
+- [x] visualização da autoria;
+- [x] consulta da situação;
+- [x] acesso às informações utilizadas para acompanhamento administrativo.
+
+A área administrativa é de consulta e acompanhamento. A aprovação e rejeição continuam sendo realizadas pela Moderação do ConectaCC.
 
 ## Acesso
 
