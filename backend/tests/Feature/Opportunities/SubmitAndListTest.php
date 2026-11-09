@@ -6,6 +6,7 @@ use App\Enums\MaterialStatus;
 use App\Models\AuditEvent;
 use App\Models\Opportunity;
 use App\Models\User;
+use App\Support\Campus;
 use Illuminate\Validation\ValidationException;
 
 const OPPORTUNITIES = '/api/v1/opportunities';
@@ -150,7 +151,7 @@ it('lista só as aprovadas, não excluídas e dentro do prazo, sem autoria', fun
     Opportunity::factory()->create();
     Opportunity::factory()->rejected('Não.')->create();
     Opportunity::factory()->approved()->create()->delete();
-    Opportunity::factory()->approved()->create(['deadline' => now()->subDay()->toDateString()]);
+    Opportunity::factory()->approved()->create(['deadline' => now(Campus::TIMEZONE)->subDay()->toDateString()]);
 
     $response = $this->actingAs(User::factory()->create())->getJson(OPPORTUNITIES)->assertOk()->assertJsonCount(1, 'data');
 

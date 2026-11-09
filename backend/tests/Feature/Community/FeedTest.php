@@ -7,6 +7,7 @@ use App\Models\Discipline;
 use App\Models\Material;
 use App\Models\Opportunity;
 use App\Models\User;
+use App\Support\Campus;
 
 const FEED = '/api/v1/community/feed';
 
@@ -193,7 +194,7 @@ it('mistura materiais e oportunidades pela publicação, e a oportunidade não t
 });
 
 it('não mostra no mural a oportunidade vencida, excluída ou pendente', function () {
-    Opportunity::factory()->approved()->create(['deadline' => now()->subDay()->toDateString()]);
+    Opportunity::factory()->approved()->create(['deadline' => now(Campus::TIMEZONE)->subDay()->toDateString()]);
     Opportunity::factory()->approved()->create()->delete();
     Opportunity::factory()->create();
 
@@ -230,7 +231,7 @@ it('pagina os dois tipos juntos sem repetir nem pular, mesmo publicados no mesmo
 
 it('conta as oportunidades visíveis nos números', function () {
     Opportunity::factory()->count(2)->approved()->create();
-    Opportunity::factory()->approved()->create(['deadline' => now()->subDay()->toDateString()]);
+    Opportunity::factory()->approved()->create(['deadline' => now(Campus::TIMEZONE)->subDay()->toDateString()]);
     Opportunity::factory()->create();
 
     $this->actingAs(User::factory()->create())->getJson('/api/v1/community/stats')->assertJsonPath('opportunities', 2);
