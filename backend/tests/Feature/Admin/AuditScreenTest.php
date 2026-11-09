@@ -12,6 +12,7 @@ use App\Models\AuditEvent;
 use App\Models\Discipline;
 use App\Models\Material;
 use App\Models\User;
+use App\Support\Campus;
 use Filament\Actions\Testing\TestAction;
 use Filament\Facades\Filament;
 use Livewire\Livewire;
@@ -81,11 +82,11 @@ it('filtra por ação, por quem fez e por período', function () {
         ->assertCanSeeTableRecords([$roleEvent])->assertCanNotSeeTableRecords([$passwordEvent]);
 
     Livewire::test(ListAuditEvents::class)
-        ->filterTable('period', ['from' => now()->toDateString(), 'until' => null])
+        ->filterTable('period', ['from' => now(Campus::TIMEZONE)->toDateString(), 'until' => null])
         ->assertCanSeeTableRecords([$passwordEvent])->assertCanNotSeeTableRecords([$roleEvent]);
 
     Livewire::test(ListAuditEvents::class)
-        ->filterTable('period', ['from' => null, 'until' => now()->subDay()->toDateString()])
+        ->filterTable('period', ['from' => null, 'until' => now(Campus::TIMEZONE)->subDay()->toDateString()])
         ->assertCanSeeTableRecords([$roleEvent])->assertCanNotSeeTableRecords([$passwordEvent]);
 });
 

@@ -21,6 +21,10 @@ updates:
         patterns: ['eslint', '@eslint/*']
       npm-pequenas:
         update-types: [minor, patch]
+    ignore:
+      # os tipos do Node acompanham a versão LTS do projeto (24): sobem de versão principal junto com o Node, por decisão
+      - dependency-name: '@types/node'
+        update-types: [version-update:semver-major]
 
   - package-ecosystem: github-actions
     directory: /
