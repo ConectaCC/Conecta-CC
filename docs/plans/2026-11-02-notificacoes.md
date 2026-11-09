@@ -1,6 +1,6 @@
 # Estudos parte 2, etapa 2c: Notificações — plano de implementação
 
-> **Para agentes:** SUB-SKILL OBRIGATÓRIA: use superpowers:subagent-driven-development (recomendado) ou superpowers:executing-plans para executar este plano tarefa por tarefa. Os passos usam checkbox (`- [ ]`) para acompanhamento.
+> **Execução:** tarefa por tarefa. Os passos usam checkbox (`- [ ]`) para acompanhamento.
 
 **Objetivo:** o autor recebe uma notificação quando o material ou a alteração dele é aprovado ou rejeitado. O sino do Header mostra o contador e abre o painel. Clicar numa notificação marca como lida e leva ao conteúdo.
 
@@ -19,7 +19,7 @@
 
 - **Git:**
   - branch `feat/notificacoes`;
-  - Conventional Commits em português, terminando com `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`;
+  - Conventional Commits em português;
   - sem push.
 - **Fora desta etapa:**
   - página própria de notificações (§33);
@@ -46,13 +46,13 @@
   - cada item mostra um ícone (✓ ou ✕), título, detalhe, tempo relativo (`timeAgo`) e o selo "Nova" quando não lida;
   - vazio: "Você ainda não tem notificações." e "Quando algo que você enviar for analisado, o resultado aparece aqui.";
   - carregando: "Carregando notificações…";
-  - erro: "Não foi possível carregar as notificações agora." com "Tentar novamente" **(escolha do Claude)**.
+  - erro: "Não foi possível carregar as notificações agora." com "Tentar novamente".
 - **Sino:**
   - `aria-label` "Notificações" ou "Notificações, N não lidas" ("1 não lida" no singular);
   - badge com o número, ou "9+" acima de 9;
   - `aria-expanded` vem do Popover.
 - **Textos que mudam nesta etapa:**
-  - sucesso do envio: "Você receberá uma notificação quando o material for analisado.", mantendo "Você pode acompanhar a análise em Meus conteúdos." como segunda frase **(escolha do Claude)**;
+  - sucesso do envio: "Você receberá uma notificação quando o material for analisado.", mantendo "Você pode acompanhar a análise em Meus conteúdos." como segunda frase;
   - avisos da Moderação: "Conteúdo aprovado com sucesso." e "Conteúdo rejeitado." passam a terminar com "O autor será notificado.".
 - **Lista:** traz as 20 mais recentes e `unread_count` (de todas as não lidas, não só das 20).
 - **Front:**
@@ -90,7 +90,7 @@ frontend/src/
 docs/  decisoes.md, implementacao.md (§16), status-mvp.md, README.md
 ```
 
-**Escolha do Claude:** em vez de quatro classes de notificação, uma só (`MaterialDecided`), com o `kind` no construtor. Os quatro eventos diferem só no `kind`, então quatro classes seriam código repetido. A spec §4.3 citava quatro classes. Registrar no ledger.
+**Escolha da implementação:** em vez de quatro classes de notificação, uma só (`MaterialDecided`), com o `kind` no construtor. Os quatro eventos diferem só no `kind`, então quatro classes seriam código repetido. A spec §4.3 citava quatro classes. Registrar no ledger.
 
 ---
 

@@ -4,8 +4,6 @@ Data: 08/11/2026
 Responsável: Marcelo Henrique Germiniani Panho
 Base: `main` (após o PR #18)
 
-Itens marcados **(escolha do Claude)** podem ser trocados na revisão.
-
 ## 1. Intenção
 
 Os testes provam que o código faz o que o teste confere, mas não que o teste confere o que importa. Uma rodada de amostra mostrou isso: os testes de `ChangeUserRole` aceitam qualquer erro HTTP onde a regra exige 403.
@@ -21,7 +19,7 @@ A **análise estática pesada** pega, sem rodar nada, erros de tipo que os teste
 3. **Fluxo das próximas entregas:** o teste de mutação roda só no que for novo, ou seja, nas classes e arquivos alterados em relação à `main`.
    - **Nota mínima:** 90% no back e 80% no front.
    - **Execução:** passo no CI e comando local antes do PR.
-4. **Análise estática no front:** `strict` e `noUncheckedIndexedAccess` no TypeScript, e as regras do ESLint que usam tipos (`strictTypeChecked`). `exactOptionalPropertyTypes` fica de fora, porque gera muitos erros de biblioteca e quase não pega problema real **(escolha do Claude)**.
+4. **Análise estática no front:** `strict` e `noUncheckedIndexedAccess` no TypeScript, e as regras do ESLint que usam tipos (`strictTypeChecked`). `exactOptionalPropertyTypes` fica de fora, porque gera muitos erros de biblioteca e quase não pega problema real.
 5. **Testes do front:** Vitest e Testing Library, como dependências só de desenvolvimento, começando pela lógica mais sensível.
    - **Lógica:** datas e prazos, busca e filtros no endereço, rolagem até o item e iniciais.
    - **Regras de tela de privacidade:** o material anônimo e a oportunidade nunca mostram quem enviou.
@@ -47,9 +45,9 @@ O job `backend` liga a cobertura (PCOV), baixa o histórico completo do Git e ro
 
 - **Classes alteradas:** `scripts/changed-php-classes.sh` lista os arquivos de `backend/app` criados ou alterados desde o ponto em que a branch saiu da base, incluindo o que ainda não foi commitado, e converte em nomes de classe. O mesmo script serve ao `make mutate` e ao CI.
 - **PR que só apaga código:** a lista fica vazia, e o passo de mutação termina sem erro.
-- **`--covered-only`:** o Pest trata atributos e propriedades de classe (`#[Fillable]`, `$timestamps`) como linhas não executadas e os conta como mutantes sem teste, mesmo testados. Por isso a mutação roda com `--covered-only`, e a cobertura de linhas de 100% garante que código novo sem teste não passe **(escolha do Claude)**.
+- **`--covered-only`:** o Pest trata atributos e propriedades de classe (`#[Fillable]`, `$timestamps`) como linhas não executadas e os conta como mutantes sem teste, mesmo testados. Por isso a mutação roda com `--covered-only`, e a cobertura de linhas de 100% garante que código novo sem teste não passe.
 - **Marca de mutante equivalente:** `// @pest-mutate-ignore: Mutador1,Mutador2` no fim da linha, com o motivo na linha de cima. Texto depois dos dois-pontos é lido como nome de mutador.
-- **`preventLazyLoading`** ligado fora de produção, para que um N+1 em lista falhe no teste **(escolha do Claude)**.
+- **`preventLazyLoading`** ligado fora de produção, para que um N+1 em lista falhe no teste.
 
 ### Resultado da rodada completa (08/11/2026)
 
@@ -84,14 +82,14 @@ O job `frontend` passa a rodar os testes e, quando o PR altera `frontend/src`, o
 
 - `src/components/ui`, gerado pelo shadcn;
 - `src/lib/api/schema.d.ts`, gerado a partir da API;
-- `src/main.tsx`, só a montagem da aplicação **(escolha do Claude)**.
+- `src/main.tsx`, só a montagem da aplicação.
 
 ### Como ficou (08/11/2026)
 
-- **Linhas, e não arquivos:** `scripts/changed-front-lines.sh` lista os trechos de `frontend/src` alterados desde que a branch saiu da base, no formato `src/arquivo.tsx:10-14`, que o StrykerJS aceita. Só o que mudou é mutado **(escolha do Claude)**. Sem linha alterada, o passo termina sem erro.
+- **Linhas, e não arquivos:** `scripts/changed-front-lines.sh` lista os trechos de `frontend/src` alterados desde que a branch saiu da base, no formato `src/arquivo.tsx:10-14`, que o StrykerJS aceita. Só o que mudou é mutado. Sem linha alterada, o passo termina sem erro.
 - **Fuso dos testes:** os scripts `test` e `mutate` do `package.json` definem `TZ=America/Sao_Paulo`, e o setup dos testes também. O `Intl` guarda o fuso no primeiro uso, então o processo precisa começar com ele.
-- **Ponta a ponta:** `frontend/e2e/`, com o serviço `e2e` do `compose.yaml` (perfil `e2e`, imagem do Playwright na mesma versão do `@playwright/test`, rede do host) **(escolha do Claude)**.
-- **Branch:** a do front saiu da do back, para não conflitar no Makefile, no CI e na documentação **(escolha do Claude)**.
+- **Ponta a ponta:** `frontend/e2e/`, com o serviço `e2e` do `compose.yaml` (perfil `e2e`, imagem do Playwright na mesma versão do `@playwright/test`, rede do host).
+- **Branch:** a do front saiu da do back, para não conflitar no Makefile, no CI e na documentação.
 
 ### Resultado (08/11/2026)
 

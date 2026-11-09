@@ -1,6 +1,6 @@
 # Painel `/admin` — plano de implementação
 
-> **Para agentes:** use `superpowers:subagent-driven-development` ou `superpowers:executing-plans` para executar tarefa por tarefa. Os passos usam checkbox (`- [ ]`).
+> **Execução:** tarefa por tarefa. Os passos usam checkbox (`- [ ]`) para acompanhamento.
 
 **Objetivo:** criar o painel exclusivo do ADMINISTRADOR, com alteração de papéis e consulta somente leitura das moderações.
 
@@ -12,7 +12,7 @@
 
 ## Restrições globais
 
-- Branch `feat/painel-admin`. Commits em Conventional Commits, em português, terminando com `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
+- Branch `feat/painel-admin`. Commits em Conventional Commits, em português.
 - Não entram: exclusão de conta, retirada, revisão ou reversão de moderação, catálogo de disciplinas, contadores, edição de dados de usuário, redefinição de senha, auditoria em tela.
 - Sem migrations e sem mudança na API.
 - `role` continua fora do `Fillable`.

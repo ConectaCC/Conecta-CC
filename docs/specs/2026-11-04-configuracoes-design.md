@@ -4,7 +4,7 @@ Data: 04/11/2026
 Responsável: Marcelo Henrique Germiniani Panho
 Base: `main` (após o PR #10)
 
-Referência visual: protótipo, artboards `Configuracoes` e `Cfg-*`. Itens marcados **(escolha do Claude)** podem ser trocados na revisão.
+Referência visual: protótipo, artboards `Configuracoes` e `Cfg-*`.
 
 ## 1. Intenção
 
@@ -72,7 +72,7 @@ Hoje a sidebar leva a uma página "Em construção", e ninguém consegue trocar 
 
 ### Limite (`throttle:password`)
 
-Registrado em `AppServiceProvider`, ao lado de `login` e `register`: 5 por minuto, por id do usuário **(escolha do Claude)**. Conta todas as tentativas e reaproveita `tooManyAttempts`.
+Registrado em `AppServiceProvider`, ao lado de `login` e `register`: 5 por minuto, por id do usuário. Conta todas as tentativas e reaproveita `tooManyAttempts`.
 
 Mudou a API: rodar `make api-types`.
 
@@ -93,7 +93,7 @@ Pasta `features/settings/`, com `SettingsPage.tsx` e `hooks.ts`. A rota `/config
 
 ### Comportamento
 
-- **E-mail:** vem de `useMe()`. O guard de autenticação não espera essa consulta, então a página mostra um esqueleto enquanto ela carrega e "E-mail indisponível no momento." se falhar **(escolha do Claude)**. O `AppLayout` já mostra o aviso com "Tentar novamente".
+- **E-mail:** vem de `useMe()`. O guard de autenticação não espera essa consulta, então a página mostra um esqueleto enquanto ela carrega e "E-mail indisponível no momento." se falhar. O `AppLayout` já mostra o aviso com "Tentar novamente".
 
 > **Correção (04/11/2026):** a spec dizia que o e-mail já vinha carregado pelo guard, e a implementação mostrou que não vem.
 - **Validação no navegador:** as mesmas regras e mensagens da seção 4, antes de enviar. O backend continua sendo a fonte de verdade.
@@ -111,8 +111,8 @@ Pasta `features/settings/`, com `SettingsPage.tsx` e `hooks.ts`. A rota `/config
 
 ### Diferenças em relação ao protótipo
 
-- O aviso de sucesso usa o botão de fechar do `FormAlert` ("Fechar aviso"), não "Fechar mensagem" **(escolha do Claude)**.
-- O aviso de falha usa o `FormAlert` vermelho de erro **(escolha do Claude)**.
+- O aviso de sucesso usa o botão de fechar do `FormAlert` ("Fechar aviso"), não "Fechar mensagem".
+- O aviso de falha usa o `FormAlert` vermelho de erro.
 
 ## 6. Testes
 

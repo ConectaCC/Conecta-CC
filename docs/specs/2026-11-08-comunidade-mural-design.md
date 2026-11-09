@@ -4,7 +4,7 @@ Data: 08/11/2026
 Responsável: Marcelo Henrique Germiniani Panho
 Base: `main` (após o PR #15)
 
-Referência visual: protótipo, artboards `Comunidade` e `Com-*`. Só o visual do mural ("O que está rolando") é usado; canais, busca de estudantes e "Compartilhar com a comunidade" ficam de fora. Itens marcados **(escolha do Claude)** podem ser trocados na revisão.
+Referência visual: protótipo, artboards `Comunidade` e `Com-*`. Só o visual do mural ("O que está rolando") é usado; canais, busca de estudantes e "Compartilhar com a comunidade" ficam de fora.
 
 ## 1. Intenção
 
@@ -41,7 +41,7 @@ Hoje um material aprovado só é encontrado por quem abre a disciplina certa. A 
 
 ### Rota
 
-**`GET /api/v1/community/feed`**, dentro de `auth:sanctum`. Paginação por cursor, 20 por página **(escolha do Claude)**: a lista muda enquanto a pessoa lê, e o cursor não repete nem pula itens quando um material novo é aprovado.
+**`GET /api/v1/community/feed`**, dentro de `auth:sanctum`. Paginação por cursor, 20 por página: a lista muda enquanto a pessoa lê, e o cursor não repete nem pula itens quando um material novo é aprovado.
 
 Consulta direta à tabela `materials`, sem tabela nova:
 
@@ -67,12 +67,12 @@ Pasta `features/community/`, com a página e o hook do mural.
 
 ### Textos
 
-- **Cabeçalho:** "Comunidade" e "Veja o que a comunidade de Ciência da Computação tem compartilhado." **(escolha do Claude: o subtítulo do protótipo falava em encontrar pessoas, o que não entra)**.
+- **Cabeçalho:** "Comunidade" e "Veja o que a comunidade de Ciência da Computação tem compartilhado." (o subtítulo do protótipo falava em encontrar pessoas, o que não entra).
 - **Seção:** "O que está rolando" e "Mais recentes primeiro.".
 - **Publicação identificada:** "**Marcos** compartilhou **“Resumo de Grafos”** em **Estrutura de Dados II**", com o tempo relativo ao lado.
 - **Publicação anônima:** "**Comunidade** compartilhou **“Resumo de Grafos”** em **Estrutura de Dados II**".
 - **Mais itens:** botão "Mostrar mais".
-- **Vazio:** "Ainda não há novidades compartilhadas" e "Quando um material for aprovado em Estudos, ele aparece aqui.", com o link "Ir para Estudos" **(escolha do Claude: o protótipo oferecia publicar, o que não entra)**.
+- **Vazio:** "Ainda não há novidades compartilhadas" e "Quando um material for aprovado em Estudos, ele aparece aqui.", com o link "Ir para Estudos" (o protótipo oferecia publicar, o que não entra).
 - **Carregando:** três blocos cinzentos e, para leitores de tela, "Carregando novidades…".
 - **Erro:** "Não foi possível carregar as novidades agora." com "Tentar novamente". Se o erro for em "Mostrar mais", os itens já carregados continuam na tela.
 
@@ -144,7 +144,7 @@ Se o material não estiver mais na lista (excluído entre o mural e o clique), a
   - a busca dispara 300 ms depois de a pessoa parar de digitar.
 - **Ordem:** "Mais recentes" ou "Mais antigos".
 - **Visualização:** em lista ou em grade, com duas colunas a partir de 768 px.
-- **Endereço:** a busca, a ordem e a visualização ficam na URL (`?busca=`, `?ordem=antigos`, `?visualizacao=grade`) **(escolha do Claude)**.
+- **Endereço:** a busca, a ordem e a visualização ficam na URL (`?busca=`, `?ordem=antigos`, `?visualizacao=grade`).
 - **Subtítulo da seção:** "Atualizações mais recentes da comunidade." ou, na ordem inversa, "Atualizações mais antigas primeiro.".
 - **Sem resultado:** "Nenhum resultado para “…”", "Tente outro título, disciplina ou nome." e "Limpar busca".
 - **Coluna lateral**, ao lado da lista a partir de 1280 px e abaixo dela em telas menores:

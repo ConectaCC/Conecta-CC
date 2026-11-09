@@ -1,6 +1,6 @@
 # Configurações — plano de implementação
 
-> **Para agentes:** use `superpowers:subagent-driven-development` ou `superpowers:executing-plans` para executar tarefa por tarefa. Os passos usam checkbox (`- [ ]`).
+> **Execução:** tarefa por tarefa. Os passos usam checkbox (`- [ ]`) para acompanhamento.
 
 **Objetivo:** substituir o placeholder de `/configuracoes` por uma página com o e-mail somente leitura e a troca de senha, que encerra as outras sessões da conta.
 
@@ -12,7 +12,7 @@
 
 ## Restrições globais
 
-- Branch `feat/configuracoes`. Commits em Conventional Commits, em português, terminando com `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
+- Branch `feat/configuracoes`. Commits em Conventional Commits, em português.
 - Não entram: "Esqueci minha senha", e-mail de aviso, tema, idioma, preferências e exclusão de conta.
 - Regras da senha: mínimo de 8 caracteres e confirmação igual. Sem regra de composição. Nova senha igual à atual é aceita.
 - Limite: 5 tentativas por minuto, por id do usuário.

@@ -1,6 +1,6 @@
 # Oportunidades — plano de implementação
 
-> **Para agentes:** use `superpowers:subagent-driven-development` ou `superpowers:executing-plans` para executar tarefa por tarefa. Os passos usam checkbox (`- [ ]`).
+> **Execução:** tarefa por tarefa. Os passos usam checkbox (`- [ ]`) para acompanhamento.
 
 **Objetivo:** página `/oportunidade` com envio moderado, prazo, autoria só interna e integração ao mural da Comunidade.
 
@@ -12,7 +12,7 @@
 
 ## Restrições globais
 
-- Branch `feat/oportunidades`. Commits em Conventional Commits, em português, terminando com `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`. Cada commit só depois de os testes e o lint passarem.
+- Branch `feat/oportunidades`. Commits em Conventional Commits, em português. Cada commit só depois de os testes e o lint passarem.
 - Nenhuma resposta pública traz o autor de uma oportunidade.
 - Prazo: `deadline`, ou a data de publicação em Brasília mais 15 dias. A oportunidade é visível até o fim desse dia, em Brasília. A data de "hoje" vem do PHP, para os testes conseguirem mudar o relógio.
 - Valores: tipos `ESTAGIO`, `EMPREGO`, `EVENTO`, `PROJETO` e `OUTRO`; modalidades `REMOTO`, `HIBRIDO` e `PRESENCIAL`. Os rótulos ficam no front e no `/admin`.

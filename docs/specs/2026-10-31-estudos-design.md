@@ -8,8 +8,6 @@ Este documento registra o design da etapa 1 de Estudos. Ele parte de `requisitos
 
 Referência visual: protótipo congelado (https://claude.ai/artifact/Gwv1arQoKYix47kJHF3dF4), artboards `Estudos`, `Estudos-Carregando`, `Estudos-Erro`, `Estudos-SemDisciplinas`, `Estudos-Mobile`, `Disciplina`, `Disc-SemMateriais`, `Disc-Mobile`.
 
-Itens marcados **(escolha do Claude)** não foram decididos pelo Marcelo e podem ser trocados na revisão.
-
 ## 1. Intenção
 
 Estudos é onde o estudante chega às disciplinas que cursa e, depois, aos materiais da comunidade. Esta etapa entrega a navegação: o estudante encontra as próprias disciplinas, encontra qualquer disciplina do curso e abre a página dela com a ementa oficial.
@@ -44,14 +42,14 @@ Estudos foi dividido em duas etapas (decisão de 31/10/2026, `implementacao.md` 
 
 ### 4.1 Slug
 
-- O slug é **calculado a partir do nome** (`Str::slug($name)`) por um accessor do model `Discipline`. Ele não fica guardado no banco. **(escolha do Claude, ajustada no plano)** Uma coluna nova quebraria o `migrate:fresh`: a migration de carga do catálogo (`2026_10_19_000003`) roda antes dela e chama `DisciplineCatalog::sync`. Calcular evita migration e dá o mesmo endereço.
+- O slug é **calculado a partir do nome** (`Str::slug($name)`) por um accessor do model `Discipline`. Ele não fica guardado no banco. Uma coluna nova quebraria o `migrate:fresh`: a migration de carga do catálogo (`2026_10_19_000003`) roda antes dela e chama `DisciplineCatalog::sync`. Calcular evita migration e dá o mesmo endereço.
 - Os 49 nomes atuais geram 49 slugs distintos (verificado), e um teste garante isso. Se um nome futuro colidir, o teste falha.
-- O slug é derivado do nome. Se o nome de uma disciplina mudar, o endereço muda junto. **(escolha do Claude)** Hoje os nomes vêm da Matriz oficial e não mudam.
+- O slug é derivado do nome. Se o nome de uma disciplina mudar, o endereço muda junto. Hoje os nomes vêm da Matriz oficial e não mudam.
 - Na etapa 2, se o backend precisar buscar disciplina por slug (`/disciplines/{slug}/materials`), avaliar ali se vale criar a coluna. Isso exige uma migration que não use `DisciplineCatalog::sync`.
 
 ### 4.2 API
 
-**Não há endpoint novo. (escolha do Claude)** `GET /api/v1/disciplines` já devolve o catálogo inteiro, ordenado por semestre e nome, e o front o guarda em cache com `staleTime: Infinity`. São 49 linhas. `DisciplineResource` passa a devolver também `slug`, `workload_hours` e `syllabus_url`. O Perfil reaproveita o mesmo resource e só ganha campos a mais.
+**Não há endpoint novo.** `GET /api/v1/disciplines` já devolve o catálogo inteiro, ordenado por semestre e nome, e o front o guarda em cache com `staleTime: Infinity`. São 49 linhas. `DisciplineResource` passa a devolver também `slug`, `workload_hours` e `syllabus_url`. O Perfil reaproveita o mesmo resource e só ganha campos a mais.
 
 A página da disciplina encontra a disciplina pelo slug nessa lista. A etapa 2 adiciona `GET /api/v1/disciplines/{slug}/materials`.
 
@@ -75,14 +73,14 @@ Cabeçalho: "Estudos", com o subtítulo "Acesse suas disciplinas e materiais com
 **Todas as disciplinas**
 - O campo "Buscar disciplina" filtra pelo nome sem diferenciar maiúsculas de minúsculas e ignorando acentos ("computacao" encontra "Computação"). A busca roda no navegador.
 - Os grupos aparecem como "1º semestre" a "8º semestre", e um grupo sem resultados some.
-- Cada semestre abre e fecha ao clicar no título (botão com `aria-expanded`). Todos começam fechados (decisão do Marcelo, 31/10/2026). Durante a busca, os semestres com resultado abrem sozinhos e voltam a fechar quando a busca é limpa **(escolha do Claude)**.
+- Cada semestre abre e fecha ao clicar no título (botão com `aria-expanded`). Todos começam fechados (decisão do Marcelo, 31/10/2026). Durante a busca, os semestres com resultado abrem sozinhos e voltam a fechar quando a busca é limpa.
 - O contador mostra "N disciplinas" ou "1 disciplina" e é anunciado ao leitor de tela (`aria-live="polite"`).
 - Sem resultados: "Nenhuma disciplina encontrada para “<busca>”."
 - O aviso do protótipo "Lista de demonstração do protótipo…" não entra, porque o catálogo agora é o oficial.
 
 **Card de disciplina** (o mesmo nas duas seções)
 - Nome da disciplina, o selo "Minha disciplina" no canto superior direito (decisão do Marcelo) quando ela está em `profile.disciplines` e a ação "Ver disciplina", que leva a `/estudos/<slug>`. O card inteiro é um único link.
-- **A linha de status do protótipo ("Materiais disponíveis") não entra. (escolha do Claude)** Como toda disciplina tem área de materiais, a linha seria igual em todos os cards e não informaria nada. A etapa 2 pode trocá-la pela quantidade de materiais.
+- **A linha de status do protótipo ("Materiais disponíveis") não entra.** Como toda disciplina tem área de materiais, a linha seria igual em todos os cards e não informaria nada. A etapa 2 pode trocá-la pela quantidade de materiais.
 
 **Estados**
 - Carregando: skeletons como em `Estudos-Carregando`, com o componente `Skeleton` existente.
@@ -95,8 +93,8 @@ Cabeçalho: "Estudos", com o subtítulo "Acesse suas disciplinas e materiais com
 - Breadcrumb "Estudos / <nome>", com "Estudos" como link.
 - Título com o nome da disciplina e o selo "Minha disciplina" quando for o caso.
 - Card **Informações da disciplina**: "<N>º semestre · <H> h", o texto "Consulte a ementa e as informações oficiais na fonte institucional." e o link "Ver ementa oficial", que abre em nova guia com indicação para leitor de tela (padrão `srTxt` do protótipo: "(abre em nova guia, inf.passofundo.ifsul.edu.br)"). Se `syllabus_url` vier nulo, aparece o texto "Link oficial a confirmar" sem link (RF-33). Hoje as 49 disciplinas têm link.
-- Seção **Materiais compartilhados**, ainda sem materiais **(escolha do Claude)**: o título da seção, "Ainda não há materiais compartilhados" e o texto "Em breve você poderá compartilhar materiais nesta disciplina." Não há botão. A etapa 2 troca esse texto pelo do protótipo e adiciona "Compartilhar material".
-- Slug inexistente **(escolha do Claude)**: "Disciplina não encontrada", com o link "Voltar para Estudos". A página não redireciona.
+- Seção **Materiais compartilhados**, ainda sem materiais: o título da seção, "Ainda não há materiais compartilhados" e o texto "Em breve você poderá compartilhar materiais nesta disciplina." Não há botão. A etapa 2 troca esse texto pelo do protótipo e adiciona "Compartilhar material".
+- Slug inexistente: "Disciplina não encontrada", com o link "Voltar para Estudos". A página não redireciona.
 - Carregando e erro seguem os mesmos padrões de 5.1.
 
 ### 5.3 Acessibilidade

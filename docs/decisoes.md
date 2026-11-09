@@ -1369,7 +1369,7 @@ Decisão de Produto para manter uma semântica única e evitar interpretações 
 
 A informação não depende só da cor: a tag sempre traz o texto. No front, a regra fica em um único componente, `StatusTag`.
 
-Isso muda o que estava implementado: EXCLUÍDO era cinza e Alteração era neutra. No painel de análise, o destaque de "Alteração proposta" deixa de ser azul e passa a laranja **(escolha do Claude)**.
+Isso muda o que estava implementado: EXCLUÍDO era cinza e Alteração era neutra. No painel de análise, o destaque de "Alteração proposta" deixa de ser azul e passa a laranja.
 
 ---
 
@@ -1383,7 +1383,7 @@ Revisão de Produto do painel de Notificações. Todo o comportamento de §55.5 
 - **Notificação não lida:** fundo `#D9E9F8`, no lugar de `#EEF7FC`. Depois de lida, volta ao fundo normal do painel.
 - **Aprovação e rejeição:** os ícones ✓ e ✕ não têm mais fundo verde ou vermelho. A apresentação é neutra e o resultado é comunicado pelo ícone, pelo título e pelo texto.
 
-A única cor de fundo especial do item da lista é a de não lida. Ao passar o mouse, a não lida fica um pouco mais clara e mantém o tom azul **(escolha do Claude)**.
+A única cor de fundo especial do item da lista é a de não lida. Ao passar o mouse, a não lida fica um pouco mais clara e mantém o tom azul.
 
 > **Atualização (04/11/2026):** a cor do contador passou a ser `#BD5228` (§62.1).
 
@@ -1433,12 +1433,12 @@ Trocar a senha encerra as outras sessões da conta, e a pessoa continua logada n
 
 - **Sessão atual:** o id muda na troca e a linha antiga é apagada na hora. O `AuthenticateSession` já recusaria um cookie antigo pela divergência do hash da senha; apagar a linha é uma camada extra.
 - **Limite conhecido:** se outra requisição do mesmo aparelho estiver em andamento durante a troca (o sino de notificações ou outra aba), a resposta dela pode devolver o cookie antigo e deslogar a pessoa. É raro e nada se perde: a senha nova já vale. Será revisto se houver relato no piloto.
-- **Sair durante o envio:** o envio não é cancelado, então "Descartar alterações?" espera o resultado. Se a senha mudou, a pessoa fica na página e vê o aviso. Se falhou, o diálogo aparece **(escolha do Claude)**.
-- **Link "Configurações" na própria página:** não pergunta nada e mantém os campos, porque não há saída **(escolha do Claude)**.
-- **Foco:** depois do sucesso vai para o aviso; ao fechar o aviso, vai para "Senha atual" **(escolha do Claude)**.
+- **Sair durante o envio:** o envio não é cancelado, então "Descartar alterações?" espera o resultado. Se a senha mudou, a pessoa fica na página e vê o aviso. Se falhou, o diálogo aparece.
+- **Link "Configurações" na própria página:** não pergunta nada e mantém os campos, porque não há saída.
+- **Foco:** depois do sucesso vai para o aviso; ao fechar o aviso, vai para "Senha atual".
 - **E-mail na API:** `email` entra na resposta de login e de `GET /me`, que só devolvem os dados da própria pessoa. O Perfil público continua sem ele.
-- **E-mail ainda carregando ou indisponível:** a página mostra um esqueleto durante o carregamento e "E-mail indisponível no momento." se a busca falhar **(escolha do Claude)**.
-- **Aviso de sucesso:** usa o botão de fechar que já existe ("Fechar aviso") **(escolha do Claude)**.
+- **E-mail ainda carregando ou indisponível:** a página mostra um esqueleto durante o carregamento e "E-mail indisponível no momento." se a busca falhar.
+- **Aviso de sucesso:** usa o botão de fechar que já existe ("Fechar aviso").
 - **Página "Em construção":** removida, porque Configurações era a última área que a usava.
 
 ---
@@ -1616,9 +1616,9 @@ Ficam fora: exclusão de conta (§64), retirada, revisão e reversão de decisõ
 
 Vale a §55.2: o ADMINISTRADOR vê o nome de exibição do autor, com a marca "Enviado anonimamente". O MODERADOR não acessa o painel.
 
-## 65.5 Escolhas do Claude
+## 65.5 Escolhas da implementação
 
-Estas escolhas não foram decididas pelo time e podem ser revistas:
+Estas escolhas podem ser revistas pelo time:
 
 - **Tabelas:** filtro por papel em Usuários; mais recentes primeiro nas duas telas; empilhadas no celular.
 - **Situação:** "Alteração" aparece como uma marca ao lado da situação, em Moderações, conforme a §58.
@@ -1801,7 +1801,7 @@ Essa funcionalidade não faz parte da versão atual.
 
 Oportunidades entra integrada ao mural, sempre com "Comunidade" como autoria pública. Os filtros "Tudo", "Materiais" e "Oportunidades" chegam junto com ela.
 
-## 68.7 Escolhas do Claude
+## 68.7 Escolhas da implementação
 
 - **Paginação por cursor:** um material aprovado enquanto a pessoa lê não repete nem esconde itens em "Mostrar mais".
 - **Subtítulo:** "Veja o que a comunidade de Ciência da Computação tem compartilhado.".
@@ -1846,23 +1846,11 @@ Isso substitui as "abas por tipo" da §68.8 e o "Os filtros 'Tudo', 'Materiais' 
 
 O botão do card "Contribua com a comunidade" passa a servir para os dois tipos. A pessoa escolhe se vai compartilhar um **material** ou uma **oportunidade** (vaga, estágio, evento, hackathon e afins).
 
-Hoje o botão é "Compartilhar material" e leva a Estudos.
-
-O fluxo será planejado no design de Oportunidades. Ficam para essa rodada:
-
-- o nome do botão e onde a escolha do tipo aparece (menu, diálogo ou página);
-- como escolher a disciplina de um material a partir da Comunidade, já que hoje o envio fica dentro da disciplina;
-- se Estudos continua com o próprio "Compartilhar material" na página da disciplina;
-- os campos e as categorias da oportunidade;
-- a Moderação da oportunidade e as notificações;
-- a autoria: a oportunidade aparece sempre como "Comunidade" no mural (§68.6), e falta definir se o envio de material a partir da Comunidade mantém a opção "Compartilhar anonimamente".
+O fluxo, os campos, a Moderação e a autoria da oportunidade estão definidos na §70.
 
 ## 69.3 O que continua em aberto
 
-Também ficam para o design de Oportunidades:
-
 - "Explorar por tipo";
-- o número de oportunidades em "A comunidade em números";
 - o ícone de cada tipo no card.
 
 ---
@@ -1890,7 +1878,7 @@ Oportunidade reúne indicações de estágios, empregos, eventos e projetos. Ela
 
 ## 70.3 Prazo
 
-"Inscrições até" é opcional. Se ficar vazio, a oportunidade fica visível por **15 dias depois da aprovação**. A contagem começa na aprovação, porque só a partir daí a oportunidade aparece **(escolha do Claude)**.
+"Inscrições até" é opcional. Se ficar vazio, a oportunidade fica visível por **15 dias depois da aprovação**. A contagem começa na aprovação, porque só a partir daí a oportunidade aparece.
 
 A oportunidade continua visível até o fim do último dia, no horário de Brasília. Depois disso, sai da página, do mural e dos números, sem ação de ninguém, e aparece como "Encerrada" em Meus conteúdos.
 
@@ -1919,7 +1907,7 @@ Não há envio anônimo. O MODERADOR não analisa a própria oportunidade, como 
 
 - **Mural:** mistura materiais e oportunidades, com o filtro "Tipo" (§69.1).
 - **"A comunidade em números":** ganha "Oportunidades" e passa a ser uma lista, para caber na coluna lateral.
-- **Botão:** "Compartilhar conteúdo" abre um menu com "Material", que leva a Estudos, e "Oportunidade", que abre o modal **(escolha do Claude para o nome do botão, em aberto na §69.2)**.
+- **Botão:** "Compartilhar conteúdo" abre um menu com "Material", que leva a Estudos, e "Oportunidade", que abre o modal.
 
 ## 70.8 Auditoria e `/admin`
 
@@ -1976,8 +1964,8 @@ A Home ganha a seção "Acessos institucionais" ("Conecte-se aos principais serv
 **Links:**
 
 - Os links externos abrem em nova aba.
-- O do Instagram ficou sem o parâmetro de rastreamento que veio com ele **(escolha do Claude)**.
-- O contato da CORAC é um link de telefone (`tel:`), e não de WhatsApp: não foi confirmado que o número atende por WhatsApp **(escolha do Claude)**.
+- O do Instagram ficou sem o parâmetro de rastreamento que veio com ele.
+- O contato da CORAC é um link de telefone (`tel:`), e não de WhatsApp: não foi confirmado que o número atende por WhatsApp.
 
 **Ícones:** são genéricos, sem os logos do IFSul, do SUAP, do Moodle, do Instagram ou do WhatsApp. Os logos só entram com os arquivos oficiais.
 
@@ -2243,7 +2231,7 @@ O Larastan subiu do nível 6 para o 10, com todos os erros corrigidos e sem list
 
 - Antes do PR, `make mutate` precisa estar verde. O CI roda o mesmo passo.
 - A mutação roda só nas classes de `backend/app` alteradas em relação à base do PR, com nota mínima de **90%**.
-- A cobertura de linhas do back fica em **100%**, para que código novo sem teste não passe **(escolha do Claude)**.
+- A cobertura de linhas do back fica em **100%**, para que código novo sem teste não passe.
 
 ## 76.4 Front
 
@@ -2271,7 +2259,7 @@ O Vitest e a Testing Library entram como dependências de desenvolvimento. Os te
 
 ## 77.3 Mutação nas linhas alteradas
 
-- O StrykerJS muta só as **linhas** de `frontend/src` alteradas em relação à base do PR, e não o arquivo inteiro **(escolha do Claude)**.
+- O StrykerJS muta só as **linhas** de `frontend/src` alteradas em relação à base do PR, e não o arquivo inteiro.
 - A nota mínima é **80%**.
 - Textos fixos não são mutados, e o código gerado fica de fora.
 - Nesta entrega, a nota nas linhas alteradas foi de 97,1%. Os dois mutantes que sobraram trocam "buscar só os Termos de novo" por "buscar tudo de novo", o que não muda a tela.
@@ -2279,7 +2267,7 @@ O Vitest e a Testing Library entram como dependências de desenvolvimento. Os te
 ## 77.4 Ponta a ponta
 
 - As specs do Playwright estão no repositório e rodam com `make e2e`, só no ambiente local.
-- Elas rodam num container com o navegador, na rede do host, para a sessão do Sanctum valer em `localhost:5173` **(escolha do Claude)**.
+- Elas rodam num container com o navegador, na rede do host, para a sessão do Sanctum valer em `localhost:5173`.
 - Os testes criam conteúdo de teste no banco de dev.
 
 # 78. Revisão de segurança (OWASP Top 10) — 08/11/2026
@@ -2344,7 +2332,7 @@ Em produção, o ConectaCC começa com o Cadastro restrito a pessoas convidadas.
 
 ## 79.2 Mensagem
 
-Quem não está na lista vê: "O cadastro está restrito às pessoas convidadas para o período de teste." **(escolha do Claude)**
+Quem não está na lista vê: "O cadastro está restrito às pessoas convidadas para o período de teste."
 
 A conferência da lista vem antes da de e-mail já cadastrado. Assim, quem não foi convidado não descobre se o e-mail já tem conta.
 
