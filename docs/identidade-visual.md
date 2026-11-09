@@ -1,4 +1,4 @@
-# Identidade Visual — ConectaCC
+# Identidade Visual - ConectaCC
 
 Este documento registra os princípios visuais definidos para o ConectaCC.
 
@@ -333,7 +333,9 @@ Evitar interfaces em que todos os elementos tenham o mesmo peso visual.
 
 # 9. Telas de autenticação
 
-Login, Cadastro e Recuperação de senha utilizam uma identidade mais expressiva.
+Login e Cadastro utilizam uma identidade mais expressiva.
+
+Caso a Recuperação de senha seja implementada futuramente, deverá seguir a mesma linguagem visual.
 
 No desktop:
 
@@ -411,7 +413,7 @@ Grupo inferior:
 - Configurações
 - Sair
 
-Para ADMIN:
+Para MODERADOR e ADMINISTRADOR:
 
 - Moderação
 
@@ -532,8 +534,7 @@ Os ícones devem:
 
 Evitar misturar diversas famílias ou estilos de ícones.
 
-O emoji 👋 é uma exceção aprovada exclusivamente para a saudação da Home.
-
+Na saudação da Home, o aceno é representado por um ícone..
 ---
 
 # 18. Estados
@@ -615,8 +616,7 @@ No mobile:
 - ações com tamanho adequado para toque;
 - modais e painéis adaptados à largura disponível.
 
-A estratégia atual é uma referência do protótipo e deverá ser validada durante a implementação.
-
+Essa é a estratégia responsiva adotada na implementação atual.
 ---
 
 # 23. Acessibilidade
