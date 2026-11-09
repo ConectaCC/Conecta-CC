@@ -10,8 +10,7 @@ Os fluxos representam o comportamento esperado do produto e servem como referên
 - validação com usuários.
 
 
-> **Escopo atual (02/11/2026):** Oportunidade, Comunidade (feed, publicações e canais) e a busca de estudantes saíram do MVP e ficam para a próxima versão (`decisoes.md` 56). Os requisitos e fluxos dessas áreas continuam neste documento como referência.
-
+> **Escopo atual:** Estudos, Oportunidade, Comunidade, Perfil, Moderação, Meus conteúdos e Notificações fazem parte da aplicação atual. Funcionalidades futuras são identificadas ao longo deste documento.
 ---
 
 # 1. Cadastro
@@ -48,6 +47,12 @@ Assim, depois da criação bem-sucedida da conta:
 → o usuário retorna diretamente ao Login.
 
 A confirmação de propriedade do e-mail poderá ser avaliada apenas em uma evolução futura do ConectaCC.
+
+Durante o período de teste fechado:
+
+- o cadastro fica restrito aos e-mails convidados;
+- o e-mail ainda precisa pertencer ao domínio institucional permitido;
+- quem não estiver na lista de convidados recebe a informação de que o cadastro está restrito aos participantes convidados.
 ---
 
 # 2. Login
@@ -74,37 +79,21 @@ A interface não deve indicar separadamente se o problema está no e-mail ou na 
 
 # 3. Recuperação de senha
 
-Fluxo:
+A recuperação de senha não faz parte da versão atual.
+
+Caso seja implementada futuramente, deverá utilizar um fluxo seguro:
 
 Login  
 → Esqueci minha senha  
 → informar E-mail institucional  
-→ Enviar instruções  
-→ Verifique seu e-mail.
-
-A resposta deve ser genérica e não confirmar se existe uma conta associada ao endereço informado.
-
-Exemplo:
-
-**Se existir uma conta associada ao e-mail informado, enviaremos as instruções para redefinir sua senha.**
-
-Depois:
-
-E-mail recebido  
+→ receber instruções por e-mail  
 → acessar link de recuperação  
-→ Definir nova senha  
-→ Confirmar nova senha  
-→ Redefinir senha  
+→ definir nova senha  
+→ confirmar nova senha  
 → Senha redefinida  
-→ Ir para o Login.
+→ Login.
 
-A tela de definição da nova senha não faz parte da navegação normal da aplicação.
-
-Ela deve ser acessada através do link de recuperação.
-
-A recuperação de senha é independente da confirmação de cadastro.
-
-Mesmo sem confirmação de propriedade do e-mail no MVP/piloto, a recuperação continuará utilizando envio de instruções para o endereço associado à conta.
+A resposta inicial não deverá confirmar se existe uma conta associada ao e-mail informado.
 
 ---
 
@@ -300,8 +289,17 @@ O material não aparece imediatamente para outros estudantes.
 
 Perfil  
 → Meus conteúdos  
-→ filtros Todos, Em andamento, Aprovados, Rejeitados e Excluídos  
-→ "Mostrar mais" de 20 em 20.
+→ escolher entre **Materiais** e **Oportunidades**.
+
+Cada tipo possui filtros por situação, como:
+
+- Todos;
+- Em andamento;
+- Aprovados;
+- Rejeitados;
+- Excluídos.
+
+### Materiais
 
 Em análise  
 → Cancelar envio  
@@ -310,23 +308,34 @@ Em análise
 → sai da fila.
 
 Aprovado  
-→ Editar (também pelo menu ⋯ no card, só para o autor)  
+→ Editar  
 → Enviar para análise  
 → alteração PENDENTE  
-→ a versão publicada continua no ar até a aprovação.
+→ a versão publicada continua disponível até a aprovação da alteração.
 
 Aprovado  
-→ Excluir (também pelo menu ⋯)  
+→ Excluir  
 → confirmar  
-→ some da disciplina  
-→ aparece como Excluído  
-→ a alteração pendente é cancelada.
+→ deixa de aparecer em Estudos e na Comunidade  
+→ continua consultável em Meus conteúdos como Excluído.
 
 Rejeitado  
-→ o autor vê o motivo  
-→ para corrigir, faz um envio novo.
+→ consultar motivo  
+→ para corrigir, realizar um novo envio.
 
-> **Atualização (04/11/2026):** as tags seguem uma cor por status: Em análise em amarelo, Aprovado em verde, Rejeitado e Excluído em vermelho, Cancelado em cinza. Item com alteração em análise ou não aprovada mantém o status e ganha também a tag Alteração, em laranja (`decisoes.md` 58).
+### Oportunidades
+
+Em análise  
+→ Cancelar envio  
+→ confirmar  
+→ CANCELADO.
+
+Aprovada  
+→ pode ser excluída pelo autor.
+
+Oportunidades não possuem edição na versão atual.
+
+As listas utilizam **Mostrar mais** quando necessário.
 
 ---
 
@@ -336,137 +345,172 @@ Fluxo:
 
 Material enviado  
 → PENDENTE  
-→ ADMIN acessa Moderação  
+→ MODERADOR ou ADMINISTRADOR acessa Moderação  
 → abre conteúdo  
 → analisa.
 
+O MODERADOR não recebe na própria fila materiais enviados por ele.
+
+O ADMINISTRADOR pode moderar o próprio conteúdo.
+
 ## Se aprovado
 
-ADMIN  
 → Aprovar  
 → confirmar aprovação  
 → APROVADO  
 → material sai da fila  
-→ material aparece em Estudos  
+→ aparece em Estudos e na Comunidade  
 → data pública = data de aprovação/publicação  
 → autor recebe notificação.
 
-Para os demais estudantes, o material continua aparecendo no MVP atual como:
+Quando identificado, o material mostra o Nome de exibição do autor.
 
-**Compartilhado pela comunidade**
+Quando enviado anonimamente:
 
-> **Atualização (04/11/2026):** substituído. O material identificado mostra o nome do autor, com link para o Perfil público. Só o material anônimo aparece como "Compartilhado pela comunidade" (`decisoes.md` 55.2 e 57.2).
+→ aparece como **Compartilhado pela comunidade** nas áreas públicas.
 
 ## Se rejeitado
 
-ADMIN  
 → Rejeitar  
-→ motivo obrigatório (`decisoes.md` 55.4)  
+→ informar motivo obrigatório  
 → confirmar rejeição  
 → REJEITADO  
 → material sai da fila  
-→ material não é publicado  
-→ autor recebe notificação.
-
+→ não é publicado  
+→ autor recebe notificação  
+→ motivo fica disponível em Meus conteúdos.
 ---
 
 # 11. Oportunidade
-
-> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
-
-> **Atualização (08/11/2026):** fluxo atual (`decisoes.md` 70): Sidebar → Oportunidade → card das bolsas do IFSul (abre em nova aba) ou lista → buscar, filtrar por tipo → "Acessar oportunidade". "+ Adicionar oportunidade" (ou Comunidade → "Compartilhar conteúdo" → Oportunidade) → modal → "Enviar para análise" → Moderação → aprovada: aparece na página e no mural, com notificação; rejeitada: notificação leva a Meus conteúdos com o motivo.
 
 Fluxo principal:
 
 Sidebar  
 → Oportunidade.
 
-A página possui:
+A página apresenta:
 
-## Oportunidades do IFSul
+- acessos para oportunidades oficiais do IFSul;
+- oportunidades indicadas pela comunidade;
+- busca;
+- filtro por tipo;
+- opção de adicionar oportunidade.
 
-Recursos institucionais confirmados.
+Ao selecionar uma oportunidade:
 
-## Oportunidades indicadas pela comunidade
-
-Conteúdos enviados por estudantes e aprovados pela Moderação.
+→ acessar o link original em nova guia.
 
 ---
 
 # 12. Indicar oportunidade
 
-> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
-
 Fluxo:
 
 Oportunidade  
-→ Indicar oportunidade.
+→ Adicionar oportunidade.
+
+ou:
+
+Comunidade  
+→ Compartilhar conteúdo  
+→ Oportunidade.
 
 Campos:
 
-- Título;
 - Tipo;
-- Descrição opcional;
-- Link.
+- Título;
+- Descrição curta;
+- Link;
+- Modalidade;
+- Inscrições até, opcional.
+
+Tipos:
+
+- Estágio;
+- Emprego;
+- Evento;
+- Projeto;
+- Outro.
+
+Modalidades:
+
+- Remoto;
+- Híbrido;
+- Presencial.
 
 Fluxo:
 
 Preencher  
 → Enviar para análise  
-→ loading  
 → Oportunidade enviada para análise  
-→ status PENDENTE.
+→ PENDENTE  
+→ acompanhar em Meus conteúdos.
 
-A oportunidade não aparece imediatamente na página.
+Sem data de encerramento informada, a oportunidade permanece visível por 15 dias após a aprovação.
 
 ---
 
 # 13. Moderação de oportunidade
 
-> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
-
 Fluxo:
 
 Oportunidade enviada  
 → PENDENTE  
-→ ADMIN analisa.
+→ MODERADOR ou ADMINISTRADOR acessa Moderação  
+→ analisa.
+
+O MODERADOR não pode analisar a própria oportunidade.
+
+O ADMINISTRADOR pode moderar o próprio envio.
 
 ## Aprovação
 
 → APROVADO  
-→ oportunidade passa a aparecer em Oportunidade  
-→ data pública considera aprovação/publicação  
+→ sai da fila  
+→ aparece em Oportunidade e no mural da Comunidade  
 → autor recebe notificação.
 
 ## Rejeição
 
+→ informar motivo obrigatório  
 → REJEITADO  
+→ sai da fila  
 → não é publicada  
 → autor recebe notificação  
-→ motivo pode ser exibido quando informado.
-
+→ motivo fica disponível em Meus conteúdos.
 ---
 
 # 14. Comunidade
-
-> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
 
 Fluxo principal:
 
 Sidebar  
 → Comunidade.
 
-A Comunidade possui:
+A Comunidade funciona atualmente como um mural de descoberta dos conteúdos compartilhados no ConectaCC.
 
-- O que está rolando;
-- Encontre estudantes;
-- Conecte-se com a comunidade.
+O mural reúne:
+
+- materiais aprovados;
+- oportunidades aprovadas.
+
+A página permite:
+
+- buscar conteúdos;
+- filtrar por tipo;
+- ordenar resultados;
+- alternar entre visualização em lista e grade;
+- carregar mais resultados;
+- acessar os conteúdos;
+- utilizar o menu Compartilhar conteúdo.
+
+Funcionalidades como busca de estudantes, canais e publicações externas ficam para evoluções futuras.
 
 ---
 
 # 15. Compartilhar com a Comunidade
 
-> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
+> **Evolução futura:** este fluxo não faz parte da versão atual.
 
 Fluxo:
 
@@ -493,7 +537,7 @@ A publicação não aparece imediatamente no feed.
 
 # 16. Moderação de publicação
 
-> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
+> **Evolução futura:** este fluxo não faz parte da versão atual.
 
 Fluxo:
 
@@ -516,50 +560,57 @@ Publicação enviada
 
 ---
 
-# 17. Feed da Comunidade
+# 17. Mural da Comunidade
 
-> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
+Fluxo:
 
-> **Atualização (08/11/2026):** o feed voltou como mural dos materiais aprovados (`decisoes.md` 68). Fluxo: Sidebar → Comunidade → mural → nome do autor (Perfil público), título (disciplina rolada até o material) ou disciplina. No material anônimo, "Comunidade" aparece sem link.
+Sidebar  
+→ Comunidade  
+→ mural.
 
-> **Atualização (08/11/2026):** no mural: Comunidade → buscar (título, disciplina ou autor) → mudar a ordem → ver em lista ou grade → resultado. Sem resultado → "Limpar busca". Card "Contribua com a comunidade" → "Compartilhar material" → Estudos. Com Oportunidades, o mural terá um filtro por tipo, e "Compartilhar" vai oferecer material ou oportunidade (`decisoes.md` 69).
+O mural apresenta materiais e oportunidades aprovados, do mais recente para o mais antigo por padrão.
 
-O feed segue ordem cronológica.
+O usuário pode:
 
-Para conteúdos que passaram por Moderação, a ordenação pública considera a:
-
-**data de aprovação/publicação.**
-
-Isso vale para conteúdos que só se tornam visíveis para os estudantes depois da aprovação.
-
-Pode apresentar:
+- buscar;
+- filtrar por tipo;
+- alterar a ordem;
+- alternar entre lista e grade;
+- carregar mais resultados.
 
 ## Material
 
-Exemplo:
+Material identificado:
 
-**Novo material disponível**
+→ mostra o Nome de exibição do autor  
+→ nome pode abrir o Perfil público.
 
-→ Ver material  
-→ abrir Página da disciplina em Estudos.
+Material anônimo:
 
-## Publicação
+→ aparece como compartilhado pela Comunidade  
+→ não revela o autor.
 
-Exemplo:
+Ao selecionar o título do material:
 
-**Ana Silva compartilhou**
+→ abrir a disciplina correspondente em Estudos  
+→ localizar o material.
 
-→ Ver publicação externa.
+## Oportunidade
 
-O Nome de exibição do autor pode abrir:
+→ aparece como adicionada pela Comunidade  
+→ não mostra publicamente quem realizou o envio.
 
-→ Perfil público.
+Ao acessar:
+
+→ abrir a oportunidade correspondente.
+
+Materiais excluídos e oportunidades encerradas ou excluídas deixam de aparecer no mural.
 
 ---
 
 # 18. Encontrar estudantes
 
-> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
+> **Evolução futura:** a busca de estudantes ainda não faz parte da versão atual.
 
 Fluxo:
 
@@ -591,7 +642,7 @@ Filtros:
 
 # 19. Busca por disciplina
 
-> **Fora do MVP (02/11/2026):** `decisoes.md` 56.
+> **Evolução futura:** a busca de estudantes ainda não faz parte da versão atual.
 
 Exemplo:
 
@@ -696,61 +747,68 @@ Após o sucesso:
 
 # 23. Notificações
 
-O sino pode apresentar notificações relacionadas à Moderação.
+O sino apresenta notificações relacionadas à análise dos conteúdos enviados.
 
-Tipos principais:
+Entre os eventos atuais estão:
 
-- Material aprovado;
-- Material rejeitado;
-- Publicação aprovada;
-- Publicação rejeitada;
-- Oportunidade aprovada;
-- Oportunidade rejeitada.
+- material aprovado;
+- material rejeitado;
+- alteração de material aprovada;
+- alteração de material rejeitada;
+- oportunidade aprovada;
+- oportunidade rejeitada.
 
-Quando houver motivo de rejeição:
+O sistema possui:
 
-→ ele pode ser exibido ao estudante.
-
-O MVP possui:
-
-- badge de não lidas;
-- dropdown;
+- contador de não lidas;
+- painel de notificações;
+- indicação de notificação nova;
 - marcar como lida;
-- marcar todas como lidas;
-- estado vazio.
+- marcar todas como lidas.
 
-> **Atualização (04/11/2026):** resolvido. Clicar marca como lida e leva ao conteúdo: uma aprovação abre a disciplina, e uma rejeição abre o item em Meus conteúdos (`decisoes.md` 55.5).
+Ao clicar em uma notificação:
 
-Essa decisão não bloqueia:
+→ ela é marcada como lida  
+→ o usuário é direcionado ao destino correspondente.
 
-- o checkpoint com a professora;
-- a definição da arquitetura geral;
-- a implementação dos módulos anteriores.
+Exemplos:
 
-Ela deverá estar fechada antes da implementação definitiva de Notificações.
+Aprovação de material  
+→ disciplina correspondente.
 
+Rejeição de material  
+→ item correspondente em Meus conteúdos.
+
+Aprovação de oportunidade  
+→ oportunidade correspondente.
+
+Rejeição de oportunidade  
+→ item correspondente em Meus conteúdos.
+
+O motivo da rejeição pode ser consultado pelo autor em Meus conteúdos.
 ---
 
 # 24. Moderação
 
 Fluxo:
 
-ADMIN  
+MODERADOR ou ADMINISTRADOR  
 → Moderação.
 
-A fila apresenta apenas conteúdos:
+A fila apresenta conteúdos:
 
 **PENDENTES**
 
-Tipos:
+Tipos atuais:
 
 - Material;
-- Publicação;
 - Oportunidade.
+
+A fila é única e não possui filtro por tipo.
 
 Ordem:
 
-mais antigos primeiro.
+**mais antigos primeiro.**
 
 Fluxo:
 
@@ -759,24 +817,21 @@ Fila
 → visualizar detalhes  
 → Aprovar ou Rejeitar.
 
+A rejeição exige motivo.
+
 ---
 
-# 25. ADMIN e próprio conteúdo
+# 25. Moderação do próprio conteúdo
 
-> **Atualização (02/11/2026):** a regra mudou. O ADMINISTRADOR pode moderar o próprio conteúdo, e o MODERADOR não vê o próprio envio na fila nem pode decidir sobre ele (`decisoes.md` 51.2, implementado na etapa 2a).
+## MODERADOR
 
-Se um ADMIN enviar um conteúdo como estudante:
+O próprio envio não aparece na fila de Moderação do MODERADOR.
 
-→ conteúdo aparece na fila  
-→ recebe indicação “Seu envio”  
-→ pode ser consultado  
-→ não apresenta ações Aprovar/Rejeitar.
+Ele deverá ser analisado por outro MODERADOR ou por um ADMINISTRADOR.
 
-Mensagem:
+## ADMINISTRADOR
 
-**Este conteúdo deve ser analisado por outro administrador.**
-
-Outro ADMIN deverá realizar a análise.
+O ADMINISTRADOR pode moderar conteúdos enviados pela própria conta.
 
 ---
 
@@ -847,7 +902,7 @@ Exemplos:
 
 Links institucionais ainda não confirmados não devem funcionar como links falsos.
 
-O levantamento dos links institucionais ainda pendentes será retomado após o checkpoint com a professora.
+Links institucionais pendentes só devem ser disponibilizados depois da confirmação do endereço correto.
 ---
 
 # 30. Estados gerais

@@ -1,10 +1,12 @@
-# ConectaCC — Stack e Decisões Técnicas
+# ConectaCC - Stack e Decisões Técnicas
 
-Última atualização: 13/10/2026
+Última atualização: 09/11/2026
 
-O ConectaCC é uma API REST em Laravel consumida por uma SPA em React, publicadas juntas numa imagem Docker no Render, com PostgreSQL no Neon e todos os serviços externos em planos gratuitos. Este documento registra apenas a stack e as decisões de tecnologia: o que foi escolhido e por quê. As regras de como cada parte funciona (autenticação, papéis, moderação, modelo de dados, convenções de código) ficam no documento de Implementação.
+O ConectaCC é uma API REST em Laravel consumida por uma SPA em React. API, SPA e painel administrativo são publicados juntos em uma imagem Docker no Render, com PostgreSQL no Neon.
 
-Complementa o `decisoes.md`, que registra as decisões de produto.
+Este documento registra a stack atual, as principais decisões técnicas, as justificativas dessas escolhas e os planos condicionados para possíveis evoluções.
+
+As regras funcionais do sistema ficam no documento de Implementação. As decisões de Produto ficam registradas em `decisoes.md`.
 
 ## Visão geral
 
@@ -154,49 +156,69 @@ As decisões seguem o formato do `decisoes.md`: o que foi decidido, por quê, o 
 
 ### 5. Painel administrativo
 
-**Decisão.** Filament em `/admin`, acessível somente a ADMINISTRADOR. O painel serve para:
+**Decisão.** Filament em `/admin`, acessível somente a ADMINISTRADOR.
 
-- gestão de usuários e papéis;
-- consulta de moderações;
-- atendimento de pedidos de exclusão de conta;
-- cadastros curados (oportunidades do IFSul, canais da Comunidade, catálogo de disciplinas). Oportunidades e canais saíram do MVP (`decisoes.md` 56);
-- consulta de dados para suporte.
+O painel atual permite:
 
-O que cada função do painel pode fazer está definido no documento de Implementação.
+- consultar usuários;
+- alterar papéis de outras contas;
+- consultar registros administrativos de Materiais;
+- consultar Oportunidades;
+- acessar a Auditoria;
+- consultar informações necessárias para suporte e administração.
 
-> **Atualização (05/11/2026):** o atendimento de pedidos de exclusão de conta fica fora do painel no MVP (`decisoes.md` 64).
+A aprovação e rejeição de conteúdos não são realizadas pelo Filament.
 
-**Motivo.** O Render gratuito não é um ambiente confiável para comandos manuais em produção; o painel substitui mecanismos improvisados e é gratuito, mantido e construído sobre os models existentes.
+A Moderação permanece na aplicação comum e é utilizada por MODERADOR e ADMINISTRADOR.
 
-**Consequência.** É a única exceção à regra de nenhuma tela renderizada no servidor: o Filament usa Livewire e a sessão do Laravel. A versão do Filament precisa ser compatível com a do Laravel adotada.
+A autoexclusão de conta e o atendimento de pedidos de exclusão através do painel não fazem parte do MVP atual.
 
-## Decisões: infraestrutura e operação
+**Motivo.** O painel concentra funções administrativas sem exigir a construção manual de uma segunda interface administrativa completa.
+
+**Consequência.** O Filament é a única exceção à arquitetura da SPA: utiliza renderização do servidor e Livewire, mantendo o acesso restrito ao ADMINISTRADOR.
 
 ### 6. Hospedagem
 
-**Decisão.** Aplicação no Render (plano gratuito), como uma imagem Docker com API, SPA e painel; banco no Neon (plano Free). Hospedagem inicialmente fora do IFSul, sem orçamento e sem domínio próprio. A hibernação do Render é tratada com um monitor externo acessando `/up` a cada 10 minutos, se os termos do Render permitirem; caso contrário, com aviso no convite aos alunos.
+**Decisão.** A aplicação é publicada no Render através de uma imagem Docker, enquanto o banco PostgreSQL de produção fica no Neon.
 
-| Serviço                     | Limite que importa                                                     |
-| ---------------------------- | ---------------------------------------------------------------------- |
-| Render, web service gratuito | Hiberna após 15 min sem tráfego; cerca de 1 min para acordar         |
-| Neon, plano Free             | 1 GB e 100 horas de computação por mês; suspende após 5 min ocioso |
+A hospedagem inicial é externa ao IFSul, sem domínio próprio e utilizando planos gratuitos.
 
-**Motivo.** Custo zero, sem cartão. O Postgres gratuito do próprio Render expira em 30 dias, por isso o banco fica no Neon.
+O Render utiliza:
 
-**Alternativas descartadas.**
+- região Virginia;
+- health check em `/up`;
+- deploy disparado pelo GitHub Actions somente depois do CI verde.
 
-- Oracle Always Free: única VM gratuita sem hibernação, mas exige cartão, teve cota reduzida em 2026 e pode recuperar instâncias ociosas;
-- Supabase como banco: pausa projetos após 7 dias sem uso.
+**Motivo.**
 
-**Consequência.** A defesa contra mudanças nos planos gratuitos é a portabilidade: imagem Docker, configuração só em variáveis de ambiente e Postgres padrão. Trocar de provedor, inclusive para hospedagem institucional, é trocar a connection string e refazer o deploy. Resolve a pendência 2.1. O Render gratuito não tem Shell: comandos administrativos (como mudar o papel de um usuário) rodam pelo workflow "Promover usuário" no GitHub Actions.
+- custo inicial zero;
+- facilidade de publicação;
+- suporte a Docker;
+- possibilidade de utilizar PostgreSQL externo;
+- portabilidade para outro provedor futuramente.
+
+**Consequência.** A infraestrutura foi construída de forma a reduzir dependência do provedor:
+
+- aplicação empacotada em Docker;
+- configuração por variáveis de ambiente;
+- PostgreSQL padrão;
+- migrations automatizadas.
+
+Caso exista continuidade institucional, o sistema poderá ser migrado para outra infraestrutura sem alteração das regras de Produto.
+
+O uso de monitor externo para reduzir os efeitos de hibernação do plano gratuito permanece como decisão operacional condicionada.
 
 ### 7. E-mail
 
-**Decisão.** E-mails da aplicação (recuperação de senha, se implementada — decisoes.md 52.9) pelo SMTP do Gmail, com senha de app, na conta Google do projeto. Envio síncrono, sem fila. Mailpit no desenvolvimento.
+**Decisão.** O MVP atual não depende de envio de e-mails em produção.
 
-**Motivo.** Sem domínio próprio, provedores transacionais não conseguem autenticar o remetente; o Gmail envia pelos servidores do Google.
+No ambiente de desenvolvimento, o Mailpit está disponível para testar funcionalidades que utilizem e-mail.
 
-**Consequência.** Com domínio próprio, a troca para um provedor com SPF/DKIM é só configuração.
+Caso Recuperação de senha ou outras funcionalidades de e-mail entrem no escopo futuramente, a primeira opção prevista é utilizar SMTP através da conta Google do projeto.
+
+Com domínio próprio, poderá ser adotado posteriormente um provedor transacional com SPF/DKIM.
+
+**Consequência.** A aplicação utiliza a abstração de Mailer do Laravel, permitindo trocar o provedor sem alterar as regras funcionais.
 
 ### 8. Monitoramento de erros
 

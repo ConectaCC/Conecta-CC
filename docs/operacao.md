@@ -1,4 +1,4 @@
-# Operação — ConectaCC
+# Operação - ConectaCC
 
 Como subir o ambiente, rodar os testes e operar a produção.
 
@@ -37,8 +37,16 @@ Criadas pelos seeders (só em desenvolvimento). Senha de todas: `password`.
 | moderador2@academico.ifsul.edu.br | MODERADOR |
 | admin@academico.ifsul.edu.br | ADMINISTRADOR |
 
-O `MaterialSeeder` cria materiais de exemplo (aprovados, pendentes, rejeitado, cancelado e uma alteração pendente), e o `NotificationSeeder` cria duas notificações para o `aluno@`. Os dois podem ser rodados sozinhos, sem recriar o banco: `docker compose exec -u sail app php artisan db:seed --class=MaterialSeeder`.
+O `MaterialSeeder` cria materiais de exemplo, incluindo aprovados, pendentes, rejeitado, cancelado e uma alteração pendente.
 
+O `NotificationSeeder` cria notificações de exemplo para `aluno@academico.ifsul.edu.br`.
+
+Os seeders podem ser executados separadamente, sem recriar o banco:
+
+```bash
+docker compose exec -u sail app php artisan db:seed --class=MaterialSeeder
+docker compose exec -u sail app php artisan db:seed --class=NotificationSeeder
+```
 ### Comandos
 
 | Comando | O que faz |
@@ -92,7 +100,7 @@ Todas as contas pertencem à conta Google do projeto (decisão 9).
 - **Quem não está na lista** vê "O cadastro está restrito às pessoas convidadas para o período de teste." e não descobre se o e-mail já tem conta.
 - **Tirar alguém da lista** só impede novos cadastros com aquele e-mail: quem já tem conta continua entrando.
 - **Abrir o Cadastro** a todo o domínio institucional: apagar o valor de `ALLOWED_EMAILS`.
-- **Começo do teste (08/11/2026):** a lista tem só Marcelo e Viviane, que se cadastram e viram ADMINISTRADOR pelo workflow "Promover usuário".
+- **Planejamento inicial do período de teste (08/11/2026):** o piloto foi planejado para 12 participantes: 10 estudantes com papel ALUNO e 2 ADMINISTRADORES, Marcelo e Viviane. Todos os participantes devem ser incluídos em `ALLOWED_EMAILS` para realizar o cadastro. As contas criadas pelo Cadastro recebem inicialmente o papel ALUNO; Marcelo e Viviane devem receber o papel ADMINISTRADOR após o cadastro, seguindo o procedimento de alteração de papel descrito neste documento.
 
 ## Configuração do repositório (admin)
 

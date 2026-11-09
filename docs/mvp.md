@@ -1,8 +1,8 @@
-# Escopo do MVP — ConectaCC
+# Escopo do MVP - ConectaCC
 
 Este documento define o escopo atual do MVP do ConectaCC.
 
-O objetivo é deixar claro o que faz parte da primeira versão do projeto, o que está sendo prototipado e o que deverá permanecer para evoluções futuras.
+O objetivo é deixar claro o que faz parte da versão atual do projeto e o que permanece previsto para evoluções futuras.
 
 ---
 
@@ -47,7 +47,6 @@ Pode:
 
 - criar conta;
 - realizar Login;
-- recuperar senha, se a recuperação for implementada no MVP;
 - acessar a Home;
 - editar o próprio Perfil;
 - selecionar disciplinas atuais;
@@ -55,31 +54,50 @@ Pode:
 - consultar materiais;
 - compartilhar materiais por link;
 - consultar Perfis públicos;
-
-> **Atualização (02/11/2026):** consultar e indicar oportunidades, acessar a Comunidade, compartilhar publicações e encontrar outros estudantes saíram do MVP e ficam para a próxima versão (`decisoes.md` 56).
+- acessar Oportunidade;
+- consultar e indicar oportunidades;
+- acessar a Comunidade;
 - consultar e gerenciar os próprios conteúdos em Perfil → Meus conteúdos;
 - acessar Configurações;
 - alterar senha;
 - receber notificações.
 
+A busca de estudantes e outras funcionalidades sociais permanecem para evoluções futuras.
+
 ### MODERADOR
 
-Possui as funcionalidades disponíveis ao estudante e também pode acessar a **Moderação** dentro da aplicação comum (fora do `/admin`), para analisar, aprovar e rejeitar Material, Publicação e Oportunidade.
+Possui as funcionalidades disponíveis ao estudante e também pode acessar a **Moderação** dentro da aplicação comum.
 
-- É nomeado somente por ADMINISTRADOR.
-- Não acessa `/admin`, não altera papéis e não gerencia permissões.
-- Não modera o próprio conteúdo: esse conteúdo não aparece na fila dele.
-- Nunca vê a identidade real do autor de conteúdo anônimo.
+Pode analisar:
+
+- Materiais;
+- Oportunidades.
+
+Regras:
+
+- é nomeado somente por ADMINISTRADOR;
+- não acessa `/admin`;
+- não altera papéis;
+- não gerencia permissões administrativas;
+- não pode moderar o próprio conteúdo;
+- o próprio conteúdo não aparece na fila que ele pode moderar;
+- não visualiza a identidade real do autor de um material enviado anonimamente.
 
 ### ADMINISTRADOR
 
-Possui as funcionalidades disponíveis ao estudante, pode moderar (inclusive o próprio conteúdo) e é o único com acesso ao painel administrativo em `/admin`, onde gerencia papéis e permissões e pode identificar o autor real de conteúdo anônimo quando necessário.
+Possui as funcionalidades disponíveis ao estudante e também:
+
+- acessa a Moderação;
+- pode moderar o próprio conteúdo;
+- acessa exclusivamente o painel administrativo em `/admin`;
+- pode alterar papéis de outras contas;
+- consulta informações administrativas;
+- acessa a Auditoria;
+- pode identificar o autor real de material anônimo nas áreas administrativas autorizadas.
 
 ---
 
 # 4. Áreas do MVP
-
-> **Atualização (04/11/2026):** Oportunidade e Comunidade saíram do MVP (`decisoes.md` 56).
 
 ## 4.1 Autenticação
 
@@ -88,8 +106,10 @@ O MVP contempla:
 - Login;
 - Cadastro;
 - Termos de participação;
-- Recuperação de senha;
-- Logout.
+- Logout;
+- alteração de senha em Configurações.
+
+A recuperação de senha não faz parte da versão atual.
 
 ### Cadastro
 
@@ -102,19 +122,23 @@ O cadastro utiliza:
 
 O Nome completo é utilizado inicialmente como Nome de exibição e poderá ser alterado posteriormente no Perfil.
 
-No MVP e no piloto, o cadastro utiliza exclusivamente:
+No MVP e no piloto, o cadastro utiliza exclusivamente o domínio institucional definido para o projeto:
 
-**e-mail institucional do IFSul.**
+**`academico.ifsul.edu.br`**
 
-A possibilidade de aceitar e-mails de outras instituições poderá ser avaliada apenas em uma futura expansão do ConectaCC para fora do IFSul.
+Durante o período de teste fechado, o cadastro também pode ser limitado aos e-mails convidados.
 
-No MVP e no piloto não haverá confirmação de propriedade do e-mail por link ou código.
+A possibilidade de aceitar e-mails de outras instituições poderá ser avaliada apenas em uma futura expansão do ConectaCC.
 
-Essa funcionalidade poderá ser avaliada em uma evolução futura e não interfere no fluxo de recuperação de senha.
+### Confirmação de propriedade do e-mail
+
+No MVP e no piloto não haverá confirmação de cadastro por link ou código enviado ao e-mail.
+
+Essa funcionalidade poderá ser avaliada futuramente.
 
 ### Senha
 
-Regra inicial:
+Regra atual:
 
 - mínimo de 8 caracteres;
 - confirmação deve ser igual à senha.
@@ -123,37 +147,77 @@ Não existem, no MVP atual, exigências adicionais obrigatórias de letras maiú
 
 ### Termos de participação
 
-Antes da criação da conta, o estudante deve aceitar os Termos de participação da versão de testes.
+Antes da criação da conta, o estudante deve aceitar os Termos de participação vigentes.
 
-O aceite deverá ser registrado de forma versionada durante a implementação.
+Os Termos são versionados.
+
+O sistema registra:
+
+- versão aceita;
+- usuário;
+- data e hora do aceite.
 
 ---
 
 # 5. Home
 
-> **Atualização (04/11/2026):** os atalhos são só para Estudos e Perfil (`decisoes.md` 56).
+## 4.1 Autenticação
 
-A Home funciona como ponto inicial do ConectaCC.
+O MVP contempla:
 
-Ela apresenta:
+- Login;
+- Cadastro;
+- Termos de participação;
+- Logout;
+- alteração de senha em Configurações.
 
-- saudação;
-- breve apresentação da plataforma;
-- atalhos para as principais áreas;
-- notificações;
-- orientação para completar o Perfil quando necessário.
+A recuperação de senha não faz parte da versão atual.
 
-O Perfil é considerado completo quando possui:
+### Cadastro
 
-- Nome de exibição;
-- pelo menos uma disciplina atual.
+O cadastro utiliza:
 
-Enquanto isso não ocorrer, a Home apresenta:
+- Nome completo;
+- E-mail institucional;
+- Senha;
+- Confirmar senha.
 
-**Complete seu perfil**
+O Nome completo é utilizado inicialmente como Nome de exibição e poderá ser alterado posteriormente no Perfil.
 
-Depois que o Perfil estiver completo, esse card deixa de ser exibido.
+No MVP e no piloto, o cadastro utiliza exclusivamente o domínio institucional definido para o projeto:
 
+**`academico.ifsul.edu.br`**
+
+Durante o período de teste fechado, o cadastro também pode ser limitado aos e-mails convidados.
+
+A possibilidade de aceitar e-mails de outras instituições poderá ser avaliada apenas em uma futura expansão do ConectaCC.
+
+### Confirmação de propriedade do e-mail
+
+No MVP e no piloto não haverá confirmação de cadastro por link ou código enviado ao e-mail.
+
+Essa funcionalidade poderá ser avaliada futuramente.
+
+### Senha
+
+Regra atual:
+
+- mínimo de 8 caracteres;
+- confirmação deve ser igual à senha.
+
+Não existem, no MVP atual, exigências adicionais obrigatórias de letras maiúsculas, números ou símbolos.
+
+### Termos de participação
+
+Antes da criação da conta, o estudante deve aceitar os Termos de participação vigentes.
+
+Os Termos são versionados.
+
+O sistema registra:
+
+- versão aceita;
+- usuário;
+- data e hora do aceite.
 ---
 
 # 6. Perfil
@@ -200,7 +264,7 @@ Apresenta as disciplinas selecionadas pelo estudante no Perfil.
 
 Apresenta o catálogo das disciplinas confirmadas do curso.
 
-A referência acadêmica inicial do MVP será a:
+A referência acadêmica utilizada no MVP é a:
 
 **Matriz 2023 do Bacharelado em Ciência da Computação do IFSul – Câmpus Passo Fundo.**
 
@@ -220,7 +284,7 @@ A Matriz 2023 organiza o curso do:
 
 A necessidade de contemplar estudantes ainda vinculados à Matriz 2017 será verificada posteriormente e não bloqueia as atividades atuais.
 
-> **Atualização (04/11/2026):** substituído. Todas as disciplinas têm área de materiais (`decisoes.md` 54.2).
+Todas as disciplinas confirmadas da Matriz 2023 possuem área para compartilhamento e consulta de materiais.
 
 ## Página da disciplina
 
@@ -241,52 +305,69 @@ No MVP, materiais são compartilhados através de:
 
 Não existe upload direto de arquivos nesta versão.
 
-Fluxo:
+## Fluxo
 
-Aluno acessa disciplina
-→ Compartilhar material
-→ informa Título, Descrição e Link
-→ Enviar para análise
-→ conteúdo fica PENDENTE
-→ ADMIN analisa.
+Aluno acessa disciplina  
+→ Compartilhar material  
+→ informa Título, Descrição opcional e Link  
+→ escolhe se deseja compartilhar anonimamente  
+→ Enviar para análise  
+→ conteúdo fica PENDENTE  
+→ MODERADOR ou ADMINISTRADOR analisa.
 
-Se aprovado:
+## Se aprovado
 
-→ material aparece em Estudos.
+→ material aparece em Estudos  
+→ também pode aparecer no mural da Comunidade  
+→ autor recebe notificação.
 
-Se rejeitado:
+## Se rejeitado
 
-→ material não é publicado.
+→ material não é publicado  
+→ autor recebe notificação  
+→ motivo fica disponível em Meus conteúdos.
 
-> **Atualização (04/11/2026):** substituído. O card mostra o nome de exibição do autor, com link para o Perfil público. Com a opção "Compartilhar anonimamente", o card mostra "Compartilhado pela comunidade", sem link, e o sistema continua guardando quem enviou (`decisoes.md` 55.2 e 57.2).
+## Autoria
 
-O ADMIN continua identificando quem realizou o envio para fins de Moderação e notificação.
+Por padrão, o material apresenta publicamente o **Nome de exibição** do autor.
 
-Quando um material for aprovado, sua data pública será:
+O estudante também pode escolher:
+
+**Compartilhar anonimamente**
+
+Nesse caso, o material aparece publicamente como:
+
+**Compartilhado pela comunidade**
+
+O sistema continua registrando internamente quem realizou o envio.
+
+O MODERADOR não visualiza a identidade real do autor de um material anônimo.
+
+O ADMINISTRADOR pode identificar o autor nas áreas administrativas autorizadas.
+
+## Data pública
+
+Quando aprovado, o material utiliza publicamente:
 
 **a data de aprovação/publicação.**
 
-A data original do envio poderá permanecer registrada internamente.
+A data original do envio permanece registrada internamente.
 ---
 
 # 9. Oportunidade
 
-> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
+Oportunidade faz parte do MVP atual.
 
-> **Atualização (08/11/2026):** Oportunidade voltou como funcionalidade adicional (`decisoes.md` 70). Os tipos continuam os cinco; a descrição curta passou a ser obrigatória, e entraram a modalidade e o prazo "Inscrições até" (15 dias depois da aprovação quando fica vazio). A autoria nunca aparece na área pública.
+A área reúne:
 
-A área Oportunidade possui duas origens diferentes.
+- acesso a oportunidades institucionais;
+- oportunidades indicadas pela comunidade.
 
-## Oportunidades do IFSul
+## Oportunidades institucionais
 
-Reúne acessos institucionais já existentes.
+A página disponibiliza acesso a recursos oficiais já existentes, como as oportunidades e bolsas divulgadas pelo IFSul.
 
-Exemplos atualmente previstos:
-
-- Estágios;
-- Projetos de Extensão.
-
-As URLs devem ser confirmadas antes de serem utilizadas como links reais.
+Links institucionais somente devem ser utilizados quando o endereço oficial estiver confirmado.
 
 ## Oportunidades indicadas pela comunidade
 
@@ -294,12 +375,14 @@ Estudantes podem indicar oportunidades externas.
 
 Campos:
 
-- Título;
 - Tipo;
-- Descrição breve;
-- Link.
+- Título;
+- Descrição curta;
+- Link;
+- Modalidade;
+- Inscrições até, opcional.
 
-Tipos iniciais:
+Tipos:
 
 - Estágio;
 - Emprego;
@@ -307,68 +390,75 @@ Tipos iniciais:
 - Projeto;
 - Outro.
 
+Modalidades:
+
+- Remoto;
+- Híbrido;
+- Presencial.
+
 As oportunidades indicadas passam por Moderação antes de aparecer para outros estudantes.
 
-A data apresentada publicamente corresponde à:
+Quando aprovadas:
 
-**data de aprovação/publicação.**
+- aparecem na área Oportunidade;
+- podem aparecer no mural da Comunidade;
+- o autor recebe notificação.
 
-A data original do envio permanece como informação interna.
+A autoria de quem indicou a oportunidade não é apresentada publicamente.
 
+## Prazo
+
+O campo **Inscrições até** é opcional.
+
+Quando não for informado, a oportunidade permanece visível por 15 dias após a aprovação.
+
+Não fazem parte da versão atual:
+
+- edição de oportunidade aprovada;
+- envio anônimo.
 ---
 
 # 10. Comunidade
 
-> **Fora do MVP (02/11/2026):** decisão do Marcelo. Esta área fica para a próxima versão (`decisoes.md` 56). O texto abaixo é mantido como referência.
+A Comunidade faz parte do MVP atual e funciona como um mural de descoberta dos conteúdos compartilhados no ConectaCC.
 
-> **Atualização (08/11/2026):** a Comunidade voltou como mural de descoberta dos materiais aprovados, sem publicações próprias (`decisoes.md` 68). Continuam fora: publicações, comentários, canais e busca de estudantes.
+O mural reúne:
 
-A Comunidade busca aproximar estudantes e facilitar a circulação de conhecimentos e informações.
+- materiais aprovados;
+- oportunidades aprovadas.
 
-Ela possui três áreas principais:
+O usuário pode:
 
-## O que está rolando
+- buscar conteúdos;
+- filtrar por tipo;
+- alterar a ordem;
+- alternar entre visualização em lista e grade;
+- carregar mais resultados;
+- acessar materiais;
+- acessar oportunidades;
+- utilizar a opção "Compartilhar conteúdo".
 
-Feed cronológico simples.
+## Materiais
 
-Pode apresentar:
+Materiais identificados podem apresentar o Nome de exibição do autor e permitir acesso ao Perfil público.
 
-- novos materiais;
-- publicações compartilhadas por estudantes.
+Materiais anônimos aparecem como compartilhados pela Comunidade e não revelam publicamente o autor.
 
-O feed utiliza ordem do mais recente para o mais antigo.
+## Oportunidades
 
-Para publicações que passam por Moderação, a referência pública de data utiliza:
+Oportunidades aparecem como conteúdos indicados pela Comunidade.
 
-**a data de aprovação/publicação.**
+A identidade de quem realizou a indicação não é apresentada publicamente.
 
-Não existe algoritmo de recomendação no MVP.
+## Evoluções futuras
 
-## Encontre estudantes
+Não fazem parte da versão atual:
 
-Permite pesquisar outros estudantes por:
-
-- Nome de exibição;
-- Interesses;
-- Pode ajudar com;
-- Procura ajuda com;
-- Disciplinas atuais.
-
-O próprio usuário não aparece nos próprios resultados.
-
-Sem busca ativa, a lista utiliza ordem alfabética.
-
-## Conecte-se com a comunidade
-
-Área destinada a acessos relevantes.
-
-Recursos já discutidos:
-
-- grupo de WhatsApp dos estudantes;
-- Instagram institucional;
-- Arena Games.
-
-Links ainda não confirmados não devem ser inventados.
+- publicações como tipo próprio de conteúdo;
+- comentários;
+- canais da comunidade;
+- busca de estudantes;
+- funcionalidades de rede social.
 
 ---
 
@@ -400,8 +490,7 @@ Não apresenta:
 
 As disciplinas atuais são visíveis para outros estudantes autenticados.
 
-Essa informação deverá aparecer explicitamente nos Termos antes do piloto real.
-
+Os Termos de participação informam que as informações preenchidas no Perfil podem ser visualizadas por outros usuários autenticados, enquanto o e-mail institucional permanece privado.
 ---
 
 # 12. Configurações
@@ -426,77 +515,98 @@ Não existem no MVP atual:
 - idioma;
 - preferências de feed;
 - configurações sociais;
-- exclusão automática de conta;
+- autoexclusão de conta pela interface;
 - preferências avançadas de notificações.
 
 ---
 
 # 13. Notificações
 
-As notificações estão principalmente relacionadas aos resultados da Moderação.
+As notificações estão relacionadas principalmente aos resultados da Moderação.
 
-Exemplos:
+Eventos atuais:
 
 - material aprovado;
 - material rejeitado;
-- publicação aprovada;
-- publicação rejeitada;
+- alteração de material aprovada;
+- alteração de material rejeitada;
 - oportunidade aprovada;
 - oportunidade rejeitada.
-
-> **Atualização (02/11/2026):** no MVP, só materiais e alterações de material geram notificação. Publicação e Oportunidade saíram do MVP (`decisoes.md` 56).
-
-Quando houver motivo de rejeição, ele poderá aparecer na notificação.
 
 O MVP utiliza:
 
 - sino de notificações;
 - contador de não lidas;
+- limite visual `9+`;
 - dropdown;
+- indicação de notificação não lida;
 - marcar como lida;
-- marcar todas como lidas.
+- marcar todas como lidas;
+- estado vazio.
 
-Não é necessária uma página específica de notificações nesta primeira versão.
+Ao clicar em uma notificação:
 
-O comportamento ao clicar em uma notificação específica será definido antes da implementação definitiva de Notificações.
+→ ela é marcada como lida  
+→ o usuário é direcionado ao conteúdo ou área correspondente.
 
-Essa decisão não bloqueia a definição da arquitetura geral.
+Exemplos:
+
+Material aprovado  
+→ disciplina correspondente em Estudos.
+
+Material rejeitado  
+→ item correspondente em Meus conteúdos.
+
+Oportunidade aprovada  
+→ oportunidade correspondente.
+
+Oportunidade rejeitada  
+→ item correspondente em Meus conteúdos.
+
+O motivo da rejeição fica disponível nos detalhes do envio em Meus conteúdos.
+
+Não existe página específica de notificações no MVP.
 
 ---
 
 # 14. Moderação
 
-A Moderação é realizada por MODERADOR e ADMINISTRADOR. ALUNO não acessa a Moderação.
+A Moderação é realizada por:
 
-Os conteúdos moderados são:
+- MODERADOR;
+- ADMINISTRADOR.
+
+ALUNO não possui acesso à área.
+
+A fila atual reúne:
 
 - MATERIAL;
-- PUBLICAÇÃO;
 - OPORTUNIDADE.
 
-> **Atualização (02/11/2026):** no MVP, a fila tem só MATERIAL (`decisoes.md` 56).
+A fila é única e apresenta conteúdos PENDENTES, dos mais antigos para os mais recentes.
 
-Estados:
+Não existe filtro por tipo de conteúdo na versão atual.
+
+## Estados
 
 - PENDENTE;
 - APROVADO;
 - REJEITADO.
 
-Fluxo:
+## Fluxo
 
-Conteúdo enviado
-→ PENDENTE
-→ MODERADOR ou ADMINISTRADOR analisa
-→ APROVADO ou REJEITADO
+Conteúdo enviado  
+→ PENDENTE  
+→ MODERADOR ou ADMINISTRADOR analisa  
+→ APROVADO ou REJEITADO  
 → autor recebe notificação.
 
 ## Aprovação
 
 Quando aprovado:
 
-- Material → aparece em Estudos;
-- Publicação → aparece na Comunidade;
-- Oportunidade → aparece em Oportunidade.
+- Material → aparece em Estudos e na Comunidade;
+- Oportunidade → aparece em Oportunidade e na Comunidade.
 
 ## Rejeição
 
@@ -504,13 +614,24 @@ Quando rejeitado:
 
 - não aparece publicamente;
 - autor recebe notificação;
-- motivo da rejeição é obrigatório (`decisoes.md` 55.4).
+- motivo da rejeição é obrigatório;
+- motivo fica disponível ao autor em Meus conteúdos.
 
 ## Conflito de interesse
 
-Um MODERADOR não pode aprovar ou rejeitar o próprio conteúdo, inclusive o anônimo. Esse conteúdo não aparece na fila dele e é analisado por outro MODERADOR ou por um ADMINISTRADOR.
+O MODERADOR não pode aprovar ou rejeitar o próprio conteúdo.
+
+O próprio envio não aparece entre as pendências que ele pode moderar.
+
+Essa regra também vale para materiais enviados anonimamente.
 
 O ADMINISTRADOR pode moderar o próprio conteúdo.
+
+## Anonimato
+
+O MODERADOR não visualiza a identidade real do autor de material anônimo.
+
+O ADMINISTRADOR pode consultar essa informação nas áreas administrativas autorizadas.
 
 ---
 
@@ -518,32 +639,40 @@ O ADMINISTRADOR pode moderar o próprio conteúdo.
 
 ## ALUNO
 
+Menu principal:
+
 - Home
 - Estudos
+- Oportunidade
+- Comunidade
 - Perfil
-
-(Oportunidade e Comunidade saíram do MVP — `decisoes.md` 56.)
 
 Grupo inferior:
 
 - Configurações
 - Sair
 
-## MODERADOR e ADMINISTRADOR
+## MODERADOR
 
-Possuem os mesmos itens e adicionalmente acesso à Moderação, dentro da aplicação comum.
+Possui os mesmos itens do ALUNO e adicionalmente:
+
+- Moderação
+
+O MODERADOR não possui acesso ao painel `/admin`.
+
+## ADMINISTRADOR
+
+Possui os mesmos itens do ALUNO e adicionalmente:
+
+- Moderação
+- Painel administrativo
 
 O painel administrativo em `/admin` é exclusivo do ADMINISTRADOR.
-
-A navegação exata de MODERADOR e ADMINISTRADOR será definida na rodada específica desses papéis.
-
 ---
 
 # 16. O que NÃO pertence ao MVP
 
-> **Atualização (04/11/2026):** além da lista abaixo, Oportunidade, Comunidade e busca de estudantes ficam para a próxima versão (`decisoes.md` 56). Se houver tempo, a Comunidade pode voltar ainda durante a etapa de testes (57.2).
-
-Não implementar nesta primeira versão:
+Não fazem parte da versão atual:
 
 - chat;
 - mensagens diretas;
@@ -558,18 +687,26 @@ Não implementar nesta primeira versão:
 - recomendações personalizadas;
 - ranking;
 - gamificação;
+- busca de estudantes;
+- canais da comunidade;
+- publicação externa como tipo próprio de conteúdo;
 - upload direto de materiais;
 - upload de foto de Perfil;
+- recuperação de senha;
 - confirmação de propriedade do e-mail institucional por link ou código;
 - candidatura a oportunidades dentro do sistema;
+- edição de oportunidade aprovada;
+- envio anônimo de oportunidade;
 - feed algorítmico;
 - rede social completa;
 - CRUD administrativo completo;
-- histórico administrativo completo;
-- remoção de conteúdo já aprovado;
-- expansão para outros cursos.
+- retirada administrativa de conteúdo aprovado pela interface;
+- reversão administrativa de rejeição;
+- denúncia ou solicitação de revisão de conteúdo;
+- autoexclusão de conta pela interface;
+- expansão para outros cursos, câmpus ou instituições.
 
-Essas funcionalidades poderão ser avaliadas posteriormente, principalmente a partir dos resultados do piloto.
+Essas funcionalidades poderão ser avaliadas posteriormente, principalmente a partir dos resultados do piloto e da evolução do projeto.
 
 ---
 
@@ -580,10 +717,12 @@ O MVP deverá permitir avaliar questões como:
 - os estudantes entendem a proposta do ConectaCC?
 - Estudos facilita o acesso a materiais?
 - estudantes têm interesse em compartilhar conteúdos?
-- ~~a área Oportunidade é útil?~~ (fora do MVP)
-- ~~a Comunidade facilita a descoberta de colegas e interesses?~~ (fora do MVP)
+- a área Oportunidade facilita a descoberta de oportunidades relevantes?
+- estudantes têm interesse em indicar oportunidades para a comunidade?
+- o mural da Comunidade facilita a descoberta de materiais e oportunidades?
 - os recursos institucionais ficam mais fáceis de encontrar?
 - o processo de Moderação é compreensível?
+- as notificações ajudam o estudante a acompanhar os próprios envios?
 - quais funcionalidades realmente geram valor?
 - quais partes devem ser alteradas, removidas ou ampliadas?
 

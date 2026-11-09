@@ -1,10 +1,8 @@
 # Registro de Decisões — ConectaCC
 
-Este documento registra decisões importantes tomadas durante a definição do ConectaCC.
+Este documento reúne as principais definições do ConectaCC ao longo do desenvolvimento do projeto.
 
-O objetivo é evitar que decisões já discutidas sejam perdidas ou reabertas sem necessidade durante a implementação.
-
-Este documento registra principalmente decisões de:
+Aqui ficam registradas decisões relacionadas a:
 
 - produto;
 - experiência do usuário;
@@ -12,7 +10,7 @@ Este documento registra principalmente decisões de:
 - regras funcionais;
 - prototipação.
 
-Decisões de arquitetura técnica serão adicionadas posteriormente, depois da análise conduzida por Marcelo Henrique Germiniani Panho.
+Novas definições podem ser adicionadas conforme o projeto evoluir.
 
 ---
 
@@ -95,7 +93,7 @@ Grupo inferior:
 - Configurações
 - Sair
 
-Para ADMIN:
+Para MODERADOR e ADMINISTRADOR:
 
 - Moderação
 
@@ -136,14 +134,15 @@ No conteúdo da página podem ser utilizadas expressões no plural, como:
 
 ## Decisão
 
-O MVP possui dois papéis:
+O MVP possui três papéis:
 
 - ALUNO;
-- ADMIN.
+- MODERADOR;
+- ADMINISTRADOR.
 
-ADMIN possui as funcionalidades comuns do usuário e adicionalmente acesso à Moderação.
+O MODERADOR possui as funcionalidades comuns do usuário e também acesso à Moderação, respeitando as regras definidas para esse papel.
 
-> **Atualização (12/10/2026):** substituída. O MVP passa a ter três papéis: ALUNO, MODERADOR e ADMINISTRADOR. Ver `requisitos.md`, seção 1.
+O ADMINISTRADOR possui as funcionalidades comuns do usuário, acesso à Moderação e acesso ao painel administrativo.
 
 ---
 
@@ -333,39 +332,31 @@ Upload adicionaria complexidade relacionada a:
 
 # 18. Autoria dos materiais
 
-## Decisão atual do MVP
+## Decisão
 
-Publicamente, os materiais aparecem como:
+Por padrão, os materiais mostram publicamente o **Nome de exibição** do autor.
 
-**Compartilhado pela comunidade**
+No envio, o estudante pode escolher a opção:
 
-O ADMIN continua identificando o autor para:
+**Publicar anonimamente**
 
-- Moderação;
-- notificação;
-- controle interno do envio.
-
-## Decisão futura
-
-A decisão sobre exibir ou não a autoria dos materiais publicamente não será tomada neste semestre.
-
-Ela será retomada:
-
-**no próximo semestre, após os primeiros testes com estudantes.**
-
-Até essa avaliação, permanece o comportamento atual:
+Nesse caso, o material aparece para a comunidade como:
 
 **Compartilhado pela comunidade**
 
-> **Atualização (12/10/2026):** substituída. Agora o padrão é mostrar o Nome de exibição, com a opção “Publicar anonimamente”. Ver seção 51.
+O sistema continua registrando internamente quem realizou o envio para fins de Moderação, administração e controle do conteúdo.
+
+O MODERADOR não visualiza a identidade real do autor de um material anônimo.
+
+O ADMINISTRADOR pode identificar o autor nas áreas administrativas autorizadas.
 
 ---
 
-# 19. Catálogo acadêmico e disciplinas piloto
+# 19. Catálogo acadêmico
 
 ## Fonte acadêmica inicial
 
-A **Matriz 2023** do Bacharelado em Ciência da Computação do IFSul – Câmpus Passo Fundo será utilizada como referência acadêmica inicial do MVP.
+A **Matriz 2023** do Bacharelado em Ciência da Computação do IFSul – Câmpus Passo Fundo será utilizada como referência acadêmica inicial do ConectaCC.
 
 Fontes institucionais identificadas:
 
@@ -389,25 +380,13 @@ As fontes institucionais permitem obter informações como:
 - organização por semestre;
 - pré-requisitos.
 
-## Disciplinas piloto
+Todas as disciplinas confirmadas da Matriz 2023 estão disponíveis no Perfil e no catálogo de Estudos.
 
-Todas as disciplinas confirmadas podem existir no Perfil e no catálogo de Estudos.
-
-Somente algumas poderão inicialmente possuir:
-
-- materiais;
-- compartilhamento;
-- área colaborativa.
-
-Essas serão utilizadas como disciplinas piloto.
-
-As disciplinas piloto ainda precisam ser escolhidas.
+Todas possuem área para compartilhamento e consulta de materiais.
 
 ## Matriz 2017
 
 A necessidade de contemplar estudantes ainda vinculados à Matriz 2017 será verificada posteriormente.
-
-Esse levantamento não é necessário para as atividades atuais e não bloqueia a definição da arquitetura.
 
 ---
 
@@ -427,9 +406,7 @@ No protótipo pode existir:
 
 Em produção, o link só aparece depois da confirmação da URL.
 
-O levantamento dos links institucionais que ainda faltam será retomado após o novo mapeamento.
-
-Esse levantamento é a próxima atividade de produto e não bloqueia a definição inicial da arquitetura.
+Links institucionais ainda não confirmados deverão permanecer pendentes até que a URL correta seja validada.
 
 ---
 
@@ -501,13 +478,21 @@ Utilizar a data original do envio poderia fazer um conteúdo recém-publicado ap
 
 ## Decisão
 
-A Comunidade possui três áreas:
+No MVP atual, a Comunidade funciona como um espaço de descoberta dos conteúdos compartilhados no ConectaCC.
 
-1. O que está rolando
-2. Encontre estudantes
-3. Conecte-se com a comunidade
+Ela reúne conteúdos aprovados, como:
 
-O módulo não deve se transformar em uma rede social completa no MVP.
+- materiais;
+- oportunidades.
+
+Funcionalidades como:
+
+- Encontre estudantes;
+- Conecte-se com a comunidade;
+
+podem ser adicionadas futuramente.
+
+O módulo não deve se transformar em uma rede social completa.
 
 ---
 
@@ -586,15 +571,7 @@ Não adicionar opções apenas para preencher a página.
 
 Não existe exclusão automática de conta na interface atual do MVP.
 
-## Obrigatório antes do piloto
-
-Definir:
-
-- procedimento de exclusão;
-- exclusão de dados;
-- responsabilidades;
-- retenção;
-- impacto sobre conteúdos enviados.
+As regras relacionadas à exclusão de conta, dados e conteúdos enviados estão detalhadas na seção 64.
 
 ---
 
@@ -688,22 +665,14 @@ No MVP, notificações utilizam:
 Tipos principais:
 
 - Material aprovado/rejeitado;
-- Publicação aprovada/rejeitada;
 - Oportunidade aprovada/rejeitada.
 
 Não criar página específica de notificações no MVP.
 
-## Decisão futura
+Ao clicar em uma notificação:
 
-O comportamento ao clicar em uma notificação ainda será definido.
-
-Será necessário decidir, antes da implementação definitiva de Notificações:
-
-- se clicar marca automaticamente como lida;
-- se a notificação direciona ao conteúdo correspondente;
-- qual será o destino para cada tipo de conteúdo.
-
-Essa decisão não bloqueia a definição da arquitetura geral.
+- ela é marcada como lida;
+- o usuário é direcionado ao conteúdo ou área correspondente.
 
 ---
 
@@ -713,11 +682,10 @@ Essa decisão não bloqueia a definição da arquitetura geral.
 
 Existe uma única fila de Moderação.
 
-Tipos:
+Atualmente, ela reúne:
 
-- MATERIAL;
-- PUBLICAÇÃO;
-- OPORTUNIDADE.
+- MATERIAIS;
+- OPORTUNIDADES.
 
 Estados:
 
@@ -725,7 +693,7 @@ Estados:
 - APROVADO;
 - REJEITADO.
 
-Não criar três sistemas de Moderação separados.
+Não criar sistemas de Moderação separados para cada tipo de conteúdo.
 
 ---
 
@@ -741,31 +709,15 @@ para priorizar quem está esperando há mais tempo.
 
 ---
 
-# 36. ADMIN e próprio conteúdo
+# 36. Moderação do próprio conteúdo
 
 ## Decisão
 
-ADMIN não pode:
+O MODERADOR não pode aprovar ou rejeitar conteúdo de sua própria autoria.
 
-- Aprovar;
-- Rejeitar;
+Seus próprios conteúdos não aparecem entre as pendências que ele pode moderar.
 
-conteúdo de sua própria autoria.
-
-Seu conteúdo:
-
-- aparece na fila;
-- possui indicação “Seu envio”;
-- pode ser consultado;
-- deve ser analisado por outro ADMIN.
-
-## Consequência para o piloto
-
-Se ADMIN também utilizar a plataforma como estudante:
-
-→ deverá existir mais de um ADMIN.
-
-> **Atualização (12/10/2026):** substituída. A restrição vale só para MODERADOR, e ADMINISTRADOR pode moderar o próprio conteúdo. Ver seção 51.
+O ADMINISTRADOR pode moderar o próprio conteúdo.
 
 ---
 
@@ -773,17 +725,13 @@ Se ADMIN também utilizar a plataforma como estudante:
 
 ## Decisão
 
-O motivo da rejeição é:
+Quando um MODERADOR rejeita um conteúdo, o motivo da rejeição é obrigatório.
 
-**opcional**
+O motivo não precisa aparecer diretamente na notificação.
 
-Quando informado:
+O autor pode consultá-lo em:
 
-→ pode ser exibido ao autor na notificação.
-
-Antes do piloto deverá existir orientação básica de redação para administradores.
-
-> **Atualização (12/10/2026):** substituída. O motivo é obrigatório na rejeição feita por MODERADOR. Ele não precisa aparecer na notificação, mas o autor o vê em Meus conteúdos → Detalhes do envio rejeitado. Ver seção 52.2.
+**Meus conteúdos → Detalhes do envio rejeitado.**
 
 ---
 
@@ -810,15 +758,12 @@ A implementação técnica será definida posteriormente.
 Quando aprovado:
 
 Material  
-→ Estudos
-
-Publicação  
-→ Comunidade
+→ Estudos e Comunidade
 
 Oportunidade  
-→ Oportunidade
+→ Oportunidade e Comunidade
 
-O conteúdo sai da fila de pendentes e o autor recebe notificação.
+O conteúdo sai da fila de pendentes e o autor recebe uma notificação.
 
 ---
 
@@ -829,23 +774,22 @@ O conteúdo sai da fila de pendentes e o autor recebe notificação.
 Quando rejeitado:
 
 - não é publicado;
-- sai da fila;
-- autor recebe notificação;
-- motivo pode ser incluído.
-
+- sai da fila de pendentes;
+- o autor recebe uma notificação;
+- o motivo da rejeição fica disponível nos detalhes do envio em Meus conteúdos.
 ---
 
 # 41. “Mostrar mais”
 
 ## Decisão
 
-No MVP, feed e lista de estudantes utilizam:
+No MVP, listas extensas utilizam:
 
 **Mostrar mais**
 
 em vez de rolagem infinita.
 
-A quantidade inicial ainda será definida durante a implementação.
+A quantidade inicial de itens pode variar conforme a área da aplicação.
 
 ---
 
@@ -949,9 +893,9 @@ ficam para análise futura.
 
 ## Status
 
-Ainda não definida.
+A arquitetura técnica do ConectaCC já foi definida durante a implementação.
 
-Decisões como:
+As decisões relacionadas a:
 
 - stack;
 - frontend;
@@ -961,9 +905,11 @@ Decisões como:
 - autenticação;
 - deploy;
 
-serão analisadas posteriormente por Marcelo Henrique Germiniani Panho com apoio da equipe.
+estão registradas na documentação técnica do projeto.
 
-Não criar estrutura técnica definitiva no repositório antes dessa decisão.
+Ver:
+
+`stack-e-decisoes-tecnicas.md`
 
 ---
 
@@ -983,16 +929,11 @@ Antes de incluir uma nova funcionalidade, avaliar:
 
 # 49. Estado do protótipo
 
-As dez áreas principais do MVP foram:
+As áreas principais do MVP foram definidas e prototipadas antes do início da implementação.
 
-- definidas;
-- prototipadas;
-- congeladas;
-- auditadas.
+O protótipo serviu como referência inicial para o desenvolvimento do ConectaCC.
 
-A auditoria final considerou o protótipo consistente o suficiente para servir como referência para implementação.
-
-Isso não significa que o sistema esteja implementado.
+Durante a implementação, algumas decisões foram refinadas ou alteradas conforme novas necessidades e validações do projeto.
 
 ---
 
@@ -1037,7 +978,9 @@ O conteúdo do próprio MODERADOR **não aparece na fila dele**. Ele é analisad
 
 ## 51.3 Versão dos Termos de participação
 
-O texto dos Termos ganhou a regra de autoria e anonimato e **continua na versão 0.1**, porque nenhum usuário aceitou uma versão ainda.
+Os Termos de participação são versionados.
+
+Sempre que houver alteração relevante no conteúdo dos Termos, uma nova versão deverá ser criada, preservando as versões anteriores.
 
 ## 51.4 E-mail já cadastrado
 
@@ -1055,7 +998,11 @@ Registro original: todo o fluxo de recuperação ficaria para depois do MVP inic
 
 ## 51.6 Visibilidade das disciplinas atuais
 
-As disciplinas atuais ficam **visíveis para usuários autenticados**: no Perfil público e na busca da Comunidade. Isso reconfirma as seções 13 e 15.
+As disciplinas atuais ficam **visíveis para usuários autenticados** no Perfil público.
+
+Elas também poderão ser utilizadas futuramente na busca de estudantes da Comunidade, conforme as regras definidas para essa funcionalidade.
+
+Isso reconfirma as seções 13 e 15.
 
 ## 51.7 Título da seção no Perfil
 
@@ -1069,13 +1016,23 @@ Complementam a seção 51 e substituem regras antigas que entrem em conflito.
 
 ## 52.1 Perfil → Meus conteúdos entra no MVP
 
-Área privada do próprio usuário para consultar e gerenciar os conteúdos e solicitações vinculados à sua conta, **inclusive os anônimos**. Não é um histórico administrativo completo.
+Área privada do próprio usuário para consultar e gerenciar os conteúdos e solicitações vinculados à sua conta, **inclusive os anônimos**.
 
-- Uma única lista, da mais recente para a mais antiga, sem abas por status.
-- Filtro por status: Todos, Em andamento, Aprovados, Rejeitados, Excluídos.
-- “Em andamento” é só um agrupamento visual (por exemplo, PENDENTE). **Não** cria um status persistido.
-- Cada item mostra: título, código da solicitação, tipo (Material/Publicação/Oportunidade), módulo (Estudos/Comunidade/Oportunidade), data do envio, status, indicação de anônimo quando aplicável e as ações permitidas.
+Meus conteúdos permite separar os envios por tipo de conteúdo, como:
 
+- Materiais;
+- Oportunidades.
+
+Os conteúdos também apresentam sua situação atual, como:
+
+- Em andamento;
+- Aprovado;
+- Rejeitado;
+- Excluído.
+
+“Em andamento” é apenas uma apresentação para solicitações que ainda estão pendentes e não cria um novo status persistido.
+
+Cada item permite consultar as informações do envio e as ações disponíveis conforme sua situação.
 ## 52.2 Motivo da rejeição visível ao autor
 
 Em Meus conteúdos → **Detalhes do envio rejeitado**, o autor vê o status REJEITADO e o motivo registrado pela Moderação. A notificação pode continuar mostrando só “Rejeitado”.
@@ -1098,9 +1055,15 @@ Mantida: a versão aprovada continua pública enquanto a edição está pendente
 
 ## 52.5 Solicitação em andamento
 
-Não pode ser modificada diretamente. O usuário pode **pedir o cancelamento**. Depois do cancelamento efetivo, qualquer novo envio ou edição gera uma nova solicitação.
+Uma solicitação pendente não pode ser modificada diretamente.
 
-**Em aberto:** se o cancelamento é imediato ou processado por alguém, como a solicitação cancelada é representada, se existe status CANCELADA e em qual filtro ela aparece.
+O autor pode cancelar o envio imediatamente.
+
+Após o cancelamento:
+
+- o envio passa para CANCELADO;
+- ele deixa de seguir para Moderação;
+- qualquer novo envio ou edição gera uma nova solicitação.
 
 ## 52.6 Conteúdo excluído
 
@@ -1131,13 +1094,8 @@ Salvar, Compartilhar, Copiar link, Denunciar, notificações por disciplina, mó
 
 ## 52.11 Pendências que continuam
 
-- Cancelamento: fluxo, se é imediato, quem processa, representação e filtro.
-- Rejeitado: se poderá ser editado e reenviado direto de Meus conteúdos ou se exige um novo envio.
-- Filtro por tipo em Meus conteúdos: avaliar se for simples. Busca textual fica para o futuro.
+- Busca textual em Meus conteúdos fica para evolução futura.
 - Continuam futuros: histórico de versões, linha do tempo, comparação antes/depois, auditoria completa, mostrar ao usuário comum quem moderou, portfólio, métricas, reavaliação e restauração pelo usuário.
-
-> **Atualização (04/11/2026):** o filtro por tipo e a busca textual em Meus conteúdos ficam fora do MVP (§60).
-
 ---
 
 # 53. Perfil e catálogo de disciplinas — 19/10/2026
@@ -1154,8 +1112,10 @@ O princípio vale para integrações futuras (Moodle, SUAP, páginas institucion
 
 - Entram as **49 disciplinas obrigatórias** da Matriz 2023, do 1º ao 8º semestre, com nome, semestre, carga horária e link da ementa.
 - Os nomes seguem o site do IFSul. Única correção: "Gestão Empresarial e Empreendedorismo" (o site traz "Empreededorismo").
-- As **eletivas** ficam fora por enquanto. A Matriz 2017 será verificada depois.
-- Todas as disciplinas do catálogo podem ser escolhidas no Perfil, mesmo que só algumas tenham área de materiais. As disciplinas piloto serão escolhidas depois e não bloqueiam o catálogo.
+- As **eletivas** ficam fora por enquanto.
+- A Matriz 2017 será verificada posteriormente.
+- Todas as disciplinas do catálogo podem ser escolhidas no Perfil.
+- Todas as disciplinas possuem área para consulta e compartilhamento de materiais.
 
 ## 53.3 Perfil nesta entrega
 
@@ -1228,15 +1188,14 @@ A parte 2 é entregue em três etapas, cada uma funcionando de ponta a ponta:
 
 ## 55.4 Moderação
 
-- **Motivo da rejeição obrigatório** para MODERADOR e ADMINISTRADOR, com até 500 caracteres. Substitui a §37 e o RF-73.
-- **Fila sem filtro por tipo** enquanto houver um tipo só.
-- **Status na tabela de materiais:** o status de moderação fica na própria tabela, sem tabela genérica de moderação.
+- **Motivo da rejeição obrigatório** para MODERADOR e ADMINISTRADOR, com até 500 caracteres.
+- Materiais e Oportunidades utilizam a mesma fila de Moderação.
+- A fila não possui filtro por tipo de conteúdo.
 
 ## 55.5 Resolvidas para as próximas etapas
 
 - **§52.5 (cancelamento):** o autor cancela o envio pendente na hora, e o envio passa a CANCELADO, que aparece só no filtro Todos.
-- **§52.11 (rejeitado):** o material rejeitado não é reenviado. O autor faz um envio novo.
-- **Código da solicitação:** `MAT-00042`.
+- **Rejeitado:** o material rejeitado não é reenviado. O autor faz um envio novo.- **Código da solicitação:** `MAT-00042`.
 - **Meus conteúdos:** fica em `/perfil/meus-conteudos`.
 - **Alteração de material publicado:** é moderada mostrando a versão publicada e a proposta lado a lado.
 - **Excluir com alteração pendente:** excluir o material cancela a alteração.
@@ -1273,33 +1232,27 @@ A parte 2 é entregue em três etapas, cada uma funcionando de ponta a ponta:
 
 ---
 
-# 56. Escopo do MVP: sem Oportunidade e sem Comunidade — 02/11/2026
+# 56. Retomada de Oportunidade e Comunidade
 
-Decisão do Marcelo: **Oportunidade** e **Comunidade** saem do MVP e ficam para a próxima versão.
+Em 02/11/2026, Oportunidade e Comunidade foram temporariamente retiradas do escopo obrigatório para não bloquear as entregas principais.
 
-## 56.1 O que sai
+Essa decisão foi posteriormente substituída.
 
-- **Oportunidade:** oportunidades do IFSul, "Indicar oportunidade" e a moderação de oportunidades.
-- **Comunidade:** feed, publicações, "Compartilhar com a comunidade", canais e **busca de estudantes**. A busca fazia parte da Comunidade, então sai junto.
-- Os tipos PUBLICAÇÃO e OPORTUNIDADE na fila de Moderação e nas notificações.
-- No painel `/admin`: os cadastros curados de oportunidades do IFSul e de canais da Comunidade.
+## Estado atual
 
-## 56.2 Consequências
+O ConectaCC possui novamente:
 
-- **Navegação do ALUNO:** Home, Estudos e Perfil. No grupo inferior: Configurações e Sair. MODERADOR e ADMINISTRADOR continuam vendo Moderação.
-- **Atalhos da Home:** só Estudos e Perfil. Os endereços `/oportunidade` e `/comunidade` levam à Home.
-- **Moderação:** fica só com materiais, e o filtro por tipo não é necessário no MVP.
-- **Perfil público:** continua no MVP. Sem a busca de estudantes, o caminho até ele passa a ser o nome do autor nos materiais.
-- **Limites de texto e "Mostrar mais":** os de oportunidade e publicação (pendências 2.7) e a quantidade de itens no feed e na busca (pendências 2.8) deixam de bloquear o MVP.
-- **Identidade do projeto:** os pilares (Conexão, Conhecimento, Oportunidades, Comunidade) e os textos institucionais continuam, porque descrevem o ConectaCC como um todo, e não as telas do MVP.
+- Home;
+- Estudos;
+- Oportunidade;
+- Comunidade;
+- Perfil.
 
-## 56.3 Retomada da Comunidade (04/11/2026)
+Oportunidades indicadas pela comunidade passam por Moderação junto com os materiais.
 
-A Comunidade permanece fora do escopo obrigatório do MVP e não deve bloquear as entregas atuais. Porém, caso haja capacidade durante o desenvolvimento ou os testes, poderá ser retomada ainda nesta etapa como funcionalidade adicional.
+A Comunidade também faz parte da aplicação atual, reunindo conteúdos compartilhados no ConectaCC.
 
-Se isso acontecer, os fluxos e as informações exibidas — como descoberta de estudantes, cards de Perfil, disciplinas atuais, "Pode ajudar com" e "Procura ajuda com" — deverão ser definidos antes da implementação.
-
-O Perfil público deve continuar funcionando independentemente da existência da Comunidade.
+O Perfil público continua funcionando independentemente das formas disponíveis para descobrir outros estudantes.
 
 ---
 
@@ -1322,8 +1275,6 @@ Decisões tomadas na definição do Perfil público (spec `specs/2026-11-04-perf
 Material identificado → clicar no Nome de exibição do autor → Perfil público. O material anônimo continua com "Compartilhado pela comunidade" e não dá acesso ao perfil real do autor: a API não envia o código dele.
 
 O próprio nome num material leva a `/perfil`. "Ver como outros estudantes veem meu perfil" fica para o futuro.
-
-Se houver tempo, a Comunidade pode voltar ainda durante a etapa de testes, criando novas formas de descobrir estudantes (ver §56).
 
 ## 57.3 Código público na URL
 
@@ -1375,40 +1326,37 @@ Isso muda o que estava implementado: EXCLUÍDO era cinza e Alteração era neutr
 
 # 59. Cores das Notificações — 04/11/2026
 
-Revisão de Produto do painel de Notificações. Todo o comportamento de §55.5 e §55.7 continua igual: clicar marca como lida e leva ao conteúdo, "Marcar todas como lidas", contador até `9+`, mais recentes primeiro, lidas continuam no painel, indicação "Nova", tempo relativo e polling.
+Todo o comportamento de Notificações definido anteriormente continua válido: clicar marca como lida e leva ao conteúdo, existe a opção "Marcar todas como lidas", o contador mostra até `9+`, as mais recentes aparecem primeiro, notificações lidas continuam no painel, existe indicação de "Nova", tempo relativo e polling.
 
-## 59.1 O que muda
+## 59.1 Cores
 
-- **Contador do sino:** `#C65A2E`, no lugar do vermelho `#B42318`.
-- **Notificação não lida:** fundo `#D9E9F8`, no lugar de `#EEF7FC`. Depois de lida, volta ao fundo normal do painel.
-- **Aprovação e rejeição:** os ícones ✓ e ✕ não têm mais fundo verde ou vermelho. A apresentação é neutra e o resultado é comunicado pelo ícone, pelo título e pelo texto.
+- **Contador do sino:** `#BD5228`.
+- **Notificação não lida:** fundo `#D9E9F8`.
+- Depois de lida, a notificação volta ao fundo normal do painel.
+- **Aprovação e rejeição:** os ícones ✓ e ✕ não utilizam fundo verde ou vermelho. O resultado é comunicado pelo ícone, pelo título e pelo texto.
 
-A única cor de fundo especial do item da lista é a de não lida. Ao passar o mouse, a não lida fica um pouco mais clara e mantém o tom azul.
-
-> **Atualização (04/11/2026):** a cor do contador passou a ser `#BD5228` (§62.1).
-
-## 59.2 Ponto de atenção
-
-O número branco sobre `#C65A2E` tem contraste de 4,28:1, abaixo do mínimo de 4,5:1 (WCAG AA) para texto pequeno. A cor foi aplicada como definida. Leitores de tela não dependem dela, porque o botão anuncia a quantidade de não lidas.
-
-> **Atualização (04/11/2026):** resolvido com a troca da cor (§62.1).
-
+A única cor de fundo especial do item da lista é a utilizada para indicar uma notificação não lida.
 ---
 
-# 60. Filtros de Meus conteúdos — 04/11/2026
+# 60. Organização de Meus conteúdos — 04/11/2026
 
-Revisão de Produto. A implementação atual está correta e não muda. Esta decisão resolve o ponto do filtro por tipo que estava em aberto em §52.11.
+## 60.1 Organização atual
 
-## 60.1 O que fica no MVP
+Meus conteúdos permite consultar os envios vinculados ao usuário e separá-los por tipo de conteúdo, incluindo:
 
-Só os filtros por situação: **Todos**, **Em andamento**, **Aprovados**, **Rejeitados** e **Excluídos**.
+- Materiais;
+- Oportunidades.
 
-## 60.2 O que fica para o futuro
+Os conteúdos também apresentam sua situação atual, como:
 
-O **filtro por tipo de conteúdo** e a **busca textual** ficam de fora de propósito. Não são funcionalidades esquecidas.
+- Em andamento;
+- Aprovados;
+- Rejeitados;
+- Excluídos.
 
-No escopo atual, Meus conteúdos trabalha só com Material, então um filtro por tipo não teria utilidade. Se outros tipos de conteúdo entrarem nessa área, a necessidade será revista.
+## 60.2 Evoluções futuras
 
+A busca textual em Meus conteúdos fica para uma evolução futura.
 ---
 
 # 61. Configurações — 04/11/2026
@@ -1440,7 +1388,6 @@ Trocar a senha encerra as outras sessões da conta, e a pessoa continua logada n
 - **E-mail ainda carregando ou indisponível:** a página mostra um esqueleto durante o carregamento e "E-mail indisponível no momento." se a busca falhar.
 - **Aviso de sucesso:** usa o botão de fechar que já existe ("Fechar aviso").
 - **Página "Em construção":** removida, porque Configurações era a última área que a usava.
-
 ---
 
 # 62. Ajustes das cores de status e das Notificações — 04/11/2026
@@ -1574,8 +1521,7 @@ A conta deixa de existir como conta utilizável. O Perfil público deixa de exis
 
 ## 64.5 Observações
 
-- A política deve ser refletida nos Termos (`pendencias.md` 3.1).
-- A implementação e a redação final devem ser avaliadas à luz da LGPD e das orientações institucionais.
+- A implementação e a redação final da política de exclusão devem ser avaliadas à luz da LGPD e das orientações institucionais.
 - É uma política do piloto e pode ser refinada depois.
 - A autoexclusão pelo próprio usuário pode ser tratada futuramente, se necessário.
 
@@ -1618,7 +1564,7 @@ Vale a §55.2: o ADMINISTRADOR vê o nome de exibição do autor, com a marca "E
 
 ## 65.5 Escolhas da implementação
 
-Estas escolhas podem ser revistas pelo time:
+Alguns detalhes da implementação podem ser revistos conforme os testes e a evolução do sistema:
 
 - **Tabelas:** filtro por papel em Usuários; mais recentes primeiro nas duas telas; empilhadas no celular.
 - **Situação:** "Alteração" aparece como uma marca ao lado da situação, em Moderações, conforme a §58.
@@ -1964,14 +1910,13 @@ A Home ganha a seção "Acessos institucionais" ("Conecte-se aos principais serv
 **Links:**
 
 - Os links externos abrem em nova aba.
-- O do Instagram ficou sem o parâmetro de rastreamento que veio com ele.
-- O contato da CORAC é um link de telefone (`tel:`), e não de WhatsApp: não foi confirmado que o número atende por WhatsApp.
+- O Instagram utiliza o endereço oficial sem parâmetros adicionais de rastreamento.
+- O contato da CORAC abre o WhatsApp Web pelo número institucional confirmado.
 
 **Ícones:** são genéricos, sem os logos do IFSul, do SUAP, do Moodle, do Instagram ou do WhatsApp. Os logos só entram com os arquivos oficiais.
 
 Isso resolve em parte `pendencias.md` 1.1: a Home passa a reunir os principais acessos institucionais.
 
-> **Atualização (08/11/2026):** o time confirmou que a CORAC atende pelo WhatsApp. O card passou a abrir o WhatsApp Web (`https://web.whatsapp.com/send?phone=555433112916`) em nova aba, no lugar do link de telefone. O link não usa `wa.me` nem `whatsapp://`, que tentam abrir o aplicativo instalado.
 
 ---
 
@@ -2001,7 +1946,7 @@ As páginas internas usam o mesmo cabeçalho (`PageHeader`): uma faixa azul com 
 | Página | Ícone | À direita |
 |---|---|---|
 | Estudos | livro | Recursos acadêmicos |
-| Oportunidades | maleta | bolsas do IFSul |
+| Oportunidades | maleta | Oportunidades do IFSul |
 | Comunidade | pessoas | — |
 | Moderação | escudo | — |
 | Perfil | pessoa | "Meus conteúdos" e "Editar perfil", ou "Editando" |
@@ -2093,123 +2038,51 @@ A regra principal já está decidida: **o usuário poderá favoritar oportunidad
 
 # 75. Ícones dos acessos institucionais durante o período de teste
 
-A alteração dos ícones dos cards de **Acessos institucionais** será realizada de forma planejada durante o período de testes do ConectaCC.
+A primeira versão do ConectaCC será publicada com os ícones atuais dos cards de **Acessos institucionais**.
 
-Esta decisão complementa as §§71.2 e 73.2.
+A troca pelos logos e símbolos oficiais será realizada posteriormente, durante o piloto, como uma pequena atualização visual do sistema.
 
-## 75.1 Versão inicial
+Essa alteração não bloqueia a publicação inicial.
 
-O ConectaCC será inicialmente disponibilizado com os ícones atuais dos cards de Acessos institucionais.
+## 75.1 Ícones previstos
 
-A substituição dos ícones por marcas mais reconhecíveis **não é requisito para a publicação inicial**.
+Quando a atualização for realizada:
 
-Manter os ícones atuais na primeira versão é intencional, pois permitirá realizar posteriormente uma pequena atualização visual enquanto o sistema já estiver em uso pelos participantes do piloto.
+- **IFSul:** logo oficial do IFSul;
+- **Informática / Ciência da Computação:** logo oficial do IFSul;
+- **SUAP:** logo oficial do SUAP;
+- **Moodle:** logo oficial do Moodle;
+- **Instagram do IFSul Passo Fundo:** símbolo oficial do Instagram;
+- **Fale com a CORAC:** símbolo oficial do WhatsApp.
 
-## 75.2 Atualização durante o piloto
+A estrutura dos cards, textos, links, posições, tamanhos e demais elementos do layout permanecem iguais.
 
-Depois que o ConectaCC já estiver em uso pelos participantes do piloto, será publicada uma nova versão modificando os ícones dos Acessos institucionais.
+## 75.2 Assets
 
-A alteração será limitada aos ícones.
+Os arquivos utilizados deverão ficar armazenados localmente no frontend, preferencialmente em SVG quando adequado.
 
-Devem permanecer iguais:
-
-- estrutura dos cards;
-- textos;
-- links;
-- posição dos cards;
-- tamanhos;
-- cores de fundo;
-- comportamento;
-- demais elementos do layout.
-
-A troca dos ícones será utilizada como uma alteração de baixo impacto para acompanhar, na prática, o processo de atualização de uma versão do ConectaCC enquanto o sistema já estiver publicado e em uso.
-
-O objetivo principal dessa atualização é verificar se uma nova versão pode ser disponibilizada sem comprometer o funcionamento e a estabilidade do sistema.
-
-## 75.3 Ícones previstos para a atualização
-
-Quando a atualização for realizada, a direção prevista é:
-
-- **IFSul:** utilizar o logo oficial do IFSul, preservando suas cores institucionais;
-- **Informática / Ciência da Computação:** utilizar o logo oficial do IFSul, preservando suas cores institucionais;
-- **SUAP:** utilizar o logo oficial do SUAP;
-- **Moodle:** utilizar o logo oficial do Moodle;
-- **Instagram do IFSul Passo Fundo:** utilizar o símbolo oficial do Instagram;
-- **Fale com a CORAC:** utilizar o símbolo oficial do WhatsApp.
-
-Os ícones deverão continuar dentro dos pequenos blocos arredondados já utilizados nos cards, preservando o padrão visual da Home.
-
-## 75.4 Assets de marca
-
-Os logos, ícones e símbolos oficiais utilizados nos cards de **Acessos institucionais** deverão ser armazenados como assets locais do frontend.
-
-Isso inclui, quando aplicável:
-
-- IFSul;
-- SUAP;
-- Moodle;
-- Instagram;
-- WhatsApp.
-
-Os arquivos poderão ser armazenados, preferencialmente em formato SVG quando adequado, em uma pasta específica para assets de marca, por exemplo:
+Uma possibilidade de organização é:
 
 `frontend/src/assets/brands/`
 
-Não deve ser instalada uma nova biblioteca React apenas para fornecer esses ícones.
+Não instalar uma nova biblioteca React somente para fornecer esses ícones e não depender de carregamento dos logos por URLs externas.
 
-Os assets não devem depender de carregamento em runtime a partir de URLs externas.
+Devem ser utilizados arquivos oficiais ou adequados ao uso de cada marca.
 
-Devem ser utilizados arquivos oficiais ou adequados ao uso de cada marca, respeitando sua identidade visual e eventuais orientações de utilização.
+## 75.3 Atualização durante o piloto
 
-O uso desses assets não deve alterar a estrutura, os tamanhos, as cores de fundo ou o layout dos cards definidos para os Acessos institucionais.
+A troca dos ícones será utilizada também como uma atualização simples durante o período de testes.
 
-## 75.5 Validação da nova versão durante o piloto
+Após a publicação da nova versão, deverão ser verificados:
 
-A alteração dos ícones será utilizada como uma atualização planejada durante o piloto do ConectaCC.
-
-O objetivo é acompanhar o comportamento do sistema durante a publicação de uma nova versão enquanto a aplicação já estiver em uso.
-
-Durante e após essa atualização deverão ser verificados, entre outros pontos:
-
-- publicação correta da nova versão;
-- disponibilidade do sistema durante e após a atualização;
-- carregamento correto dos novos assets de marca;
-- manutenção da estrutura e do layout dos cards;
-- funcionamento dos links dos Acessos institucionais;
-- funcionamento das demais áreas do sistema;
+- carregamento correto dos novos assets;
+- funcionamento dos links;
+- manutenção do layout;
+- funcionamento das demais áreas;
 - preservação dos dados existentes;
-- ausência de regressões provocadas pela atualização;
-- comportamento da interface em diferentes tamanhos de tela;
-- identificação de eventuais problemas surgidos após a publicação da nova versão.
+- possíveis regressões.
 
-A troca dos ícones foi escolhida por representar uma alteração visual de baixo impacto funcional, permitindo testar uma atualização real do ConectaCC sem introduzir, nesse momento, uma nova funcionalidade complexa.
-
-Caso algum problema seja identificado após a atualização, ele deverá ser registrado e considerado no processo de correção e evolução do sistema.
-
-## 75.6 Relação com o piloto
-
-A atualização dos ícones deverá fazer parte do planejamento do piloto como uma pequena evolução do sistema realizada enquanto a aplicação já estiver em uso.
-
-O fluxo previsto é:
-
-1. publicar inicialmente o ConectaCC com os ícones atuais;
-2. iniciar o uso do sistema pelos participantes do piloto;
-3. realizar a atualização dos ícones definida nesta seção;
-4. publicar a nova versão;
-5. verificar o funcionamento e a estabilidade da aplicação após a atualização;
-6. registrar e corrigir eventuais problemas identificados.
-
-Essa atualização poderá contribuir para avaliar aspectos relacionados a:
-
-- processo de publicação de novas versões;
-- estabilidade da aplicação após uma atualização;
-- manutenção das funcionalidades existentes;
-- identificação de regressões;
-- carregamento de novos assets;
-- continuidade do uso após uma atualização;
-- capacidade da equipe de realizar correções após a publicação.
-
-A mudança dos ícones ocorre **depois que o ConectaCC já estiver em uso** e não deve bloquear a publicação inicial do sistema.
+Caso algum problema seja identificado, ele deverá ser registrado e corrigido.
 
 # 76. Qualidade dos testes e análise estática (back) — 08/11/2026
 
@@ -2332,7 +2205,9 @@ Em produção, o ConectaCC começa com o Cadastro restrito a pessoas convidadas.
 
 ## 79.2 Mensagem
 
-Quem não está na lista vê: "O cadastro está restrito às pessoas convidadas para o período de teste."
+Quem não está na lista vê:
+
+> O cadastro está restrito às pessoas convidadas para o período de teste.
 
 A conferência da lista vem antes da de e-mail já cadastrado. Assim, quem não foi convidado não descobre se o e-mail já tem conta.
 
