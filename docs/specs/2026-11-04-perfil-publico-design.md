@@ -4,7 +4,7 @@ Data: 04/11/2026
 Responsável: Marcelo Henrique Germiniani Panho
 Base: `main` (após o PR #8)
 
-Referência visual: protótipo, artboards `PerfilPublico` e `PP-*`. Itens marcados **(escolha do Claude)** podem ser trocados na revisão.
+Referência visual: protótipo, artboards `PerfilPublico` e `PP-*`.
 
 ## 1. Intenção
 
@@ -38,7 +38,7 @@ E-mail institucional, Nome completo da conta, dados de autenticação, papel e d
 
 ## 4. Backend
 
-- **Coluna `users.public_code`** (`string(16)`, única, não nula), gerada pelo banco: `left(replace(gen_random_uuid()::text, '-', ''), 16)`. **(escolha do Claude)** O valor padrão da coluna cobre os usuários existentes e os novos, inclusive os do seeder, que roda sem eventos de model. Não é fillable.
+- **Coluna `users.public_code`** (`string(16)`, única, não nula), gerada pelo banco: `left(replace(gen_random_uuid()::text, '-', ''), 16)`. O valor padrão da coluna cobre os usuários existentes e os novos, inclusive os do seeder, que roda sem eventos de model. Não é fillable.
 - **`GET /api/v1/students/{código}`**, dentro de `auth:sanctum`. Código em formato inválido ou inexistente dá 404. O id interno não funciona na rota.
 - **`StudentProfileResource`** é uma lista fechada de campos: `display_name`, `initials`, `about`, `interests`, `can_help_with`, `needs_help_with`, `github_url`, `linkedin_url` e `disciplines`.
 - **`MaterialResource`** ganha `author_code`, nulo quando o material é anônimo. A Moderação não recebe o código.
@@ -55,7 +55,7 @@ E-mail institucional, Nome completo da conta, dados de autenticação, papel e d
   - "Sobre", "Disciplinas atuais", "Interesses", "Apoio entre estudantes", "Pode ajudar com", "Procura ajuda com", "GitHub" e "LinkedIn";
   - "Perfil visível apenas para estudantes autenticados no ConectaCC.".
 - **Links externos:** abrem em nova guia, com "(abre em nova guia)" para leitor de tela.
-- **O próprio nome num material** leva a `/perfil`, onde a pessoa vê e edita o próprio Perfil **(escolha do Claude)**.
+- **O próprio nome num material** leva a `/perfil`, onde a pessoa vê e edita o próprio Perfil.
 
 ## 6. Testes
 

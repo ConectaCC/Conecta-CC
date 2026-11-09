@@ -2,15 +2,32 @@
 
 Leia antes o [`AGENTS.md`](../AGENTS.md) da raiz. Tudo aqui é escrito em português do Brasil, em frases curtas e diretas. As datas no texto seguem o formato **dd/mm/aaaa**.
 
+## Regras de escrita
+
+A documentação mostra o projeto como ele está hoje e separa claramente o que é futuro.
+
+- **Sem menção a IA.** Nada de "escolha do Claude", "sugestão da IA", "gerado por IA". A documentação é escrita e mantida pelo time.
+- **Confira antes de afirmar.** Antes de escrever que algo existe, não existe, é futuro ou está em aberto, confira nesta ordem: código na `main`, decisões mais recentes, specs mais recentes, documentação existente. Texto antigo não é verdade só por estar no arquivo.
+- **Sem contradição.** Antes de registrar uma decisão, procure o assunto nos outros documentos e ajuste o que ficou errado. Não acrescente no fim deixando informação errada antes.
+- **Pendência resolvida sai.** Revise "em aberto", "a definir", "será decidido", "será avaliado" e "próxima atividade" sobre o assunto decidido.
+- **Atual × futuro.** O que não existe aparece como evolução futura, pós-MVP ou comportamento previsto. O que existe não aparece como futuro.
+- **Termo comum não vira entidade.** "Publicação" no sentido de publicar não é uma entidade `PUBLICAÇÃO`, a menos que ela exista no sistema.
+- **Nada institucional inventado:** URL, contato, telefone, domínio ou comportamento de serviço externo. Sem confirmação, fica pendente ou não aparece. Quando for confirmado, remova o texto antigo.
+- **Decisão de produto é do time.** Uma situação sem regra que afeta o produto vira pergunta, não decisão inventada.
+- **Nomes do projeto:** ALUNO, MODERADOR, ADMINISTRADOR, Estudos, Oportunidade, Comunidade, Perfil, Meus conteúdos, Moderação.
+- **Texto natural e enxuto.** Registre o que foi decidido, a regra, o comportamento e a justificativa quando importa. Sem raciocínio interno, sem quem sugeriu cada detalhe, sem alternativas irrelevantes, sem repetir a mesma justificativa em várias seções.
+
+Antes de subir, procure no que mudou: "Claude", "IA", "escolha do", "sugestão do", "em aberto", "a definir", "será definido", "ainda será", "futuramente", "piloto", "fora do MVP", "substituída" e "atualização". Cada ocorrência precisa continuar verdadeira, e nenhuma seção anterior pode ter ficado obsoleta.
+
 ## Mapa dos documentos
 
 | Arquivo | O que guarda | Como atualizar |
 |---|---|---|
 | `mvp.md` | escopo do MVP | só com decisão do time |
-| `requisitos.md` | requisitos numerados (RF-xx) | acrescentar ou ajustar o RF. Mudanças relevantes recebem uma nota de atualização com data |
+| `requisitos.md` | requisitos numerados (RF-xx) | acrescentar ou ajustar o RF para a regra vigente, sem manter a versão antiga ao lado |
 | `fluxos.md` | fluxos das telas | seguir o formato `Tela → ação → resultado` |
-| `decisoes.md` | registro numerado de decisões | **acrescentar** uma seção nova no fim (ver abaixo). Nunca reescrever decisão antiga |
-| `pendencias.md` | questões em aberto | não apagar. Acrescentar `> **Atualização (dd/mm/aaaa):** ...` no item resolvido ou alterado |
+| `decisoes.md` | registro numerado de decisões | **acrescentar** uma seção nova no fim (ver abaixo) e ajustar as seções antigas que ela contradiz |
+| `pendencias.md` | questões em aberto | só o que ainda está em aberto. Item decidido sai daqui (a decisão fica em `decisoes.md`) |
 | `implementacao.md` | checklists de implementação por área e a ordem de implementação (§22) | marcar `- [x]` no que foi entregue e ajustar a ordem quando o plano mudar |
 | `status-mvp.md` | tabela Definido / Prototipado / Implementado / Validado | atualizar as linhas da área entregue |
 | `roadmap.md` | evolução planejada | — |
@@ -35,7 +52,7 @@ Decisões tomadas na definição de Estudos (spec `specs/2026-10-31-estudos-desi
 ...
 ```
 
-Quando uma decisão nova substitui uma antiga, diga isso explicitamente (por exemplo: "Isso substitui, para materiais, o item §19"). Não edite o texto antigo.
+Quando uma decisão nova muda uma antiga, ajuste a seção antiga para não deixar duas regras ativas ao mesmo tempo. Não deixe a regra antiga, um aviso de que foi substituída e a regra nova lado a lado: fica só a regra vigente, salvo quando o histórico é necessário para entender a decisão.
 
 ## Spec de entrega — `specs/AAAA-MM-DD-<tema>-design.md`
 
@@ -50,7 +67,7 @@ A spec é escrita depois das perguntas ao time e **aprovada antes de qualquer c�
 7. **Documentação a atualizar** junto com o código.
 8. **Fica para o builder:** o que pode ser decidido na implementação.
 
-Toda escolha que o time não fez leva a marca **(escolha do Claude)**. Se a implementação mudar algo da spec aprovada, a spec é corrigida no mesmo PR, com o motivo.
+Uma escolha técnica que o time não fez é registrada como escolha da implementação. Se ela afeta o produto (UX, regra de negócio, permissões, privacidade, visibilidade, prazos, fluxo, escopo), fica como pergunta para o time. Se a implementação mudar algo da spec aprovada, a spec é corrigida no mesmo PR, com o motivo.
 
 ## Plano — `plans/AAAA-MM-DD-<tema>.md`
 

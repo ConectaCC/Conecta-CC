@@ -17,8 +17,6 @@ Este documento registra o design da parte 2 de Estudos. Ele parte de:
 - Esboços aprovados nesta conversa para as telas sem protótipo: formulário com anônimo, card com autoria e menu ⋯, Meus conteúdos e alteração na Moderação.
 - **O protótipo da Moderação é anterior às decisões 51 e 52.** Onde os dois diferem, valem os documentos e este design.
 
-Itens marcados **(escolha do Claude)** não foram decididos pelo Marcelo e podem ser trocados na revisão.
-
 ## 1. Intenção
 
 A etapa 1 deixou Estudos navegável. Esta parte faz Estudos cumprir o que promete: o estudante compartilha um material, a moderação analisa, e o material aprovado aparece na disciplina. O autor acompanha o que enviou, corrige e exclui, e é avisado do resultado.
@@ -98,11 +96,11 @@ Meus conteúdos vem antes das Notificações porque é onde o autor vê o motivo
 
 - `(status, created_at)`, para a fila em ordem do mais antigo;
 - `(discipline_id, status, published_at)`, para a lista da disciplina;
-- índice único **parcial** em `(discipline_id, url)` com `WHERE status IN ('PENDENTE','APROVADO') AND deleted_at IS NULL AND revises_id IS NULL`. Esse índice garante a decisão 3.4 no banco. **(escolha do Claude)**
+- índice único **parcial** em `(discipline_id, url)` com `WHERE status IN ('PENDENTE','APROVADO') AND deleted_at IS NULL AND revises_id IS NULL`. Esse índice garante a decisão 3.4 no banco.
 
 O status é um enum PHP `MaterialStatus` guardado como string, no mesmo padrão de `Role`.
 
-### 4.2 Alteração de material publicado (etapa 2b) (escolha do Claude)
+### 4.2 Alteração de material publicado (etapa 2b)
 
 Uma alteração é uma **nova linha** em `materials`, com `revises_id` apontando para o original, status `PENDENTE`, a mesma disciplina e o mesmo `anonymous`. Assim, a fila de Moderação continua sendo uma consulta só (`status = PENDENTE`).
 
@@ -120,13 +118,13 @@ As notificações usam o recurso nativo do Laravel (`Notifiable` já está no `U
 
 ### 5.1 Endpoints
 
-Todos ficam sob `auth:sanctum`. As disciplinas são acessadas pelo **id** na API, e não pelo slug, porque o front já tem o id no catálogo em cache. Por isso não é preciso criar uma coluna de slug **(escolha do Claude)**.
+Todos ficam sob `auth:sanctum`. As disciplinas são acessadas pelo **id** na API, e não pelo slug, porque o front já tem o id no catálogo em cache. Por isso não é preciso criar uma coluna de slug.
 
 | Etapa | Método e rota | Quem pode | Resposta |
 |---|---|---|---|
 | 2a | `GET /disciplines/{discipline}/materials?cursor=` | autenticado | os materiais `APROVADO` (sem soft delete e sem `revises_id`), por `published_at` decrescente, 20 por página (`cursorPaginate`) |
 | 2a | `POST /disciplines/{discipline}/materials` | autenticado; 10 envios ou edições por hora por usuário, contando só os que deram certo | 201 com o material `PENDENTE` |
-| 2a | `GET /moderation/materials` | Gate `access-moderation` | os pendentes, do mais antigo para o mais novo. O MODERADOR não recebe os próprios. Sem paginação (`// shortcut: fila inteira numa resposta; paginar se passar de ~200 pendentes`) **(escolha do Claude)** |
+| 2a | `GET /moderation/materials` | Gate `access-moderation` | os pendentes, do mais antigo para o mais novo. O MODERADOR não recebe os próprios. Sem paginação (`// shortcut: fila inteira numa resposta; paginar se passar de ~200 pendentes`) |
 | 2a | `POST /moderation/materials/{material}/approve` | Gate + Policy | 200, 409 ou 403 |
 | 2a | `POST /moderation/materials/{material}/reject` (`reason`) | Gate + Policy | 200, 409, 403 ou 422 |
 | 2b | `GET /me/materials?status=` | autenticado (só os próprios) | lista de Meus conteúdos |
@@ -152,7 +150,7 @@ Todos ficam sob `auth:sanctum`. As disciplinas são acessadas pelo **id** na API
 
 ### 5.2 Validação (`StoreMaterialRequest`, também usada na edição)
 
-Os limites ficam em constantes `MAX_TITLE = 200`, `MAX_DESCRIPTION = 2000` e `MAX_URL = 2048` **(escolha do Claude: o Marcelo pediu limites maiores que 120/500, e os números são proposta minha)**.
+Os limites ficam em constantes `MAX_TITLE = 200`, `MAX_DESCRIPTION = 2000` e `MAX_URL = 2048`, maiores que os 120 e 500 iniciais, a pedido do time.
 
 - `prepareForValidation`:
   - aplica `trim` em tudo;
@@ -187,7 +185,7 @@ Os limites ficam em constantes `MAX_TITLE = 200`, `MAX_DESCRIPTION = 2000` e `MA
 - **Aprovação:** preenche `published_at`, `decided_by` e `decided_at`. Uma alteração (2b) é aplicada ao original como descrito em 4.2.
 - **Notificação (2c):** criada na mesma transação da decisão.
 
-### 5.4 Termos de participação (escolha do Claude)
+### 5.4 Termos de participação
 
 O texto implementado dos Termos (versão 0.1) não fala de autoria. Ele diz o que outros estudantes veem do perfil, mas não dos conteúdos. Na etapa 2a entra a **versão 0.2**, que acrescenta à seção "O que outros estudantes podem ver" o parágrafo:
 
@@ -195,7 +193,7 @@ O texto implementado dos Termos (versão 0.1) não fala de autoria. Ele diz o qu
 
 Para isso, segue-se `docs/operacao.md` ("Trocar os Termos de participação") e atualiza-se `TERMS_VERSION`. Quem já aceitou a 0.1 não precisa aceitar de novo nesta etapa, porque os Termos só são exigidos no Cadastro.
 
-### 5.5 Seeders (escolha do Claude)
+### 5.5 Seeders
 
 Só para dev, o seeder cria cerca de 3 materiais aprovados (um deles anônimo) e 2 pendentes. Um dos pendentes é do `moderador@` e o outro do `aluno@`. Isso permite testar a fila e a regra do próprio conteúdo sem rodar `make fresh`. Os materiais são criados por `firstOrCreate`, e o seeder pode ser rodado sozinho.
 
@@ -273,7 +271,7 @@ Substitui o placeholder. O guard `RequireModeration` e o item da Sidebar já exi
 Segue o esboço aprovado.
 
 - **Acesso:** o link "Meus conteúdos" fica no cabeçalho do Perfil. A página tem o breadcrumb "Perfil / Meus conteúdos", o título "Meus conteúdos" e o texto "Acompanhe o que você enviou e a análise da moderação.".
-- **Filtros:** Todos, Em andamento (PENDENTE), Aprovados, Rejeitados, Excluídos. "Cancelado" aparece só em Todos **(escolha do Claude)**. A lista vem dos mais recentes para os mais antigos.
+- **Filtros:** Todos, Em andamento (PENDENTE), Aprovados, Rejeitados, Excluídos. "Cancelado" aparece só em Todos. A lista vem dos mais recentes para os mais antigos.
 - **Paginação:** "Mostrar mais", de 20 em 20, como na lista de materiais da disciplina (decisão do Marcelo, 02/11/2026). O `?item=` carrega as páginas seguintes até achar o item.
 - **Item:**
   - linha de identificação: "MAT-00042 · Material · Estudos › <disciplina>";
@@ -290,12 +288,12 @@ Segue o esboço aprovado.
 | Rejeitado | os dados enviados e o motivo, num quadro "Motivo da rejeição: …" |
 | Cancelado ou Excluído | "Ver dados enviados" |
 
-- **"Ver dados enviados"** abre os dados no próprio item **(escolha do Claude)**.
+- **"Ver dados enviados"** abre os dados no próprio item.
 - **Lista vazia:** "Você ainda não enviou conteúdos.". Num filtro sem itens: "Nenhum conteúdo neste filtro."
 - **Abrir pela URL:** `?item=MAT-00042` abre o item já expandido. A notificação de rejeição usa esse endereço.
 - **Diálogos:**
-  - **Cancelar envio?** Texto: "O material sai da fila de análise e não será publicado." Botões: "Voltar" e "Cancelar envio". **(escolha do Claude)**
-  - **Excluir material?** Texto: "O material deixará de aparecer na disciplina. Você ainda poderá consultá-lo em Meus conteúdos." Botões: "Cancelar" e "Excluir material". **(escolha do Claude)**
+  - **Cancelar envio?** Texto: "O material sai da fila de análise e não será publicado." Botões: "Voltar" e "Cancelar envio".
+  - **Excluir material?** Texto: "O material deixará de aparecer na disciplina. Você ainda poderá consultá-lo em Meus conteúdos." Botões: "Cancelar" e "Excluir material".
   - **Editar:** usa o mesmo diálogo do envio, já preenchido, sem o checkbox de anônimo (a autoria não muda) e com o título "Editar material".
     - Sucesso: "Alteração enviada para análise", com "A versão atual continua visível até a alteração ser aprovada.".
     - Se já houver alteração pendente: "Já existe uma alteração deste material em análise.".
@@ -318,8 +316,8 @@ Segue o protótipo `Home-Notificacoes`.
 |---|---|---|
 | material aprovado | "Seu material foi aprovado" | "O material enviado para <disciplina> foi aprovado." |
 | material rejeitado | "Seu material não foi aprovado" | "O material enviado para <disciplina> foi analisado." |
-| alteração aprovada (escolha do Claude) | "Sua alteração foi aprovada" | "A alteração do material em <disciplina> foi aprovada." |
-| alteração rejeitada (escolha do Claude) | "Sua alteração não foi aprovada" | "A alteração enviada para <disciplina> foi analisada." |
+| alteração aprovada | "Sua alteração foi aprovada" | "A alteração do material em <disciplina> foi aprovada." |
+| alteração rejeitada | "Sua alteração não foi aprovada" | "A alteração enviada para <disciplina> foi analisada." |
 
 - **Clique:** marca como lida e navega. Uma aprovação vai para `/estudos/<slug>`, e uma rejeição vai para `/perfil/meus-conteudos?item=<código>`.
 - **Atualização:** `refetchInterval: 60_000` e nova consulta a cada troca de rota.

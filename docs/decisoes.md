@@ -1792,23 +1792,11 @@ Isso substitui as "abas por tipo" da §68.8 e o "Os filtros 'Tudo', 'Materiais' 
 
 O botão do card "Contribua com a comunidade" passa a servir para os dois tipos. A pessoa escolhe se vai compartilhar um **material** ou uma **oportunidade** (vaga, estágio, evento, hackathon e afins).
 
-Hoje o botão é "Compartilhar material" e leva a Estudos.
-
-O fluxo será planejado no design de Oportunidades. Ficam para essa rodada:
-
-- o nome do botão e onde a escolha do tipo aparece (menu, diálogo ou página);
-- como escolher a disciplina de um material a partir da Comunidade, já que hoje o envio fica dentro da disciplina;
-- se Estudos continua com o próprio "Compartilhar material" na página da disciplina;
-- os campos e as categorias da oportunidade;
-- a Moderação da oportunidade e as notificações;
-- a autoria: a oportunidade aparece sempre como "Comunidade" no mural (§68.6), e falta definir se o envio de material a partir da Comunidade mantém a opção "Compartilhar anonimamente".
+O fluxo, os campos, a Moderação e a autoria da oportunidade estão definidos na §70.
 
 ## 69.3 O que continua em aberto
 
-Também ficam para o design de Oportunidades:
-
 - "Explorar por tipo";
-- o número de oportunidades em "A comunidade em números";
 - o ícone de cada tipo no card.
 
 ---
@@ -1866,6 +1854,7 @@ Não há envio anônimo. O MODERADOR não analisa a própria oportunidade, como 
 - **Mural:** mistura materiais e oportunidades, com o filtro "Tipo" (§69.1).
 - **"A comunidade em números":** ganha "Oportunidades" e passa a ser uma lista, para caber na coluna lateral.
 - **Botão:** "Compartilhar conteúdo" abre um menu com "Material", que leva a Estudos, e "Oportunidade", que abre o modal.
+
 ## 70.8 Auditoria e `/admin`
 
 - **Eventos:** "Oportunidade enviada", "Oportunidade cancelada", "Oportunidade excluída", "Oportunidade aprovada" e "Oportunidade rejeitada". O título e o tipo ficam no evento.

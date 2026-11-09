@@ -1,6 +1,6 @@
 # Estudos parte 2, etapa 2a: Materiais e Moderação — plano de implementação
 
-> **Para agentes:** SUB-SKILL OBRIGATÓRIA: use superpowers:subagent-driven-development (recomendado) ou superpowers:executing-plans para executar este plano tarefa por tarefa. Os passos usam checkbox (`- [ ]`) para acompanhamento.
+> **Execução:** tarefa por tarefa. Os passos usam checkbox (`- [ ]`) para acompanhamento.
 
 **Objetivo:** o estudante compartilha um material (identificado ou anônimo) numa disciplina, MODERADOR e ADMINISTRADOR aprovam ou rejeitam em `/moderacao`, e os materiais aprovados aparecem na página da disciplina com "Mostrar mais".
 
@@ -24,7 +24,7 @@
 
 - **Git:**
   - branch `feat/materiais` (já criada, com a spec commitada);
-  - Conventional Commits em português, terminando com `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`;
+  - Conventional Commits em português;
   - sem push.
 - **Fora desta etapa:**
   - Meus conteúdos, Editar, Excluir, Cancelar e alteração;

@@ -50,7 +50,7 @@ Plataforma acadêmica para estudantes de Ciência da Computação do IFSul – C
    - **Front:** nota de mutação de pelo menos 80% nas linhas alteradas.
 6. **PR para a `main`:** o CI precisa estar verde (checks `backend`, `frontend`, `docker`, `gitleaks`). O merge é feito com **merge commit**, como nos PRs anteriores.
 
-Uma escolha que o time não fez e o agente fez fica marcada na spec como **(escolha do Claude)**, para ser revista.
+Uma escolha puramente técnica feita durante a implementação é registrada como **escolha da implementação**. Se ela afeta UX, regra de negócio, permissões, privacidade, visibilidade, prazos, fluxo ou escopo, vira pergunta para o time antes de virar regra. A documentação nunca menciona Claude ou outra IA (regras completas em `docs/AGENTS.md`).
 
 Uma funcionalidade que depende de outra ainda inexistente é dividida em etapas, e cada etapa entra na `main` funcionando de ponta a ponta. Exemplo: o envio de material só entra junto com a Moderação de material (`decisoes.md` 54.1).
 

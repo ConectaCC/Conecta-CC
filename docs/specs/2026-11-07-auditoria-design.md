@@ -4,7 +4,7 @@ Data: 07/11/2026
 Responsável: Marcelo Henrique Germiniani Panho
 Base: `main` (após o PR #14)
 
-Referência visual: o protótipo não tem a auditoria. A tela segue o layout atual do `/admin` (`decisoes.md` 65.6). Itens marcados **(escolha do Claude)** podem ser trocados na revisão.
+Referência visual: o protótipo não tem a auditoria. A tela segue o layout atual do `/admin` (`decisoes.md` 65.6).
 
 ## 1. Intenção
 
@@ -68,7 +68,7 @@ Também entra a tela **Auditoria** no `/admin`, só de leitura.
 
 - **Sem `updated_at`:** o evento não muda.
 - **Chaves estrangeiras** para `users` e `materials`, com `restrict` na exclusão, como em `materials`. Pela §64, a exclusão de conta anonimiza a conta em vez de apagá-la.
-- **Proteção no banco:** uma trigger do PostgreSQL recusa `UPDATE` e `DELETE` em `audit_events` **(escolha do Claude)**. Assim, nem um bug, nem o painel, nem um `tinker` apagam o histórico sem desligar a trigger de propósito.
+- **Proteção no banco:** uma trigger do PostgreSQL recusa `UPDATE` e `DELETE` em `audit_events`. Assim, nem um bug, nem o painel, nem um `tinker` apagam o histórico sem desligar a trigger de propósito.
 - **Índices:** por `created_at`, `action` e `actor_id`, que são os filtros da tela.
 
 ### O que vai em `data`

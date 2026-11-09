@@ -8,8 +8,6 @@ Referência visual: o protótipo não tem o painel. O visual segue o layout do a
 
 > **Correção (05/11/2026):** a spec previa o visual padrão do Filament com as cores e o logo do ConectaCC. Na revisão, o time pediu um layout mais parecido com o resto do sistema.
 
- Itens marcados **(escolha do Claude)** podem ser trocados na revisão.
-
 ## 1. Intenção
 
 Hoje, mudar o papel de alguém exige disparar um workflow no GitHub, porque o Render gratuito não tem terminal. Quem administra também não tem onde consultar o histórico de moderações. Esta entrega cria o painel exclusivo do ADMINISTRADOR, com só essas duas funções.
@@ -52,8 +50,8 @@ Decisões anteriores que valem aqui:
 
 - `User` implementa `FilamentUser`. `canAccessPanel()` só libera `Role::Administrador`.
 - A verificação roda a cada requisição, então quem perde o papel perde o acesso na requisição seguinte.
-- O login só aceita ADMINISTRADOR, e o e-mail é normalizado como no login do app (sem espaços nas pontas e em minúsculas). Tem o título "Painel administrativo" e o botão "Entrar", sem "Lembrar de mim" **(escolha do Claude)**.
-- O painel não tem cadastro, perfil, recuperação de senha, busca global, notificações em banco nem modo escuro **(escolha do Claude)**.
+- O login só aceita ADMINISTRADOR, e o e-mail é normalizado como no login do app (sem espaços nas pontas e em minúsculas). Tem o título "Painel administrativo" e o botão "Entrar", sem "Lembrar de mim".
+- O painel não tem cadastro, perfil, recuperação de senha, busca global, notificações em banco nem modo escuro.
 
 ### Usuários (`/admin/usuarios`)
 
@@ -64,9 +62,9 @@ Decisões anteriores que valem aqui:
 | Papel | `role`, em português |
 | Cadastro | `created_at`, só a data e em telas a partir de 1280 px |
 
-- **Ordem:** cadastros mais recentes primeiro **(escolha do Claude)**.
+- **Ordem:** cadastros mais recentes primeiro.
 - **Busca:** nome, nome de exibição e e-mail.
-- **Filtro:** por papel **(escolha do Claude)**.
+- **Filtro:** por papel.
 - **Sem criação, edição geral ou exclusão.**
 
 **Ação "Alterar papel":**
@@ -81,7 +79,7 @@ Decisões anteriores que valem aqui:
 
 - A Action recebe quem altera, a conta e o novo papel. Se quem altera for a própria conta ou não for ADMINISTRADOR, responde 403, mesmo que a tela tenha sido burlada.
 - Papel igual ao atual não grava nem registra nada.
-- Cada mudança gera uma linha de log com `actor_id`, `target_id`, papel anterior e novo papel, sem e-mail ou nome **(escolha do Claude)**.
+- Cada mudança gera uma linha de log com `actor_id`, `target_id`, papel anterior e novo papel, sem e-mail ou nome.
 
 ### Moderações (`/admin/moderacoes`)
 
@@ -100,7 +98,7 @@ Inclui todos os materiais, inclusive excluídos e alterações. Não há ação 
 > **Correção (05/11/2026):** a marca "Alteração" estava na coluna Título. Ela foi para Situação, junto com o status, porque a §58 diz que Alteração não substitui o status.
 
 - **Excluído:** `deleted_at` preenchido vale mais que o status, como em `MyMaterialResource`.
-- **Ordem:** envios mais recentes primeiro **(escolha do Claude)**.
+- **Ordem:** envios mais recentes primeiro.
 - **Busca:** título e autor.
 - **Filtro:** por situação.
 - **Detalhe ("Ver"):** mostra todos os campos da tabela, com data e hora, e também descrição, link (abre em nova aba), motivo da rejeição e, numa alteração, o título e o link originais.
@@ -113,10 +111,10 @@ Não muda a API, então `make api-types` não é necessário.
 
 - `roles.ts` ganha `isAdmin(role)`, no mesmo formato de `canModerate`.
 - A sidebar mostra "Painel administrativo" abaixo de Moderação, só para ADMINISTRADOR.
-- É um link comum, com recarga completa da página e na mesma aba **(escolha do Claude)**. Se houver alteração não salva, vale o aviso que o navegador já mostra ao sair.
+- É um link comum, com recarga completa da página e na mesma aba. Se houver alteração não salva, vale o aviso que o navegador já mostra ao sair.
 - O link precisa funcionar em produção e no ambiente de desenvolvimento, em que o app roda em outra porta.
 
-No painel, o rodapé da sidebar tem "Voltar ao ConectaCC", que leva a `/home` **(escolha do Claude)**. Sair do painel encerra a mesma sessão do app.
+No painel, o rodapé da sidebar tem "Voltar ao ConectaCC", que leva a `/home`. Sair do painel encerra a mesma sessão do app.
 
 ## 6. Textos e idioma
 
@@ -124,7 +122,7 @@ No painel, o rodapé da sidebar tem "Voltar ao ConectaCC", que leva a `/home` **
 - **Interface:** usa a tradução `pt_BR` do Filament.
 - **Mensagens de validação:** o projeto não tem `lang/pt_BR`, então as validações padrão do Laravel podem aparecer como chave. Nenhuma mensagem pode aparecer em inglês ou como chave.
 - **Campo obrigatório no login:** o aviso nativo do navegador segue o idioma do navegador.
-- **Página 403:** "Você não tem permissão para acessar esta página." e o link "Voltar ao ConectaCC" **(escolha do Claude)**.
+- **Página 403:** "Você não tem permissão para acessar esta página." e o link "Voltar ao ConectaCC".
 
 ## 7. Produção
 
@@ -135,7 +133,7 @@ No painel, o rodapé da sidebar tem "Voltar ao ConectaCC", que leva a `/home` **
 
 ### Limite conhecido
 
-Se dois ADMINISTRADORES retirarem o papel um do outro ao mesmo tempo, o sistema pode ficar sem ADMINISTRADOR. Não vale tratar esse caso raro agora: o workflow "Promover usuário" resolve **(escolha do Claude)**.
+Se dois ADMINISTRADORES retirarem o papel um do outro ao mesmo tempo, o sistema pode ficar sem ADMINISTRADOR. Não vale tratar esse caso raro agora: o workflow "Promover usuário" resolve.
 
 ## 8. Testes
 

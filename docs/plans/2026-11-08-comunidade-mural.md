@@ -1,6 +1,6 @@
 # Comunidade (mural de materiais) — plano de implementação
 
-> **Para agentes:** use `superpowers:subagent-driven-development` ou `superpowers:executing-plans` para executar tarefa por tarefa. Os passos usam checkbox (`- [ ]`).
+> **Execução:** tarefa por tarefa. Os passos usam checkbox (`- [ ]`) para acompanhamento.
 
 **Objetivo:** mural cronológico em `/comunidade` com os materiais aprovados, apontando para o conteúdo original.
 
@@ -12,7 +12,7 @@
 
 ## Restrições globais
 
-- Branch `feat/comunidade`. Commits em Conventional Commits, em português, terminando com `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`. Cada commit só acontece depois de os testes e o lint passarem.
+- Branch `feat/comunidade`. Commits em Conventional Commits, em português. Cada commit só acontece depois de os testes e o lint passarem.
 - O material anônimo nunca envia o autor, para nenhum papel.
 - Depois de mudar a API, rodar `make api-types`. Não rodar formatadores no front.
 - Os textos de tela são os da seção 5 da spec.

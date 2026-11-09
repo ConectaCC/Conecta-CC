@@ -1,6 +1,6 @@
 # Estudos parte 2, etapa 2b: Meus conteúdos, Editar, Excluir e Cancelar — plano de implementação
 
-> **Para agentes:** SUB-SKILL OBRIGATÓRIA: use superpowers:subagent-driven-development (recomendado) ou superpowers:executing-plans para executar este plano tarefa por tarefa. Os passos usam checkbox (`- [ ]`) para acompanhamento.
+> **Execução:** tarefa por tarefa. Os passos usam checkbox (`- [ ]`) para acompanhamento.
 
 **Objetivo:** o autor acompanha os próprios envios em `/perfil/meus-conteudos`, cancela um envio pendente, edita um material aprovado (a alteração passa pela Moderação) e exclui um material aprovado. A Moderação passa a analisar alterações, com a versão publicada e a proposta lado a lado.
 
@@ -24,11 +24,11 @@
 
 - **Git:**
   - branch `feat/meus-conteudos` (já criada a partir da `main`, com a 2a);
-  - Conventional Commits em português, terminando com `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`;
+  - Conventional Commits em português;
   - sem push.
 - **Fora desta etapa:**
   - Notificações (2c);
-  - cancelar uma alteração pendente (o autor espera a análise) **(escolha do Claude)**;
+  - cancelar uma alteração pendente (o autor espera a análise);
   - retirar material aprovado (ADMIN) e solicitar revisão (MODERADOR).
 - **Regras:**
   - Meus conteúdos tem paginação com "Mostrar mais", de 20 em 20 (decisão do Marcelo, 02/11/2026), no mesmo padrão da lista de materiais da disciplina;
@@ -42,7 +42,7 @@
   - "Já existe uma alteração deste material em análise." (409);
   - "Este conteúdo foi cancelado pelo autor." (409 na Moderação, quando o item foi cancelado);
   - "O link desta alteração já foi compartilhado nesta disciplina." (409 ao aprovar uma alteração cujo link passou a repetir);
-  - "Este envio não pode ser cancelado.", "Este material não pode ser editado." e "Este material não pode ser excluído." (409) **(escolha do Claude)**;
+  - "Este envio não pode ser cancelado.", "Este material não pode ser editado." e "Este material não pode ser excluído." (409);
   - o resto é igual à 2a ("Esse link já foi compartilhado nesta disciplina." etc.).
 - **Textos do front, exatos:**
   - **Meus conteúdos:**
@@ -53,7 +53,7 @@
     - "MAT-00042 · Material · Estudos › <disciplina>" e "Enviado em dd/mm/aaaa";
     - ações: "Ver dados enviados", "Cancelar envio", "Ver conteúdo", "Editar" e "Excluir";
     - "Motivo da rejeição:";
-    - "Alteração não aprovada em dd/mm/aaaa: <motivo>" **(escolha do Claude: último resultado de alteração rejeitada, até a próxima alteração)**;
+    - "Alteração não aprovada em dd/mm/aaaa: <motivo>" (último resultado de alteração rejeitada, até a próxima alteração);
     - vazio: "Você ainda não enviou conteúdos." e "Nenhum conteúdo neste filtro.";
     - carregando: "Carregando seus conteúdos…";
     - erro: "Não foi possível carregar seus conteúdos agora." e "Tentar novamente".
@@ -62,7 +62,7 @@
     - **Excluir:** "Excluir material?", "O material deixará de aparecer na disciplina. Você ainda poderá consultá-lo em Meus conteúdos." e os botões "Cancelar" e "Excluir material" ("Excluindo…").
     - **Editar:** título "Editar material", sem o checkbox de anônimo.
       - Sucesso: "Alteração enviada para análise", "A versão atual continua visível até a alteração ser aprovada." e "Voltar".
-    - **Falha:** "Não foi possível concluir a ação. Tente novamente." **(escolha do Claude)**.
+    - **Falha:** "Não foi possível concluir a ação. Tente novamente.".
   - **Sucesso do envio (muda nesta etapa):** "Você pode acompanhar a análise em Meus conteúdos.", com "Meus conteúdos" como link para `/perfil/meus-conteudos`.
   - **Moderação:**
     - a etiqueta "Alteração", e no painel "Versão publicada" e "Alteração proposta";
@@ -284,7 +284,7 @@ docs/  decisoes.md, implementacao.md, status-mvp.md, README.md
     - "Ver dados enviados" é um botão com `aria-expanded` que mostra título, descrição, link (sr-only "(abre em nova guia, …)") e "Compartilhado anonimamente" quando for o caso;
     - "Ver conteúdo" é um `Link` para `/estudos/<slug>`.
   - **"Mostrar mais":** aparece abaixo da lista enquanto houver `next_cursor`. Uma falha ao carregar a próxima página mostra o aviso "Não foi possível carregar seus conteúdos agora." com "Tentar novamente", sem esconder o que já carregou.
-  - **`?item=MAT-00042`:** abre o item expandido e faz `scrollIntoView` nele. Se o item não estiver nas páginas carregadas, a página chama `fetchNextPage` até achar o item ou acabar a lista **(escolha do Claude)**. Se não achar, a lista fica normal, sem erro.
+  - **`?item=MAT-00042`:** abre o item expandido e faz `scrollIntoView` nele. Se o item não estiver nas páginas carregadas, a página chama `fetchNextPage` até achar o item ou acabar a lista. Se não achar, a lista fica normal, sem erro.
   - **Status:** as etiquetas usam os tokens existentes: `warning` para Em análise, `success` para Aprovado, `danger` para Rejeitado e neutro para Cancelado e Excluído.
   - **Filtros:** um grupo de botões com `aria-pressed`, dentro de `role="group" aria-label="Filtrar por situação"`.
 

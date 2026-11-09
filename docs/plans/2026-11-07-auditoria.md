@@ -1,6 +1,6 @@
 # Auditoria — plano de implementação
 
-> **Para agentes:** use `superpowers:subagent-driven-development` ou `superpowers:executing-plans` para executar tarefa por tarefa. Os passos usam checkbox (`- [ ]`).
+> **Execução:** tarefa por tarefa. Os passos usam checkbox (`- [ ]`) para acompanhamento.
 
 **Objetivo:** gravar um evento imutável para cada ação que muda dados e mostrá-los ao ADMINISTRADOR em `/admin/auditoria`.
 
@@ -12,7 +12,7 @@
 
 ## Restrições globais
 
-- Branch `feat/auditoria`. Commits em Conventional Commits, em português, terminando com `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`. Cada commit só acontece depois de os testes e o lint passarem.
+- Branch `feat/auditoria`. Commits em Conventional Commits, em português. Cada commit só acontece depois de os testes e o lint passarem.
 - Nenhum evento guarda IP, e-mail, senha, hash, token, sessão ou o texto do motivo.
 - Sem mudança na API, então `make api-types` não é necessário.
 - Os textos de tela são os das seções 5 e 6 da spec.

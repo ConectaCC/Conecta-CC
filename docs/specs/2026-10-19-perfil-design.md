@@ -11,8 +11,6 @@ Referência visual (os números de tela citados nesta spec são as páginas dest
 - Perfil: `~/Downloads/ConectaCC — Protótipo de telas.pdf`, 11 páginas. 1: visualização vazia (desktop); 2: visualização preenchida; 3: visualização vazia (mobile); 4: edição (mobile, lista de disciplinas aberta); 5: edição vazia; 6: edição preenchida com a lista de disciplinas aberta; 7: erro de validação; 8: salvando; 9: sucesso; 10: falha ao salvar; 11: "Descartar alterações?".
 - Home: `~/Downloads/ConectaCC — Protótipo de telas-1.pdf`, página 1 (primeiro acesso com o card "Complete seu perfil").
 
-Itens marcados **(escolha do Claude)** não foram decididos pelo Marcelo; podem ser trocados na revisão.
-
 ## 1. Intenção
 
 O Perfil é a primeira peça de conteúdo do próprio estudante. Ele resolve duas coisas:
@@ -83,12 +81,12 @@ São **49 disciplinas obrigatórias**:
 
 Nesta entrega, o Perfil só usa nome e semestre (para ordenar). Carga horária e ementa ficam guardadas para Estudos.
 
-### Como o catálogo chega ao banco **(escolha do Claude)**
+### Como o catálogo chega ao banco
 
 - O conteúdo fica num arquivo versionado no backend (`backend/resources/catalog/matriz-2023.json`), no mesmo espírito dos Termos.
 - Uma **migration de dados** grava o arquivo no banco com upsert pelo nome. Assim o catálogo chega à produção sozinho (o container roda as migrations na inicialização) e não depende do seeder de desenvolvimento, que cria contas de teste.
 - Mudanças futuras no catálogo entram por uma nova migration.
-- Os 49 links de ementa foram conferidos em 19/10/2026 e todos responderam 200. A coluna do link é opcional mesmo assim **(escolha do Claude)**: uma disciplina futura sem ementa confirmada entra sem link, e nunca se inventa uma URL institucional (`decisoes.md` §20).
+- Os 49 links de ementa foram conferidos em 19/10/2026 e todos responderam 200. A coluna do link é opcional mesmo assim: uma disciplina futura sem ementa confirmada entra sem link, e nunca se inventa uma URL institucional (`decisoes.md` §20).
 
 ## 5. Perfil
 
@@ -112,7 +110,7 @@ Disciplinas atuais são obrigatórias para **salvar**, como no protótipo (aster
 
 - O estudante digita e pressiona Enter para adicionar; o "×" de cada chip remove.
 - Espaços nas pontas são removidos; tag vazia é ignorada.
-- Tag repetida (sem diferenciar maiúsculas e minúsculas) é ignorada, no front e no servidor **(escolha do Claude)**.
+- Tag repetida (sem diferenciar maiúsculas e minúsculas) é ignorada, no front e no servidor.
 - Não há sugestões nesta entrega.
 
 ### 5.3 GitHub e LinkedIn
@@ -126,10 +124,10 @@ Decisão do Marcelo: só o endereço do **perfil da pessoa**. Validação no ser
 
 - Query string (`?utm_source=share…`) e fragmento (`#…`) são **descartados** nos dois campos, e não recusados (decisão do Marcelo, para aceitar o link de compartilhamento do app).
 - Recusa outros domínios, repositórios, posts e páginas de empresa.
-- O nome de usuário do GitHub segue a regra do GitHub (letras, números e hífen, até 39 caracteres, sem hífen nas pontas). O do LinkedIn aceita letras, números, hífen e sublinhado **(escolha do Claude)**.
+- O nome de usuário do GitHub segue a regra do GitHub (letras, números e hífen, até 39 caracteres, sem hífen nas pontas). O do LinkedIn aceita letras, números, hífen e sublinhado.
 - Campo vazio apaga o link.
 - Na visualização, os links abrem em nova guia (`target="_blank"`, `rel="noopener noreferrer"`) e trazem o "↗", com texto acessível de que abrem em nova guia.
-- Mensagens de erro **(escolha do Claude)**: "Informe o endereço do seu perfil no GitHub, como https://github.com/usuario." e "Informe o endereço do seu perfil no LinkedIn, como https://www.linkedin.com/in/usuario."
+- Mensagens de erro: "Informe o endereço do seu perfil no GitHub, como https://github.com/usuario." e "Informe o endereço do seu perfil no LinkedIn, como https://www.linkedin.com/in/usuario."
 
 ### 5.4 Teto técnico provisório
 
@@ -174,8 +172,8 @@ Seguir as telas 4 a 6 e 8 do PDF:
 - **Nome de exibição**: ajuda "É assim que seu nome aparecerá para outros estudantes no ConectaCC.".
 - **Curso**: campo desabilitado com cadeado.
 - **Disciplinas atuais**: ajuda "Selecione as disciplinas que você está cursando neste semestre.", nota de visibilidade, campo "Buscar disciplina..." com lista suspensa e, abaixo, "Selecionadas (N)" com chips removíveis, ou "Nenhuma disciplina selecionada.".
-  - A lista suspensa mostra as disciplinas do catálogo ainda não selecionadas, em ordem de semestre e depois de nome **(escolha do Claude)**.
-  - A busca filtra pelo nome sem diferenciar acentos nem maiúsculas **(escolha do Claude)**.
+  - A lista suspensa mostra as disciplinas do catálogo ainda não selecionadas, em ordem de semestre e depois de nome.
+  - A busca filtra pelo nome sem diferenciar acentos nem maiúsculas.
   - Teclado: setas navegam, Enter seleciona, Esc fecha (padrão combobox do WAI-ARIA).
   - Sem a nota "Lista de demonstração do protótipo…", porque agora o catálogo é o oficial.
 - **Sobre mim**: ajuda "Conte um pouco sobre seus interesses acadêmicos ou profissionais.".
@@ -195,8 +193,8 @@ Seguir as telas 4 a 6 e 8 do PDF:
 
 - Ao clicar em "Cancelar" com alterações, ou ao tentar ir para outra página do app (sidebar, header, voltar do navegador), abre o diálogo da tela 11: "Descartar alterações?", "As alterações feitas no seu perfil ainda não foram salvas.", botões "Continuar editando" e "Descartar alterações" (vermelho).
 - Sem alterações, "Cancelar" volta direto para a visualização.
-- "Sair" (logout) durante a edição com alterações também pede a confirmação **antes** de encerrar a sessão **(escolha do Claude)**. O redirecionamento automático para `/login` quando a sessão expira (401) não pede confirmação.
-- Ao fechar ou recarregar a aba com alterações, vale o aviso padrão do navegador **(escolha do Claude)**.
+- "Sair" (logout) durante a edição com alterações também pede a confirmação **antes** de encerrar a sessão. O redirecionamento automático para `/login` quando a sessão expira (401) não pede confirmação.
+- Ao fechar ou recarregar a aba com alterações, vale o aviso padrão do navegador.
 - O diálogo devolve o foco ao elemento de origem ao fechar (mesmo cuidado já aplicado ao modal dos Termos).
 
 ### 5.10 Carregamento
@@ -210,7 +208,7 @@ Seguir a tela 1 do PDF da Home:
 - Aparece enquanto o Perfil estiver incompleto (sem Nome de exibição ou sem disciplina atual) e some quando ficar completo (`decisoes.md` §8). Sem porcentagem nem gamificação.
 - Conteúdo: ícone, "Complete seu perfil", "Selecione pelo menos uma disciplina atual para personalizar sua experiência no ConectaCC." e o botão "Completar perfil".
 - "Completar perfil" abre o Perfil em edição com o foco na busca de disciplinas (`fluxos.md` §4).
-- Desktop: fica à direita do card de apresentação, que encolhe, como no protótipo. Mobile: fica logo abaixo do card de apresentação **(escolha do Claude; o protótipo não mostra o mobile com o card)**.
+- Desktop: fica à direita do card de apresentação, que encolhe, como no protótipo. Mobile: fica logo abaixo do card de apresentação (o protótipo não mostra o mobile com o card).
 - Enquanto `/me` carrega, o card não aparece (não pisca).
 
 ## 7. Backend
@@ -219,7 +217,7 @@ Seguir a tela 1 do PDF da Home:
 
 - Tabela de **disciplinas**: nome (único), semestre, carga horária, link da ementa.
 - Tabela de ligação **disciplinas atuais** (usuário ↔ disciplina), sem repetição; apagar o usuário apaga as ligações.
-- Em **users** **(escolha do Claude)**: Sobre mim (texto, opcional), as três listas de tags (JSON), GitHub e LinkedIn (opcionais). `display_name` já existe.
+- Em **users**: Sobre mim (texto, opcional), as três listas de tags (JSON), GitHub e LinkedIn (opcionais). `display_name` já existe.
 
 ### API (prefixo `/api/v1`, autenticada)
 
@@ -233,11 +231,11 @@ Seguir a tela 1 do PDF da Home:
 - Erros de validação no formato 422 já usado no Cadastro, com as mensagens em português desta spec.
 - O `PUT` grava tudo numa transação (campos e disciplinas atuais).
 - Os nomes exatos de campos no JSON ficam a cargo de quem implementa, seguindo o padrão `snake_case` existente; os tipos do front são regenerados com `make api-types`.
-- `PUT /profile` não tem limite de tentativas próprio **(escolha do Claude)**: é autenticado e só altera a própria conta.
+- `PUT /profile` não tem limite de tentativas próprio: é autenticado e só altera a própria conta.
 
 ### Seeders de desenvolvimento
 
-As contas de teste continuam como estão (`aluno`, `moderador`, `moderador2`, `admin`), com Perfil **incompleto**, para o card da Home aparecer e o fluxo poder ser testado **(escolha do Claude)**.
+As contas de teste continuam como estão (`aluno`, `moderador`, `moderador2`, `admin`), com Perfil **incompleto**, para o card da Home aparecer e o fluxo poder ser testado.
 
 ## 8. Frontend
 

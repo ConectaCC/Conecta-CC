@@ -4,7 +4,7 @@ Data: 08/11/2026
 Responsável: Marcelo Henrique Germiniani Panho
 Base: `main` (após o PR #16)
 
-Referência visual: protótipo, artboards `Oportunidade` e `Op-*`. O cabeçalho segue a faixa da Comunidade (`decisoes.md` 68.8). Itens marcados **(escolha do Claude)** podem ser trocados na revisão.
+Referência visual: protótipo, artboards `Oportunidade` e `Op-*`. O cabeçalho segue a faixa da Comunidade (`decisoes.md` 68.8).
 
 ## 1. Intenção
 
@@ -60,7 +60,7 @@ As colunas seguem `materials`:
 - motivo obrigatório só no REJEITADO, como em `materials`;
 - link único entre as oportunidades pendentes e aprovadas que não foram excluídas.
 
-**Prazo efetivo:** `deadline`, ou `published_at` mais 15 dias quando o campo está vazio. Os 15 dias contam a partir da aprovação, porque só a partir daí a oportunidade aparece **(escolha do Claude)**.
+**Prazo efetivo:** `deadline`, ou `published_at` mais 15 dias quando o campo está vazio. Os 15 dias contam a partir da aprovação, porque só a partir daí a oportunidade aparece.
 
 A oportunidade fica visível até o fim do dia do prazo, no horário de Brasília. No envio, "Inscrições até" não pode ser uma data passada.
 
@@ -140,7 +140,7 @@ Mudou a API: rodar `make api-types`.
   - a fila mistura materiais e oportunidades por data de envio, com a etiqueta do tipo;
   - o painel de análise da oportunidade mostra tipo, título, descrição, modalidade, prazo, link e quem enviou;
   - "Aprovar" e "Rejeitar" funcionam como no material.
-- **Meus conteúdos:** um filtro "Tipo" com "Materiais" (padrão) e "Oportunidades", junto dos filtros de situação **(escolha do Claude: as duas listas têm paginação separada, e juntá-las numa só seria bem mais complexo)**.
+- **Meus conteúdos:** um filtro "Tipo" com "Materiais" (padrão) e "Oportunidades", junto dos filtros de situação (as duas listas têm paginação separada, e juntá-las numa só seria bem mais complexo).
 - **Notificações:** os textos das notificações de material, trocando "material" por "oportunidade".
 - **Comunidade:**
   - o card da oportunidade usa o ícone de maleta e a etiqueta "Oportunidade";
@@ -183,7 +183,7 @@ Mudou a API: rodar `make api-types`.
 ## 9. Correções feitas na implementação (08/11/2026)
 
 - **Nomes dos eventos de auditoria:** "Oportunidade enviada", "Oportunidade cancelada", "Oportunidade excluída", "Oportunidade aprovada" e "Oportunidade rejeitada". Os rótulos "Envio cancelado", "Aprovada" e "Rejeitada" ficariam iguais ou parecidos com os do material no filtro da Auditoria.
-- **Botão da Comunidade:** "Compartilhar conteúdo", com um menu ("Material" e "Oportunidade") **(escolha do Claude)**.
+- **Botão da Comunidade:** "Compartilhar conteúdo", com um menu ("Material" e "Oportunidade").
 - **"A comunidade em números":** virou uma lista, porque "Oportunidades" não cabia em três blocos lado a lado na coluna lateral.
 - **Situação da oportunidade nas tags:** no feminino, por exemplo "Aprovada", "Rejeitada" e "Encerrada".
 - **Visual da página, a partir de uma imagem de referência do time:**
@@ -192,5 +192,5 @@ Mudou a API: rodar `make api-types`.
   - o cabeçalho ganhou uma onda decorativa;
   - o estado vazio passou a ser "Nenhuma oportunidade compartilhada por enquanto" e "Quando novas oportunidades forem aprovadas, elas aparecerão aqui.", sem botão, porque "+ Adicionar oportunidade" já fica logo acima.
 - **Tipos:** a imagem mostrava botões no estilo de abas ("Todas", "Vagas e Estágios", "Hackathons e Eventos"). A pedido do time, os tipos ficam num filtro de seleção ao lado da busca, com os cinco tipos (§69.1 e §70.2).
-- **Logo do IFSul:** o card usa um ícone, e não o logo da imagem. O logo só entra com o arquivo oficial **(escolha do Claude)**.
+- **Logo do IFSul:** o card usa um ícone, e não o logo da imagem. O logo só entra com o arquivo oficial.
 
