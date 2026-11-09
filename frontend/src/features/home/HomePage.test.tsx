@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import { expect, it } from 'vitest';
 import { mockApi, reply } from '@/test/api';
 import { renderWithProviders } from '@/test/render';
@@ -16,6 +16,7 @@ const me = (profileComplete: boolean) => ({
 
 // o tamanho real é conferido nos testes de ponta a ponta (e2e/home.spec.ts); aqui, a regra de quando o bloco fica lado a lado
 const hero = () => screen.getByRole('heading', { name: /Conecte-se/ }).closest('section');
+const hubs = () => within(screen.getByRole('navigation', { name: 'Áreas do ConectaCC' })).getByRole('list');
 
 it('com o perfil incompleto, mostra o card e deixa o texto e os atalhos em coluna', async () => {
   mockApi('GET', reply(200, me(false)));
@@ -24,6 +25,7 @@ it('com o perfil incompleto, mostra o card e deixa o texto e os atalhos em colun
   expect(await screen.findByText('Olá, Ana!')).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'Complete seu perfil' })).toBeInTheDocument();
   expect(hero()).not.toHaveClass('xl:flex-row');
+  expect(hubs()).not.toHaveClass('xl:grid-cols-[max-content_max-content]');
 });
 
 it('com o perfil completo, esconde o card e põe o texto e os atalhos lado a lado nas telas largas', async () => {
@@ -33,4 +35,5 @@ it('com o perfil completo, esconde o card e põe o texto e os atalhos lado a lad
   expect(await screen.findByText('Olá, Ana!')).toBeInTheDocument();
   expect(screen.queryByRole('heading', { name: 'Complete seu perfil' })).not.toBeInTheDocument();
   expect(hero()).toHaveClass('xl:flex-row', 'xl:items-center');
+  expect(hubs()).toHaveClass('xl:grid-cols-[max-content_max-content]');
 });
