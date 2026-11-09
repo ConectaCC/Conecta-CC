@@ -1,4 +1,4 @@
-# Roadmap — ConectaCC
+# Roadmap - ConectaCC
 
 Este documento apresenta uma proposta de evolução gradual do ConectaCC.
 
@@ -19,20 +19,24 @@ A ideia central é permitir que o ConectaCC cresça de forma progressiva, evitan
 
 # Visão geral
 
-A evolução proposta é:
+A evolução do ConectaCC está organizada nas seguintes etapas:
 
-1. Definição e prototipação
-2. Checkpoint com a professora e eventuais ajustes
-3. Definição da arquitetura técnica
-4. Implementação do MVP
-5. Testes internos
-6. Preparação do piloto
-7. Piloto com estudantes e disciplinas
-8. Revisão do MVP
-9. Possível continuidade institucional / extensão
-10. Possível projeto de pesquisa
-11. Possível produção científica
-12. Evoluções futuras do produto
+1. ✅ Definição do produto e prototipação
+2. ✅ Checkpoint inicial e ajustes de produto
+3. ✅ Definição da arquitetura técnica
+4. ✅ Implementação funcional do MVP
+5. 🔄 Testes internos e validações finais
+6. 🔄 Preparação do piloto
+7. ⏳ Piloto com estudantes
+8. ⏳ Revisão após o piloto
+9. ⏳ Possível continuidade institucional / extensão
+10. ⏳ Possível projeto de pesquisa
+11. ⏳ Possível produção científica
+12. ⏳ Evoluções futuras do produto
+
+O roadmap não representa um cronograma rígido.
+
+As etapas futuras dependem dos resultados obtidos nas fases anteriores, da disponibilidade da equipe, da orientação docente e da viabilidade técnica e institucional.
 
 ---
 
@@ -40,105 +44,53 @@ A evolução proposta é:
 
 ## Objetivo
 
-Transformar a ideia do ConectaCC em um produto com escopo compreensível e requisitos definidos antes da implementação.
+Transformar a ideia do ConectaCC em um produto com escopo compreensível, requisitos definidos e representação visual antes da implementação.
 
-## Atividades
+## Atividades realizadas
 
-- definir problema;
-- definir público inicial;
-- definir objetivos;
-- delimitar MVP;
-- criar identidade visual;
-- definir navegação;
-- definir fluxos;
-- definir papéis ALUNO e ADMIN;
-- prototipar telas;
-- definir estados de erro, loading e vazio;
-- considerar responsividade;
-- considerar acessibilidade;
-- realizar auditoria geral do protótipo;
-- registrar decisões e pendências.
+- definição do problema;
+- definição do público inicial;
+- definição dos objetivos;
+- delimitação do MVP;
+- criação da identidade visual;
+- definição da navegação;
+- definição dos principais fluxos;
+- definição dos papéis ALUNO, MODERADOR e ADMINISTRADOR;
+- prototipação das principais telas;
+- definição de estados de erro, loading e vazio;
+- consideração de responsividade e acessibilidade;
+- auditoria geral do protótipo;
+- registro das decisões e pendências.
 
-## Resultado esperado
+## Resultado
 
-Um protótipo navegável e documentado que possa servir como referência para implementação.
+Foi produzido um protótipo navegável e documentado que serviu como referência para a implementação.
+
+Durante a evolução do projeto, algumas decisões do protótipo foram ajustadas.
+
+Entre elas:
+
+- Oportunidade passou a fazer parte da versão funcional;
+- Comunidade passou a funcionar como mural de Materiais e Oportunidades;
+- busca de estudantes permaneceu para evolução futura;
+- Publicação como tipo próprio de conteúdo permaneceu fora do MVP;
+- os papéis MODERADOR e ADMINISTRADOR foram separados.
 
 ## Situação
 
-> **Atualização (02/11/2026):** Oportunidade e Comunidade foram prototipadas, mas saíram do MVP (`decisoes.md` 56).
-
-**Concluída para o MVP atual.**
-
-As dez áreas principais foram prototipadas:
-
-1. Login
-2. Cadastro + Termos
-3. Recuperação de senha
-4. Home
-5. Perfil
-6. Estudos
-7. Oportunidade
-8. Comunidade + Perfil público
-9. Configurações
-10. Moderação
-
-# Marco atual — Checkpoint com a professora
-
-Antes da definição definitiva da arquitetura e do início da implementação, o MVP será apresentado à professora.
-
-## Objetivo
-
-Apresentar o estado atual do ConectaCC e validar se a direção adotada está adequada antes de transformar o protótipo em código.
-
-Serão apresentados:
-
-- problema e proposta do ConectaCC;
-- escopo do MVP;
-- protótipo navegável;
-- principais fluxos;
-- documentação do projeto;
-- estado atual;
-- decisões já tomadas;
-- pendências planejadas para etapas futuras.
-
-## Importante
-
-O protótipo representa a especificação funcional e visual do MVP.
-
-Ele ainda não representa uma aplicação implementada.
-
-Caso sejam solicitadas alterações relevantes de produto, fluxo ou escopo:
-
-→ a equipe deverá avaliar e incorporar os ajustes necessários  
-→ atualizar a documentação e o protótipo quando aplicável  
-→ somente depois congelar a arquitetura técnica.
-
-Se não houver alterações relevantes:
-
-→ o projeto segue para a definição da arquitetura.
+✅ **Concluída.**
 
 ---
 
 # Fase 2 — Definição da arquitetura técnica
 
-> **Atualização (04/11/2026):** concluída. Ver `stack-e-decisoes-tecnicas.md`.
-
 ## Objetivo
 
-Definir como o MVP será construído.
+Definir como o MVP seria construído, preservando os requisitos de Produto já estabelecidos.
 
-Essa etapa começa após:
+## Principais decisões realizadas
 
-- a análise de eventuais alterações solicitadas;
-- o fechamento dos ajustes de produto necessários.
-
-A pergunta central desta fase é:
-
-> **Como vamos construir o produto que já foi definido?**
-
-Ela não deve reabrir silenciosamente decisões de produto já documentadas.
-
-## Principais decisões
+Foram definidos:
 
 - stack;
 - arquitetura;
@@ -147,65 +99,77 @@ Ela não deve reabrir silenciosamente decisões de produto já documentadas.
 - banco de dados;
 - autenticação;
 - autorização;
-- recuperação de senha;
-- envio de e-mails;
 - hospedagem;
 - deploy;
-- testes;
-- estrutura do código.
+- estratégia de testes;
+- segurança;
+- organização do código;
+- estratégia de branches e integração contínua.
+
+As decisões técnicas estão registradas principalmente em:
+
+`stack-e-decisoes-tecnicas.md`
 
 ## Responsabilidade principal
 
-Marcelo Henrique Germiniani Panho, com participação da equipe na validação das decisões.
+Marcelo Henrique Germiniani Panho, com participação da equipe na validação das decisões relacionadas ao Produto.
 
 ## Princípio
 
-A tecnologia deverá atender ao produto definido.
+A tecnologia deve atender ao Produto definido.
 
-A arquitetura não deve alterar requisitos de produto apenas para facilitar a implementação sem que isso seja discutido com a equipe.
+Necessidades técnicas que alterem comportamento, escopo, experiência do usuário ou regras de negócio devem ser discutidas com a equipe antes da mudança.
+
+## Situação
+
+✅ **Concluída.**
 
 ---
 
 # Fase 3 — Implementação do MVP
 
-> **Atualização (04/11/2026):** em andamento. O estado atual está em `status-mvp.md`.
-
 ## Objetivo
 
-Transformar o protótipo em uma aplicação funcional.
+Transformar as definições de Produto e o protótipo em uma aplicação funcional.
 
-## Ordem inicial sugerida
+## Principais entregas
 
-> **Atualização (02/11/2026):** Oportunidade e Comunidade saíram do MVP (`decisoes.md` 56). Os itens 1 a 5, a Moderação de material e as Notificações já foram entregues. O Perfil público foi entregue em 04/11/2026. A ordem atual é: Configurações, painel `/admin`, responsividade, acessibilidade e testes.
+Foram implementados:
 
-> **Atualização (04/11/2026):** Configurações foi entregue. A ordem atual é: painel `/admin`, responsividade, acessibilidade e testes.
+1. fundação técnica;
+2. autenticação;
+3. layout global;
+4. Perfil;
+5. Home;
+6. Estudos;
+7. Materiais;
+8. Meus conteúdos;
+9. Perfil público;
+10. Moderação;
+11. Notificações;
+12. Configurações;
+13. painel administrativo `/admin`;
+14. Auditoria;
+15. Oportunidade;
+16. Comunidade.
 
-> **Atualização (05/11/2026):** o painel `/admin` foi entregue (`decisoes.md` 65). A ordem atual é: responsividade, acessibilidade e testes.
+Também foram implementadas as regras de autorização para os papéis:
 
-> **Atualização (08/11/2026):** a Comunidade voltou como mural de materiais (`decisoes.md` 68). A próxima entrega é Oportunidades, integrada ao mural, com um filtro por tipo (sem abas) e "Compartilhar" para material e oportunidade (`decisoes.md` 69).
+- ALUNO;
+- MODERADOR;
+- ADMINISTRADOR.
 
-> **Atualização (08/11/2026):** Oportunidades foi entregue, integrada ao mural (`decisoes.md` 70).
+## Resultado
 
-1. Fundação e autenticação
-2. Layout global
-3. Perfil
-4. Home
-5. Estudos
-6. Oportunidade
-7. Comunidade
-8. Perfil público
-9. Moderação
-10. Notificações
-11. Configurações
-12. Responsividade
-13. Acessibilidade
-14. Testes
+Existe uma versão funcional do MVP capaz de ser utilizada em testes internos e preparada para um piloto controlado.
 
-A ordem poderá ser ajustada depois da definição da arquitetura.
+Funcionalidades futuras registradas na documentação não são consideradas pendências para concluir esta fase.
 
-## Resultado esperado
+## Situação
 
-Uma versão funcional do MVP capaz de ser utilizada em testes internos.
+✅ **Implementação funcional do MVP concluída.**
+
+As atividades seguintes concentram-se em qualidade, testes, revisão do ambiente e preparação do piloto.
 
 ---
 
@@ -213,118 +177,158 @@ Uma versão funcional do MVP capaz de ser utilizada em testes internos.
 
 ## Objetivo
 
-Identificar problemas antes de disponibilizar o sistema para estudantes participantes do piloto.
+Identificar problemas antes de disponibilizar o sistema para os participantes do piloto.
 
-## Testes previstos
+## Áreas a validar
+
+A rodada final deve contemplar:
 
 - Cadastro;
 - Login;
-- recuperação de senha;
-- permissões ALUNO/ADMIN;
+- controle de acesso por papel;
+- Home;
 - Perfil;
 - seleção de disciplinas;
 - Estudos;
-- compartilhamento de material;
-- Meus conteúdos (editar, excluir e cancelar);
+- Materiais;
+- Meus conteúdos;
 - Perfil público;
+- Oportunidade;
+- Comunidade;
+- Configurações;
 - alteração de senha;
 - Moderação;
-- notificações;
+- Notificações;
+- painel `/admin`;
+- Auditoria;
 - links externos;
-- erros;
-- loading;
+- estados de loading;
+- estados de erro;
+- estados vazios;
+- buscas e filtros;
+- concorrência;
 - responsividade;
 - acessibilidade.
+
+A recuperação de senha não faz parte da versão atual e, portanto, não integra a rodada de validação do MVP.
+
+## Qualidade automatizada
+
+O projeto já possui uma base de testes automatizados para backend e frontend, incluindo:
+
+- Pest;
+- Vitest;
+- Testing Library;
+- testes de mutação;
+- análise estática;
+- Playwright;
+- integração contínua.
+
+A rodada final deve complementar essa cobertura com a validação funcional do MVP completo.
 
 ## Resultado esperado
 
 Uma versão suficientemente estável para um piloto controlado.
 
+## Situação
+
+🔄 **Em andamento.**
+
 ---
 
-# Fase 5 — Preparação do piloto
+# Fase 5 - Preparação do piloto
 
 ## Objetivo
 
-Preparar o uso real do ConectaCC por um grupo limitado de estudantes.
+Preparar o uso real do ConectaCC por um grupo controlado de estudantes.
+
+## Configuração definida
+
+O piloto foi planejado inicialmente para:
+
+**12 participantes**
+
+sendo:
+
+- 10 estudantes com papel ALUNO;
+- 2 ADMINISTRADORES: Marcelo e Viviane.
+
+O cadastro ficará restrito aos participantes convidados por meio de:
+
+`ALLOWED_EMAILS`
+
+O domínio institucional utilizado é:
+
+`academico.ifsul.edu.br`
+
+A Matriz 2023, com as 49 disciplinas obrigatórias cadastradas, é a referência acadêmica do piloto.
+
+Não haverá confirmação de propriedade do e-mail por link ou código nesta versão.
 
 ## Antes do piloto
 
-Deverão ser resolvidos itens como:
+Ainda devem ser concluídos:
 
-- confirmar tecnicamente o domínio ou os domínios institucionais do IFSul utilizados na validação do cadastro;
-- utilizar a Matriz 2023 como referência acadêmica inicial;
-- verificar posteriormente se será necessário contemplar estudantes vinculados à Matriz 2017;
-- ~~definir disciplinas piloto~~: todas as disciplinas têm área de materiais (`decisoes.md` 54.2);
-- concluir o levantamento dos links institucionais necessários;
-- revisar Termos de participação;
-- definir tratamento de dados;
-- definir exclusão de conta e dados;
-- definir administradores;
-- preparar instrumento de feedback;
-- definir participantes.
+- selecionar os 10 estudantes participantes;
+- cadastrar os participantes em `ALLOWED_EMAILS`;
+- revisar os Termos de participação;
+- garantir que os Termos reflitam as regras atuais de Perfil, autoria, anonimato e tratamento dos dados;
+- definir o canal operacional para solicitações de exclusão de conta;
+- revisar o tratamento de dados considerando a LGPD e orientações institucionais;
+- revisar os links institucionais utilizados;
+- preparar o instrumento de feedback;
+- definir o que será observado durante os testes;
+- concluir a rodada final de testes internos;
+- validar responsividade;
+- validar acessibilidade;
+- corrigir problemas bloqueadores;
+- validar o ambiente de produção.
 
-> **Atualização (05/11/2026):** a política de exclusão de conta foi definida em `decisoes.md` 64, com implementação fora do MVP. Antes do piloto, ela precisa ser refletida nos Termos, e falta decidir o canal de contato e como atender um pedido.
+## Situação
 
-  ## Confirmação de e-mail
-
-A confirmação de propriedade do e-mail por link ou código:
-
-**não faz parte do MVP nem do piloto.**
-
-Ela poderá ser avaliada como evolução futura do ConectaCC.
-
-A recuperação de senha continuará utilizando envio de e-mail normalmente.
-
-## Disciplinas piloto
-
-> **Atualização (02/11/2026):** substituído. Todas as 49 disciplinas têm área de materiais desde o início (`decisoes.md` 54.2).
-
-O ConectaCC poderá iniciar a área de materiais com um número reduzido de disciplinas.
-
-Isso permite:
-
-- testar o fluxo com menor complexidade;
-- avaliar se estudantes utilizam os materiais;
-- observar se existe interesse em compartilhar;
-- identificar problemas na Moderação;
-- ajustar o modelo antes de ampliar o catálogo.
-
-Importante:
-
-O Perfil poderá utilizar o catálogo geral do curso, mesmo que apenas algumas disciplinas possuam inicialmente a área colaborativa de materiais.
-
+🔄 **Em preparação.**
 ---
 
-# Fase 6 — Piloto com estudantes
+# Fase 6 - Piloto com estudantes
 
 ## Objetivo
 
-Avaliar o ConectaCC em uso real.
+Avaliar o ConectaCC em uso real por estudantes de Ciência da Computação do IFSul – Câmpus Passo Fundo.
 
-## Possíveis participantes
+## Participantes planejados
 
-Estudantes de Ciência da Computação do IFSul – Câmpus Passo Fundo.
+O piloto inicial foi planejado para:
 
-O grupo poderá ser limitado inicialmente para facilitar acompanhamento e análise.
+- 10 estudantes participantes com papel ALUNO;
+- 2 integrantes responsáveis pelo acompanhamento com papel ADMINISTRADOR.
+
+A composição poderá ser ajustada caso exista necessidade durante a preparação da validação.
 
 ## Aspectos a observar
 
+Entre os principais pontos:
+
+- compreensão da proposta do ConectaCC;
 - facilidade de uso;
-- compreensão da proposta;
-- utilidade de Estudos;
 - facilidade para encontrar materiais;
+- utilidade de Estudos;
 - interesse em compartilhar materiais;
-- utilidade de Meus conteúdos e das notificações;
+- utilidade da área Oportunidade;
+- interesse em indicar oportunidades;
+- utilidade do mural da Comunidade;
+- facilidade para encontrar recursos institucionais;
 - compreensão da Moderação;
+- utilidade de Meus conteúdos;
 - utilidade das notificações;
+- compreensão da autoria identificada e anônima dos materiais;
 - dificuldades de navegação;
+- problemas de responsividade ou acessibilidade;
 - funcionalidades consideradas desnecessárias;
 - necessidades não previstas.
 
 ## Feedback
 
-O piloto deverá utilizar um instrumento estruturado de feedback.
+O piloto deve utilizar um instrumento estruturado de feedback.
 
 Podem ser utilizados:
 
@@ -334,6 +338,9 @@ Podem ser utilizados:
 - observação do uso;
 - registro de dificuldades.
 
+## Situação
+
+⏳ **Aguardando a conclusão da preparação do piloto.**
 ---
 
 # Fase 7 — Revisão após o piloto
@@ -353,10 +360,8 @@ Transformar feedback em decisões de produto.
 - revisar personas;
 - revisar requisitos;
 - revisar fluxos;
-- avaliar a percepção dos estudantes sobre a autoria pública dos materiais;
+- avaliar se a combinação entre autoria identificada e compartilhamento anônimo de materiais funcionou adequadamente;
 - corrigir problemas.
-
-> **Atualização (04/11/2026):** a autoria foi decidida antes do previsto. O material mostra o nome do autor, com a opção "Compartilhar anonimamente" (`decisoes.md` 55.2). Depois dos testes, vale avaliar se essa escolha funcionou bem.
 
 ## Resultado esperado
 
@@ -382,7 +387,7 @@ O ConectaCC poderá futuramente ser avaliado como uma iniciativa de extensão ou
 - envolver novos colaboradores;
 - melhorar os recursos existentes;
 - criar ações de integração;
-- ampliar a quantidade de disciplinas;
+- ampliar os recursos acadêmicos e, quando necessário, contemplar outras matrizes e disciplinas eletivas;
 - aproximar estudantes de diferentes semestres;
 - fortalecer circulação de oportunidades.
 
@@ -403,9 +408,10 @@ Exemplos de questões possíveis:
 - Quais funcionalidades colaborativas geram maior participação?
 - Estudantes compartilham materiais quando existe Moderação?
 - Como estudantes percebem o compartilhamento anônimo ou identificado de materiais?
-- A busca por colegas facilita a percepção de apoio dentro do curso?
+- O Perfil público e as contribuições identificadas ajudam os estudantes a perceber melhor quem faz parte da comunidade acadêmica?
 - Quais fatores influenciam a adoção de uma plataforma acadêmica colaborativa?
 - Quais barreiras impedem estudantes de utilizar recursos institucionais já existentes?
+- O mural da Comunidade facilita a descoberta de materiais e oportunidades?
 
 Essas questões são exemplos.
 
@@ -452,10 +458,11 @@ Somente depois de validar o funcionamento no contexto inicial deverá ser avalia
 
 Possibilidades:
 
-- outras disciplinas;
-- outros semestres;
+- disciplinas eletivas;
+- Matriz 2017 ou outras matrizes curriculares;
 - outros cursos;
 - outros câmpus;
+- outras instituições;
 - novas iniciativas institucionais.
 
 Caso o ConectaCC seja futuramente expandido para fora do IFSul, também poderá ser necessário avaliar:
@@ -470,69 +477,87 @@ Essas questões não pertencem ao MVP nem ao piloto atual.
 
 # Fase 12 — Funcionalidades futuras possíveis
 
-As seguintes funcionalidades já foram discutidas, mas permanecem fora do MVP.
+As funcionalidades abaixo já foram discutidas, mas permanecem fora do MVP atual.
 
-## Apoio entre estudantes
+## Apoio e descoberta entre estudantes
 
+- busca de estudantes;
+- busca por disciplinas atuais;
 - botão "Preciso de ajuda";
-- identificação automática de colegas que podem ajudar;
+- identificação de colegas que podem ajudar;
 - matching;
 - pedidos de ajuda;
 - acompanhamento de dúvidas.
 
-## Comunicação
+## Comunicação e Comunidade
 
 - chat;
 - mensagens diretas;
 - espaços de dúvidas;
-- conversas entre estudantes.
-
-## Comunidade
-
 - comentários;
 - reações;
-- recursos sociais adicionais.
+- curtidas;
+- seguidores;
+- canais da comunidade;
+- publicação externa como tipo próprio de conteúdo.
 
 ## Estudos
 
-- upload de arquivos;
+- upload direto de arquivos;
 - favoritos;
 - avaliações;
-- histórico;
 - trilhas de estudo;
 - organização mais avançada dos materiais.
 
 ## Perfil
 
-- foto;
-- controle de visibilidade;
-- escolha de aparecer ou não na Comunidade.
+- upload de foto;
+- controles adicionais de visibilidade;
+- ocultação de disciplinas;
+- opção de não participar da descoberta social;
+- inclusão do semestre, caso seja considerada útil.
 
 ## Oportunidades
 
-- favoritos de oportunidades, com bookmark nos cards e controle separado para visualizar somente as oportunidades salvas (`decisoes.md` §74);
+- favoritar oportunidades;
+- filtro "Somente salvas";
 - alertas;
 - filtros adicionais;
-- acompanhamento de oportunidades.
+- edição de oportunidade aprovada;
+- acompanhamento mais avançado de oportunidades.
 
-## Administração
+### Favoritos
 
-- histórico de decisões;
-- auditoria;
-- remoção de conteúdo aprovado;
+A regra principal já definida prevê:
 
-> **Atualização (07/11/2026):** a auditoria de ações que mudam dados foi entregue no MVP (`decisoes.md` 66). Continuam futuras a auditoria de consultas e de login e a exportação.
+- bookmark nos cards;
+- favoritos individuais;
+- filtro separado "Somente salvas";
+- possibilidade de combinar favoritos com o filtro de tipo.
 
-- gestão administrativa;
-- contador de pendências.
+Os detalhes de UX e comportamento de oportunidades encerradas ou removidas serão definidos quando essa funcionalidade entrar no escopo.
+
+## Moderação e Administração
+
+- retirada administrativa de conteúdo aprovado;
+- reversão administrativa de rejeição;
+- denúncia ou solicitação de revisão de conteúdo;
+- histórico administrativo mais detalhado;
+- contador de pendências na Moderação;
+- auditoria de consultas;
+- auditoria de Login;
+- exportação de eventos de Auditoria.
+
+A Auditoria das ações que alteram dados já faz parte do MVP atual.
 
 ## Autenticação e conta
 
-Possibilidades futuras:
-
+- recuperação de senha;
 - confirmação de propriedade do e-mail institucional por link ou código;
-- suporte a outros domínios institucionais caso o ConectaCC seja expandido para fora do IFSul;
-- políticas adicionais de segurança de conta conforme a evolução do projeto.
+- aviso por e-mail após alteração de senha;
+- autoexclusão de conta pela interface;
+- suporte a outros domínios institucionais caso exista expansão do projeto;
+- políticas adicionais de segurança conforme a evolução do sistema.
 
 ## Inteligência Artificial
 
@@ -544,7 +569,7 @@ Possibilidades futuras poderão ser estudadas, como:
 - recomendações;
 - Agente Orienta.
 
-Nenhuma dessas funcionalidades pertence ao MVP atual.
+Nenhuma dessas funcionalidades de Inteligência Artificial faz parte do MVP atual.
 
 ---
 
