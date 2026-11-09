@@ -108,6 +108,7 @@ final class UpdateProfileController
 - Para cada entrada que a spec não cobre mas que vai acontecer (variações de URL, maiúsculas, espaços, payload malformado, requisição duplicada), crie um teste.
 - **Dois usuários no mesmo teste:** a sessão guarda o hash da senha (`AuthenticateSession`) e o guard do Sanctum guarda o usuário. Quando o resultado depende de quem é o usuário atual, rode `$this->flushSession()` e `app('auth')->forgetGuards()` antes de trocar.
 
+- **Datas no fuso do câmpus:** prazos e filtros de período contam o dia em Brasília. Em teste, monte a data com `now(Campus::TIMEZONE)` (ou congele o relógio com `travelTo`), nunca com `now()->toDateString()`, que usa UTC: entre 21h e meia-noite de Brasília o UTC já está no dia seguinte. O CI roda a suíte também às 00:30 UTC (`TEST_NOW`) para pegar isso; localmente: `docker compose exec -u sail -e TEST_NOW='2026-11-09 00:30:00' app vendor/bin/pest --parallel`.
 - **Formato das respostas:** `tests/Feature/ResponseShapesTest.php` confere, campo a campo, os itens que a SPA consome. Campo novo num Resource entra lá.
 
 ## Qualidade
