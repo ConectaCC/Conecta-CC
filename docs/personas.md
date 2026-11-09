@@ -84,15 +84,17 @@ Organiza:
 
 ### Comunidade
 
-Permite encontrar estudantes por:
-
-- interesses;
-- áreas de ajuda;
-- disciplinas atuais.
+Funciona como espaço de descoberta dos conteúdos compartilhados no ConectaCC, reunindo materiais e oportunidades aprovados.
 
 ### Oportunidade
 
 Reúne acessos institucionais e oportunidades compartilhadas pela comunidade.
+
+### Home
+
+Reúne atalhos para as principais áreas e acessos institucionais relevantes.
+
+A descoberta e busca de outros estudantes poderá ser ampliada em evoluções futuras.
 
 ---
 
@@ -102,7 +104,7 @@ Reúne acessos institucionais e oportunidades compartilhadas pela comunidade.
 
 Estudante que costuma encontrar ou produzir materiais úteis durante a graduação e gostaria de facilitar o acesso desses conteúdos para outros colegas.
 
-Pode compartilhar:
+Pode encontrar ou produzir:
 
 - listas de exercícios;
 - resumos;
@@ -111,24 +113,24 @@ Pode compartilhar:
 - cursos;
 - ferramentas;
 - materiais externos;
-- publicações próprias.
-
-Também pode desejar compartilhar experiências acadêmicas ou profissionais.
+- conteúdos acadêmicos;
+- projetos e experiências que possam gerar oportunidades relevantes.
 
 ## Principais necessidades
 
 - indicar materiais sem precisar criar uma estrutura complexa;
 - compartilhar conteúdos úteis com colegas;
 - divulgar oportunidades;
-- compartilhar publicações ou projetos;
-- contribuir com a comunidade acadêmica.
+- contribuir com a comunidade acadêmica;
+- permitir que conteúdos úteis sejam encontrados posteriormente.
 
 ## Dificuldades
 
 - materiais úteis ficam perdidos em conversas e grupos;
 - links compartilhados são difíceis de reencontrar;
 - não existe necessariamente um local único para concentrar contribuições dos estudantes;
-- conteúdos podem circular sem contexto ou sem identificação da disciplina relacionada.
+- conteúdos podem circular sem contexto ou sem identificação da disciplina relacionada;
+- oportunidades podem ficar restritas aos grupos ou canais em que foram divulgadas.
 
 ## Como o ConectaCC ajuda
 
@@ -136,26 +138,22 @@ Também pode desejar compartilhar experiências acadêmicas ou profissionais.
 
 Permite compartilhar material por link dentro da disciplina correspondente.
 
+O estudante pode escolher compartilhar o material de forma identificada ou anônima.
+
 ### Oportunidade
 
 Permite indicar oportunidades encontradas fora da plataforma.
 
 ### Comunidade
 
-Permite compartilhar:
-
-- publicação;
-- artigo;
-- projeto;
-- conteúdo externo relevante.
+Permite que materiais e oportunidades aprovados sejam descobertos em um mural comum.
 
 ### Moderação
 
-Os conteúdos enviados passam por análise antes de ficarem disponíveis para os demais estudantes.
-
+Materiais e oportunidades enviados passam por análise antes de ficarem disponíveis para os demais estudantes.
 ---
 
-# 4. Persona 3 — Estudante buscando conexão com colegas
+# 4. Persona 3 - Estudante buscando conexão com colegas
 
 ## Perfil
 
@@ -175,7 +173,7 @@ Pode:
 - encontrar estudantes com interesses semelhantes;
 - descobrir quem pode ajudar em determinado assunto;
 - encontrar colegas que estejam cursando a mesma disciplina;
-- conhecer projetos, experiências e publicações de outros estudantes.
+- conhecer experiências e interesses de outros estudantes.
 
 ## Dificuldades
 
@@ -184,33 +182,42 @@ Pode:
 - dificuldade para descobrir interesses acadêmicos de outros alunos;
 - pouca integração entre estudantes de diferentes etapas do curso.
 
-## Como o ConectaCC ajuda
+## Como o ConectaCC ajuda atualmente
+
+### Perfil público
+
+Permite conhecer informações que outro estudante decidiu disponibilizar no ConectaCC, como:
+
+- Nome de exibição;
+- Curso;
+- Sobre;
+- Interesses;
+- Pode ajudar com;
+- Procura ajuda com;
+- Disciplinas atuais;
+- GitHub;
+- LinkedIn.
+
+O acesso ao Perfil público pode ocorrer, por exemplo, pelo nome do autor de um material identificado.
 
 ### Comunidade
 
-Permite pesquisar estudantes através de:
+O mural permite descobrir materiais e oportunidades compartilhados pela comunidade, criando também formas indiretas de conhecer contribuições de outros estudantes.
+
+## Evolução futura
+
+A busca e descoberta direta de estudantes ainda não faz parte da versão atual.
+
+Futuramente poderão ser avaliadas formas de encontrar estudantes por:
 
 - Nome de exibição;
 - Interesses;
 - Pode ajudar com;
 - Procura ajuda com;
 - Disciplinas atuais.
-
-### Perfil público
-
-Permite conhecer informações acadêmicas e profissionais que o estudante decidiu disponibilizar dentro do ConectaCC.
-
-### Feed
-
-Permite descobrir:
-
-- materiais;
-- publicações;
-- atividades compartilhadas pela comunidade.
-
 ---
 
-# 5. Persona 4 — Estudante buscando oportunidades
+# 5. Persona 4 - Estudante buscando oportunidades
 
 ## Perfil
 
@@ -255,46 +262,76 @@ Ele direciona o estudante para a fonte original.
 
 ---
 
-# 6. Persona 5 — Administrador / Moderador
+# 6. Persona 5 - Moderador / Administrador
 
 ## Perfil
 
-Usuário responsável por analisar conteúdos colaborativos antes que sejam disponibilizados para a comunidade.
+Usuário responsável por apoiar a organização e a segurança dos conteúdos colaborativos do ConectaCC.
 
-No MVP, o ADMIN não representa uma estrutura administrativa completa.
+O sistema possui dois papéis com responsabilidades diferentes:
 
-Seu papel está concentrado na Moderação.
+- MODERADOR;
+- ADMINISTRADOR.
 
 ## Principais necessidades
 
 - identificar conteúdos aguardando análise;
-- saber quem enviou;
-- verificar o link;
+- visualizar as informações necessárias para tomar uma decisão;
+- verificar o link enviado;
 - entender onde o conteúdo será exibido;
-- aprovar ou rejeitar;
-- informar motivo quando necessário;
-- evitar decisões duplicadas.
+- aprovar ou rejeitar conteúdos;
+- informar um motivo compreensível quando rejeitar;
+- evitar decisões duplicadas;
+- respeitar as regras de autoria e anonimato;
+- acompanhar informações administrativas quando possuir permissão.
 
-## Conteúdos analisados
+## Conteúdos moderados
+
+Na versão atual:
 
 - Material;
-- Publicação;
 - Oportunidade.
 
-## Regras importantes
+## MODERADOR
 
-O ADMIN:
+Pode:
 
-- pode consultar conteúdos pendentes;
-- pode aprovar;
-- pode rejeitar;
-- pode informar motivo opcional;
-- não pode moderar o próprio conteúdo.
+- acessar a fila de Moderação;
+- analisar conteúdos pendentes;
+- aprovar;
+- rejeitar;
+- informar o motivo obrigatório da rejeição.
 
-Caso um ADMIN envie conteúdo como estudante:
+Não pode:
 
-→ o conteúdo permanece PENDENTE  
-→ outro ADMIN deverá analisá-lo.
+- moderar o próprio conteúdo;
+- acessar o painel `/admin`;
+- alterar papéis de usuários;
+- visualizar a identidade real do autor de um material anônimo.
+
+Os próprios envios não aparecem entre os conteúdos que o MODERADOR pode analisar.
+
+## ADMINISTRADOR
+
+Possui acesso à Moderação e também ao painel administrativo `/admin`.
+
+Pode:
+
+- moderar conteúdos;
+- moderar o próprio conteúdo;
+- alterar o papel de outras contas;
+- consultar informações administrativas;
+- acessar a Auditoria;
+- identificar o autor real de material anônimo nas áreas administrativas autorizadas.
+
+O ADMINISTRADOR não pode alterar o próprio papel.
+
+## Concorrência
+
+Se duas pessoas abrirem o mesmo conteúdo para análise:
+
+→ a primeira decisão válida prevalece  
+→ uma segunda tentativa não sobrescreve a decisão já registrada.
 
 ---
 
