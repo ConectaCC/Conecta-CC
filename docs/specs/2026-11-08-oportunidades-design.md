@@ -16,7 +16,7 @@ Estudantes encontram vagas, estágios e eventos espalhados por grupos e redes. O
 
 ### Entra
 
-- Página `/oportunidade` com o card das bolsas do IFSul e as oportunidades aprovadas, com busca e filtro por tipo.
+- Página `/oportunidade` com o card das oportunidades do IFSul e as oportunidades aprovadas, com busca e filtro por tipo.
 - Envio pelo botão "+ Adicionar oportunidade", com Moderação.
 - Prazo: o campo "Inscrições até", ou 15 dias quando ele fica vazio.
 - Notificações, Meus conteúdos (cancelar e excluir), auditoria e uma página só de leitura no `/admin`.
@@ -105,10 +105,10 @@ Mudou a API: rodar `make api-types`.
 ### Página `/oportunidade`
 
 - **Cabeçalho:** "Oportunidade" e "Encontre oportunidades para complementar sua formação acadêmica e profissional. Aqui você encontra recursos do IFSul e indicações de estudantes aprovadas pela moderação.", na faixa com ícone de maleta.
-- **Card das bolsas:**
-  - "Conheça as oportunidades de bolsas do IFSul", com a marca "Fonte oficial · IFSul";
-  - "Consulte bolsas, programas e oportunidades disponibilizadas oficialmente pelo IFSul.";
-  - "Ver oportunidades ↗", que abre em nova aba.
+- **Card das oportunidades do IFSul:**
+  - "Conheça as oportunidades do IFSul", com a marca "Fonte oficial · IFSul";
+  - "Consulte oportunidades de bolsas, projetos de extensão, estágios e outras iniciativas para complementar sua formação acadêmica e profissional.";
+  - os links "Bolsas e programas ↗" (`https://www.ifsul.edu.br/estudante-pronatec`) e "Projetos e estágios ↗" (`https://extensao.passofundo.ifsul.edu.br/src/home/home.html`), que abrem em nova aba.
 - **Seção das indicações:** "Oportunidades indicadas pela comunidade" e "Veja oportunidades compartilhadas por estudantes e aprovadas pela moderação do ConectaCC.", com o botão "+ Adicionar oportunidade".
 - **Busca e filtro:** "Buscar oportunidades" e um filtro por tipo ("Todos os tipos" e os cinco). Ambos ficam no endereço da página.
 - **Card:**
@@ -188,7 +188,7 @@ Mudou a API: rodar `make api-types`.
 - **Situação da oportunidade nas tags:** no feminino, por exemplo "Aprovada", "Rejeitada" e "Encerrada".
 - **Visual da página, a partir de uma imagem de referência do time:**
   - o título passou a ser "Oportunidades", no plural, como a §6 permite no conteúdo da página (o item da navegação continua "Oportunidade");
-  - o card das bolsas do IFSul fica dentro do cabeçalho, ao lado do texto, com o botão "Ver oportunidades";
+  - o card das oportunidades do IFSul fica dentro do cabeçalho, ao lado do texto;
   - o cabeçalho ganhou uma onda decorativa;
   - o estado vazio passou a ser "Nenhuma oportunidade compartilhada por enquanto" e "Quando novas oportunidades forem aprovadas, elas aparecerão aqui.", sem botão, porque "+ Adicionar oportunidade" já fica logo acima.
 - **Tipos:** a imagem mostrava botões no estilo de abas ("Todas", "Vagas e Estágios", "Hackathons e Eventos"). A pedido do time, os tipos ficam num filtro de seleção ao lado da busca, com os cinco tipos (§69.1 e §70.2).

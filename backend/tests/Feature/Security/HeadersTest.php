@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Support\Facades\File;
 
 it('manda os cabeçalhos de segurança em toda resposta', function (string $url) {
     $this->get($url)
@@ -18,20 +17,9 @@ it('só manda o HSTS por HTTPS', function () {
 });
 
 it('a SPA sai com uma política de conteúdo que só aceita scripts do próprio site', function () {
-    $index = public_path('spa/index.html');
-    $existed = is_file($index);
-    if (! $existed) {
-        File::ensureDirectoryExists(dirname($index));
-        File::put($index, '<!doctype html><title>ConectaCC</title>');
-    }
+    fakeSpaBuild('<!doctype html><title>ConectaCC</title>');
 
-    try {
-        $csp = $this->get('/login')->assertOk()->headers->get('Content-Security-Policy');
-    } finally {
-        if (! $existed) {
-            File::delete($index);
-        }
-    }
+    $csp = $this->get('/login')->assertOk()->headers->get('Content-Security-Policy');
 
     expect($csp)->toContain("default-src 'self'")
         ->toContain("script-src 'self'")
