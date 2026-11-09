@@ -17,7 +17,7 @@ const STATUS_LABELS: Record<string, string> = {
   ENCERRADO: 'Encerrada',
 };
 
-const ACTION = 'h-10 border-action px-4 text-[15px] font-semibold text-action';
+const ACTION = 'h-11 border-action px-4 text-[15px] font-semibold text-action';
 
 type Props = { item: MyOpportunity; onCancel: () => void; onDelete: () => void };
 

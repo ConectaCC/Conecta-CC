@@ -10,7 +10,7 @@ export function Chip({ children, onRemove, removeLabel }: { children: ReactNode;
           type="button"
           onClick={onRemove}
           aria-label={removeLabel}
-          className="-mr-1 grid size-6 place-items-center rounded-full hover:bg-white/60"
+          className="relative -mr-1 grid size-6 shrink-0 place-items-center rounded-full after:absolute after:-inset-2.5 hover:bg-white/60"
         >
           <X className="size-3.5" aria-hidden />
         </button>
