@@ -4,7 +4,6 @@ use App\Enums\Role;
 use App\Filament\Pages\Auth\Login;
 use App\Models\User;
 use Filament\Facades\Filament;
-use Illuminate\Support\Facades\File;
 use Livewire\Livewire;
 use Livewire\Mechanisms\HandleRequests\EndpointResolver;
 
@@ -116,19 +115,9 @@ it('compartilha a sessão com o app, inclusive depois da troca de senha', functi
 });
 
 it('não deixa a SPA capturar as rotas do painel e do Livewire', function () {
-    $hadBuild = File::exists(public_path('spa/index.html'));
-    if (! $hadBuild) {
-        File::ensureDirectoryExists(public_path('spa'));
-        File::put(public_path('spa/index.html'), '<div id="root"></div>');
-    }
+    fakeSpaBuild();
 
-    try {
-        $this->get('/home')->assertOk()->assertSee('id="root"', false);
-        $this->get('/admin/login')->assertOk()->assertDontSee('id="root"', false);
-        $this->get(EndpointResolver::prefix().'/livewire.js')->assertOk()->assertDontSee('id="root"', false);
-    } finally {
-        if (! $hadBuild) {
-            File::deleteDirectory(public_path('spa'));
-        }
-    }
+    $this->get('/home')->assertOk()->assertSee('id="root"', false);
+    $this->get('/admin/login')->assertOk()->assertDontSee('id="root"', false);
+    $this->get(EndpointResolver::prefix().'/livewire.js')->assertOk()->assertDontSee('id="root"', false);
 });
