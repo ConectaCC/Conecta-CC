@@ -1846,7 +1846,7 @@ Não há envio anônimo. O MODERADOR não analisa a própria oportunidade, como 
 ## 70.6 Página
 
 - **Navegação:** "Oportunidade" fica no singular (§6), entre Estudos e Comunidade.
-- **No topo:** o card fixo "Conheça as oportunidades de bolsas do IFSul", que leva a `https://www.ifsul.edu.br/estudante-pronatec` (link confirmado pelo time).
+- **No topo:** o card fixo "Conheça as oportunidades do IFSul", com os links oficiais (§70.10).
 - **Lista:** busca sem acentos no título e na descrição, filtro por tipo e cards em grade.
 
 ## 70.7 Mural e "Compartilhar"
@@ -1865,12 +1865,10 @@ Não há envio anônimo. O MODERADOR não analisa a própria oportunidade, como 
 A página segue uma imagem de referência do time:
 
 - **Título:** "Oportunidades", no plural, com o item da navegação ainda no singular (§6).
-- **Cabeçalho:** traz o card das bolsas do IFSul, com o botão "Ver oportunidades".
+- **Cabeçalho:** traz o card das oportunidades do IFSul (§70.10).
 - **Estado vazio:** novo texto.
 
 Os tipos ficam num **filtro de seleção**, e não em botões no estilo de abas, mantendo os cinco tipos. O logo do IFSul só entra com o arquivo oficial; até lá, o card usa um ícone.
-
-
 
 ## 70.10 Card das oportunidades do IFSul (08/11/2026)
 
