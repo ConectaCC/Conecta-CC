@@ -1,4 +1,4 @@
-# Recursos Institucionais e Externos — ConectaCC
+# Recursos Institucionais e Externos - ConectaCC
 
 Este documento registra recursos, sistemas, páginas e canais relevantes para o ConectaCC.
 
@@ -20,8 +20,8 @@ O mapeamento de recursos serve para:
 - decidir onde cada recurso deve aparecer dentro do ConectaCC;
 - confirmar URLs antes da implementação;
 - diferenciar recursos institucionais de conteúdos colaborativos;
-- apoiar a futura definição do módulo ou área de Informações e Serviços.
-
+- apoiar a definição de onde cada recurso deve aparecer dentro das áreas existentes do ConectaCC.
+- 
 ---
 
 # 2. Status utilizados
@@ -49,25 +49,22 @@ https://painel.passofundo.ifsul.edu.br/
 
 O Painel de Sistemas funciona como ponto de acesso para diferentes sistemas e serviços utilizados no Câmpus Passo Fundo.
 
-**Possível utilização no ConectaCC:**
+**Situação no ConectaCC:**
 
-- acesso rápido a serviços;
-- seção futura de Informações e Serviços;
-- contextualização de sistemas importantes para estudantes.
+O Painel de Sistemas não faz parte dos acessos exibidos na versão atual.
 
-**Observação:**
+Poderá ser avaliado futuramente como acesso institucional caso agregue valor aos estudantes.
+
+**Princípio:**
 
 O ConectaCC não deve reproduzir os sistemas disponíveis no Painel.
 
-Deve apenas facilitar sua descoberta e acesso.
-
+Caso o recurso seja utilizado, deve apenas facilitar sua descoberta e acesso.
 ---
 
 ## 3.2 Instituto de Informática — IFSul Câmpus Passo Fundo
 
-**Status:** ✅ Confirmado
-
-> **Atualização (08/11/2026):** usado na Home, em "Acessos institucionais" (`decisoes.md` 71).
+**Status:** ✅ Confirmado e utilizado
 
 **URL:**
 
@@ -75,27 +72,27 @@ https://inf.passofundo.ifsul.edu.br/src/home/index.html
 
 **Finalidade:**
 
-Página relacionada ao Instituto de Informática e a conteúdos acadêmicos da área.
+Página da área de Informática do IFSul – Câmpus Passo Fundo, relacionada ao curso e aos recursos acadêmicos da área.
 
-**Possível utilização no ConectaCC:**
+**Utilização no ConectaCC:**
 
-- informações acadêmicas;
-- informações do curso;
-- professores;
-- estrutura;
-- ementas;
-- recursos relacionados à Ciência da Computação;
-- acesso a informações já existentes no site da Informática.
+O recurso é disponibilizado na:
 
-**Pendência:**
+**Home → Acessos institucionais**
 
-Ainda é necessário mapear quais páginas internas do site são realmente relevantes para o ConectaCC.
+com o nome:
+
+**Informática / Ciência da Computação**
+
+O site também funciona como fonte institucional para recursos acadêmicos relacionados ao curso.
+
+Páginas internas específicas poderão ser mapeadas futuramente quando houver necessidade.
 
 ---
 
 ## 3.3 Arena Games
 
-**Status:** ✅ Confirmado
+**Status:** ✅ Recurso confirmado / 💡 utilização futura
 
 **URL:**
 
@@ -103,73 +100,70 @@ https://arenagames.passofundo.ifsul.edu.br/src/home/index.html
 
 **Finalidade:**
 
-Página do Arena Games.
+Página do Arena Games, iniciativa relacionada à integração estudantil e aos e-sports no IFSul – Câmpus Passo Fundo.
 
-**Utilização prevista no ConectaCC:**
+**Situação no ConectaCC:**
 
-Área:
+O recurso está mapeado, mas não possui acesso direto na versão atual do MVP.
 
-**Comunidade → Conecte-se com a comunidade**
+Poderá ser avaliado futuramente como recurso relacionado à comunidade estudantil.
 
-Ação prevista:
-
-**Conhecer o Arena Games ↗**
-
-O recurso deve abrir em ambiente externo.
-
+Caso seja disponibilizado no ConectaCC, deverá abrir a fonte oficial em ambiente externo.
 ---
 
 ## 3.4 SUAP
 
-**Status:** ✅ URL identificada / 💡 utilização a decidir
-
-> **Atualização (08/11/2026):** confirmado pelo time e usado na Home, em "Acessos institucionais", com o link `https://suap.ifsul.edu.br/` (`decisoes.md` 71).
+**Status:** ✅ Confirmado e utilizado
 
 **URL:**
 
-https://suap.ifsul.edu.br/accounts/login/?next=/
+https://suap.ifsul.edu.br/
 
 **Finalidade:**
 
 Sistema institucional utilizado para diferentes serviços acadêmicos e administrativos.
 
-**Possível utilização no ConectaCC:**
+**Utilização no ConectaCC:**
 
-- acesso rápido;
-- futura área de Informações e Serviços;
-- contextualização de quando o estudante deve utilizar o SUAP.
+Disponibilizado na:
+
+**Home → Acessos institucionais**
+
+como acesso direto ao SUAP.
 
 **Princípio:**
 
 O ConectaCC não substitui o SUAP.
 
+Ele apenas facilita o acesso ao sistema institucional.
+
 ---
 
-## 3.5 Moodle — Câmpus Passo Fundo
+## 3.5 Moodle - Câmpus Passo Fundo
 
-**Status:** ✅ Confirmado
-
-> **Atualização (08/11/2026):** usado na Home, em "Acessos institucionais", com o link `https://moodle.passofundo.ifsul.edu.br/` (`decisoes.md` 71).
+**Status:** ✅ Confirmado e utilizado
 
 **URL:**
 
-https://moodle.passofundo.ifsul.edu.br/login/index.php
+https://moodle.passofundo.ifsul.edu.br/
 
 **Finalidade:**
 
-Ambiente virtual de aprendizagem utilizado em disciplinas.
+Ambiente Virtual de Aprendizagem utilizado em disciplinas.
 
-**Possível utilização no ConectaCC:**
+**Utilização no ConectaCC:**
 
-- acesso rápido;
-- contextualização dentro de Estudos;
-- futura área de Informações e Serviços.
+Disponibilizado na:
+
+**Home → Acessos institucionais**
+
+como acesso direto ao Moodle.
 
 **Princípio:**
 
 O ConectaCC não deve copiar conteúdos de disciplinas mantidos no Moodle sem necessidade.
 
-O objetivo é complementar a experiência e conectar o estudante aos recursos adequados.
+O objetivo é complementar a experiência e direcionar o estudante para o ambiente institucional adequado.
 
 ## 3.6 Grade Curricular — Ciência da Computação
 
@@ -206,13 +200,17 @@ Principal fonte institucional para:
 - acesso às ementas oficiais;
 - apoio ao preenchimento da área Estudos.
 
-Para o MVP, a:
+No MVP, a:
 
 **Matriz 2023**
 
-será utilizada como referência acadêmica inicial.
+é utilizada como referência acadêmica.
 
-A necessidade de contemplar estudantes ainda vinculados à Matriz 2017 será verificada posteriormente.
+As 49 disciplinas obrigatórias confirmadas estão cadastradas no catálogo do ConectaCC.
+
+Cada disciplina possui também a referência para sua respectiva ementa oficial quando disponível na fonte institucional.
+
+A necessidade de contemplar estudantes ainda vinculados à Matriz 2017 será avaliada futuramente.
 
 ---
 
@@ -279,279 +277,199 @@ Os dois são usados na Home, em "Acessos institucionais" (`decisoes.md` 71).
 Os dois são usados em Estudos, em "Recursos acadêmicos" (`decisoes.md` 72).
 
 ---
+## 3.10 Oportunidades institucionais do IFSul
 
-# 4. Recursos institucionais a confirmar
+**Status:** ✅ Confirmado e utilizado
 
-## 4.1 Estágios
+A área Oportunidade possui dois acessos institucionais confirmados.
 
-**Status:** 🟡 A confirmar
+### Bolsas e programas
 
-> **Atualização (08/11/2026):** o time confirmou o site de extensão do câmpus, `https://extensao.passofundo.ifsul.edu.br/src/home/home.html`, usado em Oportunidades no link "Projetos e estágios" (`decisoes.md` 70.10).
+**URL:**
 
-Sabemos que existe uma área institucional relacionada a estágios.
+https://www.ifsul.edu.br/estudante-pronatec
 
-No MVP, ela está prevista em:
+**Utilização no ConectaCC:**
 
-**Oportunidade → Oportunidades do IFSul**
+**Oportunidade → Conheça as oportunidades do IFSul → Bolsas e programas**
 
-Card:
+### Projetos e estágios
 
-**Estágios**
+**URL:**
 
-Ação futura:
+https://extensao.passofundo.ifsul.edu.br/src/home/home.html
 
-**Acessar página oficial ↗**
+**Utilização no ConectaCC:**
 
-**Pendência:**
+**Oportunidade → Conheça as oportunidades do IFSul → Projetos e estágios**
 
-Confirmar a URL oficial antes de tornar o card clicável.
+Os dois recursos funcionam como redirecionamentos para fontes institucionais externas.
 
----
-
-## 4.2 Projetos de Extensão
-
-**Status:** 🟡 A confirmar
-
-> **Atualização (08/11/2026):** o time confirmou o site de extensão do câmpus, `https://extensao.passofundo.ifsul.edu.br/src/home/home.html`, usado em Oportunidades no link "Projetos e estágios" (`decisoes.md` 70.10).
-
-Previsto em:
-
-**Oportunidade → Oportunidades do IFSul**
-
-Card:
-
-**Projetos de Extensão**
-
-Ação futura:
-
-**Acessar página oficial ↗**
-
-**Pendência:**
-
-Confirmar a fonte e URL institucional correta.
+O ConectaCC não copia as oportunidades dessas páginas.
 
 ---
 
-## 4.3 Ementas das disciplinas
+# 4. Recursos institucionais ainda a mapear
 
-**Status:** ✅ Fonte institucional identificada
-
-A página da Grade Curricular do Bacharelado em Ciência da Computação disponibiliza acesso às ementas das disciplinas.
-
-**URL da fonte principal:**
-
-https://inf.passofundo.ifsul.edu.br/src/bcc_grade/index.html
-
-Nas páginas de disciplina em Estudos poderá existir:
-
-**Acessar ementa oficial ↗**
-
-A implementação deverá utilizar os links institucionais disponibilizados pela própria Grade Curricular.
-
-**Pendência de implementação:**
-
-- relacionar cada disciplina do catálogo à sua respectiva ementa oficial;
-- validar os links antes da disponibilização no sistema.
-
-Não deverão ser utilizados links inventados ou fontes não confirmadas.
-
----
-
-## 4.4 Professores
+## 4.1 Professores
 
 **Status:** 🔎 A mapear
 
-É necessário verificar se existe página oficial adequada contendo informações sobre os professores relacionados ao curso.
+Ainda poderá ser avaliado se existe uma fonte institucional adequada com informações sobre os professores relacionados ao curso.
 
 **Possível utilização:**
 
-- futura área de Informações e Serviços;
-- contexto acadêmico.
+- orientação acadêmica;
+- acesso a informações institucionais;
+- contexto relacionado ao curso.
 
-**Decisão importante:**
+**Princípio:**
 
-O ConectaCC não deve criar cadastro paralelo de professores se uma fonte institucional já resolver adequadamente essa necessidade.
+O ConectaCC não deve criar um cadastro paralelo de professores caso uma fonte institucional já atenda adequadamente essa necessidade.
+
+Esse recurso não bloqueia o MVP nem o piloto.
 
 ---
 
-## 4.5 Organograma
+## 4.2 Organograma institucional e setores
 
 **Status:** 🔎 A mapear
 
-Verificar se existe organograma institucional relevante para estudantes.
-
-**Possível objetivo:**
-
-Ajudar o aluno a compreender:
+Poderá ser avaliado se existe uma fonte institucional útil para ajudar o estudante a compreender:
 
 - setores;
 - responsabilidades;
+- contatos;
 - onde buscar determinado tipo de atendimento.
+
+A Matriz de Pré-requisitos do curso não deve ser confundida com esse organograma institucional.
+
+Esse recurso não bloqueia o MVP nem o piloto.
 
 ---
 
-# 5. Canais da Comunidade
+# 5. Canais e recursos sociais
 
 ## 5.1 Grupo de WhatsApp dos estudantes
 
-**Status:** 🟡 Link a confirmar
+**Status:** 💡 Evolução futura / link a confirmar
 
-Previsto em:
+O grupo de WhatsApp dos estudantes não faz parte da versão atual do MVP.
 
-**Comunidade → Conecte-se com a comunidade**
-
-Possível card:
-
-**WhatsApp dos estudantes**
-
-Ação:
-
-**Acessar grupo ↗**
-
-**Pendência:**
-
-Confirmar:
+Caso sua inclusão seja avaliada futuramente, será necessário confirmar:
 
 - link correto;
 - quem administra o grupo;
 - se o link pode ser divulgado dentro do ConectaCC;
-- se existe algum cuidado de privacidade relacionado.
+- cuidados relacionados à privacidade;
+- local adequado para disponibilização.
 
 ---
 
 ## 5.2 Instagram institucional
 
-**Status:** 🟡 A confirmar
+**Status:** ✅ Confirmado e utilizado
 
-> **Atualização (08/11/2026):** **confirmado** pelo time: `https://www.instagram.com/ifsulpassofundo/`, usado na Home, em "Acessos institucionais" (`decisoes.md` 71).
+**URL:**
 
-Previsto em:
+https://www.instagram.com/ifsulpassofundo/
 
-**Comunidade → Conecte-se com a comunidade**
+**Utilização no ConectaCC:**
 
-Possível card:
+Disponibilizado na:
 
-**Instagram do IFSul**
+**Home → Acessos institucionais**
 
-Ação:
+como:
 
-**Acessar Instagram ↗**
+**Instagram do IFSul Passo Fundo**
 
-**Pendência:**
-
-Confirmar qual perfil institucional deverá ser utilizado.
-
-Não inventar usuário ou URL.
+O acesso abre o perfil institucional em ambiente externo.
 
 ---
 
-# 6. Recursos acadêmicos que ainda podem ser mapeados
+# 6. Recursos acadêmicos que ainda podem ser avaliados
 
-Durante o levantamento institucional, também deverão ser avaliados recursos relacionados a:
+Futuramente poderão ser avaliados recursos relacionados a:
 
-- biblioteca;
-- ensino;
 - pesquisa;
-- extensão;
 - regulamentos;
 - documentos acadêmicos;
-- calendários;
 - assistência estudantil;
-- bolsas;
 - monitorias;
 - eventos;
-- projetos;
-- oportunidades acadêmicas;
 - atendimento ao estudante;
-- setores administrativos importantes.
+- setores administrativos relevantes;
+- outros recursos identificados durante o piloto.
 
-Nem todos necessariamente entrarão no ConectaCC.
+Nem todos necessariamente deverão entrar no ConectaCC.
 
-Cada recurso deverá ser avaliado considerando sua utilidade para estudantes de Ciência da Computação.
+Cada recurso deve ser avaliado considerando:
+
+- utilidade para estudantes de Ciência da Computação;
+- existência de fonte oficial;
+- frequência de uso;
+- estabilidade do link;
+- adequação às áreas existentes do sistema.
 
 ---
 
-# 7. Possível área “Informações e Serviços”
+# 7. Distribuição atual dos recursos
 
-A auditoria final do protótipo identificou uma questão importante:
+A versão atual do ConectaCC não possui uma área independente chamada **Informações e Serviços**.
 
-recursos como:
+Os recursos foram distribuídos pelas áreas em que fazem mais sentido para a jornada do estudante.
 
+## Home → Acessos institucionais
+
+Atualmente reúne:
+
+- IFSul;
+- Informática / Ciência da Computação;
 - SUAP;
 - Moodle;
-- Painel de Sistemas;
-- Instituto de Informática;
-- Grade Curricular;
-- Matriz de Pré-requisitos;
-- professores;
-- ementas;
+- Instagram do IFSul Passo Fundo;
+- CORAC.
 
-não possuem atualmente um local único no protótipo.
+## Estudos → Recursos acadêmicos
 
-A concepção original do projeto previa uma dimensão de orientação e acesso a informações.
+Atualmente reúne:
 
-Durante a simplificação do MVP, essa área deixou de existir como item independente da navegação.
+- Biblioteca Virtual;
+- Calendário Acadêmico.
 
-Antes da decisão definitiva, será concluído o levantamento dos recursos institucionais relevantes.
+## Estudos → Disciplinas
+
+As disciplinas utilizam referências institucionais para:
+
+- informações acadêmicas;
+- carga horária;
+- ementas oficiais.
+
+## Oportunidade
+
+Disponibiliza acessos para:
+
+- Bolsas e programas;
+- Projetos e estágios.
+
+Novos recursos devem, sempre que possível, ser incorporados à área que melhor corresponda à sua finalidade, evitando criar módulos desnecessários.
 ---
 
-# 8. Alternativas para Informações e Serviços
+# 8. Evoluções futuras da organização dos recursos
 
-Algumas possibilidades que poderão ser avaliadas:
+A estratégia atual é distribuir os recursos entre as áreas existentes do ConectaCC.
 
-## Alternativa A — Área própria
+Uma área própria de **Informações e Serviços** somente deverá ser reconsiderada futuramente caso:
 
-Criar futuramente uma área:
+- a quantidade de recursos aumente significativamente;
+- os acessos fiquem difíceis de localizar;
+- os testes indiquem dificuldade dos estudantes em encontrar informações;
+- existam recursos importantes sem um local natural nas áreas atuais.
 
-**Informações e Serviços**
+A criação de uma nova área não deve ocorrer apenas para concentrar links.
 
-reunindo acessos importantes.
-
-### Vantagem
-
-Centralização clara.
-
-### Desvantagem
-
-Adiciona mais um item à navegação.
-
----
-
-## Alternativa B — Distribuir pelos módulos existentes
-
-Exemplos:
-
-Moodle e ementas  
-→ Estudos
-
-Estágios e extensão  
-→ Oportunidade
-
-Arena Games, WhatsApp e Instagram  
-→ Comunidade
-
-SUAP e Painel  
-→ Home ou outro espaço de acesso rápido.
-
-### Vantagem
-
-Evita novo módulo.
-
-### Desvantagem
-
-Alguns recursos podem não possuir destino natural.
-
----
-
-## Alternativa C — Área de acessos rápidos
-
-Criar um bloco ou componente transversal:
-
-**Acessos úteis**
-
-sem necessariamente criar um novo módulo completo.
-
-Essa possibilidade poderá ser avaliada após o mapeamento dos recursos.
+Ela deve responder a uma necessidade identificada dos usuários.
 
 ---
 
@@ -590,7 +508,7 @@ instituição ou responsável.
 o que o recurso oferece.
 
 **Possível local no ConectaCC:**  
-Estudos / Oportunidade / Comunidade / Home / Informações e Serviços / outro.
+Home / Estudos / Oportunidade / Comunidade / outro.
 
 **Observações:**  
 dependências, cuidados ou decisões ainda necessárias.
@@ -607,10 +525,9 @@ Links institucionais devem:
 - não utilizar URLs inventadas;
 - ser revisados periodicamente quando o projeto estiver em uso real.
 
-No protótipo, URLs ainda não confirmadas utilizam estados não clicáveis como:
+URLs ainda não confirmadas não devem ser disponibilizadas como links clicáveis na aplicação.
 
-**Link oficial a confirmar**
-
+O endereço deve ser validado antes de entrar no ConectaCC.
 ---
 
 # 12. Diferença entre recurso institucional e conteúdo colaborativo
@@ -634,39 +551,48 @@ Origem:
 - estudantes;
 - comunidade.
 
-Exemplos:
+Exemplos atuais:
 
-- material;
-- publicação;
-- oportunidade indicada.
+- material compartilhado por estudante;
+- oportunidade indicada pela comunidade.
 
 Conteúdos colaborativos passam por Moderação antes de serem disponibilizados.
 
 ---
 
-# 13. Próximos passos do mapeamento
+# 13. Situação atual do mapeamento
 
-Este levantamento será retomado após o checkpoint com a professora.
+## Recursos já mapeados
 
-Situação atual:
+- [x] Painel de Sistemas;
+- [x] site do Instituto de Informática;
+- [x] IFSul;
+- [x] SUAP;
+- [x] Moodle;
+- [x] Arena Games;
+- [x] Grade Curricular do curso;
+- [x] Matriz de Pré-requisitos;
+- [x] ementas oficiais das disciplinas;
+- [x] relacionamento das disciplinas da Matriz 2023 com suas ementas;
+- [x] Biblioteca Virtual;
+- [x] Calendário Acadêmico;
+- [x] Instagram institucional;
+- [x] CORAC;
+- [x] Bolsas e programas;
+- [x] Projetos e estágios;
+- [x] distribuição dos principais recursos entre Home, Estudos e Oportunidade.
 
-- [x] identificar Painel de Sistemas;
-- [x] identificar site do Instituto de Informática;
-- [x] identificar SUAP;
-- [x] identificar Moodle;
-- [x] identificar Arena Games;
-- [x] identificar Grade Curricular do curso;
-- [x] identificar Matriz de Pré-requisitos;
-- [x] identificar fonte institucional das ementas;
-- [ ] relacionar cada disciplina à respectiva ementa durante a preparação dos dados;
-- [ ] localizar página oficial de Estágios;
-- [ ] localizar página oficial de Projetos de Extensão;
-- [ ] localizar informações oficiais de professores, se relevantes;
-- [ ] verificar organograma institucional / setores, se relevante;
-- [ ] confirmar Instagram institucional;
-- [ ] confirmar grupo de WhatsApp dos estudantes;
-- [ ] verificar outros recursos acadêmicos relevantes;
-- [ ] decidir a localização de Informações e Serviços dentro do ConectaCC.
+## Recursos que ainda poderão ser avaliados
+
+- [ ] informações oficiais sobre professores, se relevantes;
+- [ ] organograma institucional ou informações sobre setores, se relevantes;
+- [ ] grupo de WhatsApp dos estudantes, caso seja incorporado futuramente;
+- [ ] outros recursos identificados durante o piloto.
+
+## Antes do piloto
+
+- [ ] realizar uma verificação final dos links atualmente utilizados na aplicação;
+- [ ] confirmar que todos continuam apontando para fontes oficiais e acessíveis.
 ---
 
 # 14. Princípio final
