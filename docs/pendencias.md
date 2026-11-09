@@ -1,481 +1,181 @@
-# Pendências e decisões em aberto — ConectaCC
+# Pendências e decisões em aberto - ConectaCC
 
-Este documento registra decisões que ainda precisam ser tomadas, informações que precisam ser confirmadas e questões que deverão ser resolvidas durante a implementação ou antes do piloto do ConectaCC.
+Este documento reúne somente decisões, validações e atividades que ainda precisam ser concluídas no ConectaCC.
 
-A existência de um item nesta lista não significa que ele deveria estar concluído neste momento.
-
-O objetivo é diferenciar claramente:
+O objetivo é diferenciar:
 
 - decisões de produto ainda abertas;
-- pendências técnicas;
-- pendências institucionais;
-- requisitos obrigatórios antes do piloto;
+- validações técnicas ainda necessárias;
+- pendências obrigatórias antes do piloto;
+- informações institucionais ainda a avaliar;
 - possibilidades de evolução pós-MVP.
 
+Decisões já concluídas não devem permanecer neste documento como pendências. Elas ficam registradas em `decisoes.md` e nas demais documentações correspondentes.
 ---
-
-# 1. Decisões de produto ainda abertas
 
 # 1. Decisões e próximos passos de produto
 
-Depois da auditoria final do protótipo, algumas questões que estavam em aberto já foram decididas pela equipe.
+A maior parte das decisões necessárias para o MVP já foi definida.
 
-Esta seção mantém apenas decisões que ainda precisam ser tomadas ou atividades de produto que deverão ser retomadas no momento adequado.
+Permanecem abertas apenas questões que não bloqueiam a versão atual ou que deverão ser retomadas conforme os resultados do piloto.
 
 ---
 
-## 1.1 Informações e Serviços
+## 1.1 Recursos institucionais adicionais
 
-Ainda precisa ser definido onde o ConectaCC reunirá ou contextualizará acessos como:
+O MVP já possui acessos institucionais distribuídos entre Home, Estudos e Oportunidade.
 
-- SUAP;
-- Moodle;
+Ainda poderá ser avaliada futuramente a inclusão ou melhor contextualização de recursos como:
+
 - Painel de Sistemas do Câmpus;
-- Instituto de Informática;
-- professores;
-- organograma;
-- ementas;
-- outros serviços e informações institucionais.
+- informações sobre professores;
+- organograma institucional;
+- outros serviços identificados posteriormente.
 
-Esse conteúdo fazia parte da concepção original do ConectaCC, mas não aparece atualmente como módulo independente na navegação do MVP.
-
-> **Atualização (08/11/2026):** resolvida em parte: a Home ganhou "Acessos institucionais", com IFSul, Informática, SUAP, Moodle, Instagram do câmpus e o telefone da CORAC (`decisoes.md` 71). Continuam em aberto o Painel de Sistemas, professores, organograma e ementas fora de Estudos.
-
-> **Atualização (08/11/2026):** Estudos ganhou "Recursos acadêmicos", com a Biblioteca Virtual e o Calendário Acadêmico (`decisoes.md` 72). Oportunidades ganhou o site de extensão do câmpus, para projetos e estágios (`decisoes.md` 70.10).
-
-A decisão deverá considerar o princípio:
+A decisão deverá seguir o princípio:
 
 > O ConectaCC deve conectar e contextualizar recursos existentes, e não reconstruir sistemas institucionais.
 
-Antes da decisão definitiva, será realizado um levantamento mais completo dos recursos institucionais disponíveis.
-
-**Quando retomar:** após o checkpoint com a professora.
-
-A decisão deverá estar fechada antes da implementação das áreas afetadas.
+Esses itens não bloqueiam o piloto.
 
 ---
 
-## 1.2 Comportamento das notificações
+## 1.2 Catálogo acadêmico — evoluções futuras
 
-> **Atualização (02/11/2026):** resolvido (`decisoes.md` 55.5).
+O catálogo atual utiliza como referência a Matriz 2023 do Bacharelado em Ciência da Computação do IFSul – Câmpus Passo Fundo.
 
-Ainda deve ser definido o comportamento ao clicar em uma notificação.
+As 49 disciplinas obrigatórias confirmadas estão cadastradas e possuem área de materiais.
 
-Questões:
+Continuam para avaliação futura:
 
-- abrir uma notificação deve marcá-la automaticamente como lida?
-- a notificação deve levar diretamente ao conteúdo correspondente?
-- uma notificação de material aprovado deve abrir a disciplina?
-- uma notificação de oportunidade aprovada deve abrir Oportunidade?
-- uma publicação aprovada deve abrir a Comunidade?
+- disciplinas eletivas;
+- estudantes ainda vinculados à Matriz 2017;
+- necessidade de suportar mais de uma matriz curricular simultaneamente.
 
-Essa decisão não precisa ser tomada antes da definição da arquitetura geral.
-
-**Quando decidir:** antes da implementação definitiva de Notificações.
+Esses itens não bloqueiam o piloto atual.
 
 ---
 
-## 1.3 Catálogo acadêmico e disciplinas piloto
+## 1.3 Visibilidade do Perfil — evolução futura
 
-A fonte institucional inicial para o catálogo acadêmico já foi identificada.
+O Perfil público atual é visível apenas para usuários autenticados.
 
-### Matriz 2023
+Futuramente poderão ser avaliadas opções adicionais de privacidade.
 
-Grade Curricular do Bacharelado em Ciência da Computação:
-
-https://inf.passofundo.ifsul.edu.br/src/bcc_grade/index.html
-
-Matriz / Organograma de pré-requisitos:
-
-https://inf.passofundo.ifsul.edu.br/src/bcc_organograma/index.html
-
-A Matriz 2023 será utilizada como referência acadêmica inicial do MVP.
-
-Ela organiza o curso do:
-
-**1º ao 8º semestre.**
-
-Também foram identificadas fontes institucionais para:
-
-- disciplinas;
-- carga horária;
-- ementas;
-- organização por semestre;
-- pré-requisitos.
-
-Ainda precisam ser definidas:
-
-- quais disciplinas terão área de materiais inicialmente;
-- quais disciplinas participarão do piloto.
-
-A necessidade de contemplar estudantes ainda vinculados à Matriz 2017 será verificada posteriormente, quando esse levantamento se tornar necessário para preparar os dados reais do piloto.
-
-Essa verificação não bloqueia a arquitetura nem as atividades atuais.
-
-> **Atualização (19/10/2026):** o catálogo já está carregado com as 49 disciplinas obrigatórias da Matriz 2023 (`decisoes.md` 53.2). Continuam em aberto: quais disciplinas terão área de materiais, quais participarão do piloto, as eletivas e a Matriz 2017.
-
-> **Atualização (31/10/2026):** todas as disciplinas têm área de materiais (`decisoes.md` 54.2), então não há mais escolha de disciplinas piloto para materiais. Continuam em aberto: as disciplinas do piloto com estudantes, as eletivas e a Matriz 2017.
-
----
-
-## 1.4 Anonimato público dos materiais
-
-> **Atualização (02/11/2026):** resolvido antes do previsto. O material mostra o nome do autor, com a opção "Compartilhar anonimamente" (`decisoes.md` 55.2).
-
-No MVP atual, materiais aparecem como:
-
-**Compartilhado pela comunidade**
-
-O ADMIN continua identificando o autor para fins de Moderação e notificação.
-
-A decisão sobre apresentar ou não a autoria publicamente não será tomada neste semestre.
-
-**Quando decidir:** no próximo semestre, após os primeiros testes com estudantes.
-
-Até lá, permanece o comportamento atual do MVP:
-
-**Compartilhado pela comunidade**
-
----
-
-# 1.5 Decisões fechadas após a auditoria
-
-As seguintes questões estavam em aberto no momento da auditoria, mas já foram decididas pela equipe.
-
-## Data pública de materiais e publicações
-
-A data pública utilizada será:
-
-**data de aprovação/publicação.**
-
-A mesma regra será utilizada para:
-
-- Material;
-- Publicação;
-- Oportunidade.
-
-Exemplo:
-
-Conteúdo enviado na segunda-feira  
-→ permanece PENDENTE  
-→ ADMIN aprova na quarta-feira  
-→ publicamente aparece como publicado na quarta-feira.
-
-A data original do envio poderá permanecer registrada internamente.
-
----
-
-## E-mail utilizado no MVP e no piloto
-
-O cadastro do MVP e do piloto utilizará:
-
-**e-mail institucional do IFSul.**
-
-A possibilidade de aceitar e-mails institucionais de outras instituições será considerada apenas caso exista uma futura expansão do ConectaCC para fora do IFSul.
-
-A confirmação técnica do domínio ou dos domínios exatos utilizados pelo IFSul poderá ser realizada durante a implementação.
-
-> **Domínio adotado (12/10/2026):** `academico.ifsul.edu.br`, configurável por `ALLOWED_EMAIL_DOMAINS`.
-
-Isso não altera a regra de produto:
-
-**MVP e piloto = e-mail institucional do IFSul.**
-
----
-
-## Confirmação de propriedade do e-mail
-
-No MVP e no piloto:
-
-**não haverá confirmação de cadastro por link ou código enviado ao e-mail.**
-
-Essa funcionalidade poderá ser avaliada em uma evolução futura do ConectaCC.
-
-Essa decisão não altera a recuperação de senha, que continuará dependendo de envio de e-mail.
-
----
-
-## E-mails utilizados nos exemplos
-
-Todos os exemplos apresentados no ConectaCC deverão representar:
-
-**e-mail institucional do IFSul.**
-
-Exemplos genéricos como:
-
-`viviane@exemplo.com`
-
-não deverão permanecer na versão final.
-
-A padronização visual poderá ser realizada durante a limpeza final do protótipo.
-
----
-
-# 1.6 Visibilidade do Perfil (evolução futura)
-
-> Registrado em 04/11/2026. Não faz parte do MVP e não bloqueia o piloto (`decisoes.md` 57).
-
-## Ocultar as disciplinas atuais
+### Ocultar disciplinas atuais
 
 Antes de implementar, definir:
 
-- quem esconde as próprias disciplinas pode continuar vendo as dos outros?
-- pode continuar procurando estudantes por disciplina?
-- continua aparecendo em resultados relacionados àquela disciplina?
-- poderá esconder todas ou apenas algumas?
+- se o usuário poderá esconder todas ou apenas algumas disciplinas;
+- se quem esconde as próprias disciplinas poderá continuar vendo as dos outros;
+- como isso afetará futuras buscas por disciplina;
+- se o usuário continuará aparecendo em resultados relacionados à disciplina.
 
-## Perfil oculto ou anônimo
+### Perfil oculto ou participação na descoberta
 
 Antes de implementar, definir:
 
-- se o Perfil inteiro pode ser ocultado ou apenas campos específicos;
+- se o Perfil inteiro poderá ser ocultado ou apenas determinados campos;
 - quem ainda poderá acessá-lo;
 - o que acontece com conteúdos identificados já publicados;
-- como ficam busca e descoberta de estudantes;
+- como ficam futuras funcionalidades de busca de estudantes;
 - como ficam "Posso ajudar com" e "Procuro ajuda com";
-- quais funcionalidades o usuário perde se escolher não participar da descoberta social.
+- quais funcionalidades deixam de estar disponíveis quando o usuário optar por não participar da descoberta social.
 
-## Semestre no Perfil
+### Semestre no Perfil
 
-Será tratado junto dessas regras de visibilidade.
-
----
-
-# 1.7 Aviso por e-mail da troca de senha (decisão futura)
-
-> **Registrado em 04/11/2026:** o MVP não envia esse aviso (`specs/2026-11-04-configuracoes-design.md`).
-
-Decidir se a pessoa recebe um e-mail quando a senha da conta é alterada.
-
-Sem esse aviso, quem teve a senha trocada por outra pessoa não fica sabendo pelo sistema. O envio depende de o e-mail estar funcionando de forma confiável em produção.
+A inclusão do semestre poderá ser reavaliada futuramente junto das demais regras de Perfil e visibilidade.
 
 ---
 
-# 1.8 Oportunidades no mural e "Compartilhar" (próxima entrega)
+## 1.4 Aviso por e-mail após alteração de senha
 
-> **Registrado em 08/11/2026:** `decisoes.md` 69.
+O MVP atual não envia aviso por e-mail quando a senha é alterada.
 
-> **Atualização (08/11/2026):** resolvida em parte pela entrega de Oportunidades (`decisoes.md` 70): o botão virou "Compartilhar conteúdo", com um menu; o material segue indo para Estudos, e Estudos mantém o próprio botão; os campos, os tipos e a Moderação foram definidos. Continuam em aberto: escolher a disciplina de um material dentro da Comunidade, "Explorar por tipo" e ícones por tipo de conteúdo.
+Futuramente deverá ser avaliado se o usuário receberá uma mensagem informando que ocorreu uma alteração de senha.
 
-**Já decidido:**
-
-- o mural separa os tipos por um filtro, e não por abas;
-- "Compartilhar", na Comunidade, serve para material e oportunidade.
-
-Falta definir no design de Oportunidades:
-
-- o nome do botão e onde a escolha do tipo aparece;
-- como escolher a disciplina de um material a partir da Comunidade;
-- se o envio de material a partir da Comunidade mantém "Compartilhar anonimamente";
-- se Estudos mantém o próprio "Compartilhar material";
-- os campos, as categorias e a Moderação da oportunidade;
-- "Explorar por tipo", o número de oportunidades e o ícone de cada tipo.
+Essa funcionalidade depende de existir um serviço de e-mail configurado de forma confiável em produção.
 
 ---
 
-# 2. Pendências técnicas de implementação
+# 2. Validações técnicas ainda necessárias
 
-Estas decisões serão tratadas principalmente durante a definição da arquitetura e implementação.
+As principais decisões de arquitetura e implementação já foram concluídas.
 
-## 2.1 Stack, banco e hospedagem
-
-Definir:
-
-- stack;
-- arquitetura;
-- frontend;
-- backend;
-- banco de dados;
-- hospedagem;
-- deploy;
-- provedor de e-mail.
+Permanecem principalmente validações finais antes do piloto.
 
 ---
 
-## 2.2 Recuperação de senha
+## 2.1 Limites dos campos do Perfil
 
-Definir:
+O backend utiliza atualmente os seguintes limites:
 
-- formato do link de recuperação;
-- validade do link;
-- token;
-- segurança;
-- provedor responsável pelo envio.
+- Nome de exibição: 120 caracteres;
+- Sobre mim: 5.000 caracteres;
+- até 50 itens por campo de tags;
+- cada tag: até 255 caracteres.
 
----
+Esses valores funcionam atualmente como limites técnicos.
 
-## 2.3 Autorização ALUNO e ADMIN
+Ainda poderá ser avaliado, a partir do uso e dos testes com estudantes, se devem permanecer como limites definitivos de Produto ou ser reduzidos para melhorar a experiência da interface.
 
-> **Atualização (04/11/2026):** resolvido: enum `Role` com permissões explícitas, Gate `access-moderation` e `MaterialPolicy`, tudo no backend.
+Essa decisão não bloqueia o piloto.
 
-Garantir tecnicamente que:
+Os demais limites principais já estão definidos:
 
-- somente ADMIN consulte conteúdos pendentes;
-- somente ADMIN aprove ou rejeite conteúdos;
-- ALUNO não consiga acessar Moderação através de rota direta;
-- ADMIN não consiga moderar o próprio conteúdo.
+### Material
 
-Essa proteção deve existir no backend e no banco, e não apenas na interface.
+- título: 200 caracteres;
+- descrição: 2.000 caracteres;
+- link: 2.048 caracteres;
+- motivo da rejeição: 500 caracteres.
 
----
+### Oportunidade
 
-## 2.4 Concorrência na Moderação
-
-> **Atualização (04/11/2026):** resolvido: a decisão é um `UPDATE ... WHERE status = 'PENDENTE'`. A segunda tentativa recebe 409 e não altera nada.
-
-Caso dois administradores analisem o mesmo conteúdo:
-
-- a primeira decisão válida deve prevalecer;
-- a segunda tentativa não pode sobrescrever a primeira.
-
-O sistema deverá apresentar o estado:
-
-**Este conteúdo já foi analisado.**
+- título: 200 caracteres;
+- descrição: 300 caracteres;
+- link: 2.048 caracteres.
 
 ---
 
-## 2.5 Sessões após alteração ou recuperação de senha
+## 2.2 Acessibilidade, foco e navegação
 
-> **Atualização (04/11/2026):** continua pendente. Precisa ser decidido na entrega de Configurações.
+Antes do piloto, validar de forma sistemática:
 
-Definir se outras sessões ativas serão:
-
-- mantidas;
-- encerradas.
-
-A decisão deve contemplar:
-
-- alteração autenticada de senha;
-- recuperação de senha.
-
-> **Continua aberta (12/10/2026):** a duração da sessão foi definida (7 dias sem uso), mas o comportamento das outras sessões após trocar a senha será decidido na etapa de Configurações.
-
-> **Atualização (04/11/2026):** resolvida. A troca de senha encerra as outras sessões e mantém a atual. A recuperação de senha, se entrar, fará o mesmo (`decisoes.md` 61.1).
-
----
-
-## 2.6 Tentativas de Login
-
-Definir futuramente:
-
-- existência ou não de limite de tentativas;
-- bloqueio temporário;
-- atraso progressivo;
-- outras medidas de segurança.
-
-Não existe regra definitiva no protótipo.
-
-> **Resolvida (12/10/2026):** 5 tentativas por minuto por e-mail + IP, sem bloqueio de conta. Ver `implementacao.md` §4.
-
----
-
-## 2.7 Limites de texto
-
-> **Atualização (02/11/2026):** os limites de oportunidade e de publicação não bloqueiam mais o MVP, porque essas áreas saíram dele (`decisoes.md` 56).
-
-Ainda precisam ser definidos limites para campos como:
-
-- Nome de exibição;
-- Sobre mim;
-- quantidade de tags;
-- tamanho das tags;
-- título de material;
-- descrição de material;
-- título de oportunidade;
-- descrição de oportunidade;
-- título de publicação;
-- descrição de publicação;
-- motivo da rejeição.
-
-Os limites deverão considerar:
-
-- banco de dados;
-- segurança;
-- experiência do usuário;
-- apresentação dos cards.
-
-> **Teto provisório (19/10/2026):** até a definição, o servidor recusa Nome de exibição acima de 120 caracteres, Sobre mim acima de 5.000, tags acima de 255 caracteres e mais de 50 tags por campo. São só limites de segurança, sem contador na tela, e ficam em `UpdateProfileRequest` (constantes `MAX_*`).
-
-> **Atualização (02/11/2026):** os limites de material foram definidos: título até 200 caracteres, descrição até 2.000, link até 2.048 e motivo da rejeição até 500 (`decisoes.md` 55.3 e 55.4).
-
----
-
-## 2.8 Quantidade inicial antes de “Mostrar mais”
-
-> **Atualização (02/11/2026):** feed e lista de estudantes saíram do MVP (`decisoes.md` 56). Esta pendência não bloqueia mais o MVP.
-
-Definir quantos itens serão exibidos inicialmente em:
-
-- feed da Comunidade;
-- lista de estudantes.
-
-Os números atualmente utilizados no protótipo são apenas demonstrativos.
-
----
-
-## 2.9 Registro versionado dos Termos
-
-O sistema deverá registrar:
-
-- versão do termo aceita;
-- usuário;
-- data/hora do aceite.
-
-O aceite só deve ser registrado quando a conta for efetivamente criada.
-
----
-
-## 2.10 Validação de URLs
-
-> **Atualização (04/11/2026):** resolvido também para links de material: `MaterialUrl` aceita só http e https, com host válido, e normaliza porta padrão, barra final e domínios com acento (`decisoes.md` 55.6).
-
-Na implementação, validar no servidor:
-
-- apenas HTTP e HTTPS;
-- normalização adequada para HTTPS;
-- links GitHub correspondentes ao domínio GitHub;
-- links LinkedIn correspondentes ao domínio LinkedIn.
-
-Não confiar somente na validação do frontend.
-
-> **Resolvida (19/10/2026) para GitHub e LinkedIn:** validação no servidor, só endereço de perfil, salvo como `https://` (`decisoes.md` 53.3). Os links de materiais e oportunidades seguirão a mesma regra de http/https quando forem implementados.
-
----
-
-## 2.11 Foco e alterações não salvas
-
-Implementar corretamente:
-
-- foco preso em modais e painéis;
-- retorno de foco;
 - navegação por teclado;
-- aviso ao fechar a aba quando houver alterações não salvas, quando aplicável.
-
-O protótipo demonstra esses comportamentos apenas parcialmente.
+- foco visível;
+- foco preso em modais quando necessário;
+- retorno do foco após fechamento;
+- associação de mensagens de erro aos campos;
+- funcionamento dos controles em leitores e tecnologias assistivas;
+- estados que não dependem somente de cor;
+- comportamento de alterações não salvas.
 
 ---
 
-## 2.12 Loading e erro
+## 2.3 Loading, erro e estados vazios
 
-Completar na implementação os estados de loading e erro nas páginas que reutilizam padrões existentes.
+Realizar uma revisão final dos estados de:
 
-Exemplos:
+- loading;
+- erro;
+- estado vazio;
+- busca sem resultado;
+- ações em andamento;
+- sucesso.
 
+A validação deve contemplar as principais áreas do MVP, incluindo:
+
+- Home;
 - Perfil;
+- Estudos;
+- Materiais;
+- Oportunidade;
+- Comunidade;
+- Meus conteúdos;
 - Configurações;
-- Página da disciplina.
-
----
-
-## 2.13 Limitações específicas do protótipo
-
-Não tratar como regras do produto:
-
-- persistência entre telas através do armazenamento do navegador;
-- papel ADMIN não carregado automaticamente entre todos os artboards;
-- dados fictícios utilizados para demonstrar estados.
-
-Essas limitações existem somente na prototipação.
+- Moderação;
+- Notificações.
 
 ---
 
@@ -483,52 +183,48 @@ Essas limitações existem somente na prototipação.
 
 ## 3.1 Revisar os Termos de participação
 
-Antes do piloto real, revisar o texto para incluir explicitamente:
+A versão atual dos Termos deverá ser revisada antes da entrada dos participantes do piloto.
 
-- disciplinas atuais visíveis para estudantes autenticados;
-- tratamento de dados;
-- finalidade dos dados;
-- informações relevantes sobre o período de testes.
+A revisão deve deixar claro, quando aplicável:
 
-> **Atualização (05/11/2026):** a revisão também precisa refletir a política de exclusão de conta (`decisoes.md` 64), incluindo a permanência dos materiais aprovados como "Compartilhado pela comunidade". A redação final deve ser avaliada à luz da LGPD e das orientações institucionais. O texto da versão 0.2 ainda não foi alterado.
+- quais informações do Perfil ficam visíveis para outros usuários autenticados;
+- que as disciplinas atuais fazem parte das informações visíveis do Perfil;
+- como funciona a autoria dos materiais;
+- como funciona o compartilhamento anônimo de materiais;
+- que oportunidades não exibem publicamente quem realizou o envio;
+- finalidade dos dados coletados;
+- contexto e finalidade do período de testes;
+- política relacionada à exclusão da conta e tratamento dos conteúdos já enviados.
+
+A redação final deverá ser avaliada considerando a LGPD e as orientações institucionais aplicáveis.
+
+Sempre que houver alteração relevante nos Termos, uma nova versão deverá ser criada.
 
 ---
 
 ## 3.2 Exclusão de conta e dados
 
+A política geral já foi definida em `decisoes.md` 64, mas ainda existem pontos operacionais a confirmar antes do piloto.
+
 Definir:
 
-- como solicitar exclusão;
-- quem é responsável pelo processo;
-- quais dados serão removidos;
-- retenção de dados;
-- impacto sobre materiais enviados;
-- impacto sobre publicações;
-- impacto sobre oportunidades indicadas.
+- canal pelo qual o usuário poderá solicitar exclusão;
+- quem será responsável por receber e executar a solicitação;
+- como o pedido será atendido enquanto não existir autoexclusão pela interface;
+- retenção necessária de dados;
+- tratamento de materiais rejeitados, cancelados ou anteriormente excluídos;
+- tratamento das oportunidades vinculadas à conta;
+- procedimento para eventual solicitação relacionada à LGPD.
 
-Essa funcionalidade não possui tela automática no MVP atual.
-
-> **Atualização (05/11/2026):** a política foi definida em `decisoes.md` 64, e a implementação fica fora do MVP. **Continuam pendentes antes do piloto:** confirmar o canal de contato, decidir como atender um pedido enquanto não houver ação no `/admin` e avaliar a política à luz da LGPD e das orientações institucionais. Também ficam em aberto a retenção de dados e o destino de materiais rejeitados, cancelados ou já excluídos. Publicações e oportunidades indicadas saíram do MVP (`decisoes.md` 56).
+A autoexclusão pela interface não faz parte do MVP atual.
 
 ---
 
-## 3.3 Quantidade de administradores
+## 3.3 Orientação para motivos de rejeição
 
-> **Atualização (02/11/2026):** o ADMINISTRADOR pode moderar o próprio conteúdo (§51.2), mas o MODERADOR não. Ainda é preciso ter mais de um MODERADOR, ou um ADMINISTRADOR, para analisar o envio de um MODERADOR.
+O motivo da rejeição é obrigatório para MODERADOR e ADMINISTRADOR e possui limite de 500 caracteres.
 
-Se usuários ADMIN também participarem do piloto como estudantes, deverá existir mais de um ADMIN.
-
-Isso é necessário porque:
-
-**um ADMIN não pode moderar o próprio conteúdo.**
-
----
-
-## 3.4 Orientação para motivo de rejeição
-
-> **Atualização (02/11/2026):** o motivo é obrigatório para MODERADOR e ADMINISTRADOR, com até 500 caracteres (`decisoes.md` 55.4). A orientação de redação continua pendente.
-
-Antes do piloto, criar orientação simples para administradores.
+Antes do piloto, preparar uma orientação simples para quem realizará a Moderação.
 
 O motivo deve ser:
 
@@ -536,111 +232,141 @@ O motivo deve ser:
 - compreensível;
 - explicativo quando necessário;
 - respeitoso;
+- relacionado ao conteúdo analisado;
 - sem informações inadequadas ou desnecessárias.
-
-O limite de caracteres será definido durante a implementação.
 
 ---
 
-# 4. Recursos institucionais a mapear
+# 4. Recursos institucionais ainda a avaliar
 
-Ainda deverá ser realizado um levantamento mais completo de recursos relevantes.
+Os principais recursos necessários para o MVP já foram identificados e os acessos utilizados na aplicação estão documentados nas respectivas decisões.
 
-Entre eles:
+Ainda poderão ser avaliados:
 
-- [x] SUAP
-- [x] Moodle
-- [x] Painel de Sistemas do Câmpus
-- [x] site do Instituto de Informática
-- [ ] professores
-- [x] Matriz / Organograma de pré-requisitos
-- [x] Grade Curricular
-- [x] fonte institucional para ementas
-- [ ] Estágios
-- [ ] Projetos de Extensão
-- [ ] Instagram institucional
-- [ ] grupo de WhatsApp dos estudantes
-- [x] Arena Games
-- [ ] outros recursos identificados durante o levantamento
+- [ ] informações ou acesso relacionado aos professores;
+- [ ] necessidade de acesso direto ao Painel de Sistemas do Câmpus;
+- [ ] grupo de WhatsApp dos estudantes, caso exista autorização e necessidade de disponibilizá-lo;
+- [ ] outros recursos institucionais identificados durante o piloto.
 
-Para cada recurso deverá ser registrado:
+Novos links somente devem ser adicionados depois da confirmação da fonte e do endereço oficial.
 
-- nome;
-- finalidade;
-- URL;
-- fonte;
-- área do ConectaCC em que será utilizado.
+Esses itens não bloqueiam o início do piloto.
 
 ---
 
 # 5. Preparação da validação
 
-Antes dos testes com estudantes:
+## Configuração já definida
 
-- [ ] escolher disciplinas piloto;
-- [ ] definir participantes;
-- [ ] revisar Termos;
-- [ ] concluir levantamento dos links institucionais necessários;
-- [x] confirmar o domínio técnico utilizado para validar e-mails institucionais do IFSul (`academico.ifsul.edu.br`);
+- [x] público do piloto definido como estudantes de Ciência da Computação do IFSul – Câmpus Passo Fundo;
+- [x] piloto planejado para 12 participantes;
+- [x] composição planejada: 10 ALUNOS e 2 ADMINISTRADORES;
+- [x] ADMINISTRADORES definidos: Marcelo e Viviane;
+- [x] domínio institucional confirmado: `academico.ifsul.edu.br`;
+- [x] cadastro fechado por lista de convidados disponível através de `ALLOWED_EMAILS`.
+
+## Antes do início dos testes
+
+- [ ] selecionar os 10 estudantes participantes;
+- [ ] incluir os 12 participantes em `ALLOWED_EMAILS`;
+- [ ] revisar e publicar a versão final dos Termos de participação do piloto;
+- [ ] definir o canal e o procedimento para solicitações de exclusão de conta;
+- [ ] realizar verificação final dos links institucionais utilizados;
 - [ ] preparar formulário ou instrumento de feedback;
 - [ ] definir o que será observado durante os testes;
-- [ ] preparar ambiente funcional;
-- [ ] definir administradores do piloto.
-
+- [ ] validar o ambiente de produção;
+- [ ] executar a rodada final de testes funcionais;
+- [ ] validar responsividade;
+- [ ] validar acessibilidade;
+- [ ] corrigir problemas bloqueadores identificados antes da entrada dos participantes.
 ---
 
 # 6. Pós-MVP
 
-Itens já identificados como possíveis evoluções e que não fazem parte da primeira versão:
+As funcionalidades abaixo não fazem parte da primeira versão, mas poderão ser avaliadas após o piloto.
 
-- prevenção automática de conteúdo duplicado;
-- aviso de link já compartilhado;
-- **Retirada administrativa de conteúdo publicado — pós-MVP:** definir e implementar futuramente o fluxo pelo qual ADMINISTRADOR poderá retirar conteúdo anteriormente aprovado, preservando aprovação anterior e ação de retirada nos logs/auditoria (`decisoes.md` 63);
-- histórico administrativo;
-- auditoria de decisões;
-- **Reversão de rejeição pelo ADMINISTRADOR — pós-MVP, regra decidida (`decisoes.md` 67.1):** REJEITADO → APROVADO direto. Falta definir a UX, se a justificativa será obrigatória, as notificações e o que o autor vê;
-- **Denúncia e solicitação de revisão de conteúdo publicado — pós-MVP, regra decidida (`decisoes.md` 67.2):** feitas por usuários autenticados e pelo MODERADOR, sem remoção automática. Falta definir:
-  - categorias ou motivos;
-  - justificativa;
-  - quem recebe;
-  - denúncias repetidas;
-  - cancelamento da denúncia;
-  - notificações;
-  - conteúdo anônimo;
-  - registro no histórico e na auditoria;
-  - resultados possíveis;
-  - relação com sanções ou bloqueios;
+## Conta e autenticação
 
-> **Atualização (07/11/2026):** a auditoria de ações que mudam dados foi entregue (`decisoes.md` 66). Continuam futuras: a auditoria de consultas e de login, a exportação de eventos e a regra final de retenção.
+- recuperação de senha;
+- confirmação de propriedade do e-mail institucional por link ou código;
+- aviso por e-mail após alteração de senha;
+- autoexclusão de conta pela interface;
+- expansão para outros domínios institucionais.
 
-- contador de pendências na Moderação;
-- controle de visibilidade do Perfil;
-- opção de não aparecer na Comunidade;
-- pedido de ajuda;
-- matching entre estudantes;
-- chat;
-- mensagens diretas;
-- upload de arquivos;
-- upload de foto;
+## Perfil e descoberta de estudantes
+
+- controles adicionais de visibilidade do Perfil;
+- ocultação de disciplinas;
+- opção de não participar da descoberta social;
+- busca de estudantes;
+- busca de estudantes por disciplina;
+- inclusão do semestre no Perfil;
+- upload de foto.
+
+## Comunidade e interação
+
+- canais da comunidade;
+- publicação externa como tipo próprio de conteúdo;
 - comentários;
 - curtidas;
 - reações;
 - seguidores;
-- recomendações;
+- pedido de ajuda;
+- matching entre estudantes;
+- chat;
+- mensagens diretas.
+
+## Materiais e oportunidades
+
+- upload direto de arquivos;
+- edição de oportunidade aprovada;
+- retirada administrativa de conteúdo publicado;
+- reversão administrativa de rejeição;
+- denúncia ou solicitação de revisão de conteúdo;
+- histórico mais detalhado de versões e alterações.
+
+## Notificações
+
+Poderão ser avaliados:
+
+- histórico completo de notificações;
+- exclusão de notificações;
+- expiração;
+- filtros;
+- paginação ou "Mostrar mais";
+- preferências de notificação;
+- novas notificações relacionadas a funcionalidades futuras.
+
+## Administração e auditoria
+
+A auditoria das ações que alteram dados já faz parte do sistema.
+
+Continuam como possíveis evoluções:
+
+- auditoria de consultas;
+- auditoria de Login;
+- exportação de eventos;
+- definição de política final de retenção dos eventos;
+- histórico administrativo mais detalhado;
+- contador de pendências na Moderação.
+
+## Outras evoluções
+
+- recomendações personalizadas;
 - Inteligência Artificial;
-- confirmação de propriedade do e-mail institucional por link ou código;
 - gamificação.
 ---
 
 # 7. Observação
 
-A auditoria final do protótipo identificou que as áreas principais estão consistentes para servir como referência de implementação.
+Este documento deve representar apenas o que ainda está realmente pendente.
 
-As pendências registradas neste documento representam principalmente:
+Sempre que uma decisão for concluída ou uma funcionalidade for implementada:
 
-- decisões ainda não necessárias para o protótipo;
-- informações institucionais ainda não confirmadas;
-- escolhas técnicas da implementação;
-- requisitos necessários antes do piloto.
+- a decisão definitiva deve ser registrada em `decisoes.md` ou na documentação correspondente;
+- o item deve ser removido desta lista de pendências;
+- não é necessário manter aqui o histórico de decisões já encerradas.
 
-Portanto, elas não devem ser interpretadas como falhas ou esquecimentos do projeto.
+As pendências atuais não significam necessariamente problemas no MVP.
+
+Algumas representam requisitos obrigatórios antes do piloto, enquanto outras são melhorias ou decisões que poderão ser avaliadas somente após os testes com estudantes.
