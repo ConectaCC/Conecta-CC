@@ -29,7 +29,7 @@ export function HubLinks({ compact = false }: { compact?: boolean }) {
           <Users className="size-12" />
         </span>
       </div>
-      <ul className={cn('relative grid grid-cols-1 gap-3 min-[400px]:grid-cols-2', !compact && 'xl:grid-cols-[max-content_max-content] xl:justify-between xl:gap-y-24')}>
+      <ul className={cn('relative grid grid-cols-1 gap-3 sm:grid-cols-2', !compact && 'xl:grid-cols-[max-content_max-content] xl:justify-between xl:gap-y-24')}>
         {HUBS.map(({ to, label, icon: Icon }) => (
           <li key={to}>
             <Link
