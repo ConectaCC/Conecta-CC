@@ -1911,7 +1911,7 @@ A Home ganha a seção "Acessos institucionais" ("Conecte-se aos principais serv
 - O Instagram utiliza o endereço oficial sem parâmetros adicionais de rastreamento.
 - O contato da CORAC abre o WhatsApp Web pelo número institucional confirmado.
 
-**Ícones:** são genéricos, sem os logos do IFSul, do SUAP, do Moodle, do Instagram ou do WhatsApp. Os logos só entram com os arquivos oficiais.
+**Ícones:** IFSul, SUAP, Moodle, Instagram e WhatsApp usam o ícone oficial publicado no próprio site (o do Moodle, recortado do logo oficial: o "m" com o chapéu), guardado como arquivo local em `frontend/src/assets/institutional/`. Informática / Ciência da Computação usa um ícone genérico de notebook.
 
 Isso resolve em parte `pendencias.md` 1.1: a Home passa a reunir os principais acessos institucionais.
 

@@ -37,3 +37,15 @@ it('com o perfil completo, esconde o card e põe o texto e os atalhos lado a lad
   expect(hero()).toHaveClass('xl:flex-row', 'xl:items-center');
   expect(hubs()).toHaveClass('xl:grid-cols-[max-content_max-content]');
 });
+
+it('nos acessos institucionais, mostra o ícone oficial de cada site e um ícone genérico na Informática', async () => {
+  mockApi('GET', reply(200, me(true)));
+  renderWithProviders(<HomePage />);
+
+  const link = async (name: RegExp) => screen.findByRole('link', { name });
+  expect((await link(/^SUAP/)).querySelector('img')).toHaveAttribute('src', expect.stringContaining('suap'));
+  expect((await link(/^Moodle/)).querySelector('img')).toHaveAttribute('alt', '');
+  const informatica = await link(/^Informática/);
+  expect(informatica.querySelector('img')).toBeNull();
+  expect(informatica.querySelector('svg.size-6')).not.toBeNull();
+});
