@@ -22,7 +22,8 @@ it('não duplica ao sincronizar de novo', function () {
 
 it('sincronizar de novo restaura semestre, carga horária e ementa, e atualiza a data', function () {
     $algoritmos = Discipline::where('name', 'Algoritmos I')->sole();
-    $algoritmos->forceFill(['semester' => 8, 'workload_hours' => 1, 'syllabus_url' => null])->save();
+    // a migration carrega o catálogo na data real; com o relógio congelado (TEST_NOW), ela fica no futuro
+    $algoritmos->forceFill(['semester' => 8, 'workload_hours' => 1, 'syllabus_url' => null, 'created_at' => now()])->save();
     $this->travel(1)->day();
 
     DisciplineCatalog::sync(resource_path('catalog/matriz-2023.json'));
